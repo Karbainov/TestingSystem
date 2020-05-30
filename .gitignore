@@ -1,9 +1,11 @@
 
+.vs/TestingSystem/DesignTimeBuild/.dtbcache.v2
+
+TestingSystem.Data/bin/Debug/
+
 TestingSystem/bin/Debug/
 
 TestingSystem/obj/Debug/
-
-TestingSystem.Data/bin/Debug/
 
 TestingSystem.Data/obj/Debug/
 
@@ -11,12 +13,4 @@ TestingSystem.Data.Tests/bin/Debug/
 
 TestingSystem.Data.Tests/obj/Debug/
 
-.vs/TestingSystem/DesignTimeBuild/
-
-.vs/
-
-TestingSystem/
-
-TestingSystem.Data/
-
-TestingSystem.Data.Tests/
+.vs/TestingSystem/v16/.suo
