@@ -1,0 +1,56 @@
+﻿{
+  "version": "1.0.0",
+  "restore": {
+    "projectUniqueName": "/Users/safronov.one/source/dotNET/TestingSystem/TestingSystem.Data/TestingSystem.Data.csproj",
+    "projectName": "TestingSystem.Data",
+    "projectPath": "/Users/safronov.one/source/dotNET/TestingSystem/TestingSystem.Data/TestingSystem.Data.csproj",
+    "outputPath": "/Users/safronov.one/source/dotNET/TestingSystem/TestingSystem.Data/obj/",
+    "projectStyle": "PackageReference",
+    "originalTargetFrameworks": [
+      "netstandard2.0"
+    ],
+    "sources": {
+      "https://api.nuget.org/v3/index.json": {}
+    },
+    "frameworks": {
+      "netstandard2.0": {
+        "projectReferences": {}
+      }
+    },
+    "warningProperties": {
+      "warnAsError": [
+        "NU1605"
+      ]
+    }
+  },
+  "frameworks": {
+    "netstandard2.0": {
+      "dependencies": {
+        "Dapper": {
+          "target": "Package",
+          "version": "[2.0.35, )"
+        },
+        "NETStandard.Library": {
+          "suppressParent": "All",
+          "target": "Package",
+          "version": "[2.0.3, )",
+          "autoReferenced": true
+        },
+        "System.Data.SqlClient": {
+          "target": "Package",
+          "version": "[4.8.1, )"
+        }
+      },
+      "imports": [
+        "net461",
+        "net462",
+        "net47",
+        "net471",
+        "net472",
+        "net48"
+      ],
+      "assetTargetFallback": true,
+      "warn": true
+    }
+  }
+}

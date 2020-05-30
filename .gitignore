@@ -34,3 +34,5 @@ TestingSystem/obj/project.nuget.cache
 TestingSystem.Data/obj/project.nuget.cache
 
 TestingSystem.Data/obj/TestingSystem.Data.csproj.nuget.dgspec.json
+
+.idea/
