@@ -14,3 +14,23 @@ TestingSystem.Data.Tests/bin/Debug/
 TestingSystem.Data.Tests/obj/Debug/
 
 .vs/TestingSystem/v16/.suo
+
+TestingSystem/obj/TestingSystem.csproj.nuget.g.props
+
+TestingSystem/obj/TestingSystem.csproj.nuget.dgspec.json
+
+TestingSystem.Data.Tests/obj/TestingSystem.Data.Tests.csproj.nuget.dgspec.json
+
+TestingSystem.Data.Tests/obj/TestingSystem.Data.Tests.csproj.nuget.g.props
+
+TestingSystem.Data.Tests/obj/project.nuget.cache
+
+TestingSystem.Data.Tests/obj/project.assets.json
+
+TestingSystem/obj/project.assets.json
+
+TestingSystem/obj/project.nuget.cache
+
+TestingSystem.Data/obj/project.nuget.cache
+
+TestingSystem.Data/obj/TestingSystem.Data.csproj.nuget.dgspec.json
