@@ -9,7 +9,7 @@ namespace TestingSystem.Data.StoredProcedure
     class UserManager
     {
 
-        public int User_Student_Group_Add(SqlConnection connection, UserDTO user, GroupDTO group)
+        public int User_Student_Group_Add(SqlConnection connection, UserDTO user, GroupDTO group)//добавление студента сразу в группу
         {
             connection.Open();
             string sqlExpression = "User_Create";

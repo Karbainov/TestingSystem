@@ -37,5 +37,33 @@ namespace TestingSystem.Data.StoredProcedure
             reader.Close();
             return test;
         }
+        public List<AnswerDTO> Answer_GetCorrectByQuestionID(SqlConnection connection,TestDTO test)//нахождение правильных ответов вопроса
+        {
+            connection.Open();
+            string sqlExpression = "Answer_GetCorrectByQuestionID";
+            SqlCommand command = new SqlCommand(sqlExpression, connection);
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            SqlParameter questionParam = new SqlParameter("@QuestionID", test.ID);
+            command.Parameters.Add(idParam);
+            SqlDataReader reader = command.ExecuteReader();
+
+            List<AnswerDTO> answers = new List<AnswerDTO>();
+            if (reader.HasRows) // если есть данные
+            {
+
+                while (reader.Read()) // построчно считываем данные
+                {
+                    AnswerDTO answer= new AnswerDTO();
+
+                    answer.ID = (int)reader["id"];
+                    answer.QuestionID = (int)reader["QuestionID"];
+                    answer.Value = (string)reader["Value"];
+                    answer.Correct = (bool)reader["Correct"];
+                    answers.Add(answer);
+                }
+            }
+            reader.Close();
+            return answers;
+        }
     }
 }
