@@ -44,7 +44,7 @@ namespace TestingSystem.Data.StoredProcedure
             SqlCommand command = new SqlCommand(sqlExpression, connection);
             command.CommandType = System.Data.CommandType.StoredProcedure;
             SqlParameter questionParam = new SqlParameter("@QuestionID", test.ID);
-            command.Parameters.Add(idParam);
+            command.Parameters.Add(questionParam);
             SqlDataReader reader = command.ExecuteReader();
 
             List<AnswerDTO> answers = new List<AnswerDTO>();
