@@ -6,18 +6,18 @@ using TestingSystem.Data.DTO;
 
 namespace TestingSystem.Data.StoredProcedure
 {
-    public class FBQuestionByUserDate
+    public class AttemptByUserTest
     {
-        public FBQuestionByUserDate()
+        public AttemptByUserTest()
         {
         }
 
-        public List<FeedbackQuestionDBO> FBQuestionGetByUserId(FeedbackDTO feedback)
+        public List<AttemptResultDTO> AttemptGetByUserIdTestId(AttemptDBO attempt)
         {
             var connection = Connection.GetConnection();
             connection.Open();
 
-            string sqlExpression = "FeedBackQuestion_GetByUserDate";
+            string sqlExpression = "Attempt_GetByUserIdTestId";
             SqlCommand command = new SqlCommand(sqlExpression, connection);
 
             command.CommandType = System.Data.CommandType.StoredProcedure;
@@ -25,32 +25,35 @@ namespace TestingSystem.Data.StoredProcedure
             SqlParameter userIdParam = new SqlParameter
             {
                 ParameterName = "@userId",
-                Value = feedback.userId
+                Value = attempt.userID
             };
             command.Parameters.Add(userIdParam);
 
-            SqlParameter dateParam = new SqlParameter
+            SqlParameter testIdParam = new SqlParameter
             {
-                ParameterName = "@date",
-                Value = feedback.date
+                ParameterName = "@testId",
+                Value = attempt.testID
             };
-            command.Parameters.Add(dateParam);
+            command.Parameters.Add(testIdParam);
 
             var reader = command.ExecuteReader();
-            List<FeedbackQuestionDBO> feedbacks = new List<FeedbackQuestionDBO>();
+            List<AttemptResultDTO> attempts = new List<AttemptResultDTO>();
 
             if (reader.HasRows)
-            {                
+            {
                 while (reader.Read())
                 {
-                    FeedbackQuestionDBO fb = new FeedbackQuestionDBO();
-                    fb.message = reader.GetString(0);
-                    fb.value = reader.GetString(1);
-                    feedbacks.Add(fb);
+                    AttemptResultDTO at = new AttemptResultDTO();
+
+                    at.number = reader.GetByte(0);
+                    at.date = reader.GetDateTime(1);
+                    at.result = reader.GetByte(2);
+                    at.duration = reader.GetTimeSpan(3);
+                    attempts.Add(at);
                 }
             }
             reader.Close();
-            return feedbacks;
+            return attempts;
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TestingSystem.Data.DTO
 {
-    class AttemptDBO
+    public class AttemptDBO
     {
         public int id { get; set; }
         public int number { get; set; }
@@ -24,6 +24,13 @@ namespace TestingSystem.Data.DTO
             durationTime = _durationTime;
         }
         public AttemptDBO()
-        { }
+        { 
+        }
+
+        public AttemptDBO(int _userID, int _testID)
+        {
+            userID = _userID;
+            testID = _testID;
+        }
     }
 }
