@@ -15,8 +15,12 @@ namespace TestingSystem.Data.StoredProcedure
             string sqlExpression = "Test_Attempt_GetLate";
             SqlCommand command = new SqlCommand(sqlExpression, connection);
             command.CommandType = System.Data.CommandType.StoredProcedure;
+
+
             SqlParameter idParam = new SqlParameter("@UserID", user.ID);
             command.Parameters.Add(idParam);
+
+
             SqlDataReader reader = command.ExecuteReader();
 
             List<TestDTO> test = new List<TestDTO>();

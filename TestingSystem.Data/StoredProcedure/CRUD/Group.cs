@@ -10,9 +10,9 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
     {
         static public int Group_Add(SqlConnection connection, GroupDTO group)
         {
+
             connection.Open();
             string sqlExpression = "Group_Add";
-
             SqlCommand command = new SqlCommand(sqlExpression, connection);
             command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -42,19 +42,37 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             return command.ExecuteNonQuery();
         }
 
-        static public int Group_GetAll(SqlConnection connection, GroupDTO group)
+        static public List<GroupDTO> Group_GetAll(SqlConnection connection)
         {
             connection.Open();
             string sqlExpression = "Group_GetAll";
 
             SqlCommand command = new SqlCommand(sqlExpression, connection);
             command.CommandType = System.Data.CommandType.StoredProcedure;
+            SqlDataReader reader = command.ExecuteReader();
 
-            return command.ExecuteNonQuery();
+            List<GroupDTO> groupAll = new List<GroupDTO>();
+            if (reader.HasRows) // если есть данные
+            {
+
+                while (reader.Read()) // построчно считываем данные
+                {
+                    GroupDTO groupAll1 = new GroupDTO();
+
+                    groupAll1.id = (int)reader["ID"];
+                    groupAll1.name = (string)reader["Name"];
+                    groupAll1.startDate = (DateTime)reader["StartDate"];
+                    groupAll1.endDate = (DateTime)reader["EndDate"];
+                    groupAll.Add(groupAll1);
+                }
+            }
+            reader.Close();
+            return groupAll;
+
         }
 
 
-        static public int Group_GetById(SqlConnection connection, GroupDTO group)
+        static public List<GroupDTO> Group_GetById(SqlConnection connection, GroupDTO group)
         {
             connection.Open();
             string sqlExpression = "Group_GetById";
@@ -64,8 +82,25 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
 
             SqlParameter idParam = new SqlParameter("@idGroup", group.id);
             command.Parameters.Add(idParam);
+            SqlDataReader reader = command.ExecuteReader();
 
-            return command.ExecuteNonQuery();
+            List<GroupDTO> group_GetById = new List<GroupDTO>();
+            if (reader.HasRows) // если есть данные
+            {
+
+                while (reader.Read()) // построчно считываем данные
+                {
+                    GroupDTO group_GetById1 = new GroupDTO();
+
+                    group_GetById1.id = (int)reader["ID"];
+                    group_GetById1.name = (string)reader["Name"];
+                    group_GetById1.startDate = (DateTime)reader["StartDate"];
+                    group_GetById1.endDate = (DateTime)reader["EndDate"];
+                    group_GetById.Add(group_GetById1);
+                }
+            }
+            reader.Close();
+            return group_GetById;
         }
 
         static public int Group_Update(SqlConnection connection, GroupDTO group)
