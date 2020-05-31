@@ -25,10 +25,10 @@ namespace TestingSystem.Data.StoredProcedure
                 {
                     GroupDTO group = new GroupDTO();
 
-                    group.ID = (int)reader["id"];
-                    group.Name = (string)reader["Name"];
-                    group.StartDate = (DateTime)reader["StartDate"];
-                    group.EndDate = (DateTime)reader["EndDate"];
+                    group.id = (int)reader["id"];
+                    group.name = (string)reader["Name"];
+                    group.startDate = (DateTime)reader["StartDate"];
+                    group.endDate = (DateTime)reader["EndDate"];
                     groups.Add(group);
                 }
             }
