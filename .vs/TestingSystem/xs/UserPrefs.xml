@@ -1,0 +1,49 @@
+﻿<Properties StartupConfiguration="{0E92C1BA-5326-4E49-9550-A26045F59024}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="TestingSystem.Data/DTO/AttemptDBO.cs">
+    <Files>
+      <File FileName="TestingSystem/Program.cs" Line="1" Column="1" />
+      <File FileName="TestingSystem.Data/DTO/FeedbackDTO.cs" Line="1" Column="1" />
+      <File FileName="TestingSystem.Data/DTO/RoleDTO.cs" />
+      <File FileName="TestingSystem.Data/DTO/QuestionDTO.cs" Line="26" Column="10" />
+      <File FileName="TestingSystem.Data/StoredProcedure/FBQuestionByUserDate.cs" />
+      <File FileName="TestingSystem.Data/StoredProcedure/GroupManager.cs" />
+      <File FileName="TestingSystem.Data/DTO/GroupDTO.cs" Line="1" Column="1" />
+      <File FileName="TestingSystem.Data/DTO/AttemptResultDTO.cs" Line="1" Column="1" />
+      <File FileName="TestingSystem.Data/DTO/AttemptDBO.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="TestingSystem" expanded="True">
+            <Node name="TestingSystem" expanded="True" />
+            <Node name="TestingSystem.Data" expanded="True">
+              <Node name="DTO" expanded="True">
+                <Node name="AttemptDBO.cs" selected="True" />
+              </Node>
+              <Node name="StoredProcedure" expanded="True" />
+            </Node>
+            <Node name="TestingSystem.Data.Tests" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+      <Pad Id="MonoDevelop.UnitTesting.TestPad">
+        <State name="__root__">
+          <Node name="TestingSystem" expanded="True" selected="True" />
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.TestingSystem PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches>
+    <Watch file="../../../../CinemaTable/CinemaTable/Node.cs" line="13" column="38" endLine="13" endColumn="50" offsetX="-1" offsetY="-1" expression="CinemaTable.Node.allSchedules" liveUpdate="False" />
+    <Watch file="../../../../CinemaTable/CinemaTable/Node.cs" line="14" column="44" endLine="14" endColumn="63" offsetX="-1" offsetY="-1" expression="CinemaTable.Node.fullCinemaSchedules" liveUpdate="True" />
+  </MonoDevelop.Ide.DebuggingService.PinnedWatches>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
