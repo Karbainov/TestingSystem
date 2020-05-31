@@ -1173,19 +1173,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\User\\.nuget\\packages\\": {}
+    "C:\\Users\\s401n\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\SRM_Dev\\TestingSystem\\TestingSystem.Data\\TestingSystem.Data.csproj",
+      "projectUniqueName": "D:\\repo\\TestingSystem\\TestingSystem.Data\\TestingSystem.Data.csproj",
       "projectName": "TestingSystem.Data",
-      "projectPath": "D:\\SRM_Dev\\TestingSystem\\TestingSystem.Data\\TestingSystem.Data.csproj",
-      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "D:\\SRM_Dev\\TestingSystem\\TestingSystem.Data\\obj\\",
+      "projectPath": "D:\\repo\\TestingSystem\\TestingSystem.Data\\TestingSystem.Data.csproj",
+      "packagesPath": "C:\\Users\\s401n\\.nuget\\packages\\",
+      "outputPath": "D:\\repo\\TestingSystem\\TestingSystem.Data\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\s401n\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -1238,7 +1238,7 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.300\\RuntimeIdentifierGraph.json"
       }
     }
   }
