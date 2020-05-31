@@ -16,7 +16,7 @@ namespace TestingSystem.Data.StoredProcedure
             SqlCommand command = new SqlCommand(sqlExpression, connection);
             command.CommandType = System.Data.CommandType.StoredProcedure;
 
-            SqlParameter GroupParam = new SqlParameter("@GroupID", group.ID);
+            SqlParameter GroupParam = new SqlParameter("@GroupID", group.id);
             command.Parameters.Add(GroupParam);
 
             SqlParameter FirstNameParam = new SqlParameter("@FirstName", user.FirstName);

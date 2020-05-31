@@ -90,7 +90,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             return command.ExecuteNonQuery();
         }
 
-        static public int Test_Group_GetAll(SqlConnection connection, Test_GroupDTO test_group)
+        static public List<Test_GroupDTO> Test_Group_GetAll(SqlConnection connection)
         {
             connection.Open();
             string sqlExpression = "Test_Group_GetAll";
@@ -98,10 +98,30 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             SqlCommand command = new SqlCommand(sqlExpression, connection);
             command.CommandType = System.Data.CommandType.StoredProcedure;
 
-            return command.ExecuteNonQuery();
+            SqlDataReader reader = command.ExecuteReader();
+
+            List<Test_GroupDTO> test_groupAll = new List<Test_GroupDTO>();
+            if (reader.HasRows) // если есть данные
+            {
+
+                while (reader.Read()) // построчно считываем данные
+                {
+                    Test_GroupDTO test_groupAll1 = new Test_GroupDTO();
+
+                    test_groupAll1.id = (int)reader["ID"];
+                    test_groupAll1.idGroup = (int)reader["GroupID"];
+                    test_groupAll1.idTest = (int)reader["TestID"];
+                    test_groupAll1.startDate = (DateTime)reader["StartDate"];
+                    test_groupAll1.endDate = (DateTime)reader["EndDate"];
+                    test_groupAll.Add(test_groupAll1);
+                }
+            }
+            reader.Close();
+            return test_groupAll;
+
         }
 
-        static public int Test_Group_GetByGroupId(SqlConnection connection, Test_GroupDTO test_group)
+        static public List<Test_GroupDTO> Test_Group_GetByGroupId(SqlConnection connection, Test_GroupDTO test_group)
         {
             connection.Open();
             string sqlExpression = "Test_Group_GetByGroupId";
@@ -112,10 +132,30 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             SqlParameter idGroupParam = new SqlParameter("@idGroup", test_group.idGroup);
             command.Parameters.Add(idGroupParam);
 
-            return command.ExecuteNonQuery();
+            SqlDataReader reader = command.ExecuteReader();
+
+            List<Test_GroupDTO> test_group_GAll = new List<Test_GroupDTO>();
+            if (reader.HasRows) // если есть данные
+            {
+
+                while (reader.Read()) // построчно считываем данные
+                {
+                    Test_GroupDTO test_group_GAll1 = new Test_GroupDTO();
+
+                    test_group_GAll1.id = (int)reader["ID"];
+                    test_group_GAll1.idGroup = (int)reader["GroupID"];
+                    test_group_GAll1.idTest = (int)reader["TestID"];
+                    test_group_GAll1.startDate = (DateTime)reader["StartDate"];
+                    test_group_GAll1.endDate = (DateTime)reader["EndDate"];
+                    test_group_GAll.Add(test_group_GAll1);
+                }
+            }
+            reader.Close();
+            return test_group_GAll;
+
         }
 
-        static public int Test_Group_GetByGroupId_TestId(SqlConnection connection, Test_GroupDTO test_group)
+        static public List<Test_GroupDTO> Test_Group_GetByGroupId_TestId(SqlConnection connection, Test_GroupDTO test_group)
         {
             connection.Open();
             string sqlExpression = "Test_Group_GetByGroupId_TestId";
@@ -128,11 +168,29 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
 
             SqlParameter idTestParam = new SqlParameter("@idTest", test_group.idTest);
             command.Parameters.Add(idTestParam);
+            SqlDataReader reader = command.ExecuteReader();
 
-            return command.ExecuteNonQuery();
+            List<Test_GroupDTO> test_group_GId_TId = new List<Test_GroupDTO>();
+            if (reader.HasRows) // если есть данные
+            {
+
+                while (reader.Read()) // построчно считываем данные
+                {
+                    Test_GroupDTO test_group_GId_TId1 = new Test_GroupDTO();
+
+                    test_group_GId_TId1.id = (int)reader["ID"];
+                    test_group_GId_TId1.idGroup = (int)reader["GroupID"];
+                    test_group_GId_TId1.idTest = (int)reader["TestID"];
+                    test_group_GId_TId1.startDate = (DateTime)reader["StartDate"];
+                    test_group_GId_TId1.endDate = (DateTime)reader["EndDate"];
+                    test_group_GId_TId.Add(test_group_GId_TId1);
+                }
+            }
+            reader.Close();
+            return test_group_GId_TId;
         }
 
-        static public int Test_Group_GetById(SqlConnection connection, Test_GroupDTO test_group)
+        static public List<Test_GroupDTO> Test_Group_GetById(SqlConnection connection, Test_GroupDTO test_group)
         {
             connection.Open();
             string sqlExpression = "Test_Group_GetById";
@@ -142,8 +200,26 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
 
             SqlParameter idTestGroupParam = new SqlParameter("@idTestsGroup", test_group.id);
             command.Parameters.Add(idTestGroupParam);
+            SqlDataReader reader = command.ExecuteReader();
 
-            return command.ExecuteNonQuery();
+            List<Test_GroupDTO> test_group_Id = new List<Test_GroupDTO>();
+            if (reader.HasRows) // если есть данные
+            {
+
+                while (reader.Read()) // построчно считываем данные
+                {
+                    Test_GroupDTO test_group_Id1 = new Test_GroupDTO();
+
+                    test_group_Id1.id = (int)reader["ID"];
+                    test_group_Id1.idGroup = (int)reader["GroupID"];
+                    test_group_Id1.idTest = (int)reader["TestID"];
+                    test_group_Id1.startDate = (DateTime)reader["StartDate"];
+                    test_group_Id1.endDate = (DateTime)reader["EndDate"];
+                    test_group_Id.Add(test_group_Id1);
+                }
+            }
+            reader.Close();
+            return test_group_Id;
         }
 
         static public int Test_Group_Update(SqlConnection connection, Test_GroupDTO test_group)
