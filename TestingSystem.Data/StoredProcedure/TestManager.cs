@@ -69,7 +69,7 @@ namespace TestingSystem.Data.StoredProcedure
             reader.Close();
             return answers;
         }
-        public List<Question_AnswerDTO> Attempt_GetQuestionAndAnswer(SqlConnection connection, AttemptDBO attempt)
+        public List<Question_AnswerDTO> Attempt_GetQuestionAndAnswer(SqlConnection connection, AttemptDBO attempt)//все вопросы и ответы попытки
         {
             connection.Open();
             string sqlExpression = "Attempt_GetQuestionAndAnswer";
@@ -94,6 +94,21 @@ namespace TestingSystem.Data.StoredProcedure
             }
             reader.Close();
             return question_Answers;
+        }
+
+        public int Attempt_DeleteConcrete(SqlConnection connection,AttemptDBO attempt)//удаление попытки 
+        {
+            connection.Open();
+            string sqlExpression = "Attempt_DeleteConcrete";
+            SqlCommand command = new SqlCommand(sqlExpression, connection);
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            SqlParameter userParam = new SqlParameter("@UserID", attempt.userID);
+            command.Parameters.Add(userParam);
+            SqlParameter testParam = new SqlParameter("@TestID", attempt.testID);
+            command.Parameters.Add(testParam);
+            SqlParameter numberParam = new SqlParameter("@Number", attempt.number);
+            command.Parameters.Add(numberParam);
+            return command.ExecuteNonQuery();
         }
     }
 }
