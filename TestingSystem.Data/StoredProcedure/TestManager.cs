@@ -66,7 +66,7 @@ namespace TestingSystem.Data.StoredProcedure
             reader.Close();
             return answers;
         }
-        public List<Question_AnswerDTO> Attempt_GetQuestionAndAnswer(SqlConnection connection, AttemptDBO attempt)//все вопросы и ответы попытки
+        public List<Question_AnswerDTO> Attempt_GetQuestionAndAnswer(SqlConnection connection, AttemptDTO attempt)//все вопросы и ответы попытки
         {
             connection.Open();
             string sqlExpression = "Attempt_GetQuestionAndAnswer";
@@ -93,7 +93,7 @@ namespace TestingSystem.Data.StoredProcedure
             return question_Answers;
         }
 
-        public int Attempt_DeleteConcrete(SqlConnection connection,AttemptDBO attempt)//удаление попытки 
+        public int Attempt_DeleteConcrete(SqlConnection connection,AttemptDTO attempt)//удаление попытки 
         {
             connection.Open();
             string sqlExpression = "Attempt_DeleteConcrete";

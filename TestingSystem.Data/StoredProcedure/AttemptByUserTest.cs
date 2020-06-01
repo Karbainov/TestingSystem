@@ -12,7 +12,7 @@ namespace TestingSystem.Data.StoredProcedure
         {
         }
 
-        public List<AttemptResultDTO> AttemptGetByUserIdTestId(AttemptDBO attempt)
+        public List<AttemptResultDTO> AttemptGetByUserIdTestId(AttemptDTO attempt)
         {
             var connection = Connection.GetConnection();
             connection.Open();
