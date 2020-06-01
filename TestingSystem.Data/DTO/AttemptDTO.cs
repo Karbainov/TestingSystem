@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TestingSystem.Data.DTO
 {
-    public class AttemptDBO
+    public class AttemptDTO
     {
         public int id { get; set; }
         public int number { get; set; }
@@ -13,7 +13,7 @@ namespace TestingSystem.Data.DTO
         public int userResult { get; set; }
         public DateTime dateTime { get; set; }
         public TimeSpan durationTime { get; set; }
-        public AttemptDBO(int _id,int _number,int _userID, int _testID,int _userResult,DateTime _dateTime,TimeSpan _durationTime)
+        public AttemptDTO(int _id,int _number,int _userID, int _testID,int _userResult,DateTime _dateTime,TimeSpan _durationTime)
         {
             id = _id;
             number = _number;
@@ -23,11 +23,11 @@ namespace TestingSystem.Data.DTO
             dateTime = _dateTime;
             durationTime = _durationTime;
         }
-        public AttemptDBO()
+        public AttemptDTO()
         { 
         }
 
-        public AttemptDBO(int _userID, int _testID)
+        public AttemptDTO(int _userID, int _testID)
         {
             userID = _userID;
             testID = _testID;
