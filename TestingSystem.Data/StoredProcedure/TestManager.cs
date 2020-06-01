@@ -41,28 +41,25 @@ namespace TestingSystem.Data.StoredProcedure
             reader.Close();
             return test;
         }
-        public List<AnswerDTO> Answer_GetCorrectByQuestionID(SqlConnection connection,TestDTO test)//нахождение правильных ответов вопроса
+        public List<Question_AnswerDTO> Answer_GetCorrectByTestID(SqlConnection connection,TestDTO test)//нахождение правильных ответов теста
         {
             connection.Open();
-            string sqlExpression = "Answer_GetCorrectByQuestionID";
+            string sqlExpression = "Answer_GetCorrectByTestID";
             SqlCommand command = new SqlCommand(sqlExpression, connection);
             command.CommandType = System.Data.CommandType.StoredProcedure;
-            SqlParameter questionParam = new SqlParameter("@QuestionID", test.Id);
+            SqlParameter questionParam = new SqlParameter("@TestID", test.Id);
             command.Parameters.Add(questionParam);
             SqlDataReader reader = command.ExecuteReader();
 
-            List<AnswerDTO> answers = new List<AnswerDTO>();
+            List<Question_AnswerDTO> answers = new List<Question_AnswerDTO>();
             if (reader.HasRows) // если есть данные
             {
 
                 while (reader.Read()) // построчно считываем данные
                 {
-                    AnswerDTO answer= new AnswerDTO();
-
-                    answer.ID = (int)reader["id"];
-                    answer.QuestionID = (int)reader["QuestionID"];
-                    answer.Value = (string)reader["Value"];
-                    answer.Correct = (bool)reader["Correct"];
+                    Question_AnswerDTO answer = new Question_AnswerDTO();
+                    answer.Answer_Value = (string)reader["Answer.Value"];
+                    answer.Question_Value = (string)reader["Question.Value"];
                     answers.Add(answer);
                 }
             }
