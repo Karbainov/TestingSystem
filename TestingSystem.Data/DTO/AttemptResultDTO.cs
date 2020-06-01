@@ -10,5 +10,9 @@ namespace TestingSystem.Data.DTO
         public int result { get; set; }
         public DateTime date { get; set; }
         public TimeSpan duration { get; set; }
+
+        public AttemptResultDTO()
+        {
+        }
     }
 }

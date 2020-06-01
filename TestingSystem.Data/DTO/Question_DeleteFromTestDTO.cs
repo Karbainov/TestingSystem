@@ -15,8 +15,6 @@ namespace TestingSystem.Data.DTO
         {
             this.questionId = questionId;
             this.testId = testId;
-
         }
-
     }
 }

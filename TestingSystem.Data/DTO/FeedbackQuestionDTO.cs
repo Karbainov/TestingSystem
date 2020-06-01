@@ -4,13 +4,12 @@ using System.Text;
 
 namespace TestingSystem.Data.DTO
 {
-    public class FeedbackQuestionDBO
-    {
-        
+    public class FeedbackQuestionDTO
+    {        
         public string message { get; set; }
         public string value { get; set; }
 
-        public FeedbackQuestionDBO()
+        public FeedbackQuestionDTO()
         {
         }        
     }

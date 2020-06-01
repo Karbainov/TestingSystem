@@ -12,7 +12,7 @@ namespace TestingSystem.Data.StoredProcedure
         {
         }
 
-        public List<FeedbackQuestionDBO> FBQuestionGetByUserId(FeedbackDTO feedback)
+        public List<FeedbackQuestionDTO> FBQuestionGetByUserId(FeedbackDTO feedback)
         {
             var connection = Connection.GetConnection();
             connection.Open();
@@ -37,13 +37,13 @@ namespace TestingSystem.Data.StoredProcedure
             command.Parameters.Add(dateParam);
 
             var reader = command.ExecuteReader();
-            List<FeedbackQuestionDBO> feedbacks = new List<FeedbackQuestionDBO>();
+            List<FeedbackQuestionDTO> feedbacks = new List<FeedbackQuestionDTO>();
 
             if (reader.HasRows)
             {                
                 while (reader.Read())
                 {
-                    FeedbackQuestionDBO fb = new FeedbackQuestionDBO();
+                    FeedbackQuestionDTO fb = new FeedbackQuestionDTO();
                     fb.message = reader.GetString(0);
                     fb.value = reader.GetString(1);
                     feedbacks.Add(fb);
