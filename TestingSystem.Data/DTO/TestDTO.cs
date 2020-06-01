@@ -6,10 +6,11 @@ namespace TestingSystem.Data.DTO
 {
     public class TestDTO
     {
-        public int Id { get; set; }
-        public string name { get; set; }
-        public TimeSpan duration { get; set; }
-        public int score { get; set; }
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public TimeSpan DurationTime { get; set; }
+        public int SuccessScore { get; set; }
+        public Boolean IsDeleted { get; set; }
 
         public TestDTO()
         {
@@ -17,15 +18,16 @@ namespace TestingSystem.Data.DTO
 
         public TestDTO(int Id)
         {
-            this.Id = Id;
+            ID = Id;
         }
 
-        public TestDTO(int Id, string name, TimeSpan duration, int score)
+        public TestDTO(int Id, string name, TimeSpan duration, int score, Boolean isDeleted)
         {
-            this.Id = Id;
-            this.name = name;
-            this.duration = duration;
-            this.score = score;
+            ID = Id;
+            Name = name;
+            DurationTime = duration;
+            SuccessScore = score;
+            IsDeleted = isDeleted;
         }
     }
 }

@@ -1173,19 +1173,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\s401n\\.nuget\\packages\\": {}
+    "C:\\Users\\hp\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\repo\\TestingSystem\\TestingSystem.Data\\TestingSystem.Data.csproj",
+      "projectUniqueName": "D:\\C# проекты\\TestingSystem\\TestingSystem.Data\\TestingSystem.Data.csproj",
       "projectName": "TestingSystem.Data",
-      "projectPath": "D:\\repo\\TestingSystem\\TestingSystem.Data\\TestingSystem.Data.csproj",
-      "packagesPath": "C:\\Users\\s401n\\.nuget\\packages\\",
-      "outputPath": "D:\\repo\\TestingSystem\\TestingSystem.Data\\obj\\",
+      "projectPath": "D:\\C# проекты\\TestingSystem\\TestingSystem.Data\\TestingSystem.Data.csproj",
+      "packagesPath": "C:\\Users\\hp\\.nuget\\packages\\",
+      "outputPath": "D:\\C# проекты\\TestingSystem\\TestingSystem.Data\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\s401n\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\hp\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
