@@ -1,0 +1,55 @@
+﻿<Properties StartupConfiguration="{0E92C1BA-5326-4E49-9550-A26045F59024}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="TestingSystem.Data/StoredProcedure/CRUD/User_Role.cs">
+    <Files>
+      <File FileName="TestingSystem.Data/StoredProcedure/CRUD/Question.cs" Line="210" Column="1" />
+      <File FileName="TestingSystem.Data/DTO/AttemptDBO.cs" />
+      <File FileName="TestingSystem.Data/StoredProcedure/CRUD/Role.cs" />
+      <File FileName="TestingSystem.Data/AdminDataAccess.cs" />
+      <File FileName="TestingSystem.Data/StoredProcedure/CRUD/Student.cs" />
+      <File FileName="TestingSystem.Data/StoredProcedure/CRUD/User_Role.cs" Line="1" Column="1" />
+      <File FileName="TestingSystem.Data/StoredProcedure/CRUD/Test.cs" />
+      <File FileName="TestingSystem.Data/DTO/UserDTO.cs" />
+      <File FileName="TestingSystem.Data/DTO/TestDTO.cs" />
+      <File FileName="TestingSystem.Data/DTO/QuestionDTO.cs" />
+      <File FileName="TestingSystem/Program.cs" />
+      <File FileName="TestingSystem.Data/DTO/AnswerDTO.cs" />
+      <File FileName="TestingSystem.Data/DTO/RoleDTO.cs" />
+      <File FileName="TestingSystem.Data/DTO/FeedbackDTO.cs" />
+      <File FileName="TestingSystem.Data/DTO/AttemptResultDTO.cs" />
+      <File FileName="TestingSystem.Data/DTO/FeedbackQuestionDBO.cs" />
+      <File FileName="TestingSystem.Data/DTO/GroupDTO.cs" />
+      <File FileName="TestingSystem.Data/DTO/Question_AnswerDTO.cs" />
+      <File FileName="TestingSystem.Data/DTO/StudentDTO.cs" />
+      <File FileName="TestingSystem.Data/DTO/User_RoleDTO.cs" />
+      <File FileName="TestingSystem.Data/StoredProcedure/CRUD/Users.cs" />
+      <File FileName="TestingSystem.Data/StoredProcedure/AttemptByUserTest.cs" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="TestingSystem" expanded="True">
+            <Node name="TestingSystem" expanded="True" />
+            <Node name="TestingSystem.Data" expanded="True">
+              <Node name="Dependencies" expanded="True">
+                <Node name="PackageDependencies" expanded="True" />
+              </Node>
+              <Node name="DTO" expanded="True" />
+              <Node name="StoredProcedure" expanded="True">
+                <Node name="CRUD" expanded="True">
+                  <Node name="User_Role.cs" selected="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.TestingSystem PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
