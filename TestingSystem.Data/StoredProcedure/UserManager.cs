@@ -16,7 +16,7 @@ namespace TestingSystem.Data.StoredProcedure
             SqlCommand command = new SqlCommand(sqlExpression, connection);
             command.CommandType = System.Data.CommandType.StoredProcedure;
 
-            SqlParameter GroupParam = new SqlParameter("@GroupID", group.ID);
+            SqlParameter GroupParam = new SqlParameter("@GroupID", group.id);
             command.Parameters.Add(GroupParam);
 
             SqlParameter FirstNameParam = new SqlParameter("@FirstName", user.FirstName);
@@ -40,6 +40,17 @@ namespace TestingSystem.Data.StoredProcedure
             SqlParameter PhoneParam = new SqlParameter("@Phone", user.Phone);
             command.Parameters.Add(PhoneParam);
 
+            return command.ExecuteNonQuery();
+        }
+        public int User_DeleteAccount(SqlConnection connection, UserDTO user)//удаление студента и всего, что с ним связано
+        {
+            connection.Open();
+            string sqlExpression = "User_DeleteAccount";
+            SqlCommand command = new SqlCommand(sqlExpression, connection);
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+
+            SqlParameter userParam = new SqlParameter("@UserID", user.ID);
+            command.Parameters.Add(userParam);
             return command.ExecuteNonQuery();
         }
     }

@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Dapper;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Text;
 using TestingSystem.Data.DTO;
 
@@ -12,44 +15,12 @@ namespace TestingSystem.Data.StoredProcedure
         {
         }
 
-        public List<FeedbackQuestionDBO> FBQuestionGetByUserId(FeedbackDTO feedback)
+        public List<FeedbackQuestionDTO> FBQuestionGetByUserId(UserIdDateForFeedbackDTO feedback)
         {
-            var connection = Connection.GetConnection();
-            connection.Open();
-
+            var connection = Connection.GetConnection();            
             string sqlExpression = "FeedBackQuestion_GetByUserDate";
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
-
-            command.CommandType = System.Data.CommandType.StoredProcedure;
-
-            SqlParameter userIdParam = new SqlParameter
-            {
-                ParameterName = "@userId",
-                Value = feedback.userId
-            };
-            command.Parameters.Add(userIdParam);
-
-            SqlParameter dateParam = new SqlParameter
-            {
-                ParameterName = "@date",
-                Value = feedback.date
-            };
-            command.Parameters.Add(dateParam);
-
-            var reader = command.ExecuteReader();
-            List<FeedbackQuestionDBO> feedbacks = new List<FeedbackQuestionDBO>();
-
-            if (reader.HasRows)
-            {                
-                while (reader.Read())
-                {
-                    FeedbackQuestionDBO fb = new FeedbackQuestionDBO();
-                    fb.message = reader.GetString(0);
-                    fb.value = reader.GetString(1);
-                    feedbacks.Add(fb);
-                }
-            }
-            reader.Close();
+            List<FeedbackQuestionDTO> feedbacks = new List<FeedbackQuestionDTO>();
+            feedbacks = connection.Query<FeedbackQuestionDTO>(sqlExpression, feedback, commandType: CommandType.StoredProcedure).ToList();
             return feedbacks;
         }
     }

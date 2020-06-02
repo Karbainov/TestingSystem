@@ -15,8 +15,12 @@ namespace TestingSystem.Data.StoredProcedure
             string sqlExpression = "Test_Attempt_GetLate";
             SqlCommand command = new SqlCommand(sqlExpression, connection);
             command.CommandType = System.Data.CommandType.StoredProcedure;
+
+
             SqlParameter idParam = new SqlParameter("@UserID", user.ID);
             command.Parameters.Add(idParam);
+
+
             SqlDataReader reader = command.ExecuteReader();
 
             List<TestDTO> test = new List<TestDTO>();
@@ -37,35 +41,32 @@ namespace TestingSystem.Data.StoredProcedure
             reader.Close();
             return test;
         }
-        public List<AnswerDTO> Answer_GetCorrectByQuestionID(SqlConnection connection,TestDTO test)//нахождение правильных ответов вопроса
+        public List<Question_AnswerDTO> Answer_GetCorrectByTestID(SqlConnection connection,TestDTO test)//нахождение правильных ответов теста
         {
             connection.Open();
-            string sqlExpression = "Answer_GetCorrectByQuestionID";
+            string sqlExpression = "Answer_GetCorrectByTestID";
             SqlCommand command = new SqlCommand(sqlExpression, connection);
             command.CommandType = System.Data.CommandType.StoredProcedure;
-            SqlParameter questionParam = new SqlParameter("@QuestionID", test.Id);
+            SqlParameter questionParam = new SqlParameter("@TestID", test.Id);
             command.Parameters.Add(questionParam);
             SqlDataReader reader = command.ExecuteReader();
 
-            List<AnswerDTO> answers = new List<AnswerDTO>();
+            List<Question_AnswerDTO> answers = new List<Question_AnswerDTO>();
             if (reader.HasRows) // если есть данные
             {
 
                 while (reader.Read()) // построчно считываем данные
                 {
-                    AnswerDTO answer= new AnswerDTO();
-
-                    answer.ID = (int)reader["id"];
-                    answer.QuestionID = (int)reader["QuestionID"];
-                    answer.Value = (string)reader["Value"];
-                    answer.Correct = (bool)reader["Correct"];
+                    Question_AnswerDTO answer = new Question_AnswerDTO();
+                    answer.Answer_Value = (string)reader["Answer.Value"];
+                    answer.Question_Value = (string)reader["Question.Value"];
                     answers.Add(answer);
                 }
             }
             reader.Close();
             return answers;
         }
-        public List<Question_AnswerDTO> Attempt_GetQuestionAndAnswer(SqlConnection connection, AttemptDBO attempt)
+        public List<Question_AnswerDTO> Attempt_GetQuestionAndAnswer(SqlConnection connection, AttemptDTO attempt)//все вопросы и ответы попытки
         {
             connection.Open();
             string sqlExpression = "Attempt_GetQuestionAndAnswer";
@@ -90,6 +91,21 @@ namespace TestingSystem.Data.StoredProcedure
             }
             reader.Close();
             return question_Answers;
+        }
+
+        public int Attempt_DeleteConcrete(SqlConnection connection,AttemptDTO attempt)//удаление попытки 
+        {
+            connection.Open();
+            string sqlExpression = "Attempt_DeleteConcrete";
+            SqlCommand command = new SqlCommand(sqlExpression, connection);
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            SqlParameter userParam = new SqlParameter("@UserID", attempt.userID);
+            command.Parameters.Add(userParam);
+            SqlParameter testParam = new SqlParameter("@TestID", attempt.testID);
+            command.Parameters.Add(testParam);
+            SqlParameter numberParam = new SqlParameter("@Number", attempt.number);
+            command.Parameters.Add(numberParam);
+            return command.ExecuteNonQuery();
         }
     }
 }

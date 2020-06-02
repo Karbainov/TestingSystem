@@ -1,25 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Text;
 
 namespace TestingSystem.Data.DTO
 {
-    class GroupDTO
+    public class GroupDTO
     {
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-        public GroupDTO(int _id,string _name, DateTime _startDate,DateTime _endDate)
-        {
-            ID = _id;
-            Name = _name;
-            StartDate = _startDate;
-            EndDate = _endDate;
-        }
+        public int id { get; set; }
+        public string name { get; set; }
+        public DateTime startDate { get; set; }
+        public DateTime endDate { get; set; }
+
         public GroupDTO()
         {
 
         }
+
+        public GroupDTO(int id, string name, DateTime startDate, DateTime endDate)
+        {
+            this.id = id;
+            this.name = name;
+            this.startDate = startDate;
+            this.endDate = endDate;
+        }
+
     }
 }
