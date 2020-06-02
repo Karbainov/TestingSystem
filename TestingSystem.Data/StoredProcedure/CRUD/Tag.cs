@@ -10,7 +10,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
 {
     public class Tag
     {
-        public int TagCreate(TagDTO tag)
+        public int Create(TagDTO tag)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -21,7 +21,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             }
         }
 
-        public List<TagDTO> TagRead()
+        public List<TagDTO> ReadAll()
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -31,17 +31,16 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             }
         }
 
-        public List<TagDTO> TagReadById(int id)
+        public TagDTO Read(int id)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Tag_GetById";
-                List<TagDTO> tags = new List<TagDTO>();
-                return connection.Query<TagDTO>(sqlExpression, new { id }, commandType: CommandType.StoredProcedure).ToList();
+                return connection.Query<TagDTO>(sqlExpression, new { id }, commandType: CommandType.StoredProcedure).FirstOrDefault();
             }
         }
 
-        public void TagUpdate(TagDTO tag)
+        public void Update(TagDTO tag)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -50,7 +49,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             }
         }
 
-        public void TagDelete(int id)
+        public void Delete(int id)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
