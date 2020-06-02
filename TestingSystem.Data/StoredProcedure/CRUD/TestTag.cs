@@ -15,8 +15,8 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
-                string sqlExpression = "TestTag_Add";
-                int testtagID = connection.Query<int>(sqlExpression, testtag, commandType: CommandType.StoredProcedure).FirstOrDefault();
+                string sqlExpression = "Test_Tag_Add @testId, @tagId";
+                int testtagID = connection.Query<int>(sqlExpression, testtag).FirstOrDefault();
                 testtag.ID = testtagID;
                 return testtagID;
             }
@@ -26,9 +26,8 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
-                string sqlExpression = "TestTag_GetAll";
-                List<TestTagDTO> testtags = new List<TestTagDTO>();
-                return connection.Query<TestTagDTO>(sqlExpression, commandType: CommandType.StoredProcedure).ToList();
+                string sqlExpression = "Test_Tag_GetAll";
+                return connection.Query<TestTagDTO>(sqlExpression).ToList();
             }
         }
 
@@ -36,7 +35,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
-                string sqlExpression = "TestTag_GetById";
+                string sqlExpression = "Test_Tag_GetById";
                 return connection.Query<TestTagDTO>(sqlExpression, new { id }, commandType: CommandType.StoredProcedure).FirstOrDefault();
             }
         }
@@ -45,7 +44,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
-                string sqlExpression = "TestTag_Update";
+                string sqlExpression = "Test_Tag_Update";
                 connection.Execute(sqlExpression, testtag, commandType: CommandType.StoredProcedure);
             }
         }
@@ -54,7 +53,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
-                string sqlExpression = "TestTag_Delete";
+                string sqlExpression = "Test_Tag_DeleteById";
                 connection.Execute(sqlExpression, new { id }, commandType: CommandType.StoredProcedure);
             }
         }

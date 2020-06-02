@@ -14,8 +14,8 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
-                string sqlExpression = "Tag_Add";
-                int tagID = connection.Query<int>(sqlExpression, tag, commandType: CommandType.StoredProcedure).FirstOrDefault();
+                string sqlExpression = "Tag_Add @name";
+                int tagID = connection.Query<int>(sqlExpression, tag).FirstOrDefault();
                 tag.ID = tagID;
                 return tagID;
             }
@@ -26,8 +26,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Tag_GetAll";
-                List<TagDTO> tags = new List<TagDTO>();
-                return connection.Query<TagDTO>(sqlExpression, commandType: CommandType.StoredProcedure).ToList();
+                return connection.Query<TagDTO>(sqlExpression).ToList();
             }
         }
 
