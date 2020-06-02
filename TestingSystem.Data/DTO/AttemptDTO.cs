@@ -26,11 +26,5 @@ namespace TestingSystem.Data.DTO
         public AttemptDTO()
         { 
         }
-
-        public AttemptDTO(int _userID, int _testID)
-        {
-            userID = _userID;
-            testID = _testID;
-        }
     }
 }
