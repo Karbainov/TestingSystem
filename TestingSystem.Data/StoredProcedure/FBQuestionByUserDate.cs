@@ -15,12 +15,12 @@ namespace TestingSystem.Data.StoredProcedure
         {
         }
 
-        public FeedbackQuestionDTO FBQuestionGetByUserId(UserIdDateForFeedbackDTO feedback)
+        public List<FeedbackQuestionDTO> FBQuestionGetByUserId(UserIdDateForFeedbackDTO feedback)
         {
             var connection = Connection.GetConnection();            
             string sqlExpression = "FeedBackQuestion_GetByUserDate";
-            FeedbackQuestionDTO feedbacks = new FeedbackQuestionDTO();
-            feedbacks = connection.Query<FeedbackQuestionDTO>(sqlExpression, feedback, commandType: CommandType.StoredProcedure).FirstOrDefault();
+            List<FeedbackQuestionDTO> feedbacks = new List<FeedbackQuestionDTO>();
+            feedbacks = connection.Query<FeedbackQuestionDTO>(sqlExpression, feedback, commandType: CommandType.StoredProcedure).ToList();
             return feedbacks;
         }
     }
