@@ -6,8 +6,8 @@ namespace TestingSystem.Data.DTO
 {
     public class FeedbackQuestionDTO
     {        
-        public string message { get; set; }
-        public string value { get; set; }
+        public string Feedback { get; set; }
+        public string Question { get; set; }
 
         public FeedbackQuestionDTO()
         {

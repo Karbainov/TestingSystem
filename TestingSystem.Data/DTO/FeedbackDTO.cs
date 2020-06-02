@@ -17,12 +17,6 @@ namespace TestingSystem.Data.DTO
         {
         }
 
-        public FeedbackDTO(int userId, DateTime date)
-        {
-            this.userId = userId;
-            this.date = date;
-        }
-
         public FeedbackDTO(int Id, int userId, int questionId, string message, DateTime date, Boolean processed)
         {
             this.Id = Id;
