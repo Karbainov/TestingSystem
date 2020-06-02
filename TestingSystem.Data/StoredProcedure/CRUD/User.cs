@@ -6,7 +6,7 @@ using TestingSystem.Data.DTO;
 
 namespace TestingSystem.Data.StoredProcedure.CRUD
 {
-    class Users
+    class User
     {
         public int User_Create(SqlConnection connection, UserDTO user)
         {
