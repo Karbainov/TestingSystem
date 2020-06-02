@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TestingSystem.Data.DTO
 {
-    class Teacher_GroupDTO
+    public class Teacher_GroupDTO
     {
         public int ID { get; set; }
         public int UserID { get; set; }
