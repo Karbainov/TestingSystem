@@ -9,8 +9,7 @@ namespace TestingSystem.Data.DTO
         public int ID { get; set; }
         public string Name { get; set; }
         public TimeSpan DurationTime { get; set; }
-        public int SuccessScore { get; set; }
-        public Boolean IsDeleted { get; set; }
+        public int SuccessScore { get; set; }        
 
         public TestDTO()
         {
@@ -21,13 +20,12 @@ namespace TestingSystem.Data.DTO
             ID = Id;
         }
 
-        public TestDTO(int Id, string name, TimeSpan duration, int score, Boolean isDeleted)
+        public TestDTO(int Id, string name, TimeSpan duration, int score)
         {
             ID = Id;
             Name = name;
             DurationTime = duration;
-            SuccessScore = score;
-            IsDeleted = isDeleted;
+            SuccessScore = score;            
         }
     }
 }

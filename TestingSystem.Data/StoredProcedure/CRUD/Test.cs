@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -18,46 +19,42 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
         {
             var connection = Connection.GetConnection();
             connection.Open();
-            string sqlExpression = "Test_Add";
+            string sqlExpression = "Test_Add @name, @durationTime, @successScore";
             int testID = connection.Query<int>(sqlExpression, test).FirstOrDefault();
             test.ID = testID;
-            return test.ID;            
+            return test.ID;
         }
 
         public List<TestDTO> TestRead()
         {
-            var connection = Connection.GetConnection();
-            connection.Open();
+            var connection = Connection.GetConnection();            
             string sqlExpression = "Test_GetAll";           
             List<TestDTO> tests = new List<TestDTO>();
             tests = connection.Query<TestDTO>(sqlExpression).ToList();
             return tests;
         }
 
-        public List<TestDTO> TestReadById(int id)
+        public TestDTO TestReadById(int id)
         {
-            var connection = Connection.GetConnection();
-            connection.Open();
+            var connection = Connection.GetConnection();            
             string sqlExpression = "Test_GetById";
-            List<TestDTO> tests = new List<TestDTO>();
-            tests = connection.Query<TestDTO>(sqlExpression, new {id}).ToList();
-            return tests;
+            TestDTO newTest = null;
+            newTest = connection.Query<TestDTO>(sqlExpression, new { id }, commandType: CommandType.StoredProcedure).FirstOrDefault();
+            return newTest;
         }
 
         public void TestUpdate(TestDTO test)
         {
             var connection = Connection.GetConnection();
-            connection.Open();
             string sqlExpression = "Test_Update";
-            connection.Execute(sqlExpression, test);
+            connection.Execute(sqlExpression, test, commandType: CommandType.StoredProcedure);
         }
 
         public void TestDelete(int id)
         {
             var connection = Connection.GetConnection();
-            connection.Open();
             string sqlExpression = "Test_Delete";
-            connection.Execute(sqlExpression, new { id });
+            connection.Execute(sqlExpression, new { id }, commandType: CommandType.StoredProcedure);
         }
     }
 }
