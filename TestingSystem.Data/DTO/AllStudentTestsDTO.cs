@@ -6,7 +6,7 @@ namespace TestingSystem.Data.DTO
 {
     public class AllStudentTestsDTO
     {
-        public int userId { get; set; }
+        public int Id { get; set; }
         public string firstName { get; set; }
         public string lastName { get; set; }
         public string nameTest { get; set; }
@@ -18,7 +18,7 @@ namespace TestingSystem.Data.DTO
 
         public AllStudentTestsDTO(int userId, string firstName, string lastName, string nameTest, int numberOfAttempts, int maxResult)
         {
-            this.userId = userId;
+            this.Id = userId;
             this.firstName = firstName;
             this.lastName = lastName;
             this.nameTest = nameTest;
