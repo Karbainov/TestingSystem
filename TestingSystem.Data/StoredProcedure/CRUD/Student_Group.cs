@@ -1,141 +1,81 @@
-﻿using System;
+﻿using Dapper;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Text;
 using TestingSystem.Data.DTO;
 
 namespace TestingSystem.Data.StoredProcedure.CRUD
 {
-    class Student_Group
+    public class Student_Group
     {
-        public int Student_Group_Add(SqlConnection connection, Student_GroupDTO student_Group)
+        public int StudentGroupAdd(Student_GroupDTO studentGroup)
         {
-            connection.Open();
-            string sqlExpression = "Student_Group_Add";
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
-
-            SqlParameter groupParam = new SqlParameter("@GroupID", student_Group.GroupID);
-            command.Parameters.Add(groupParam);
-            SqlParameter userParam = new SqlParameter("@UserID", student_Group.UserID);
-            command.Parameters.Add(userParam);
-            return command.ExecuteNonQuery();
-        }
-
-        public List<Student_GroupDTO> Student_Group_GetAll(SqlConnection connection)
-        {
-            connection.Open();
-            string sqlExpression = "Student_Group_GetAll";
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
-            SqlDataReader reader = command.ExecuteReader();
-            List<Student_GroupDTO> student_group = new List<Student_GroupDTO>();
-            if (reader.HasRows) // если есть данные
+            using (IDbConnection connection = Connection.GetConnection())
             {
-
-                while (reader.Read()) // построчно считываем данные
-                {
-                    Student_GroupDTO group = new Student_GroupDTO();
-
-                    group.ID = (int)reader["id"];
-                    group.GroupID = (int)reader["GroupID"];
-                    group.UserID = (int)reader["UserID"];
-                    student_group.Add(group);
-                }
+                string sqlExpression = "Student_Group_Add @UserID, @GroupID";
+                int studentGroupID = connection.Query<int>(sqlExpression, studentGroup).FirstOrDefault();
+                studentGroup.ID = studentGroupID;
+                return studentGroupID;
             }
-            reader.Close();
-            return student_group;
         }
-        public List<Student_GroupDTO> Student_Group_GetByUserID(SqlConnection connection, Student_GroupDTO student_Group)
+        public List<Student_GroupDTO> StudentGroupGetAll()
         {
-            connection.Open();
-            string sqlExpression = "Student_Group_GetByUserID";
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
-            SqlParameter userParam = new SqlParameter("@UserID", student_Group.UserID);
-            command.Parameters.Add(userParam);
-            SqlDataReader reader = command.ExecuteReader();
-            List<Student_GroupDTO> student_group = new List<Student_GroupDTO>();
-            if (reader.HasRows) // если есть данные
+            using (IDbConnection connection = Connection.GetConnection())
             {
-
-                while (reader.Read()) // построчно считываем данные
-                {
-                    Student_GroupDTO group = new Student_GroupDTO();
-
-                    group.ID = (int)reader["id"];
-                    group.GroupID = (int)reader["GroupID"];
-                    group.UserID = (int)reader["UserID"];
-                    student_group.Add(group);
-                }
+                string sqlExpression = "Student_Group_GetAll";
+                return connection.Query<Student_GroupDTO>(sqlExpression).ToList();
             }
-            reader.Close();
-            return student_group;
         }
-        public List<Student_GroupDTO> Student_Group_GetByGroupID(SqlConnection connection, Student_GroupDTO student_Group)
+        public Student_GroupDTO StudentGroupGetByID(int id)
         {
-            connection.Open();
-            string sqlExpression = "Student_Group_GetByGroupID";
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
-            SqlParameter groupParam = new SqlParameter("@GroupID", student_Group.GroupID);
-            command.Parameters.Add(groupParam);
-            SqlDataReader reader = command.ExecuteReader();
-            List<Student_GroupDTO> student_group = new List<Student_GroupDTO>();
-            if (reader.HasRows) // если есть данные
+            using (IDbConnection connection = Connection.GetConnection())
             {
-
-                while (reader.Read()) // построчно считываем данные
-                {
-                    Student_GroupDTO group = new Student_GroupDTO();
-
-                    group.ID = (int)reader["id"];
-                    group.GroupID = (int)reader["GroupID"];
-                    group.UserID = (int)reader["UserID"];
-                    student_group.Add(group);
-                }
+                string sqlExpression = "Student_Group_GetByID";
+                return connection.Query<Student_GroupDTO>(sqlExpression, new { id }, commandType: CommandType.StoredProcedure).FirstOrDefault();
             }
-            reader.Close();
-            return student_group;
         }
-        public int Student_Group_DeleteByID(SqlConnection connection, Student_GroupDTO student_Group)
+        public Student_GroupDTO StudentGroupGetByUserID(int userId)
         {
-            connection.Open();
-            string sqlExpression = "Student_Group_DeleteByID";
-
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
-
-            SqlParameter idParam = new SqlParameter("@ID", student_Group.ID);
-            command.Parameters.Add(idParam);
-
-            return command.ExecuteNonQuery();
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "Student_Group_GetByUserID";
+                return connection.Query<Student_GroupDTO>(sqlExpression, new { userId }, commandType: CommandType.StoredProcedure).FirstOrDefault();
+            }
         }
-        public int Student_Group_DeleteByGroupID(SqlConnection connection, Student_GroupDTO student_Group)
+        public Student_GroupDTO StudentGroupGetByGroupID(int groupId)
         {
-            connection.Open();
-            string sqlExpression = "Student_Group_DeleteByGroupID";
-
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
-
-            SqlParameter groupParam = new SqlParameter("@GroupID", student_Group.GroupID);
-            command.Parameters.Add(groupParam);
-
-            return command.ExecuteNonQuery();
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "Student_Group_GetByGroupID";
+                return connection.Query<Student_GroupDTO>(sqlExpression, new { groupId }, commandType: CommandType.StoredProcedure).FirstOrDefault();
+            }
         }
-        public int Student_Group_DeleteByUserID(SqlConnection connection, Student_GroupDTO student_Group)
+        public void StudentGroupDeleteByID(int id)
         {
-            connection.Open();
-            string sqlExpression = "Student_Group_DeleteByUserID";
-
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
-
-            SqlParameter userParam = new SqlParameter("@UserID", student_Group.UserID);
-            command.Parameters.Add(userParam);
-
-            return command.ExecuteNonQuery();
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "Student_Group_DeleteByID";
+                connection.Execute(sqlExpression, new { id }, commandType: CommandType.StoredProcedure);
+            }
+        }
+        public void StudentGroupDeleteByUserID(int userId)
+        {
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "Student_Group_DeleteByUserID";
+                connection.Execute(sqlExpression, new { userId }, commandType: CommandType.StoredProcedure);
+            }
+        }
+        public void StudentGroupDeleteByGroupID(int groupId)
+        {
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "Student_Group_DeleteByGroupID";
+                connection.Execute(sqlExpression, new { groupId }, commandType: CommandType.StoredProcedure);
+            }
         }
     }
 }
