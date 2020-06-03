@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TestingSystem.Data.DTO
 {
-    class TagGroupNamesDTO
+    public class TagGroupNamesDTO
     {
     }
 }
