@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Dapper;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Text;
 using TestingSystem.Data.DTO;
 
@@ -106,6 +109,25 @@ namespace TestingSystem.Data.StoredProcedure
             SqlParameter numberParam = new SqlParameter("@Number", attempt.number);
             command.Parameters.Add(numberParam);
             return command.ExecuteNonQuery();
+        }
+
+        public List<TagDTO> GetTestTags (TestDTO tests )
+        {
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "GetTestTags @TestID";
+                return connection.Query<TagDTO>(sqlExpression,  tests , commandType: CommandType.StoredProcedure).ToList();
+              
+            }
+        }
+
+        public List<TestDTO> GetTestByTagpAndGroup (TagGroupNamesDTO names)
+        {
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "Test_GetByTagAndGroup @Tag_Name @Group_Name";
+                return connection.Query<TestDTO>(sqlExpression, names, commandType: CommandType.StoredProcedure).ToList();
+            }
         }
     }
 }

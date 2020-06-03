@@ -2206,11 +2206,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\User\\Desktop\\SQLProject\\TestingSystem\\TestingSystem.Data\\TestingSystem.Data.csproj",
+      "projectUniqueName": "C:\\Users\\User\\source\\repos\\TestingSystem\\TestingSystem.Data\\TestingSystem.Data.csproj",
       "projectName": "TestingSystem.Data",
-      "projectPath": "C:\\Users\\User\\Desktop\\SQLProject\\TestingSystem\\TestingSystem.Data\\TestingSystem.Data.csproj",
+      "projectPath": "C:\\Users\\User\\source\\repos\\TestingSystem\\TestingSystem.Data\\TestingSystem.Data.csproj",
       "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\User\\Desktop\\SQLProject\\TestingSystem\\TestingSystem.Data\\obj\\",
+      "outputPath": "C:\\Users\\User\\source\\repos\\TestingSystem\\TestingSystem.Data\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -2270,7 +2270,7 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.300\\RuntimeIdentifierGraph.json"
       }
     }
   }
