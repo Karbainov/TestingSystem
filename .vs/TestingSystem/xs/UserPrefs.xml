@@ -1,0 +1,42 @@
+﻿<Properties StartupConfiguration="{0E92C1BA-5326-4E49-9550-A26045F59024}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="TestingSystem.Data/StoredProcedure/TeacherByGroupId.cs">
+    <Files>
+      <File FileName="TestingSystem.Data/StoredProcedure/CRUD/Group.cs" Line="1" Column="1" />
+      <File FileName="TestingSystem.Data/DTO/TestTagDTO.cs" Line="1" Column="1" />
+      <File FileName="TestingSystem.Data/StoredProcedure/UserManager.cs" Line="67" Column="6" />
+      <File FileName="TestingSystem.Data/TeacherDataAccess.cs" Line="1" Column="1" />
+      <File FileName="TestingSystem.Data/StoredProcedure/UserRole.cs" Line="1" Column="1" />
+      <File FileName="TestingSystem.Data/StoredProcedure/UserPositions.cs" Line="1" Column="1" />
+      <File FileName="TestingSystem.Data/StoredProcedure/TeacherByGroupId.cs" Line="24" Column="1" />
+      <File FileName="TestingSystem.Data/StoredProcedure/CRUD/Test.cs" Line="1" Column="1" NotebookId="1" />
+      <File FileName="TestingSystem.Data/StoredProcedure/CRUD/User.cs" Line="38" Column="63" NotebookId="1" />
+      <File FileName="TestingSystem.Data/StoredProcedure/CRUD/Question.cs" Line="22" Column="10" NotebookId="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="TestingSystem" expanded="True">
+            <Node name="TestingSystem" expanded="True" />
+            <Node name="TestingSystem.Data" expanded="True">
+              <Node name="Dependencies" expanded="True">
+                <Node name="PackageDependencies" expanded="True" />
+              </Node>
+              <Node name="DTO" expanded="True" />
+              <Node name="StoredProcedure" expanded="True">
+                <Node name="CRUD" expanded="True" />
+                <Node name="TeacherByGroupId.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.TestingSystem PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

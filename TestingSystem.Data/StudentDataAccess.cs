@@ -1,10 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TestingSystem.Data.DTO;
 
 namespace TestingSystem.Data
 {
-    class StudentDataAccess
+    public class StudentDataAccess
     {
+        public void SelectActiveTest() 
+        {
+
+        }
+        public void CheckResult()
+        {
+
+        }
+        public void GetFinishedTest(UserDTO userG)
+        {
+
+        }
     }
 }
