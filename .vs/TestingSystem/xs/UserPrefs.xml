@@ -1,30 +1,16 @@
 ﻿<Properties StartupConfiguration="{0E92C1BA-5326-4E49-9550-A26045F59024}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="TestingSystem.Data/StoredProcedure/SearchTestByTag.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="TestingSystem.Data/StoredProcedure/TeacherByGroupId.cs">
     <Files>
-      <File FileName="TestingSystem.Data/DTO/AttemptDBO.cs" Line="1" Column="1" />
-      <File FileName="TestingSystem.Data/AdminDataAccess.cs" Line="11" Column="1" />
-      <File FileName="TestingSystem.Data/StoredProcedure/CRUD/Student.cs" />
-      <File FileName="TestingSystem.Data/StoredProcedure/CRUD/Test.cs" />
-      <File FileName="TestingSystem.Data/DTO/UserDTO.cs" />
-      <File FileName="TestingSystem.Data/DTO/TestDTO.cs" />
-      <File FileName="TestingSystem.Data/DTO/QuestionDTO.cs" />
-      <File FileName="TestingSystem/Program.cs" Line="1" Column="1" />
-      <File FileName="TestingSystem.Data/DTO/AnswerDTO.cs" Line="1" Column="1" />
-      <File FileName="TestingSystem.Data/DTO/RoleDTO.cs" />
-      <File FileName="TestingSystem.Data/DTO/FeedbackDTO.cs" />
-      <File FileName="TestingSystem.Data/DTO/AttemptResultDTO.cs" />
-      <File FileName="TestingSystem.Data/DTO/FeedbackQuestionDBO.cs" />
-      <File FileName="TestingSystem.Data/DTO/GroupDTO.cs" />
-      <File FileName="TestingSystem.Data/DTO/Question_AnswerDTO.cs" />
-      <File FileName="TestingSystem.Data/DTO/StudentDTO.cs" />
-      <File FileName="TestingSystem.Data/DTO/User_RoleDTO.cs" />
-      <File FileName="TestingSystem.Data/StoredProcedure/CRUD/Users.cs" />
-      <File FileName="TestingSystem.Data/StoredProcedure/CRUD/Question.cs" Line="1" Column="1" />
-      <File FileName="TestingSystem.Data/StoredProcedure/AttemptByUserTest.cs" Line="2" Column="1" />
-      <File FileName="TestingSystem.Data/StoredProcedure/CRUD/Attempt.cs" Line="1" Column="1" />
       <File FileName="TestingSystem.Data/StoredProcedure/CRUD/Group.cs" Line="1" Column="1" />
-      <File FileName="TestingSystem.Data/DTO/AllStudentTestsDTO.cs" Line="1" Column="1" />
-      <File FileName="TestingSystem.Data/StoredProcedure/SearchTestByTag.cs" Line="9" Column="40" />
+      <File FileName="TestingSystem.Data/DTO/TestTagDTO.cs" Line="1" Column="1" />
+      <File FileName="TestingSystem.Data/StoredProcedure/UserManager.cs" Line="67" Column="6" />
+      <File FileName="TestingSystem.Data/TeacherDataAccess.cs" Line="1" Column="1" />
+      <File FileName="TestingSystem.Data/StoredProcedure/UserRole.cs" Line="1" Column="1" />
+      <File FileName="TestingSystem.Data/StoredProcedure/UserPositions.cs" Line="1" Column="1" />
+      <File FileName="TestingSystem.Data/StoredProcedure/TeacherByGroupId.cs" Line="24" Column="1" />
+      <File FileName="TestingSystem.Data/StoredProcedure/CRUD/Test.cs" Line="1" Column="1" NotebookId="1" />
+      <File FileName="TestingSystem.Data/StoredProcedure/CRUD/User.cs" Line="38" Column="63" NotebookId="1" />
+      <File FileName="TestingSystem.Data/StoredProcedure/CRUD/Question.cs" Line="22" Column="10" NotebookId="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -38,7 +24,7 @@
               <Node name="DTO" expanded="True" />
               <Node name="StoredProcedure" expanded="True">
                 <Node name="CRUD" expanded="True" />
-                <Node name="SearchTestByTag.cs" selected="True" />
+                <Node name="TeacherByGroupId.cs" selected="True" />
               </Node>
             </Node>
           </Node>
