@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
 using TestingSystem.Data.DTO;
+using Dapper;
+using System.Linq;
+using System.Data;
 
 namespace TestingSystem.Data.StoredProcedure
 {
@@ -42,6 +45,24 @@ namespace TestingSystem.Data.StoredProcedure
 
             return command.ExecuteNonQuery();
         }
-        
+        public int User_DeleteAccount(SqlConnection connection, UserDTO user)//удаление студента и всего, что с ним связано
+        {
+            connection.Open();
+            string sqlExpression = "User_DeleteAccount";
+            SqlCommand command = new SqlCommand(sqlExpression, connection);
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+
+            SqlParameter userParam = new SqlParameter("@UserID", user.ID);
+            command.Parameters.Add(userParam);
+            return command.ExecuteNonQuery();
+        }
+
+        public void AddUserWithRole (UserWithRoleDTO user)
+        {
+            var connection = Connection.GetConnection();
+            connection.Open();
+            string sqlExpression = "AddUserWithRole @FirstName, @LastName, @BirthDate, @Login, @Email, @Phone, RoleID";
+            connection.Execute(sqlExpression, user, commandType: CommandType.StoredProcedure);
+        }
     }
 }

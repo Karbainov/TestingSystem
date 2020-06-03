@@ -29,7 +29,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             SqlParameter LogParam = new SqlParameter("@Login", user.Login);
             command.Parameters.Add(LogParam);
 
-            SqlParameter PassParam = new SqlParameter("@Password", user.Password);
+            SqlParameter PassParam = new SqlParameter("@Login", user.Password);
             command.Parameters.Add(PassParam);
 
             SqlParameter EmailParam = new SqlParameter("@Email", user.Email);
