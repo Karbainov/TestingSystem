@@ -4,24 +4,24 @@ using System.Text;
 
 namespace TestingSystem.Data.DTO
 {
-    public class Test_GroupDTO
+    public class TestGroupDTO
     {
         public int id { get; set; }
-        public int idGroup { get; set; }
-        public int idTest { get; set; }
+        public int groupId { get; set; }
+        public int testId { get; set; }
         public DateTime startDate { get; set; }
         public DateTime endDate { get; set; }
 
-        public Test_GroupDTO()
+        public TestGroupDTO()
         {
 
         }
 
-        public Test_GroupDTO(int id, int idGroup, int idTest, DateTime startDate, DateTime endDate)
+        public TestGroupDTO(int id, int groupId, int testId, DateTime startDate, DateTime endDate)
         {
             this.id = id;
-            this.idGroup = idGroup;
-            this.idTest = idTest;
+            this.groupId = groupId;
+            this.testId =testId;
             this.startDate = startDate;
             this.endDate = endDate;
 
