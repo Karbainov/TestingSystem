@@ -2201,24 +2201,26 @@
     ]
   },
   "packageFolders": {
-    "/Users/olegsitikov/.nuget/packages/": {}
+    "C:\\Users\\User\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/olegsitikov/Projects/TestingSystem/TestingSystem.Data/TestingSystem.Data.csproj",
+      "projectUniqueName": "C:\\Users\\User\\source\\repos\\TestingSystem\\TestingSystem.Data\\TestingSystem.Data.csproj",
       "projectName": "TestingSystem.Data",
-      "projectPath": "/Users/olegsitikov/Projects/TestingSystem/TestingSystem.Data/TestingSystem.Data.csproj",
-      "packagesPath": "/Users/olegsitikov/.nuget/packages/",
-      "outputPath": "/Users/olegsitikov/Projects/TestingSystem/TestingSystem.Data/obj/",
+      "projectPath": "C:\\Users\\User\\source\\repos\\TestingSystem\\TestingSystem.Data\\TestingSystem.Data.csproj",
+      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\User\\source\\repos\\TestingSystem\\TestingSystem.Data\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/olegsitikov/.config/NuGet/NuGet.Config"
+        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netstandard2.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -2268,7 +2270,7 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.300/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.300\\RuntimeIdentifierGraph.json"
       }
     }
   }
