@@ -9,7 +9,7 @@ using TestingSystem.Data.DTO;
 
 namespace TestingSystem.Data.StoredProcedure
 {
-    class TestManager
+    public class TestManager
     {
         public List<TestDTO> Test_Attempt_GetLate( UserDTO user)//просроченные тесты студента
         {
@@ -146,6 +146,15 @@ namespace TestingSystem.Data.StoredProcedure
             {
                 string sqlExpression = "Test_GetByTagAndGroup @Tag_Name @Group_Name";
                 return connection.Query<TestDTO>(sqlExpression, names, commandType: CommandType.StoredProcedure).ToList();
+            }
+        }
+
+        public List<TestDTO> GetTestByGroupId(int GroupID)
+        {
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "GetTestsByGroupId";
+                return connection.Query<TestDTO>(sqlExpression, new { GroupID }, commandType: CommandType.StoredProcedure).ToList();
             }
         }
     }
