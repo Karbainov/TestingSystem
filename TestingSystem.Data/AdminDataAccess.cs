@@ -44,27 +44,23 @@ namespace TestingSystem.Data
         }
         public void StudentAdd (Student_GroupDTO studentA) 
         {
-            var connect = Connection.GetSqlConnection();
             Student_Group student = new Student_Group();
-            student.Student_Group_Add(connect, studentA);
+            student.StudentGroupAdd(studentA);
         }
         public void StudentDelete(Student_GroupDTO studentD)
         {
-            var connect = Connection.GetSqlConnection();
             Student_Group student = new Student_Group();
-            student.Student_Group_DeleteByID(connect, studentD);
+            student.StudentGroupDeleteByID(studentD.ID);
         }
         public void TeacherAdd(Teacher_GroupDTO teacherA)
         {
-            var connect = Connection.GetSqlConnection();
             Teacher_Group student = new Teacher_Group();
-            student.Teacher_Group_Add(connect, teacherA);
+            student.TeacherGroupAdd(teacherA);
         }
         public void TeacherDelete(Teacher_GroupDTO teacherD)
         {
-            var connect = Connection.GetSqlConnection();
             Teacher_Group student = new Teacher_Group();
-            student.Teacher_Group_DeleteByID(connect, teacherD);
+            student.TeacherGroupDeleteByID(teacherD.ID);
         }
     }
 }

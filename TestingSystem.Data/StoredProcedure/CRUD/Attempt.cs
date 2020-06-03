@@ -16,7 +16,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
 
         public void AttemptCreate(AttemptDTO Attempt)
         {
-            var connection = Connection.GetConnection();
+            SqlConnection connection = (SqlConnection)Connection.GetConnection();
             connection.Open();
 
             string sqlExpression = "Attempt_Add";
@@ -79,7 +79,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
 
         public List<AttemptDTO> AttemptRead()
         {
-            var connection = Connection.GetConnection();
+            SqlConnection connection = (SqlConnection)Connection.GetConnection();
             connection.Open();
 
             string sqlExpression = "Attempt_GetAll";
@@ -115,7 +115,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
 
         public List<AttemptDTO> AttemptByUserId(AttemptDTO attempt)
         {
-            var connection = Connection.GetConnection();
+            SqlConnection connection = (SqlConnection)Connection.GetConnection();
             connection.Open();
 
             string sqlExpression = "Attempt_GetByUserID";
@@ -158,7 +158,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
 
         public List<AttemptDTO> AttemptByTestId(AttemptDTO attempt)
         {
-            var connection = Connection.GetConnection();
+            SqlConnection connection = (SqlConnection)Connection.GetConnection();
             connection.Open();
 
             string sqlExpression = "Attempt_GetByTestID";
@@ -199,7 +199,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
 
         public void AttemptUpdate(AttemptDTO attempt)
         {
-            var connection = Connection.GetConnection();
+            SqlConnection connection = (SqlConnection)Connection.GetConnection();
             connection.Open();
 
             string sqlExpression = "Attempt_Update";
@@ -263,7 +263,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
 
         public void AttemptDelete(AttemptDTO attempt)
         {
-            var connection = Connection.GetConnection();
+            SqlConnection connection = (SqlConnection)Connection.GetConnection();
             connection.Open();
 
             string sqlExpression = "Attempt_Delete";
