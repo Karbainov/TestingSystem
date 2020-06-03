@@ -42,16 +42,6 @@ namespace TestingSystem.Data.StoredProcedure
 
             return command.ExecuteNonQuery();
         }
-        public int User_DeleteAccount(SqlConnection connection, UserDTO user)//удаление студента и всего, что с ним связано
-        {
-            connection.Open();
-            string sqlExpression = "User_DeleteAccount";
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
-
-            SqlParameter userParam = new SqlParameter("@UserID", user.ID);
-            command.Parameters.Add(userParam);
-            return command.ExecuteNonQuery();
-        }
+        
     }
 }
