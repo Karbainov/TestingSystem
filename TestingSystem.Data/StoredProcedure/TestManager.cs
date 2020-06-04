@@ -178,14 +178,14 @@ namespace TestingSystem.Data.StoredProcedure
             }
         }
 
-       /* public List<TestWithStatsDTO> GetCompletedTestsByUserID(int UserID)
+        public List<TestAttemptDTO> GetCompletedTestsByUserID(int UserID)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "GetCompletedTestsByUserID";
-                return connection.Query<TestWithStatsDTO>(sqlExpression, new { UserID }, commandType: CommandType.StoredProcedure).ToList();
+                return connection.Query<TestAttemptDTO>(sqlExpression, new { UserID }, commandType: CommandType.StoredProcedure).ToList();
 
             }
-        }*/
+        }
     }
 }
