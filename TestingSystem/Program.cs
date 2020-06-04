@@ -1,4 +1,14 @@
-﻿using System;
+﻿using Dapper;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Text;
+using TestingSystem.Data.DTO;
+using TestingSystem.Data.StoredProcedure.CRUD;
+using TestingSystem.Data.StoredProcedure;
+
 
 namespace TestingSystem
 {
@@ -6,7 +16,7 @@ namespace TestingSystem
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            
         }
     }
 }

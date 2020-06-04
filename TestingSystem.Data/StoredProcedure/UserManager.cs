@@ -9,7 +9,7 @@ using System.Data;
 
 namespace TestingSystem.Data.StoredProcedure
 {
-    class UserManager
+    public class UserManager
     {
 
         public int User_Student_Group_Add(SqlConnection connection, UserDTO user, GroupDTO group)//добавление студента сразу в группу
@@ -61,8 +61,8 @@ namespace TestingSystem.Data.StoredProcedure
         {
             var connection = Connection.GetConnection();
             connection.Open();
-            string sqlExpression = "AddUserWithRole @FirstName, @LastName, @BirthDate, @Login, @Email, @Phone, RoleID";
-            connection.Execute(sqlExpression, user, commandType: CommandType.StoredProcedure);
+            string sqlExpression = "AddUserWithRole @FirstName, @LastName, @BirthDate, @Login, @Password, @Email, @Phone, @RoleID";
+            connection.Execute(sqlExpression, user);
         }
 
         public List<UserPositionDTO> GetUserVSRole()

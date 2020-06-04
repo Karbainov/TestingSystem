@@ -41,21 +41,21 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
 
         }
 
-        public List<QuestionDTO> QuestionGetByTestID(int id)
+        public List<QuestionDTO> QuestionGetByTestID(int Testid)
         {
             var connection = Connection.GetConnection();
             connection.Open();
             string sqlExpression = "Question_GetByTestId";
-            List<QuestionDTO> questions = connection.Query<QuestionDTO>(sqlExpression, new { id }, commandType: CommandType.StoredProcedure).ToList();
+            List<QuestionDTO> questions = connection.Query<QuestionDTO>(sqlExpression, new { Testid }, commandType: CommandType.StoredProcedure).ToList();
             return questions;
         }
 
-        public List<QuestionDTO> QuestionGetByTypeID(int id)
+        public List<QuestionDTO> QuestionGetByTypeID(int Typeid)
         {
             var connection = Connection.GetConnection();
             connection.Open();
             string sqlExpression = "Question_GetByTypeId";
-            List<QuestionDTO> questions = connection.Query<QuestionDTO>(sqlExpression, new { id }, commandType: CommandType.StoredProcedure).ToList();
+            List<QuestionDTO> questions = connection.Query<QuestionDTO>(sqlExpression, new { Typeid }, commandType: CommandType.StoredProcedure).ToList();
             return questions;
 
         }
