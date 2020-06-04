@@ -8,9 +8,9 @@ using TestingSystem.Data.DTO;
 
 namespace TestingSystem.Data.StoredProcedure.CRUD
 {
-    public class Tag
+    public class TagCRUD
     {
-        public int Create(TagDTO tag)
+        public int Add(TagDTO tag)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -21,7 +21,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             }
         }
 
-        public List<TagDTO> ReadAll()
+        public List<TagDTO> GetAll()
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -30,7 +30,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             }
         }
 
-        public TagDTO Read(int id)
+        public TagDTO GetById(int id)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {

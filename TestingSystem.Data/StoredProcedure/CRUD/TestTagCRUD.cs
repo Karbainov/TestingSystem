@@ -9,7 +9,7 @@ using TestingSystem.Data.DTO;
 
 namespace TestingSystem.Data.StoredProcedure.CRUD
 {
-    public class TestTag
+    public class TestTagCRUD
     {
         public int Create(TestTagDTO testtag)
         {

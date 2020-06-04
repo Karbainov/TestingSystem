@@ -24,7 +24,7 @@ namespace TestingSystem.Data
 
         public int TestTagCreate(TestTagDTO testtag)
         {
-            TestTag tt= new TestTag();
+            TestTagCRUD tt= new TestTagCRUD();
             int i = tt.Create(testtag);
             return i;
         }
