@@ -9,9 +9,9 @@ using TestingSystem.Data.DTO;
 
 namespace TestingSystem.Data.StoredProcedure.CRUD
 {
-     public class TestGroup
+     public class TestGroupCRUD
     {
-        public int TestGroupAdd(TestGroupDTO testgroup)
+        public int Add(TestGroupDTO testgroup)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -22,7 +22,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             }
         }
 
-        public List<TestGroupDTO> TestGroupGetAll()
+        public List<TestGroupDTO> GetAll()
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -32,7 +32,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
         }
 
 
-        public List<TestGroupDTO> TestGroupGetByGroupId(int id)
+        public List<TestGroupDTO> GetByGroupId(int id)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -41,7 +41,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             }
         }
 
-        public List<TestGroupDTO> TestGroupGetByGroupIdTestId(TestGroupDTO testgroup)
+        public List<TestGroupDTO> GetByGroupIdTestId(TestGroupDTO testgroup)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -50,7 +50,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             }
         }
 
-        public List<TestGroupDTO> TestGroupGetByTestId(int id)
+        public List<TestGroupDTO> GetByTestId(int id)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -59,7 +59,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             }
         }
 
-        public void TestGroupUpdate(TestGroupDTO testgroup)
+        public void Update(TestGroupDTO testgroup)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -68,7 +68,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             }
         }
 
-        public void TestGroupDeleteByGroupId(int id)
+        public void DeleteByGroupId(int id)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -77,7 +77,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             }
         }
 
-        public void TestGroupDeleteByGroupIdTestId(TestGroupDTO testgroup)
+        public void DeleteByGroupIdTestId(TestGroupDTO testgroup)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -86,7 +86,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             }
         }
 
-        public void TestGroupDeleteByTestId(int id)
+        public void DeleteByTestId(int id)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {

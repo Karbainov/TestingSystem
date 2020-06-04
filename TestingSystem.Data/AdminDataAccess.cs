@@ -29,17 +29,17 @@ namespace TestingSystem.Data
         }
         public void GroupCreate(GroupDTO groupC)
         {
-            Group group = new Group();
+            GroupCRUD group = new GroupCRUD();
             group.GroupAdd(groupC);
         }
         public void GroupUpdate(GroupDTO groupU)
         {
-            Group group = new Group();
+            GroupCRUD group = new GroupCRUD();
             group.GroupUpdate(groupU);
         }
         public void GroupDelete(GroupDTO groupD)
         {
-            Group group = new Group();
+            GroupCRUD group = new GroupCRUD();
             group.GroupAdd(groupD);
         }
         public void StudentAdd (StudentGroupDTO studentA) 
