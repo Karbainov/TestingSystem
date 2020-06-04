@@ -27,6 +27,30 @@ namespace TestingSystem.Data
             TestTagCRUD tt= new TestTagCRUD();
             int i = tt.Add(testtag);
             return i;
-        }        
+        }      
+        
+        public int AddFeedback(FeedbackDTO feedback)
+        {
+            FeedbackCRUD fb = new FeedbackCRUD();
+            return fb.FeedbackAdd(feedback);
+        }
+
+        public List<FeedbackDTO> GetAllFeedback()
+        {
+            FeedbackCRUD fb = new FeedbackCRUD();
+            return fb.FeedbackGetAll();
+        }
+
+        public void UpdateFeedback(FeedbackDTO feedback)
+        {
+            FeedbackCRUD fb = new FeedbackCRUD();
+            fb.FeedbackUpdate(feedback);
+        }
+
+        public void DeleteFeedback(FeedbackDTO feedback)
+        {
+            FeedbackCRUD fb = new FeedbackCRUD();
+            fb.FeedbackDelete(feedback);
+        }
     }
 }
