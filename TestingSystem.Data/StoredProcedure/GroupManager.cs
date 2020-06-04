@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
+using System.Linq;
+using System.Data;
 using TestingSystem.Data.DTO;
+using Dapper;
 
 namespace TestingSystem.Data.StoredProcedure
 {
@@ -34,6 +37,15 @@ namespace TestingSystem.Data.StoredProcedure
             }
             reader.Close();
             return groups;
+        }
+
+        public List<UserDTO> GetAllStudents(int id)
+        {
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "Group_GetAllStudents";
+                return connection.Query<UserDTO>(sqlExpression, new { id }, commandType: CommandType.StoredProcedure).ToList();
+            }
         }
     }
 }
