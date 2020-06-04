@@ -8,7 +8,7 @@ using TestingSystem.Data.DTO;
 
 namespace TestingSystem.Data.StoredProcedure.CRUD
 {
-    public class Type
+    public class TypeCRUD
     {
         public int Add(TypeDTO type)
         {
