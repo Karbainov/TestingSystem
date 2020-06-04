@@ -11,8 +11,8 @@ namespace TestingSystem.Data
     {
         public void QuestionDeleteFromTest(int questionId)
         {
-            QuestionDeleteFromTests question = new QuestionDeleteFromTests();
-            question.QuestionDelete(questionId);
+            QuestionManager question = new QuestionManager();
+            question.DeleteQuestionFromTest(questionId);
         }
 
         public List<Question_AnswerDTO> AnswerGetCorrectByTestID(TestDTO test)
@@ -27,9 +27,6 @@ namespace TestingSystem.Data
             TestTagCRUD tt= new TestTagCRUD();
             int i = tt.Add(testtag);
             return i;
-        }
-
-
-        
+        }        
     }
 }

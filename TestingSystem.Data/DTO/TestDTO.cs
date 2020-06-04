@@ -15,11 +15,6 @@ namespace TestingSystem.Data.DTO
         {
         }
 
-        public TestDTO(int Id)
-        {
-            ID = Id;
-        }
-
         public TestDTO(int Id, string name, TimeSpan duration, int score)
         {
             ID = Id;
