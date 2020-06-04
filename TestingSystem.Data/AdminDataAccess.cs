@@ -29,38 +29,38 @@ namespace TestingSystem.Data
         }
         public void GroupCreate(GroupDTO groupC)
         {
-            Group group = new Group();
-            group.GroupAdd(groupC);
+            GroupCRUD group = new GroupCRUD();
+            group.Add(groupC);
         }
         public void GroupUpdate(GroupDTO groupU)
         {
-            Group group = new Group();
-            group.GroupUpdate(groupU);
+            GroupCRUD group = new GroupCRUD();
+            group.Update(groupU);
         }
         public void GroupDelete(GroupDTO groupD)
         {
-            Group group = new Group();
-            group.GroupAdd(groupD);
+            GroupCRUD group = new GroupCRUD();
+            group.Add(groupD);
         }
-        public void StudentAdd (Student_GroupDTO studentA) 
+        public void StudentAdd (StudentGroupDTO studentA) 
         {
-            Student_Group student = new Student_Group();
-            student.StudentGroupAdd(studentA);
+            StudentGroup student = new StudentGroup();
+            student.Add(studentA);
         }
-        public void StudentDelete(Student_GroupDTO studentD)
+        public void StudentDelete(StudentGroupDTO studentD)
         {
-            Student_Group student = new Student_Group();
-            student.StudentGroupDeleteByID(studentD.ID);
+            StudentGroup student = new StudentGroup();
+            student.DeleteByID(studentD.ID);
         }
-        public void TeacherAdd(Teacher_GroupDTO teacherA)
+        public void TeacherAdd(TeacherGroupDTO teacherA)
         {
-            Teacher_Group student = new Teacher_Group();
-            student.TeacherGroupAdd(teacherA);
+            TeacherGroup student = new TeacherGroup();
+            student.Add(teacherA);
         }
-        public void TeacherDelete(Teacher_GroupDTO teacherD)
+        public void TeacherDelete(TeacherGroupDTO teacherD)
         {
-            Teacher_Group student = new Teacher_Group();
-            student.TeacherGroupDeleteByID(teacherD.ID);
+            TeacherGroup student = new TeacherGroup();
+            student.DeleteByID(teacherD.ID);
         }
     }
 }

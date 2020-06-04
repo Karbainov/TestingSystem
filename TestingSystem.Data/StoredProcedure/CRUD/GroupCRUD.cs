@@ -9,9 +9,9 @@ using TestingSystem.Data.DTO;
 
 namespace TestingSystem.Data.StoredProcedure.CRUD
 {
-    public class Group
+    public class GroupCRUD
     {
-        public int GroupAdd(GroupDTO group)
+        public int Add(GroupDTO group)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -22,7 +22,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             }
         }
 
-        public List<GroupDTO> GroupGetAll()
+        public List<GroupDTO> GetAll()
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -31,7 +31,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             }
         }
 
-        public GroupDTO GroupGetById(int id)
+        public GroupDTO GetById(int id)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -40,7 +40,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             }
         }
 
-        public void GroupUpdate(GroupDTO group)
+        public void Update(GroupDTO group)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -50,7 +50,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
         }
 
 
-        public void GroupDelete(int id)
+        public void Delete(int id)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {

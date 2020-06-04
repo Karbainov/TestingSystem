@@ -60,9 +60,5 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
                 connection.Query<int>(sqlExpression, feedback.Id);
             }
         }
-
-
-
-
     }
 }

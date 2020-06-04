@@ -9,9 +9,9 @@ using TestingSystem.Data.DTO;
 
 namespace TestingSystem.Data.StoredProcedure.CRUD
 {
-    class Teacher_Group
+    class TeacherGroup
     {
-        public int TeacherGroupAdd(Teacher_GroupDTO teacherGroup)
+        public int Add(TeacherGroupDTO teacherGroup)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -21,39 +21,39 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
                 return teacherGroupID;
             }
         }
-        public List<Teacher_GroupDTO> TeacherGroupGetAll()
+        public List<TeacherGroupDTO> GetAll()
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Teacher_Group_GetAll";
-                return connection.Query<Teacher_GroupDTO>(sqlExpression).ToList();
+                return connection.Query<TeacherGroupDTO>(sqlExpression).ToList();
             }
         }
-        public Teacher_GroupDTO TeacherGroupGetByID(int id)
+        public TeacherGroupDTO GetByID(int id)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Teacher_Group_GetByID";
-                return connection.Query<Teacher_GroupDTO>(sqlExpression, new { id }, commandType: CommandType.StoredProcedure).FirstOrDefault();
+                return connection.Query<TeacherGroupDTO>(sqlExpression, new { id }, commandType: CommandType.StoredProcedure).FirstOrDefault();
             }
         }
-        public Teacher_GroupDTO TeacherGroupGetByUserID(int userId)
+        public TeacherGroupDTO GetByUserID(int userId)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Teacher_Group_GetByUserID";
-                return connection.Query<Teacher_GroupDTO>(sqlExpression, new { userId }, commandType: CommandType.StoredProcedure).FirstOrDefault();
+                return connection.Query<TeacherGroupDTO>(sqlExpression, new { userId }, commandType: CommandType.StoredProcedure).FirstOrDefault();
             }
         }
-        public Teacher_GroupDTO TeacherGroupGetByGroupID(int groupId)
+        public TeacherGroupDTO GetByGroupID(int groupId)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Teacher_Group_GetByGroupID";
-                return connection.Query<Teacher_GroupDTO>(sqlExpression, new { groupId }, commandType: CommandType.StoredProcedure).FirstOrDefault();
+                return connection.Query<TeacherGroupDTO>(sqlExpression, new { groupId }, commandType: CommandType.StoredProcedure).FirstOrDefault();
             }
         }
-        public void TeacherGroupDeleteByID(int id)
+        public void DeleteByID(int id)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -61,7 +61,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
                 connection.Execute(sqlExpression, new { id }, commandType: CommandType.StoredProcedure);
             }
         }
-        public void TeacherGroupDeleteByUserID(int userId)
+        public void DeleteByUserID(int userId)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -69,7 +69,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
                 connection.Execute(sqlExpression, new { userId }, commandType: CommandType.StoredProcedure);
             }
         }
-        public void TeacherGroupDeleteByGroupID(int groupId)
+        public void DeleteByGroupID(int groupId)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {

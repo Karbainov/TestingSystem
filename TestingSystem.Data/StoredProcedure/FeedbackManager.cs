@@ -28,5 +28,12 @@ namespace TestingSystem.Data.StoredProcedure
                 return connection.Query<FeedbackByDateDTO>(sqlExpression, new { dateTime1, dateTime2 }, commandType: CommandType.StoredProcedure).ToList();
             }
         }
+
+        public List<FeedbackQuestionDTO> GetFeedbackAndQuestionByUserDate(UserIdDateIdDTO feedback)
+        {
+            var connection = Connection.GetConnection();
+            string sqlExpression = "FeedBackQuestion_GetByUserDate";
+            return connection.Query<FeedbackQuestionDTO>(sqlExpression, feedback, commandType: CommandType.StoredProcedure).ToList();           
+        }
     }
 }
