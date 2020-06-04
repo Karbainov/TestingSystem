@@ -4,18 +4,18 @@ using System.Text;
 
 namespace TestingSystem.Data.DTO
 {
-    public class Teacher_GroupDTO
+    public class StudentGroupDTO
     {
         public int ID { get; set; }
         public int UserID { get; set; }
         public int GroupID { get; set; }
-        public Teacher_GroupDTO(int id, int userID, int groupID)
+        public StudentGroupDTO(int id, int userID, int groupID)
         {
             ID = id;
             UserID = userID;
             GroupID = groupID;
         }
-        public Teacher_GroupDTO()
+        public StudentGroupDTO()
         {
 
         }
