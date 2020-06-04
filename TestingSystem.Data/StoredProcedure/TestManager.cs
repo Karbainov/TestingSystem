@@ -157,5 +157,25 @@ namespace TestingSystem.Data.StoredProcedure
                 return connection.Query<TestDTO>(sqlExpression, new { GroupID }, commandType: CommandType.StoredProcedure).ToList();
             }
         }
+
+        public List<SearchTestByTagDTO> GetTestVSTagSearchOr(string tag1, string tag2, string tag3)
+        {
+
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "SearchTestByTagOr";
+                return connection.Query<SearchTestByTagDTO>(sqlExpression, new { tag1, tag2, tag3 }, commandType: CommandType.StoredProcedure).ToList();
+            }
+        }
+
+        public List<SearchTestByTagDTO> GetTestVSTagSearchAnd(string tag1, string tag2, string tag3)
+        {
+
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "SearchTestByTagAnd";
+                return connection.Query<SearchTestByTagDTO>(sqlExpression, new { tag1, tag2, tag3 }, commandType: CommandType.StoredProcedure).ToList();
+            }
+        }
     }
 }

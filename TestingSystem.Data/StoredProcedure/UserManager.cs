@@ -64,5 +64,27 @@ namespace TestingSystem.Data.StoredProcedure
             string sqlExpression = "AddUserWithRole @FirstName, @LastName, @BirthDate, @Login, @Email, @Phone, RoleID";
             connection.Execute(sqlExpression, user, commandType: CommandType.StoredProcedure);
         }
+
+        public List<UserPositionDTO> GetUserVSRole()
+        {
+
+            IDbConnection usPos = Connection.GetConnection();
+            List<UserPositionDTO> userPositions = new List<UserPositionDTO>();
+            using (usPos)
+            {
+                userPositions = usPos.Query<UserPositionDTO>("User_Position").ToList();
+            }
+
+            return userPositions;
+        }
+
+        public List<AllStudentTestsDTO> GetStudentVsTests(int id)
+        {
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "AllStudentTests ";
+                return connection.Query<AllStudentTestsDTO>(sqlExpression, new { id }, commandType: CommandType.StoredProcedure).ToList();
+            }
+        }
     }
 }
