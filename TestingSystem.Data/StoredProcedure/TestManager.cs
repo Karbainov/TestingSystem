@@ -187,5 +187,12 @@ namespace TestingSystem.Data.StoredProcedure
 
             }
         }
+
+        public void DeleteTest(int ID)
+        {
+                var connection = Connection.GetConnection();
+                string sqlExpression = "DeleteTest";
+                connection.Execute(sqlExpression, ID, commandType: CommandType.StoredProcedure);
+        }
     }
 }
