@@ -27,8 +27,7 @@ namespace TestingSystem.Data.StoredProcedure
             }
         }
 
-
-
+        
         public void CountQtyOfCorrectAnswer(int questionId)
         {
             var connection = Connection.GetConnection();
