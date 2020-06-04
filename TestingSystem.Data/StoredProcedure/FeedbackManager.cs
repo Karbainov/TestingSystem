@@ -29,7 +29,7 @@ namespace TestingSystem.Data.StoredProcedure
             }
         }
 
-        public List<FeedbackQuestionDTO> GetFeedbackAndQuestionByUserId(UserIdDateIdDTO feedback)
+        public List<FeedbackQuestionDTO> GetFeedbackAndQuestionByUserDate(UserIdDateIdDTO feedback)
         {
             var connection = Connection.GetConnection();
             string sqlExpression = "FeedBackQuestion_GetByUserDate";
