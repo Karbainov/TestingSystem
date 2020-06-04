@@ -19,12 +19,12 @@ namespace TestingSystem.Data
 
         }
 
-        public List<UserDTO> GetStudentsFromGroup(int id)
+       /* public List<UserDTO> GetStudentsFromGroup(int id)
         {
             StudentsFromGroupGetter teacher = new StudentsFromGroupGetter();
             return teacher.GetStudentsFromGroup(id);
 
-        }
+        }*/
 
         ///  Select Вопросы теста 
         ///  
@@ -65,12 +65,12 @@ namespace TestingSystem.Data
         //}
 
 
-        public List<TestWithStatsDTO> GetStudentIncompleteTests(int id)
+        /*public List<TestWithStatsDTO> GetStudentIncompleteTests(int id)
         {
             StudentIncompleteTestsGetter teacher = new StudentIncompleteTestsGetter();
             return teacher.GetStudentIncompleteTests(id);
 
-        }
+        }*/
         //SelectОтветы на вопросы попытки
 
         //Лучшая попытка конкретного теста конкретного юзера

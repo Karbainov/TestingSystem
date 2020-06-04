@@ -11,10 +11,6 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
 {
     public class AnswerCRUD
     {
-        public int ID { get; set; }
-        public int QuestionID { get; set; }
-        public string Value { get; set; }
-        public bool Correct { get; set; }
         public AnswerCRUD()
         {
         }
