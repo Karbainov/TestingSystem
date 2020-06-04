@@ -11,7 +11,7 @@ namespace TestingSystem.Data.StoredProcedure
 {
     public class TestManager
     {
-        public List<TestDTO> Test_Attempt_GetLate( UserDTO user)//просроченные тесты студента
+        public List<TestDTO> Test_Attempt_GetLate(UserDTO user)//просроченные тесты студента
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -50,7 +50,7 @@ namespace TestingSystem.Data.StoredProcedure
         }
         public List<Question_AnswerDTO> Answer_GetCorrectByTestID(TestDTO test)//нахождение правильных ответов теста
         {
-            using(IDbConnection connection = Connection.GetConnection())
+            using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Answer_GetCorrectByTestID @TestID";
                 return connection.Query<Question_AnswerDTO>(sqlExpression, test).ToList();
@@ -78,7 +78,7 @@ namespace TestingSystem.Data.StoredProcedure
             //reader.Close();
             //return answers;
         }
-        public List<Question_AnswerDTO> Attempt_GetQuestionAndAnswer( AttemptDTO attempt)//все вопросы и ответы попытки
+        public List<Question_AnswerDTO> Attempt_GetQuestionAndAnswer(AttemptDTO attempt)//все вопросы и ответы попытки
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -130,17 +130,17 @@ namespace TestingSystem.Data.StoredProcedure
             //return command.ExecuteNonQuery();
         }
 
-        public List<TagDTO> GetTestTags (TestDTO tests )
+        public List<TagDTO> GetTestTags(TestDTO tests)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "GetTestTags @TestID";
-                return connection.Query<TagDTO>(sqlExpression,  tests , commandType: CommandType.StoredProcedure).ToList();
-              
+                return connection.Query<TagDTO>(sqlExpression, tests, commandType: CommandType.StoredProcedure).ToList();
+
             }
         }
 
-        public List<TestDTO> GetTestByTagpAndGroup (TagGroupNamesDTO names)
+        public List<TestDTO> GetTestByTagpAndGroup(TagGroupNamesDTO names)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -175,6 +175,16 @@ namespace TestingSystem.Data.StoredProcedure
             {
                 string sqlExpression = "SearchTestByTagAnd";
                 return connection.Query<SearchTestByTagDTO>(sqlExpression, new { tag1, tag2, tag3 }, commandType: CommandType.StoredProcedure).ToList();
+            }
+        }
+
+        public List<TestWithStatsDTO> GetCompletedTestsByUserID(int UserID)
+        {
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "GetCompletedTestsByUserID";
+                return connection.Query<TestWithStatsDTO>(sqlExpression, new { UserID }, commandType: CommandType.StoredProcedure).ToList();
+
             }
         }
     }
