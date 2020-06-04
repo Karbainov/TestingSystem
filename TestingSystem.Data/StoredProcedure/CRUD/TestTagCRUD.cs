@@ -40,6 +40,33 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             }
         }
 
+        public List<TestTagDTO> GetByTagId(int tagId)
+        {
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "Test_Tag_GetByTagId";
+                return connection.Query<TestTagDTO>(sqlExpression, new { tagId }, commandType: CommandType.StoredProcedure).ToList();
+            }
+        }
+
+        public List<TestTagDTO> GetByTestId(int testId)
+        {
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "Test_Tag_GetByTestId";
+                return connection.Query<TestTagDTO>(sqlExpression, new { testId }, commandType: CommandType.StoredProcedure).ToList();
+            }
+        }
+
+        public TestTagDTO GetByTestIdTagId(int testId, int tagId)
+        {
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "Test_Tag_GetByTestId_TagId";
+                return connection.Query<TestTagDTO>(sqlExpression, new { testId, tagId }, commandType: CommandType.StoredProcedure).FirstOrDefault();
+            }
+        }
+
         public void Update(TestTagDTO testtag)
         {
             using (IDbConnection connection = Connection.GetConnection())
@@ -55,6 +82,31 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             {
                 string sqlExpression = "Test_Tag_DeleteById";
                 connection.Execute(sqlExpression, new { id }, commandType: CommandType.StoredProcedure);
+            }
+        }
+        public void DeleteByTagId(int tagId)
+        {
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "Test_Tag_DeleteByTagId";
+                connection.Execute(sqlExpression, new { tagId }, commandType: CommandType.StoredProcedure);
+            }
+        }
+        public void DeleteByTestId(int testId)
+        {
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "Test_Tag_DeleteByTestId";
+                connection.Execute(sqlExpression, new { testId }, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        public void DeleteByTestIdTagId(int testId, int tagId)
+        {
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "Test_Tag_DeleteByTestId_TagId";
+                connection.Execute(sqlExpression, new { testId, tagId }, commandType: CommandType.StoredProcedure);
             }
         }
     }
