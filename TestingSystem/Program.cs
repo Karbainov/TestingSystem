@@ -16,7 +16,12 @@ namespace TestingSystem
     {
         static void Main(string[] args)
         {
-            
+            TeacherByGroupId teacher = new TeacherByGroupId();
+            List<UserDTO> teachers =teacher.GetTeacherByGroupId(1);
+            foreach (UserDTO t in teachers)
+            {
+                Console.WriteLine($"{t.FirstName}");
+            }
         }
     }
 }
