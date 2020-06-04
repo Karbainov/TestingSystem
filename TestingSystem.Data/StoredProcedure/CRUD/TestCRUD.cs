@@ -9,13 +9,13 @@ using TestingSystem.Data.DTO;
 
 namespace TestingSystem.Data.StoredProcedure.CRUD
 {
-    public class Test
+    public class TestCRUD
     {
-        public Test()
+        public TestCRUD()
         {
         }
 
-        public int TestCreate(TestDTO test)
+        public int Add(TestDTO test)
         {
             var connection = Connection.GetConnection();
             connection.Open();
@@ -25,7 +25,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             return test.ID;
         }
 
-        public List<TestDTO> TestRead()
+        public List<TestDTO> GetAll()
         {
             var connection = Connection.GetConnection();            
             string sqlExpression = "Test_GetAll";           
@@ -34,7 +34,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             return tests;
         }
 
-        public TestDTO TestReadById(int id)
+        public TestDTO GetById(int id)
         {
             var connection = Connection.GetConnection();            
             string sqlExpression = "Test_GetById";
@@ -43,14 +43,14 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             return newTest;
         }
 
-        public void TestUpdate(TestDTO test)
+        public void Update(TestDTO test)
         {
             var connection = Connection.GetConnection();
             string sqlExpression = "Test_Update";
             connection.Execute(sqlExpression, test, commandType: CommandType.StoredProcedure);
         }
 
-        public void TestDelete(int id)
+        public void Delete(int id)
         {
             var connection = Connection.GetConnection();
             string sqlExpression = "Test_Delete";

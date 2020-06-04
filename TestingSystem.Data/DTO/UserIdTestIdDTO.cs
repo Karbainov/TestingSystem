@@ -4,16 +4,16 @@ using System.Text;
 
 namespace TestingSystem.Data.DTO
 {
-    public class UserIdTestIdForAttemptDTO
+    public class UserIdTestIdDTO
     {
         public int UserID { get; set; }
         public int TestID { get; set; }
 
-        public UserIdTestIdForAttemptDTO()
+        public UserIdTestIdDTO()
         {
         }
 
-        public UserIdTestIdForAttemptDTO(int userID, int testID)
+        public UserIdTestIdDTO(int userID, int testID)
         {           
             UserID = userID;
             TestID = testID;            

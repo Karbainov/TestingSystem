@@ -4,16 +4,16 @@ using System.Text;
 
 namespace TestingSystem.Data.DTO
 {
-    public class UserIdDateForFeedbackDTO
+    public class UserIdDateIdDTO
     {
         public int UserID { get; set; }
         public DateTime DateTime { get; set; }
 
-        public UserIdDateForFeedbackDTO()
+        public UserIdDateIdDTO()
         {
         }
 
-        public UserIdDateForFeedbackDTO(int userId, DateTime date)
+        public UserIdDateIdDTO(int userId, DateTime date)
         {
             UserID = userId;
             DateTime = date;
