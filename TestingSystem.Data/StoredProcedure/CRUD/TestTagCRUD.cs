@@ -11,7 +11,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
 {
     public class TestTagCRUD
     {
-        public int Create(TestTagDTO testtag)
+        public int Add(TestTagDTO testtag)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -22,7 +22,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             }
         }
 
-        public List<TestTagDTO> ReadAll()
+        public List<TestTagDTO> GetAll()
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -31,7 +31,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             }
         }
 
-        public TestTagDTO Read(int id)
+        public TestTagDTO GetById(int id)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -49,7 +49,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             }
         }
 
-        public void Delete(int id)
+        public void DeleteById(int id)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
