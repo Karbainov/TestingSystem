@@ -19,5 +19,14 @@ namespace TestingSystem.Data.StoredProcedure
             }
 
         }
+
+        public List<FeedbackByDateDTO> GetFeedbackByDate(DateTime dateTime1, DateTime dateTime2)
+        {
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "GetFeedbackByDateTime";
+                return connection.Query<FeedbackByDateDTO>(sqlExpression, new { dateTime1, dateTime2 }, commandType: CommandType.StoredProcedure).ToList();
+            }
+        }
     }
 }
