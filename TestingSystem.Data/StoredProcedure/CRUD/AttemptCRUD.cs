@@ -37,25 +37,23 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
 
 
 
-        //public List<AttemptDTO> AttemptByUserId(int userID)
-        //{
-        //    var connection = Connection.GetConnection();
-        //    string sqlExpression = "Attempt_GetByUserID";
-        //    AttemptDTO attempt = null;
-        //    attempt = connection.Query<AttemptDTO>(sqlExpression, new { userID }, commandType: CommandType.StoredProcedure).FirstOrDefault();
-        //    return attempt;
-        //}
+        public List<AttemptDTO> AttemptByUserId(int userID)
+        {
+            var connection = Connection.GetConnection();
+            string sqlExpression = "Attempt_GetByUserID";
+            
+            return connection.Query<AttemptDTO>(sqlExpression, new { userID }, commandType: CommandType.StoredProcedure).ToList();
+           
+        }
 
 
 
-        //public List<AttemptDTO> AttemptByTestId(int testID)
-        //{
-        //    var connection = Connection.GetConnection();
-        //    string sqlExpression = "Attempt_GetByTestID";
-        //    AttemptDTO attempt = null;
-        //    attempt = connection.Query<AttemptDTO>(sqlExpression, new { testID }, commandType: CommandType.StoredProcedure).FirstOrDefault();
-        //    return attempt;
-        //}
+        public List<AttemptDTO> AttemptByTestId(int testID)
+        {
+            var connection = Connection.GetConnection();
+            string sqlExpression = "Attempt_GetByTestID";
+            return connection.Query<AttemptDTO>(sqlExpression, new { testID }, commandType: CommandType.StoredProcedure).ToList();
+        }
 
         public void AttemptUpdate(AttemptDTO attempt)
         {
