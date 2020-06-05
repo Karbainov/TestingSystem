@@ -17,7 +17,7 @@ namespace TestingSystem.Data
         {
             GroupManager teacher = new GroupManager();
             SqlConnection connection = (SqlConnection)Connection.GetConnection();
-            return teacher.Group_GetByTeacherID(connection, user);
+            return teacher.GetGroupByTeacherID(connection, user);
 
         }
 

@@ -9,7 +9,7 @@ using TestingSystem.Data.DTO;
 
 namespace TestingSystem.Data.StoredProcedure.CRUD
 {
-    class User_RoleCRUD
+    class UserRoleCRUD
     {
         public int Create( User_RoleDTO user_Role)
         {
