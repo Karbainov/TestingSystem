@@ -24,22 +24,11 @@ namespace TestingSystem.Data
             UserManager user = new UserManager();
             return user.GetIncompleteTests(userID);
         }
-        public List<AllStudentTestsDTO> GetAllStudentsTests(int userID)
+        public List<AllStudentTestsDTO> GetAllStudentTests(int userID)
         {
             UserManager user = new UserManager();
             return user.GetStudentVsTests(userID);
         }
-        public void SelectActiveTest() 
-        {
-
-        }
-        public void CheckResult()
-        {
-
-        }
-        public void GetFinishedTest(UserDTO userG)
-        {
-
-        }
+       
     }
 }
