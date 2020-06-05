@@ -52,5 +52,50 @@ namespace TestingSystem.Data
             FeedbackCRUD fb = new FeedbackCRUD();
             fb.FeedbackDelete(feedback);
         }
+
+
+        // Question CRUD methods
+
+        public int AddQuestion(QuestionDTO question)
+        {
+            QuestionCRUD q = new QuestionCRUD();
+            return q.Add(question);
+        }
+
+        public List<QuestionDTO> GetAllQuestions()
+        {
+            QuestionCRUD q = new QuestionCRUD();
+            return q.GetAll();
+        }
+
+        public List<QuestionDTO> GetQuestionsByTestID(int testId)
+        {
+            QuestionCRUD q = new QuestionCRUD();
+            return q.GetByTestID(testId);
+        }
+
+        public List<QuestionDTO> GetQuestionsByTypeID(int typeId)
+        {
+            QuestionCRUD q = new QuestionCRUD();
+            return q.GetByTypeID(typeId);
+        }
+
+        public QuestionDTO GetQuestionsByTagID(int id)
+        {
+            QuestionCRUD q = new QuestionCRUD();
+            return q.GetById(id);
+        }
+
+        public void UpdateQuestion(QuestionDTO question)
+        {
+            QuestionCRUD q = new QuestionCRUD();
+            q.Update(question);
+        }
+
+        public void DeleteFeedback(QuestionDTO question)
+        {
+            QuestionCRUD q = new QuestionCRUD();
+            q.Delete(question.ID);
+        }
     }
 }
