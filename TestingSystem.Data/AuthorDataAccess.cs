@@ -284,10 +284,16 @@ namespace TestingSystem.Data
 
         //From QuestionManager
 
-        public void QuestionDeleteFromTest(int questionId)
+        public void DeleteQuestionFromTest(int questionId)
         {
             QuestionManager question = new QuestionManager();
             question.DeleteQuestionFromTest(questionId);
+        }
+
+        public List<QuestionDTO> GetQuestionByTestId(int testId)
+        {
+            QuestionManager question = new QuestionManager();
+            return question.GetQuestionsByTestID(testId);
         }
     }
 }
