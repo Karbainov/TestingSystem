@@ -368,7 +368,30 @@ namespace TestingSystem.Data
         {
             TagCRUD tg = new TagCRUD();
             return tg.Add(tag);
-        } 
+        }
 
+        public List<TagDTO> GetAllTag()
+        {
+            TagCRUD tg = new TagCRUD();
+            return tg.GetAll();
+        }
+
+        public TagDTO GetByIdTag(int id)
+        {
+            TagCRUD tg = new TagCRUD();
+            return tg.GetById(id);
+        }
+
+        public void UpdateTag(TagDTO tag) 
+        {
+            TagCRUD tg = new TagCRUD();
+            tg.Update(tag);
+        }
+
+        public void DeleteTag(int id)
+        {
+            TagCRUD tg = new TagCRUD();
+            tg.Delete(id);
+        }
     }
 }
