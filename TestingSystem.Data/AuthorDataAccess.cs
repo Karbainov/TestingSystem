@@ -48,8 +48,6 @@ namespace TestingSystem.Data
         }
 
 
-
-
         //Test_TegCRUD
 
         public int TestTagCreate(TestTagDTO testtag)
@@ -287,6 +285,71 @@ namespace TestingSystem.Data
         }
 
 
+        //TestCRUD
+
+        public int AddTest(TestDTO test)
+        {
+            TestCRUD ts = new TestCRUD();
+            return ts.Add(test);
+        }
+
+        public List<TestDTO> GetAllTest()
+        {
+            TestCRUD ts = new TestCRUD();
+            return ts.GetAll();
+        }
+
+        public TestDTO GetByIdTest(int id)
+        {
+            TestCRUD ts = new TestCRUD();
+            return ts.GetById(id);
+        }
+
+        public void UpdateTest(TestDTO test)
+        {
+            TestCRUD ts = new TestCRUD();
+            ts.Update(test);
+        }
+
+        public void DeleteTest(int id)
+        {
+            TestCRUD ts = new TestCRUD();
+            ts.Delete(id);
+        }
+
+
+        //TagCRUD
+        public int AddTag(TagDTO tag)
+        {
+            TagCRUD tg = new TagCRUD();
+            return tg.Add(tag);
+        }
+
+        public List<TagDTO> GetAllTag()
+        {
+            TagCRUD tg = new TagCRUD();
+            return tg.GetAll();
+        }
+
+        public TagDTO GetByIdTag(int id)
+        {
+            TagCRUD tg = new TagCRUD();
+            return tg.GetById(id);
+        }
+
+        public void UpdateTag(TagDTO tag)
+        {
+            TagCRUD tg = new TagCRUD();
+            tg.Update(tag);
+        }
+
+        public void DeleteTag(int id)
+        {
+            TagCRUD tg = new TagCRUD();
+            tg.Delete(id);
+        }
+
+
         //From FeedbackManager
 
         public List<FeedbackSortByDataTimeDTO> feedbackSortByDataTime(QuestionDTO question)
@@ -325,73 +388,16 @@ namespace TestingSystem.Data
 
         //From QuestionManager
 
-        public void QuestionDeleteFromTest(int questionId)
+        public void DeleteQuestionFromTest(int questionId)
         {
             QuestionManager question = new QuestionManager();
             question.DeleteQuestionFromTest(questionId);
         }
 
-        // TestCRUD
-
-        public int AddTest(TestDTO test)
+        public List<QuestionDTO> GetQuestionByTestId(int testId)
         {
-            TestCRUD ts = new TestCRUD();
-            return ts.Add(test);
-        }
-
-        public List<TestDTO> GetAllTest()
-        {
-            TestCRUD ts = new TestCRUD();
-            return ts.GetAll();
-        }
-
-        public TestDTO GetByIdTest(int id)
-        {
-            TestCRUD ts = new TestCRUD();
-            return ts.GetById(id);
-        }
-
-        public void UpdateTest(TestDTO test)
-        {
-            TestCRUD ts = new TestCRUD();
-            ts.Update(test);
-        }
-
-        public void DeleteTest(int id)
-        {
-            TestCRUD ts = new TestCRUD();
-            ts.Delete(id);
-        }
-
-        //TagCRUD
-        public int AddTag(TagDTO tag) 
-        {
-            TagCRUD tg = new TagCRUD();
-            return tg.Add(tag);
-        }
-
-        public List<TagDTO> GetAllTag()
-        {
-            TagCRUD tg = new TagCRUD();
-            return tg.GetAll();
-        }
-
-        public TagDTO GetByIdTag(int id)
-        {
-            TagCRUD tg = new TagCRUD();
-            return tg.GetById(id);
-        }
-
-        public void UpdateTag(TagDTO tag) 
-        {
-            TagCRUD tg = new TagCRUD();
-            tg.Update(tag);
-        }
-
-        public void DeleteTag(int id)
-        {
-            TagCRUD tg = new TagCRUD();
-            tg.Delete(id);
-        }
+            QuestionManager question = new QuestionManager();
+            return question.GetQuestionsByTestID(testId);
+        }        
     }
 }
