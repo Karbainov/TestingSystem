@@ -12,7 +12,7 @@ namespace TestingSystem.Data.StoredProcedure
     public class UserManager
     {
 
-        public int User_Student_Group_Add(SqlConnection connection, UserDTO user, GroupDTO group)//добавление студента сразу в группу
+        public int AddStudentAndPutThemIntoGroup(SqlConnection connection, UserDTO user, GroupDTO group)//добавление студента сразу в группу
         {
             connection.Open();
             string sqlExpression = "User_Create";
@@ -45,17 +45,17 @@ namespace TestingSystem.Data.StoredProcedure
 
             return command.ExecuteNonQuery();
         }
-        public int User_DeleteAccount(SqlConnection connection, UserDTO user)//удаление студента и всего, что с ним связано
-        {
-            connection.Open();
-            string sqlExpression = "User_DeleteAccount";
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
+        //public int User_DeleteAccount(SqlConnection connection, UserDTO user)//удаление студента и всего, что с ним связано
+        //{
+        //    connection.Open();
+        //    string sqlExpression = "User_DeleteAccount";
+        //    SqlCommand command = new SqlCommand(sqlExpression, connection);
+        //    command.CommandType = System.Data.CommandType.StoredProcedure;
 
-            SqlParameter userParam = new SqlParameter("@UserID", user.ID);
-            command.Parameters.Add(userParam);
-            return command.ExecuteNonQuery();
-        }
+        //    SqlParameter userParam = new SqlParameter("@UserID", user.ID);
+        //    command.Parameters.Add(userParam);
+        //    return command.ExecuteNonQuery();
+        //}
 
         public void AddUserWithRole (UserWithRoleDTO user)
         {

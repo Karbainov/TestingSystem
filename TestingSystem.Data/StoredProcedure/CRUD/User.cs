@@ -43,7 +43,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
         public int User_Update(SqlConnection connection, UserDTO user)
         {
             connection.Open();
-            string sqlExpression = "User_Create";
+            string sqlExpression = "User_Update";
             SqlCommand command = new SqlCommand(sqlExpression, connection);
             command.CommandType = System.Data.CommandType.StoredProcedure;
 

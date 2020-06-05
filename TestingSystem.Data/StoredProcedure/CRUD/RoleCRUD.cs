@@ -9,9 +9,9 @@ using TestingSystem.Data.DTO;
 
 namespace TestingSystem.Data.StoredProcedure.CRUD
 {
-    class Role
+    class RoleCRUD
     {
-        public int Role_Create( RoleDTO role)
+        public int Create( RoleDTO role)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -20,7 +20,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
                 return role.ID;
             }
         }
-        public void Role_Delete( RoleDTO role)
+        public void Delete( RoleDTO role)
         {
            
             using (IDbConnection connection = Connection.GetConnection())
@@ -29,7 +29,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
                 connection.Query<int>(sqlExpression, role.ID);
             }
         }
-        public void Role_Update( RoleDTO role)
+        public void Update( RoleDTO role)
         {
           
 
@@ -40,7 +40,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
                
             }
         }
-        public List<RoleDTO> Role_Read()
+        public List<RoleDTO> Read()
         {
             
             using (IDbConnection connection = Connection.GetConnection())
@@ -51,7 +51,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             }
             
         }
-        public List<RoleDTO> Role_ReadById( RoleDTO role)
+        public List<RoleDTO> ReadById( RoleDTO role)
         {
             
 

@@ -37,10 +37,10 @@ namespace TestingSystem.Data
             GroupCRUD group = new GroupCRUD();
             group.Update(groupU);
         }
-        public void GroupDelete(GroupDTO groupD)
+        public void Delete(int id)
         {
             GroupCRUD group = new GroupCRUD();
-            group.Add(groupD);
+            group.Delete(id);
         }
         public void StudentAdd (StudentGroupDTO studentA) 
         {
@@ -61,6 +61,51 @@ namespace TestingSystem.Data
         {
             TeacherGroup student = new TeacherGroup();
             student.DeleteByID(teacherD.ID);
+        }
+        public void AddRoleToUser(UserRoleDTO dTO)
+        {
+            UserRoleCRUD roleCRUD = new UserRoleCRUD();
+            roleCRUD.Create(dTO);
+        }
+        public List<UserRoleDTO> GetAllUserRoles()
+        {
+            UserRoleCRUD roleCRUD = new UserRoleCRUD();
+            return roleCRUD.Read();
+        }
+        public List<UserRoleDTO> GetUserRolesByUserID(int userID)
+        {
+            UserRoleCRUD roleCRUD = new UserRoleCRUD();
+            return roleCRUD.ReadByUserID(userID);
+        }
+        public List<UserRoleDTO> GetUserRolesByRoleID(int roleID)
+        {
+            UserRoleCRUD roleCRUD = new UserRoleCRUD();
+            return roleCRUD.ReadByRoleID(roleID);
+        }
+        public void DeliteUsersRole(UserRoleDTO userRoleDTO)
+        {
+            UserRoleCRUD roleCRUD = new UserRoleCRUD();
+            roleCRUD.Delete(userRoleDTO);
+        }
+        public void AddRole(RoleDTO role)
+        {
+            RoleCRUD roleCRUD = new RoleCRUD();
+            roleCRUD.Create(role);
+        }
+        public void DeleteRole(RoleDTO role)
+        {
+            RoleCRUD roleCRUD = new RoleCRUD();
+            roleCRUD.Delete(role);
+        }
+        public void UpdateRole(RoleDTO role)
+        {
+            RoleCRUD roleCRUD = new RoleCRUD();
+            roleCRUD.Update(role);
+        }
+        public List<RoleDTO> GetRole()
+        {
+            RoleCRUD role = new RoleCRUD();
+            return role.Read();
         }
     }
 }

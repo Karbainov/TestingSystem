@@ -10,14 +10,13 @@ namespace TestingSystem.Data.StoredProcedure
 {
     public class FeedbackManager
     {
-        public List<FeedbackSortByDataTimeDTO> feedbackSortByDataTime (QuestionDTO question) 
+        public List<FeedbackSortByDataTimeDTO> FeedbackSortByDataTime (QuestionDTO question) 
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Feedback_SortByDataTime @QuestionID";
                 return connection.Query<FeedbackSortByDataTimeDTO>(sqlExpression, new { question.ID }, commandType: CommandType.StoredProcedure).ToList();
             }
-
         }
 
         public List<FeedbackByDateDTO> GetFeedbackByDate(DateTime dateTime1, DateTime dateTime2)
@@ -35,6 +34,7 @@ namespace TestingSystem.Data.StoredProcedure
             string sqlExpression = "FeedBackQuestion_GetByUserDate";
             return connection.Query<FeedbackQuestionDTO>(sqlExpression, feedback, commandType: CommandType.StoredProcedure).ToList();           
         }
+
         public List<FeedbackByTestIDDTO> GetFeedbackByTest(FeedbackByTestIDDTO feedback)
         {
             var connection = Connection.GetConnection();
