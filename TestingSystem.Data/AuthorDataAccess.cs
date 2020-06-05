@@ -272,7 +272,7 @@ namespace TestingSystem.Data
         public List<Question_AnswerDTO> AnswerGetCorrectByTestID(TestDTO test)
         {
             TestManager managerAnswer = new TestManager();
-            return managerAnswer.Answer_GetCorrectByTestID(test);
+            return managerAnswer.GetCorrectAnswerByTestID(test);
         }
 
         public List<TagDTO> GetTagsInTest(TestDTO tests)
