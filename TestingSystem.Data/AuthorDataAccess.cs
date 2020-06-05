@@ -97,5 +97,39 @@ namespace TestingSystem.Data
             QuestionCRUD q = new QuestionCRUD();
             q.Delete(question.ID);
         }
+
+        // Type CRUD methods
+
+        public int AddType(TypeDTO type)
+        {
+            TypeCRUD typeCRUD = new TypeCRUD();
+            return typeCRUD.Add(type);
+        }
+
+        public List<TypeDTO> GetAllTypes()
+        {
+            TypeCRUD typeCRUD = new TypeCRUD();
+            return typeCRUD.GetAll();
+        }
+
+        public TypeDTO GetTypesByTagID(int id)
+        {
+            TypeCRUD typeCRUD = new TypeCRUD();
+            return typeCRUD.GetById(id);
+        }
+
+        public void UpdateType(TypeDTO type)
+        {
+            TypeCRUD typeCRUD = new TypeCRUD();
+            typeCRUD.Update(type);
+        }
+
+        public void DeleteType(TypeDTO type)
+        {
+            TypeCRUD typeCRUD = new TypeCRUD();
+            typeCRUD.Delete(type.ID);
+        }
+
+
     }
 }
