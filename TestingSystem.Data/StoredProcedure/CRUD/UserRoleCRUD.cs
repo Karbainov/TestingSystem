@@ -11,7 +11,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
 {
     class UserRoleCRUD
     {
-        public int Create( User_RoleDTO user_Role)
+        public int Create( UserRoleDTO user_Role)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -20,7 +20,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             }
            
         }
-        public int Delete( User_RoleDTO user_Role)
+        public int Delete( UserRoleDTO user_Role)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -28,28 +28,28 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
                 return connection.Query<int>(sqlExpression, user_Role).FirstOrDefault();
             }
         }
-        public List<User_RoleDTO> Read()
+        public List<UserRoleDTO> Read()
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "User_Role_Read";
-                return connection.Query<User_RoleDTO>(sqlExpression).ToList();
+                return connection.Query<UserRoleDTO>(sqlExpression).ToList();
             }
         }
-        public List<User_RoleDTO> ReadByUserID( User_RoleDTO user_Role)
+        public List<UserRoleDTO> ReadByUserID( int user_Role)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "User_Role_ReadByUserID @UserID";
-                return connection.Query<User_RoleDTO>(sqlExpression,user_Role).ToList();
+                return connection.Query<UserRoleDTO>(sqlExpression,new { user_Role }).ToList();
             }
         }
-        public List<User_RoleDTO> ReadByRoleID( User_RoleDTO user_Role)
+        public List<UserRoleDTO> ReadByRoleID( int roleID)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "User_Role_ReadByRoleID @RoleID";
-                return connection.Query<User_RoleDTO>(sqlExpression, user_Role).ToList();
+                return connection.Query<UserRoleDTO>(sqlExpression, new {roleID }).ToList();
             }
         }
     }

@@ -4,18 +4,18 @@ using System.Text;
 
 namespace TestingSystem.Data.DTO
 {
-    public class User_RoleDTO
+    public class UserRoleDTO
     {
         public int ID { get; set; }
         public int UserID { get; set; }
         public int RoleID { get; set; }
-        public User_RoleDTO(int id, int userID, int roleID)
+        public UserRoleDTO(int id, int userID, int roleID)
         {
             ID = id;
             UserID = userID;
             RoleID = roleID;
         }
-        public User_RoleDTO()
+        public UserRoleDTO()
         {
 
         }
