@@ -17,11 +17,11 @@ namespace TestingSystem.Data
             return answr.AnswerAdd(answer);
         }
 
-        public List<AnswerDTO> GetAllAnswer()
-        {
-            AnswerCRUD answr = new AnswerCRUD();
-            return answr.GetAll();
-        }
+        //public List<AnswerDTO> GetAllAnswer()
+        //{
+        //    AnswerCRUD answr = new AnswerCRUD();
+        //    return answr.GetAll();
+        //}
 
         public AnswerDTO GetAnswerById(int id)
         {
@@ -62,11 +62,11 @@ namespace TestingSystem.Data
             return tt.GetAll();
         }
 
-        public TestTagDTO GetById(int id)
-        {
-            TestTagCRUD tt = new TestTagCRUD();
-            return tt.GetById(id);
-        }
+        //public TestTagDTO GetById(int id)
+        //{
+        //    TestTagCRUD tt = new TestTagCRUD();
+        //    return tt.GetById(id);
+        //}
 
         public List<TestTagDTO> GetByTagId(int tagId)
         {
@@ -74,17 +74,17 @@ namespace TestingSystem.Data
             return tt.GetByTagId(tagId);
         }
 
-        public List<TestTagDTO> GetByTestId(int testId)
-        {
-            TestTagCRUD tt = new TestTagCRUD();
-            return tt.GetByTestId(testId);
-        }
+        //public List<TestTagDTO> GetByTestId(int testId)
+        //{
+        //    TestTagCRUD tt = new TestTagCRUD();
+        //    return tt.GetByTestId(testId);
+        //}
 
-        public TestTagDTO GetByTestIdTagId(int testId, int tagId)
-        {
-            TestTagCRUD tt = new TestTagCRUD();
-            return tt.GetByTestIdTagId(testId, tagId);
-        }
+        //public TestTagDTO GetByTestIdTagId(int testId, int tagId)
+        //{
+        //    TestTagCRUD tt = new TestTagCRUD();
+        //    return tt.GetByTestIdTagId(testId, tagId);
+        //}
 
         public void Update(TestTagDTO testtag)
         {
@@ -119,11 +119,11 @@ namespace TestingSystem.Data
 
         //FeedbackCRUD
 
-        public int AddFeedback(FeedbackDTO feedback)
-        {
-            FeedbackCRUD fb = new FeedbackCRUD();
-            return fb.FeedbackAdd(feedback);
-        }
+        //public int AddFeedback(FeedbackDTO feedback)
+        //{
+        //    FeedbackCRUD fb = new FeedbackCRUD();
+        //    return fb.FeedbackAdd(feedback);
+        //}
 
         public List<FeedbackDTO> GetAllFeedback()
         {
@@ -170,11 +170,11 @@ namespace TestingSystem.Data
             return q.GetByTypeID(typeId);
         }
 
-        public QuestionDTO GetQuestionsByTagID(int id)
-        {
-            QuestionCRUD q = new QuestionCRUD();
-            return q.GetById(id);
-        }
+        //public QuestionDTO GetQuestionsByTagID(int id)
+        //{
+        //    QuestionCRUD q = new QuestionCRUD();
+        //    return q.GetById(id);
+        //}
 
         public void UpdateQuestion(QuestionDTO question)
         {
@@ -191,98 +191,98 @@ namespace TestingSystem.Data
 
         //TypeCRUD 
 
-        public int AddType(TypeDTO type)
-        {
-            TypeCRUD typeCRUD = new TypeCRUD();
-            return typeCRUD.Add(type);
-        }
+        //public int AddType(TypeDTO type)
+        //{
+        //    TypeCRUD typeCRUD = new TypeCRUD();
+        //    return typeCRUD.Add(type);
+        //}
 
-        public List<TypeDTO> GetAllTypes()
-        {
-            TypeCRUD typeCRUD = new TypeCRUD();
-            return typeCRUD.GetAll();
-        }
+        //public List<TypeDTO> GetAllTypes()
+        //{
+        //    TypeCRUD typeCRUD = new TypeCRUD();
+        //    return typeCRUD.GetAll();
+        //}
 
-        public TypeDTO GetTypesByTagID(int id)
-        {
-            TypeCRUD typeCRUD = new TypeCRUD();
-            return typeCRUD.GetById(id);
-        }
+        //public TypeDTO GetTypesByTagID(int id)
+        //{
+        //    TypeCRUD typeCRUD = new TypeCRUD();
+        //    return typeCRUD.GetById(id);
+        //}
 
-        public void UpdateType(TypeDTO type)
-        {
-            TypeCRUD typeCRUD = new TypeCRUD();
-            typeCRUD.Update(type);
-        }
+        //public void UpdateType(TypeDTO type)
+        //{
+        //    TypeCRUD typeCRUD = new TypeCRUD();
+        //    typeCRUD.Update(type);
+        //}
 
-        public void DeleteType(TypeDTO type)
-        {
-            TypeCRUD typeCRUD = new TypeCRUD();
-            typeCRUD.Delete(type.ID);
-        }
+        //public void DeleteType(TypeDTO type)
+        //{
+        //    TypeCRUD typeCRUD = new TypeCRUD();
+        //    typeCRUD.Delete(type.ID);
+        //}
 
 
         //AttemptQuestionAnswerCRUD
 
-        public int Add(AttemptQuestionAnswerDTO aQA)
-        {
-            AttemptQuestionAnswerCRUD aqa = new AttemptQuestionAnswerCRUD();
-            return aqa.Add(aQA);
-        }
+        //public int Add(AttemptQuestionAnswerDTO aQA)
+        //{
+        //    AttemptQuestionAnswerCRUD aqa = new AttemptQuestionAnswerCRUD();
+        //    return aqa.Add(aQA);
+        //}
 
-        public List<AttemptQuestionAnswerDTO> GetAllAQA()
-        {
-            AttemptQuestionAnswerCRUD aqa = new AttemptQuestionAnswerCRUD();
-            return aqa.GetAll();
-        }
+        //public List<AttemptQuestionAnswerDTO> GetAllAQA()
+        //{
+        //    AttemptQuestionAnswerCRUD aqa = new AttemptQuestionAnswerCRUD();
+        //    return aqa.GetAll();
+        //}
 
-        public AttemptQuestionAnswerDTO GetByIdAQA(int id)
-        {
-            AttemptQuestionAnswerCRUD aqa = new AttemptQuestionAnswerCRUD();
-            return aqa.GetById(id);
-        }
+        //public AttemptQuestionAnswerDTO GetByIdAQA(int id)
+        //{
+        //    AttemptQuestionAnswerCRUD aqa = new AttemptQuestionAnswerCRUD();
+        //    return aqa.GetById(id);
+        //}
 
-        public List<AttemptQuestionAnswerDTO> GetByAttemptID(int attemptId)
-        {
-            AttemptQuestionAnswerCRUD aqa = new AttemptQuestionAnswerCRUD();
-            return aqa.GetByAttemptID(attemptId);
-        }
+        //public List<AttemptQuestionAnswerDTO> GetByAttemptID(int attemptId)
+        //{
+        //    AttemptQuestionAnswerCRUD aqa = new AttemptQuestionAnswerCRUD();
+        //    return aqa.GetByAttemptID(attemptId);
+        //}
 
-        public List<AttemptQuestionAnswerDTO> GetByQuestionID(int questionId)
-        {
-            AttemptQuestionAnswerCRUD aqa = new AttemptQuestionAnswerCRUD();
-            return aqa.GetByQuestionID(questionId);
-        }
+        //public List<AttemptQuestionAnswerDTO> GetByQuestionID(int questionId)
+        //{
+        //    AttemptQuestionAnswerCRUD aqa = new AttemptQuestionAnswerCRUD();
+        //    return aqa.GetByQuestionID(questionId);
+        //}
 
-        public List<AttemptQuestionAnswerDTO> GetByAnswerID(int answerId)
-        {
-            AttemptQuestionAnswerCRUD aqa = new AttemptQuestionAnswerCRUD();
-            return aqa.GetByAnswerID(answerId);
-        }
+        //public List<AttemptQuestionAnswerDTO> GetByAnswerID(int answerId)
+        //{
+        //    AttemptQuestionAnswerCRUD aqa = new AttemptQuestionAnswerCRUD();
+        //    return aqa.GetByAnswerID(answerId);
+        //}
 
-        public void DeleteAQA(int id)
-        {
-            AttemptQuestionAnswerCRUD aqa = new AttemptQuestionAnswerCRUD();
-            aqa.Delete(id);
-        }
+        //public void DeleteAQA(int id)
+        //{
+        //    AttemptQuestionAnswerCRUD aqa = new AttemptQuestionAnswerCRUD();
+        //    aqa.Delete(id);
+        //}
 
-        public void DeleteByAttemptID(int attemptId)
-        {
-            AttemptQuestionAnswerCRUD aqa = new AttemptQuestionAnswerCRUD();
-            aqa.DeleteByAttemptID(attemptId);
-        }
+        //public void DeleteByAttemptID(int attemptId)
+        //{
+        //    AttemptQuestionAnswerCRUD aqa = new AttemptQuestionAnswerCRUD();
+        //    aqa.DeleteByAttemptID(attemptId);
+        //}
 
-        public void DeleteByQuestionID(int questionId)
-        {
-            AttemptQuestionAnswerCRUD aqa = new AttemptQuestionAnswerCRUD();
-            aqa.DeleteByQuestionID(questionId);
-        }
+        //public void DeleteByQuestionID(int questionId)
+        //{
+        //    AttemptQuestionAnswerCRUD aqa = new AttemptQuestionAnswerCRUD();
+        //    aqa.DeleteByQuestionID(questionId);
+        //}
 
-        public void DeleteByAnswerID(int answerId)
-        {
-            AttemptQuestionAnswerCRUD aqa = new AttemptQuestionAnswerCRUD();
-            aqa.DeleteByAnswerID(answerId);
-        }
+        //public void DeleteByAnswerID(int answerId)
+        //{
+        //    AttemptQuestionAnswerCRUD aqa = new AttemptQuestionAnswerCRUD();
+        //    aqa.DeleteByAnswerID(answerId);
+        //}
 
 
         //TestCRUD
@@ -299,11 +299,11 @@ namespace TestingSystem.Data
             return ts.GetAll();
         }
 
-        public TestDTO GetByIdTest(int id)
-        {
-            TestCRUD ts = new TestCRUD();
-            return ts.GetById(id);
-        }
+        //public TestDTO GetByIdTest(int id)
+        //{
+        //    TestCRUD ts = new TestCRUD();
+        //    return ts.GetById(id);
+        //}
 
         public void UpdateTest(TestDTO test)
         {
@@ -311,11 +311,11 @@ namespace TestingSystem.Data
             ts.Update(test);
         }
 
-        public void DeleteTest(int id)
-        {
-            TestCRUD ts = new TestCRUD();
-            ts.Delete(id);
-        }
+        //public void DeleteTest(int id)
+        //{
+        //    TestCRUD ts = new TestCRUD();
+        //    ts.Delete(id);
+        //}
 
 
         //TagCRUD
@@ -331,11 +331,11 @@ namespace TestingSystem.Data
             return tg.GetAll();
         }
 
-        public TagDTO GetByIdTag(int id)
-        {
-            TagCRUD tg = new TagCRUD();
-            return tg.GetById(id);
-        }
+        //public TagDTO GetByIdTag(int id)
+        //{
+        //    TagCRUD tg = new TagCRUD();
+        //    return tg.GetById(id);
+        //}
 
         public void UpdateTag(TagDTO tag)
         {
@@ -352,17 +352,8 @@ namespace TestingSystem.Data
 
         //From FeedbackManager
 
-        public List<FeedbackSortByDataTimeDTO> feedbackSortByDataTime(QuestionDTO question)
-        {
-            FeedbackManager fb = new FeedbackManager();
-            return fb.FeedbackSortByDataTime(question);
-        }
+        
 
-        public List<FeedbackQuestionDTO> GetFeedbackAndQuestionByUserDate(UserIdDateIdDTO feedback)
-        {
-            FeedbackManager fb = new FeedbackManager();
-            return fb.GetFeedbackAndQuestionByUserDate(feedback);
-        }
 
 
         //From TestManager
@@ -379,11 +370,11 @@ namespace TestingSystem.Data
             return tm.GetTestVSTagSearchAnd(tag1, tag2, tag3);
         }
 
-        public List<QuestionAnswerDTO> AnswerGetCorrectByTestID(int testID)
-        {
-            TestManager managerAnswer = new TestManager();
-            return managerAnswer.GetCorrectAnswerByTestID(testID);
-        }
+        //public List<QuestionAnswerDTO> AnswerGetCorrectByTestID(int testID)
+        //{
+        //    TestManager managerAnswer = new TestManager();
+        //    return managerAnswer.GetCorrectAnswerByTestID(testID);
+        //}
 
         public List<TagDTO> GetTagsInTest(TestDTO tests)
         {
@@ -405,18 +396,14 @@ namespace TestingSystem.Data
             question.DeleteQuestionFromTest(questionId);
         }
 
-        public List<QuestionDTO> GetQuestionByTestId(int testId)
-        {
-            QuestionManager question = new QuestionManager();
-            return question.GetQuestionsByTestID(testId);
-        }
+        //public List<QuestionDTO> GetQuestionByTestId(int testId)
+        //{
+        //    QuestionManager question = new QuestionManager();
+        //    return question.GetQuestionsByTestID(testId);
+        //}
 
         //From AttemptManager
 
-        public void UpdateResult(AttemptDTO attempt)
-        {
-            AttemptManager am = new AttemptManager();
-            am.UpdateResult(attempt.id);
-        }
+        
     }
 }
