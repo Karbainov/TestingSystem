@@ -9,6 +9,45 @@ namespace TestingSystem.Data
 {
     public class AuthorDataAccess
     {
+        //AnswerCRUD
+
+        public int AddAnswer(AnswerDTO answer)
+        {
+            AnswerCRUD answr = new AnswerCRUD();
+            return answr.AnswerAdd(answer);
+        }
+
+        public List<AnswerDTO> GetAllAnswer()
+        {
+            AnswerCRUD answr = new AnswerCRUD();
+            return answr.GetAll();
+        }
+
+        public AnswerDTO GetAnswerById(int id)
+        {
+            AnswerCRUD answr = new AnswerCRUD();
+            return answr.GetById(id);
+        }
+
+        public List<AnswerDTO> GetAnswerByQuestionId(int questonId)
+        {
+            AnswerCRUD answr = new AnswerCRUD();
+            return answr.AnswerGetByQuestionId(questonId);
+        }
+
+        public void UpdateAnswer(AnswerDTO answer)
+        {
+            AnswerCRUD answr = new AnswerCRUD();
+            answr.Update(answer);
+        }
+
+        public void DeleteAnswer(int id)
+        {
+            AnswerCRUD answr = new AnswerCRUD();
+            answr.Delete(id);
+        }
+
+
         //Test_TegCRUD
 
         public int TestTagCreate(TestTagDTO testtag)
