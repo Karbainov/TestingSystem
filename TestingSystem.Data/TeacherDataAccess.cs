@@ -36,7 +36,7 @@ namespace TestingSystem.Data
         }
 
 
-        public List<Question_AnswerDTO> GetCorrectAnswerByTestID(TestDTO test)
+        public List<QuestionAnswerDTO> GetCorrectAnswerByTestID(TestDTO test)
         {
             TestManager teacher = new TestManager();
             return teacher.GetCorrectAnswerByTestID( test);
@@ -83,7 +83,7 @@ namespace TestingSystem.Data
 
       
 
-        public List<Question_AnswerDTO> GetQuestionAndAnswerByAttempt(AttemptDTO attempt)
+        public List<QuestionAnswerDTO> GetQuestionAndAnswerByAttempt(AttemptDTO attempt)
         {
             TestManager teacher = new TestManager();
             return teacher.GetQuestionAndAnswerFromAttempt(attempt);
