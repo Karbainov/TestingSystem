@@ -391,6 +391,11 @@ namespace TestingSystem.Data
             return test.GetTestTags(tests);
         }
 
+        public void DeleteTest(TestDTO test)
+        {
+            TestManager tm = new TestManager();
+            tm.DeleteTest(test.ID);
+        }
 
         //From QuestionManager
 
@@ -404,6 +409,14 @@ namespace TestingSystem.Data
         {
             QuestionManager question = new QuestionManager();
             return question.GetQuestionsByTestID(testId);
-        }        
+        }
+
+        //From AttemptManager
+
+        public void UpdateResult(AttemptDTO attempt)
+        {
+            AttemptManager am = new AttemptManager();
+            am.UpdateResult(attempt.id);
+        }
     }
 }
