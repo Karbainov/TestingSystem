@@ -9,69 +9,110 @@ namespace TestingSystem.Data
 {
     public class AuthorDataAccess
     {
+        //AnswerCRUD 
+
+        public int AddAnswer(AnswerDTO answer)
+        {
+            AnswerCRUD answr = new AnswerCRUD();
+            return answr.AnswerAdd(answer);
+        }
+
+        public List<AnswerDTO> GetAllAnswer()
+        {
+            AnswerCRUD answr = new AnswerCRUD();
+            return answr.GetAll();
+        }
+
+        public AnswerDTO GetAnswerById(int id)
+        {
+            AnswerCRUD answr = new AnswerCRUD();
+            return answr.GetById(id);
+        }
+
+        public List<AnswerDTO> GetAnswerByQuestionId(int questonId)
+        {
+            AnswerCRUD answr = new AnswerCRUD();
+            return answr.AnswerGetByQuestionId(questonId);
+        }
+
+        public void UpdateAnswer(AnswerDTO answer)
+        {
+            AnswerCRUD answr = new AnswerCRUD();
+            answr.Update(answer);
+        }
+
+        public void DeleteAnswer(int id)
+        {
+            AnswerCRUD answr = new AnswerCRUD();
+            answr.Delete(id);
+        }
+
+
+
+
         //Test_TegCRUD
 
         public int TestTagCreate(TestTagDTO testtag)
         {
-            TestTagCRUD tt= new TestTagCRUD();
+            TestTagCRUD tt = new TestTagCRUD();
             return tt.Add(testtag);
         }
 
-        public List<TestTagDTO> GetAll() 
+        public List<TestTagDTO> GetAll()
         {
             TestTagCRUD tt = new TestTagCRUD();
             return tt.GetAll();
         }
 
-        public TestTagDTO GetById(int id) 
+        public TestTagDTO GetById(int id)
         {
             TestTagCRUD tt = new TestTagCRUD();
             return tt.GetById(id);
         }
 
-        public List<TestTagDTO> GetByTagId(int tagId) 
+        public List<TestTagDTO> GetByTagId(int tagId)
         {
             TestTagCRUD tt = new TestTagCRUD();
             return tt.GetByTagId(tagId);
         }
 
-        public List<TestTagDTO> GetByTestId(int testId) 
+        public List<TestTagDTO> GetByTestId(int testId)
         {
             TestTagCRUD tt = new TestTagCRUD();
             return tt.GetByTestId(testId);
         }
 
-        public TestTagDTO GetByTestIdTagId(int testId, int tagId) 
+        public TestTagDTO GetByTestIdTagId(int testId, int tagId)
         {
             TestTagCRUD tt = new TestTagCRUD();
             return tt.GetByTestIdTagId(testId, tagId);
         }
 
-        public void Update(TestTagDTO testtag) 
+        public void Update(TestTagDTO testtag)
         {
             TestTagCRUD tt = new TestTagCRUD();
             tt.Update(testtag);
         }
 
-        public void DeleteById(int id) 
+        public void DeleteById(int id)
         {
             TestTagCRUD tt = new TestTagCRUD();
             tt.DeleteById(id);
         }
 
-        public void DeleteByTagId(int tagId) 
+        public void DeleteByTagId(int tagId)
         {
             TestTagCRUD tt = new TestTagCRUD();
             tt.DeleteByTagId(tagId);
         }
 
-        public void DeleteByTestId(int testId) 
+        public void DeleteByTestId(int testId)
         {
             TestTagCRUD tt = new TestTagCRUD();
             tt.DeleteByTestId(testId);
         }
 
-        public void DeleteByTestIdTagId(int testId, int tagId) 
+        public void DeleteByTestIdTagId(int testId, int tagId)
         {
             TestTagCRUD tt = new TestTagCRUD();
             tt.DeleteByTestIdTagId(testId, tagId);
@@ -251,16 +292,16 @@ namespace TestingSystem.Data
         public List<FeedbackSortByDataTimeDTO> feedbackSortByDataTime(QuestionDTO question)
         {
             FeedbackManager fb = new FeedbackManager();
-            return fb.FeedbackSortByDataTime(question);        
+            return fb.FeedbackSortByDataTime(question);
         }
 
 
         //From TestManager
 
-        public List<SearchTestByTagDTO> GetTestVSTagSearchOr(string tag1, string tag2, string tag3) 
+        public List<SearchTestByTagDTO> GetTestVSTagSearchOr(string tag1, string tag2, string tag3)
         {
             TestManager tm = new TestManager();
-            return tm.GetTestVSTagSearchOr(tag1, tag2, tag3);        
+            return tm.GetTestVSTagSearchOr(tag1, tag2, tag3);
         }
 
         public List<SearchTestByTagDTO> GetTestVSTagSearchAnd(string tag1, string tag2, string tag3)
@@ -290,15 +331,15 @@ namespace TestingSystem.Data
             question.DeleteQuestionFromTest(questionId);
         }
 
-        // TEstCRUD
+        // TestCRUD
 
-        public int AddTest(TestDTO test) 
+        public int AddTest(TestDTO test)
         {
             TestCRUD ts = new TestCRUD();
             return ts.Add(test);
         }
 
-        public List<TestDTO> GetAllTest() 
+        public List<TestDTO> GetAllTest()
         {
             TestCRUD ts = new TestCRUD();
             return ts.GetAll();
@@ -310,7 +351,7 @@ namespace TestingSystem.Data
             return ts.GetById(id);
         }
 
-        public void UpdateTest(TestDTO test) 
+        public void UpdateTest(TestDTO test)
         {
             TestCRUD ts = new TestCRUD();
             ts.Update(test);
@@ -321,5 +362,13 @@ namespace TestingSystem.Data
             TestCRUD ts = new TestCRUD();
             ts.Delete(id);
         }
+
+        //TagCRUD
+        public int AddTag(TagDTO tag) 
+        {
+            TagCRUD tg = new TagCRUD();
+            return tg.Add(tag);
+        } 
+
     }
 }
