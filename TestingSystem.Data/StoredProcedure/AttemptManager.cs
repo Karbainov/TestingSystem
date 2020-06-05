@@ -16,7 +16,27 @@ namespace TestingSystem.Data.StoredProcedure
             string sqlExpression = "Attempt_GetByUserIdTestId";            
             return connection.Query<AttemptResultDTO>(sqlExpression, attempt, commandType: CommandType.StoredProcedure).ToList();
         }
-
+        /*
+        public List<AttemptResultDTO> GetAllAnswersByAttemptId(int attemptId)
+        {
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "GetAllAnswersByAttemptId";
+                connection.Execute(sqlExpression, new { attemptId }, commandType: CommandType.StoredProcedure);
+                return connection.Query<AttemptResultDTO>(sqlExpression, attemptId, commandType: CommandType.StoredProcedure).ToList();
+            }
+        }
+        */
+        public List<AttemptResultDTO> GetBestResultsOfStudentsByTestId(int testId)
+        {
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "GetBestResultsOfStudentsByTestId";
+                connection.Execute(sqlExpression, new { testId }, commandType: CommandType.StoredProcedure);
+                return connection.Query<AttemptResultDTO>(sqlExpression, testId, commandType: CommandType.StoredProcedure).ToList();
+            }
+        }
+        
         public void UpdateResult(int id)
         {
             using (IDbConnection connection = Connection.GetConnection())
