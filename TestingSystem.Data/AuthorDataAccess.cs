@@ -358,6 +358,12 @@ namespace TestingSystem.Data
             return fb.FeedbackSortByDataTime(question);
         }
 
+        public List<FeedbackQuestionDTO> GetFeedbackAndQuestionByUserDate(UserIdDateIdDTO feedback)
+        {
+            FeedbackManager fb = new FeedbackManager();
+            return fb.GetFeedbackAndQuestionByUserDate(feedback);
+        }
+
 
         //From TestManager
 
