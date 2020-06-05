@@ -48,12 +48,12 @@ namespace TestingSystem.Data.StoredProcedure
             //reader.Close();
             //return test;
         }
-        public List<Question_AnswerDTO> GetCorrectAnswerByTestID(TestDTO test)//нахождение правильных ответов теста
+        public List<QuestionAnswerDTO> GetCorrectAnswerByTestID(TestDTO test)//нахождение правильных ответов теста
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Answer_GetCorrectByTestID @TestID";
-                return connection.Query<Question_AnswerDTO>(sqlExpression, test).ToList();
+                return connection.Query<QuestionAnswerDTO>(sqlExpression, test).ToList();
             }
             //connection.Open();
             //string sqlExpression = "Answer_GetCorrectByTestID";
@@ -78,12 +78,12 @@ namespace TestingSystem.Data.StoredProcedure
             //reader.Close();
             //return answers;
         }
-        public List<Question_AnswerDTO> GetQuestionAndAnswerFromAttempt(AttemptDTO attempt)//все вопросы и ответы попытки
+        public List<QuestionAnswerDTO> GetQuestionAndAnswerFromAttempt(AttemptDTO attempt)//все вопросы и ответы попытки
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Attempt_GetQuestionAndAnswer @AttemptID";
-                return connection.Query<Question_AnswerDTO>(sqlExpression, attempt).ToList();
+                return connection.Query<QuestionAnswerDTO>(sqlExpression, attempt).ToList();
             }
             //connection.Open();
             //string sqlExpression = "Attempt_GetQuestionAndAnswer";

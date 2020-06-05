@@ -310,7 +310,7 @@ namespace TestingSystem.Data
             return tm.GetTestVSTagSearchAnd(tag1, tag2, tag3);
         }
 
-        public List<Question_AnswerDTO> AnswerGetCorrectByTestID(TestDTO test)
+        public List<QuestionAnswerDTO> AnswerGetCorrectByTestID(TestDTO test)
         {
             TestManager managerAnswer = new TestManager();
             return managerAnswer.GetCorrectAnswerByTestID(test);
