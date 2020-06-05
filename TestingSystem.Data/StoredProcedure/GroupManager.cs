@@ -47,5 +47,13 @@ namespace TestingSystem.Data.StoredProcedure
                 return connection.Query<UserDTO>(sqlExpression, new { id }, commandType: CommandType.StoredProcedure).ToList();
             }
         }
+        public List<UserDTO> GetTeacherByGroupId(int Groupid)
+        {
+            var connection = Connection.GetConnection();
+            connection.Open();
+            string sqlExpression = "GetTeacherByGroupID";
+            List<UserDTO> teachers = connection.Query<UserDTO>(sqlExpression, new { Groupid }, commandType: CommandType.StoredProcedure).ToList();
+            return teachers;
+        }
     }
 }
