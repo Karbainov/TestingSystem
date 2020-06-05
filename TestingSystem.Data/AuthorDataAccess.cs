@@ -182,7 +182,7 @@ namespace TestingSystem.Data
             q.Update(question);
         }
 
-        public void DeleteFeedback(QuestionDTO question)
+        public void DeleteQuestion(QuestionDTO question)
         {
             QuestionCRUD q = new QuestionCRUD();
             q.Delete(question.ID);
@@ -329,10 +329,43 @@ namespace TestingSystem.Data
             question.DeleteQuestionFromTest(questionId);
         }
 
+<<<<<<< HEAD
         public List<QuestionDTO> GetQuestionByTestId(int testId)
         {
             QuestionManager question = new QuestionManager();
             return question.GetQuestionsByTestID(testId);
+=======
+        // TEstCRUD
+
+        public int AddTest(TestDTO test) 
+        {
+            TestCRUD ts = new TestCRUD();
+            return ts.Add(test);
+        }
+
+        public List<TestDTO> GetAllTest() 
+        {
+            TestCRUD ts = new TestCRUD();
+            return ts.GetAll();
+        }
+
+        public TestDTO GetByIdTest(int id)
+        {
+            TestCRUD ts = new TestCRUD();
+            return ts.GetById(id);
+        }
+
+        public void UpdateTest(TestDTO test) 
+        {
+            TestCRUD ts = new TestCRUD();
+            ts.Update(test);
+        }
+
+        public void DeleteTest(int id)
+        {
+            TestCRUD ts = new TestCRUD();
+            ts.Delete(id);
+>>>>>>> AuthorDataAccessTest
         }
     }
 }
