@@ -17,8 +17,7 @@ namespace TestingSystem.Data
         {
             GroupManager teacher = new GroupManager();
             SqlConnection connection = (SqlConnection)Connection.GetConnection();
-            return teacher.GetGroupByTeacherID( user);
-
+            return teacher.GetGroupByTeacherID(user);
         }
 
         public List<UserDTO> GetStudentsFromGroup(int id)
