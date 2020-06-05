@@ -11,7 +11,7 @@ namespace TestingSystem.Data.StoredProcedure
 {
     public class TestManager
     {
-        public List<TestDTO> Test_Attempt_GetLate(UserDTO user)//просроченные тесты студента
+        public List<TestDTO> GetLateAttempt(UserDTO user)//просроченные тесты студента
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -48,7 +48,7 @@ namespace TestingSystem.Data.StoredProcedure
             //reader.Close();
             //return test;
         }
-        public List<Question_AnswerDTO> Answer_GetCorrectByTestID(TestDTO test)//нахождение правильных ответов теста
+        public List<Question_AnswerDTO> GetCorrectAnswerByTestID(TestDTO test)//нахождение правильных ответов теста
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -78,7 +78,7 @@ namespace TestingSystem.Data.StoredProcedure
             //reader.Close();
             //return answers;
         }
-        public List<Question_AnswerDTO> Attempt_GetQuestionAndAnswer(AttemptDTO attempt)//все вопросы и ответы попытки
+        public List<Question_AnswerDTO> GetQuestionAndAnswerFromAttempt(AttemptDTO attempt)//все вопросы и ответы попытки
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -110,7 +110,7 @@ namespace TestingSystem.Data.StoredProcedure
             //return question_Answers;
         }
 
-        public int Attempt_DeleteConcrete(AttemptDTO attempt)//удаление попытки 
+        public int DeleteConcreteAttempt(AttemptDTO attempt)//удаление попытки 
         {
             using (IDbConnection connection = Connection.GetConnection())
             {

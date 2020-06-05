@@ -9,9 +9,9 @@ using TestingSystem.Data.DTO;
 
 namespace TestingSystem.Data.StoredProcedure.CRUD
 {
-    class User_Role
+    class User_RoleCRUD
     {
-        public int User_Role_Create( User_RoleDTO user_Role)
+        public int Create( User_RoleDTO user_Role)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -20,7 +20,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             }
            
         }
-        public int User_Role_Delete( User_RoleDTO user_Role)
+        public int Delete( User_RoleDTO user_Role)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -28,7 +28,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
                 return connection.Query<int>(sqlExpression, user_Role).FirstOrDefault();
             }
         }
-        public List<User_RoleDTO> User_Role_Read()
+        public List<User_RoleDTO> Read()
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -36,7 +36,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
                 return connection.Query<User_RoleDTO>(sqlExpression).ToList();
             }
         }
-        public List<User_RoleDTO> User_Role_ReadByUserID( User_RoleDTO user_Role)
+        public List<User_RoleDTO> ReadByUserID( User_RoleDTO user_Role)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -44,7 +44,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
                 return connection.Query<User_RoleDTO>(sqlExpression,user_Role).ToList();
             }
         }
-        public List<User_RoleDTO> User_Role_ReadByRoleID( User_RoleDTO user_Role)
+        public List<User_RoleDTO> ReadByRoleID( User_RoleDTO user_Role)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {

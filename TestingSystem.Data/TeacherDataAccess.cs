@@ -40,7 +40,7 @@ namespace TestingSystem.Data
         public List<Question_AnswerDTO> GetCorrectAnswerByTestID(TestDTO test)
         {
             TestManager teacher = new TestManager();
-            return teacher.Answer_GetCorrectByTestID( test);
+            return teacher.GetCorrectAnswerByTestID( test);
 
         }
 
@@ -62,7 +62,7 @@ namespace TestingSystem.Data
         public List<TestDTO> GetExpiredTestOfStudent(UserDTO user)
         {
             TestManager teacher = new TestManager();
-            return teacher.Test_Attempt_GetLate( user);
+            return teacher.GetLateAttempt( user);
 
         }
 
@@ -87,7 +87,7 @@ namespace TestingSystem.Data
         public List<Question_AnswerDTO> GetQuestionAndAnswerByAttempt(AttemptDTO attempt)
         {
             TestManager teacher = new TestManager();
-            return teacher.Attempt_GetQuestionAndAnswer(attempt);
+            return teacher.GetQuestionAndAnswerFromAttempt(attempt);
 
         }
 
