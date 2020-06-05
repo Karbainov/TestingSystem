@@ -9,9 +9,9 @@ using TestingSystem.Data.DTO;
 
 namespace TestingSystem.Data.StoredProcedure.CRUD
 {
-    public class Question
+    public class QuestionCRUD
     {
-        public int QuestionAdd(QuestionDTO question)
+        public int Add(QuestionDTO question)
         {
             var connection = Connection.GetConnection();
             connection.Open();
@@ -21,7 +21,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             return question.ID;
         }
 
-        public List<QuestionDTO> QuestionGetAll()
+        public List<QuestionDTO> GetAll()
         {
             var connection = Connection.GetConnection();
             connection.Open();
@@ -31,7 +31,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
 
         }
 
-        public QuestionDTO QuestionGetById(int id)
+        public QuestionDTO GetById(int id)
         {
             var connection = Connection.GetConnection();
             connection.Open();
@@ -41,7 +41,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
 
         }
 
-        public List<QuestionDTO> QuestionGetByTestID(int Testid)
+        public List<QuestionDTO> GetByTestID(int Testid)
         {
             var connection = Connection.GetConnection();
             connection.Open();
@@ -50,7 +50,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             return questions;
         }
 
-        public List<QuestionDTO> QuestionGetByTypeID(int Typeid)
+        public List<QuestionDTO> GetByTypeID(int Typeid)
         {
             var connection = Connection.GetConnection();
             connection.Open();
@@ -60,14 +60,14 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
 
         }
 
-        public void QuestionUpdate(QuestionDTO question)
+        public void Update(QuestionDTO question)
         {
             var connection = Connection.GetConnection();
             string sqlExpression = "Question_Update";
             connection.Execute(sqlExpression, question, commandType: CommandType.StoredProcedure);
         }
 
-        public void QuestionDelete(int id)
+        public void Delete(int id)
         {
             var connection = Connection.GetConnection();
             string sqlExpression = "Question_Delete";
