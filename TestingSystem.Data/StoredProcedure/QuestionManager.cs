@@ -26,7 +26,6 @@ namespace TestingSystem.Data.StoredProcedure
                 return connection.Query<QuestionDTO>(sqlExpression, new { TestID }, commandType: CommandType.StoredProcedure).ToList();
             }
         }
-
         
         public void CountQtyOfCorrectAnswer(int questionId)
         {
