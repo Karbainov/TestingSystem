@@ -22,7 +22,7 @@ namespace TestingSystem.Data
         }
 
 
-        //Test_Teg
+        //Test_TegCRUD
         public int TestTagCreate(TestTagDTO testtag)
         {
             TestTagCRUD tt= new TestTagCRUD();
@@ -213,10 +213,65 @@ namespace TestingSystem.Data
             return tm.GetTestVSTagSearchAnd(tag1, tag2, tag3);
         }
 
+        //AttemptQuestionAnswerCRUD
+        public int Add(AttemptQuestionAnswerDTO aQA)
+        {
+            AttemptQuestionAnswerCRUD aqa = new AttemptQuestionAnswerCRUD();
+            return aqa.Add(aQA);
+        }
 
-        //var connect = Connection.GetSqlConnection();
-        //User user = new User();
-        //user.User_Create(connect, userC);
+        public List<AttemptQuestionAnswerDTO> GetAllAQA() 
+        {
+            AttemptQuestionAnswerCRUD aqa = new AttemptQuestionAnswerCRUD();
+            return aqa.GetAll();
+        }
 
+        public AttemptQuestionAnswerDTO GetByIdAQA(int id) 
+        {
+            AttemptQuestionAnswerCRUD aqa = new AttemptQuestionAnswerCRUD();
+            return aqa.GetById(id);
+        }
+
+        public List<AttemptQuestionAnswerDTO> GetByAttemptID(int attemptId) 
+        {
+            AttemptQuestionAnswerCRUD aqa = new AttemptQuestionAnswerCRUD();
+            return aqa.GetByAttemptID(attemptId);
+        }
+
+        public List<AttemptQuestionAnswerDTO> GetByQuestionID(int questionId) 
+        {
+            AttemptQuestionAnswerCRUD aqa = new AttemptQuestionAnswerCRUD();
+            return aqa.GetByQuestionID(questionId);
+        }
+
+        public List<AttemptQuestionAnswerDTO> GetByAnswerID(int answerId) 
+        {
+            AttemptQuestionAnswerCRUD aqa = new AttemptQuestionAnswerCRUD();
+            return aqa.GetByAnswerID(answerId);
+        }
+
+        public void DeleteAQA(int id) 
+        {
+            AttemptQuestionAnswerCRUD aqa = new AttemptQuestionAnswerCRUD();
+            aqa.Delete(id);
+        }
+
+        public void DeleteByAttemptID(int attemptId) 
+        {
+            AttemptQuestionAnswerCRUD aqa = new AttemptQuestionAnswerCRUD();
+            aqa.DeleteByAttemptID(attemptId);
+        }
+
+        public void DeleteByQuestionID(int questionId) 
+        {
+            AttemptQuestionAnswerCRUD aqa = new AttemptQuestionAnswerCRUD();
+            aqa.DeleteByQuestionID(questionId);
+        }
+
+        public void DeleteByAnswerID(int answerId) 
+        {
+            AttemptQuestionAnswerCRUD aqa = new AttemptQuestionAnswerCRUD();
+            aqa.DeleteByAnswerID(answerId);
+        }
     }
 }
