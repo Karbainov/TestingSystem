@@ -13,11 +13,11 @@ namespace TestingSystem.Data
     public class TeacherDataAccess
     {
 
-        public List<GroupDTO> GetGroupByTeacherID(UserDTO user)
+        public List<GroupDTO> GetGroupByTeacherID(int teacherID)
         {
             GroupManager teacher = new GroupManager();
             SqlConnection connection = (SqlConnection)Connection.GetConnection();
-            return teacher.GetGroupByTeacherID(user);
+            return teacher.GetGroupByTeacherID(teacherID);
         }
 
         public List<UserDTO> GetStudentsFromGroup(int id)
@@ -36,10 +36,10 @@ namespace TestingSystem.Data
         }
 
 
-        public List<QuestionAnswerDTO> GetCorrectAnswerByTestID(TestDTO test)
+        public List<QuestionAnswerDTO> GetCorrectAnswerByTestID(int testID)
         {
             TestManager teacher = new TestManager();
-            return teacher.GetCorrectAnswerByTestID( test);
+            return teacher.GetCorrectAnswerByTestID( testID);
 
         }
 
@@ -58,10 +58,10 @@ namespace TestingSystem.Data
         }
 
 
-        public List<TestDTO> GetExpiredTestOfStudent(UserDTO user)
+        public List<TestDTO> GetExpiredTestOfStudent(int userID)
         {
             TestManager teacher = new TestManager();
-            return teacher.GetLateAttempt( user);
+            return teacher.GetLateAttempt( userID);
 
         }
 
@@ -83,10 +83,10 @@ namespace TestingSystem.Data
 
       
 
-        public List<QuestionAnswerDTO> GetQuestionAndAnswerByAttempt(AttemptDTO attempt)
+        public List<QuestionAnswerDTO> GetQuestionAndAnswerByAttempt(int attemptID)
         {
             TestManager teacher = new TestManager();
-            return teacher.GetQuestionAndAnswerFromAttempt(attempt);
+            return teacher.GetQuestionAndAnswerFromAttempt(attemptID);
 
         }
 

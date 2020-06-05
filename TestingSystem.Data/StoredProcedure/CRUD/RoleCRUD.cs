@@ -26,7 +26,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Role_Delete @ID";
-                connection.Query<int>(sqlExpression, id);
+                connection.Query<int>(sqlExpression,new { id });
             }
         }
         public void Update( RoleDTO role)
@@ -59,7 +59,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Role_ReadDyId @ID ";
-                return connection.Query<RoleDTO>(sqlExpression,id).ToList();
+                return connection.Query<RoleDTO>(sqlExpression,new { id }).ToList();
 
             }
         }

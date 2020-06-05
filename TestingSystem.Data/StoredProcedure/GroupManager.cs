@@ -11,12 +11,12 @@ namespace TestingSystem.Data.StoredProcedure
 {
     class GroupManager
     {
-        public List<GroupDTO> GetGroupByTeacherID( UserDTO user)//все группы преподавателя
+        public List<GroupDTO> GetGroupByTeacherID( int id)//все группы преподавателя
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Group_GetByTeacherID @TeacherID";
-                return connection.Query<GroupDTO>(sqlExpression, user.ID).ToList();
+                return connection.Query<GroupDTO>(sqlExpression, new { id }).ToList();
             }
            
         }

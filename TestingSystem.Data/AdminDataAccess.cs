@@ -87,21 +87,7 @@ namespace TestingSystem.Data
             UserRoleCRUD roleCRUD = new UserRoleCRUD();
             roleCRUD.Delete(userRoleDTO);
         }
-        public void AddRole(RoleDTO role)
-        {
-            RoleCRUD roleCRUD = new RoleCRUD();
-            roleCRUD.Create(role);
-        }
-        public void DeleteRole(RoleDTO role)
-        {
-            RoleCRUD roleCRUD = new RoleCRUD();
-            roleCRUD.Delete(role);
-        }
-        public void UpdateRole(RoleDTO role)
-        {
-            RoleCRUD roleCRUD = new RoleCRUD();
-            roleCRUD.Update(role);
-        }
+       
         public List<RoleDTO> GetRole()
         {
             RoleCRUD role = new RoleCRUD();
