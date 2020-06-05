@@ -11,7 +11,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
 {
     public class AttemptQuestionAnswerCRUD
     {
-        public int AttemptQuestionAnswerAdd(AttemptQuestionAnswerDTO aQA)
+        public int Add(AttemptQuestionAnswerDTO aQA)
         {
             var connection = Connection.GetConnection();
             connection.Open();
@@ -21,7 +21,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             return aQA.ID;
         }
 
-        public List<AttemptQuestionAnswerDTO> AttemptQuestionAnswerGetAll()
+        public List<AttemptQuestionAnswerDTO> GetAll()
         {
             var connection = Connection.GetConnection();
             connection.Open();
@@ -31,7 +31,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
 
         }
 
-        public AttemptQuestionAnswerDTO AttemptQuestionAnswerGetById(int id)
+        public AttemptQuestionAnswerDTO GetById(int id)
         {
             var connection = Connection.GetConnection();
             connection.Open();
@@ -41,7 +41,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
 
         }
 
-        public List<AttemptQuestionAnswerDTO> AttemptQuestionAnswerGetByAttemptID(int attemptId)
+        public List<AttemptQuestionAnswerDTO> GetByAttemptID(int attemptId)
         {
             var connection = Connection.GetConnection();
             connection.Open();
@@ -50,7 +50,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             return aQA;
         }
 
-        public List<AttemptQuestionAnswerDTO> AttemptQuestionAnswerGetByQuestionID(int questionId)
+        public List<AttemptQuestionAnswerDTO> GetByQuestionID(int questionId)
         {
             var connection = Connection.GetConnection();
             connection.Open();
@@ -60,7 +60,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
 
         }
         
-        public List<AttemptQuestionAnswerDTO> AttemptQuestionAnswerGetByAnswerID(int answerId)
+        public List<AttemptQuestionAnswerDTO> GetByAnswerID(int answerId)
         {
             var connection = Connection.GetConnection();
             connection.Open();
@@ -70,28 +70,28 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
 
         }
 
-        public void AttemptQuestionAnswerDelete(int id)
+        public void Delete(int id)
         {
             var connection = Connection.GetConnection();
             string sqlExpression = "Attempt_Question_Answer_Delete";
             connection.Execute(sqlExpression, new { id }, commandType: CommandType.StoredProcedure);
         }
         
-        public void AttemptQuestionAnswerDeleteByAttemptID(int attemptId)
+        public void DeleteByAttemptID(int attemptId)
         {
             var connection = Connection.GetConnection();
             string sqlExpression = "Attempt_Question_Answer_DeleteByAttemptId";
             connection.Execute(sqlExpression, new { attemptId }, commandType: CommandType.StoredProcedure);
         }
         
-        public void AttemptQuestionAnswerDeleteByQuestionID(int questionId)
+        public void DeleteByQuestionID(int questionId)
         {
             var connection = Connection.GetConnection();
             string sqlExpression = "Attempt_Question_Answer_DeleteByQuestionId";
             connection.Execute(sqlExpression, new { questionId }, commandType: CommandType.StoredProcedure);
         }
         
-        public void AttemptQuestionAnswerDeleteByAnswerID(int answerId)
+        public void DeleteByAnswerID(int answerId)
         {
             var connection = Connection.GetConnection();
             string sqlExpression = "Attempt_Question_Answer_DeleteByAnswerId";
