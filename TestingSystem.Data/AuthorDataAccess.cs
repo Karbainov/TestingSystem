@@ -9,45 +9,6 @@ namespace TestingSystem.Data
 {
     public class AuthorDataAccess
     {
-        //AnswerCRUD
-
-        public int AddAnswer(AnswerDTO answer)
-        {
-            AnswerCRUD answr = new AnswerCRUD();
-            return answr.AnswerAdd(answer);
-        }
-
-        public List<AnswerDTO> GetAllAnswer()
-        {
-            AnswerCRUD answr = new AnswerCRUD();
-            return answr.GetAll();
-        }
-
-        public AnswerDTO GetAnswerById(int id)
-        {
-            AnswerCRUD answr = new AnswerCRUD();
-            return answr.GetById(id);
-        }
-
-        public List<AnswerDTO> GetAnswerByQuestionId(int questonId)
-        {
-            AnswerCRUD answr = new AnswerCRUD();
-            return answr.AnswerGetByQuestionId(questonId);
-        }
-
-        public void UpdateAnswer(AnswerDTO answer)
-        {
-            AnswerCRUD answr = new AnswerCRUD();
-            answr.Update(answer);
-        }
-
-        public void DeleteAnswer(int id)
-        {
-            AnswerCRUD answr = new AnswerCRUD();
-            answr.Delete(id);
-        }
-
-
         //Test_TegCRUD
 
         public int TestTagCreate(TestTagDTO testtag)
@@ -323,18 +284,12 @@ namespace TestingSystem.Data
 
         //From QuestionManager
 
-        public void DeleteQuestionFromTest(int questionId)
+        public void QuestionDeleteFromTest(int questionId)
         {
             QuestionManager question = new QuestionManager();
             question.DeleteQuestionFromTest(questionId);
         }
 
-<<<<<<< HEAD
-        public List<QuestionDTO> GetQuestionByTestId(int testId)
-        {
-            QuestionManager question = new QuestionManager();
-            return question.GetQuestionsByTestID(testId);
-=======
         // TEstCRUD
 
         public int AddTest(TestDTO test) 
@@ -365,7 +320,6 @@ namespace TestingSystem.Data
         {
             TestCRUD ts = new TestCRUD();
             ts.Delete(id);
->>>>>>> AuthorDataAccessTest
         }
     }
 }
