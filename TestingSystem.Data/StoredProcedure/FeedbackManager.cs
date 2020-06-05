@@ -10,7 +10,7 @@ namespace TestingSystem.Data.StoredProcedure
 {
     public class FeedbackManager
     {
-        public List<FeedbackSortByDataTimeDTO> feedbackSortByDataTime (QuestionDTO question) 
+        public List<FeedbackSortByDataTimeDTO> FeedbackSortByDataTime (QuestionDTO question) 
         {
             using (IDbConnection connection = Connection.GetConnection())
             {

@@ -18,17 +18,80 @@ namespace TestingSystem.Data
         public List<Question_AnswerDTO> AnswerGetCorrectByTestID(TestDTO test)
         {
             TestManager managerAnswer = new TestManager();
-            List<Question_AnswerDTO> ACT = new List<Question_AnswerDTO>(managerAnswer.Answer_GetCorrectByTestID(test));
-            return ACT;
+            return managerAnswer.Answer_GetCorrectByTestID(test);
         }
 
+
+        //Test_Teg
         public int TestTagCreate(TestTagDTO testtag)
         {
             TestTagCRUD tt= new TestTagCRUD();
-            int i = tt.Add(testtag);
-            return i;
-        }      
-        
+            return tt.Add(testtag);
+        }
+
+
+        public List<TestTagDTO> GetAll() 
+        {
+            TestTagCRUD tt = new TestTagCRUD();
+            return tt.GetAll();
+        }
+
+        public TestTagDTO GetById(int id) 
+        {
+            TestTagCRUD tt = new TestTagCRUD();
+            return tt.GetById(id);
+        }
+
+        public List<TestTagDTO> GetByTagId(int tagId) 
+        {
+            TestTagCRUD tt = new TestTagCRUD();
+            return tt.GetByTagId(tagId);
+        }
+
+        public List<TestTagDTO> GetByTestId(int testId) 
+        {
+            TestTagCRUD tt = new TestTagCRUD();
+            return tt.GetByTestId(testId);
+        }
+
+        public TestTagDTO GetByTestIdTagId(int testId, int tagId) 
+        {
+            TestTagCRUD tt = new TestTagCRUD();
+            return tt.GetByTestIdTagId(testId, tagId);
+        }
+
+        public void Update(TestTagDTO testtag) 
+        {
+            TestTagCRUD tt = new TestTagCRUD();
+            tt.Update(testtag);
+        }
+
+        public void DeleteById(int id) 
+        {
+            TestTagCRUD tt = new TestTagCRUD();
+            tt.DeleteById(id);
+        }
+
+        public void DeleteByTagId(int tagId) 
+        {
+            TestTagCRUD tt = new TestTagCRUD();
+            tt.DeleteByTagId(tagId);
+        }
+
+        public void DeleteByTestId(int testId) 
+        {
+            TestTagCRUD tt = new TestTagCRUD();
+            tt.DeleteByTestId(testId);
+        }
+
+        public void DeleteByTestIdTagId(int testId, int tagId) 
+        {
+            TestTagCRUD tt = new TestTagCRUD();
+            tt.DeleteByTestIdTagId(testId, tagId);
+        }
+
+
+        //Feedback
         public int AddFeedback(FeedbackDTO feedback)
         {
             FeedbackCRUD fb = new FeedbackCRUD();
@@ -130,6 +193,30 @@ namespace TestingSystem.Data
             typeCRUD.Delete(type.ID);
         }
 
+        public List<FeedbackSortByDataTimeDTO> feedbackSortByDataTime(QuestionDTO question)
+        {
+            FeedbackManager fb = new FeedbackManager();
+            return fb.FeedbackSortByDataTime(question);
+        
+        }
+
+        public List<SearchTestByTagDTO> GetTestVSTagSearchOr(string tag1, string tag2, string tag3) 
+        {
+            TestManager tm = new TestManager();
+            return tm.GetTestVSTagSearchOr(tag1, tag2, tag3);
+        
+        }
+
+        public List<SearchTestByTagDTO> GetTestVSTagSearchAnd(string tag1, string tag2, string tag3)
+        {
+            TestManager tm = new TestManager();
+            return tm.GetTestVSTagSearchAnd(tag1, tag2, tag3);
+        }
+
+
+        //var connect = Connection.GetSqlConnection();
+        //User user = new User();
+        //user.User_Create(connect, userC);
 
     }
 }

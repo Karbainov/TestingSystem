@@ -37,10 +37,10 @@ namespace TestingSystem.Data
             GroupCRUD group = new GroupCRUD();
             group.Update(groupU);
         }
-        public void GroupDelete(GroupDTO groupD)
+        public void Delete(int id)
         {
             GroupCRUD group = new GroupCRUD();
-            group.Add(groupD);
+            group.Delete(id);
         }
         public void StudentAdd (StudentGroupDTO studentA) 
         {
