@@ -118,10 +118,10 @@ namespace TestingSystem.Data
             return teacher.GetTestVSTagSearchAnd(tag1, tag2, tag3);
 
         }
-        public List<TestDTO> GetTestByTagpAndGroup(TagGroupNamesDTO names)
+        public List<TestDTO> GetTestByTagpAndGroup(TagGroupDTO dto)
         {
             TestManager teacher = new TestManager();
-            return teacher.GetTestByTagpAndGroup(names);
+            return teacher.GetTestByTagpAndGroup(dto);
 
         }
 
