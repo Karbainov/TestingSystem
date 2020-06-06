@@ -58,9 +58,19 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             
             using (IDbConnection connection = Connection.GetConnection())
             {
+                IDbTransaction transaction = connection.BeginTransaction();
                 string sqlExpression = "Role_ReadDyId @ID ";
-                return connection.Query<RoleDTO>(sqlExpression,new { id }).ToList();
-
+                List<RoleDTO> roles = new List<RoleDTO>();
+                try
+                {
+                    roles = connection.Query<RoleDTO>(sqlExpression, new { id }).ToList();
+                    transaction.Commit();
+                }
+                catch
+                {
+                    transaction.Rollback();
+                }
+                return roles;
             }
         }
     }
