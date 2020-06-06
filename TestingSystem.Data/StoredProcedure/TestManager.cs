@@ -59,12 +59,12 @@ namespace TestingSystem.Data.StoredProcedure
             }
         }
 
-        public List<TestDTO> GetTestByTagpAndGroup(TagGroupNamesDTO names)
+        public List<TestDTO> GetTestByTagpAndGroup(TagGroupDTO dto)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
-                string sqlExpression = "Test_GetByTagAndGroup @Tag_Name @Group_Name";
-                return connection.Query<TestDTO>(sqlExpression, names, commandType: CommandType.StoredProcedure).ToList();
+                string sqlExpression = "Test_ByTagAndGroup @Tag_Name @Group_ID";
+                return connection.Query<TestDTO>(sqlExpression, dto, commandType: CommandType.StoredProcedure).ToList();
             }
         }
 
@@ -114,23 +114,23 @@ namespace TestingSystem.Data.StoredProcedure
                 connection.Execute(sqlExpression, ID, commandType: CommandType.StoredProcedure);
         }
 
-        public List<TagDTO> GetTestTags (TestDTO tests )
-        {
-            using (IDbConnection connection = Connection.GetConnection())
-            {
-                string sqlExpression = "GetTestTags @TestID";
-                return connection.Query<TagDTO>(sqlExpression,  tests , commandType: CommandType.StoredProcedure).ToList();
+        //public List<TagDTO> GetTestTags (TestDTO tests )
+        //{
+        //    using (IDbConnection connection = Connection.GetConnection())
+        //    {
+        //        string sqlExpression = "GetTestTags @TestID";
+        //        return connection.Query<TagDTO>(sqlExpression,  tests , commandType: CommandType.StoredProcedure).ToList();
               
-            }
-        }
+        //    }
+        //}
 
-        public List<TestDTO> GetTestByTagpAndGroup (TagGroupNamesDTO names)
-        {
-            using (IDbConnection connection = Connection.GetConnection())
-            {
-                string sqlExpression = "Test_GetByTagAndGroup @Tag_Name @Group_Name";
-                return connection.Query<TestDTO>(sqlExpression, names, commandType: CommandType.StoredProcedure).ToList();
-            }
-        }
+        //public List<TestDTO> GetTestByTagpAndGroup (TagGroupDTO dto)
+        //{
+        //    using (IDbConnection connection = Connection.GetConnection())
+        //    {
+        //        string sqlExpression = "Test_ByTagAndGroup @Tag_Name @Group_ID";
+        //        return connection.Query<TestDTO>(sqlExpression, dto, commandType: CommandType.StoredProcedure).ToList();
+        //    }
+        //}
     }
 }
