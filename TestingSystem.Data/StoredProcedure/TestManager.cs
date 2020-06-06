@@ -113,5 +113,24 @@ namespace TestingSystem.Data.StoredProcedure
                 string sqlExpression = "DeleteTest";
                 connection.Execute(sqlExpression, ID, commandType: CommandType.StoredProcedure);
         }
+
+        public List<TagDTO> GetTestTags (TestDTO tests )
+        {
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "GetTestTags @TestID";
+                return connection.Query<TagDTO>(sqlExpression,  tests , commandType: CommandType.StoredProcedure).ToList();
+              
+            }
+        }
+
+        public List<TestDTO> GetTestByTagpAndGroup (TagGroupNamesDTO names)
+        {
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "Test_GetByTagAndGroup @Tag_Name @Group_Name";
+                return connection.Query<TestDTO>(sqlExpression, names, commandType: CommandType.StoredProcedure).ToList();
+            }
+        }
     }
 }
