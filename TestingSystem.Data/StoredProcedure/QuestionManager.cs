@@ -37,8 +37,17 @@ namespace TestingSystem.Data.StoredProcedure
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
+                IDbTransaction transaction = connection.BeginTransaction();
                 string sqlExpression = "UpdateRightAnswer";
-                connection.Execute(sqlExpression, new { id, value }, commandType: CommandType.StoredProcedure);
+                try
+                {
+                    connection.Execute(sqlExpression, new { id, value }, commandType: CommandType.StoredProcedure);
+                    transaction.Commit();
+                }
+                catch
+                {
+                    transaction.Rollback();
+                }
             }
         }
     }
