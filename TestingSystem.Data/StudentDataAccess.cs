@@ -29,6 +29,25 @@ namespace TestingSystem.Data
             UserManager user = new UserManager();
             return user.GetStudentVsTests(userID);
         }
-       
+        public int AddAttempt(AttemptDTO dto)
+        {
+            AttemptCRUD attempt = new AttemptCRUD();
+            return attempt.AttemptAdd(dto);
+        }
+        public int AddAnswerToQuestion(AttemptQuestionAnswerDTO dto)
+        {
+            AttemptQuestionAnswerCRUD attemptQuestionAnswer = new AttemptQuestionAnswerCRUD();
+            return attemptQuestionAnswer.Add(dto);
+        }
+        public int AddAnswer(AnswerDTO dto)
+        {
+            AnswerCRUD answer = new AnswerCRUD();
+            return answer.AnswerAdd(dto);
+        }
+        public List<QuestionDTO> GetQuestionsFromTest(int id)
+        {
+            QuestionManager manager = new QuestionManager();
+            return manager.GetQuestionsByTestID(id);
+        }
     }
 }
