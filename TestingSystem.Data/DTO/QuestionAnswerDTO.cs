@@ -17,7 +17,7 @@ namespace TestingSystem.Data.DTO
         public bool Correct { get; set; }
 
 
-        public QuestionAnswerDTO(int ID, int TestID, string QValue, int TypeID, byte AnswersCount, byte Weight, int _questionID, string _Avalue, bool _correct)
+        public QuestionAnswerDTO(int ID, int TestID, string QValue, int TypeID, byte AnswersCount, byte Weight, int _questionID, string _AValue, bool _correct)
         { 
             this.ID = ID;
             this.TestID = TestID;
@@ -26,10 +26,17 @@ namespace TestingSystem.Data.DTO
             this.AnswersCount = AnswersCount;
             this.Weight = Weight;
             QuestionID = _questionID;
-            AValue = _Avalue;
+            AValue = _AValue;
             Correct = _correct;
         }
-    public QuestionAnswerDTO()
+
+        public QuestionAnswerDTO(string QValue, string _AValue)
+        {
+            this.QValue = QValue;
+            AValue = _AValue;
+        }
+
+        public QuestionAnswerDTO()
         { }
     }
 }
