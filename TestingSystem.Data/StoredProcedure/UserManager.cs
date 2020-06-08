@@ -21,18 +21,7 @@ namespace TestingSystem.Data.StoredProcedure
             }
             
         }
-        //public int User_DeleteAccount(SqlConnection connection, UserDTO user)//удаление студента и всего, что с ним связано
-        //{
-        //    connection.Open();
-        //    string sqlExpression = "User_DeleteAccount";
-        //    SqlCommand command = new SqlCommand(sqlExpression, connection);
-        //    command.CommandType = System.Data.CommandType.StoredProcedure;
-
-        //    SqlParameter userParam = new SqlParameter("@UserID", user.ID);
-        //    command.Parameters.Add(userParam);
-        //    return command.ExecuteNonQuery();
-        //}
-
+      
         public void AddUserWithRole (UserWithRoleDTO user)
         {
             var connection = Connection.GetConnection();
@@ -69,6 +58,15 @@ namespace TestingSystem.Data.StoredProcedure
             {
                 string sqlExpression = "User_GetIncompleteTests";
                 return connection.Query<TestAttemptDTO>(sqlExpression, new { id }, commandType: CommandType.StoredProcedure).ToList();
+            }
+        }
+
+        public List<GroupDTO> GetGroupsAndStudentsByTeacherID(int TeacherID) 
+        {
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "GetGroupsAndStudentsByTeacherID";
+                return connection.Query<GroupDTO>(sqlExpression, new { TeacherID }, commandType: CommandType.StoredProcedure).ToList();
             }
         }
     }
