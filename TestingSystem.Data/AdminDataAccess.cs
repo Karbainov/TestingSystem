@@ -11,21 +11,21 @@ namespace TestingSystem.Data
     {
         public void UserCreate(UserDTO userC)
         {
-            var connect = Connection.GetSqlConnection();
-            User user = new User();
-            user.User_Create(connect, userC);
+            
+            UserCRUD user = new UserCRUD();
+            user.Create(userC);
         }
         public void UserUpdate(UserDTO userU)
         {
-            var connect = Connection.GetSqlConnection();
-            User user = new User();
-            user.User_Update(connect, userU);
+            
+            UserCRUD user = new UserCRUD();
+            user.Update( userU);
         }
         public void UserDelete(UserDTO userD)
         {
-            var connect = Connection.GetSqlConnection();
-            User user = new User();
-            user.User_Create(connect, userD);
+            
+            UserCRUD user = new UserCRUD();
+            user.Create( userD);
         }
         public void GroupCreate(GroupDTO groupC)
         {
