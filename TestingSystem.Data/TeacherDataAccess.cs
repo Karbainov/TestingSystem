@@ -7,41 +7,27 @@ using System.Data;
 using TestingSystem.Data.DTO;
 using Dapper;
 using TestingSystem.Data.StoredProcedure;
+using TestingSystem.Data.StoredProcedure.CRUD;
 
 namespace TestingSystem.Data
 {
     public class TeacherDataAccess
     {
 
-        public List<GroupDTO> GetGroupByTeacherID(int teacherID)
-        {
-            GroupManager teacher = new GroupManager();
-            SqlConnection connection = (SqlConnection)Connection.GetConnection();
-            return teacher.GetGroupByTeacherID(teacherID);
-        }
+       // уничтожить GetGroupByTeacherID. в группе создать свойство листюзеров 
 
-        public List<UserDTO> GetStudentsFromGroup(int id)
-        {
-            GroupManager teacher = new GroupManager();
-            return teacher.GetAllStudents(id);
-
-        }
-        
-
-        public List<QuestionDTO> GetQuestionsByTestID(int id)
-        {
-            QuestionManager teacher = new QuestionManager();
-            return teacher.GetQuestionsByTestID(id);
-
-        }
-
-
+        //public List<UserDTO> GetGroupsAndStudentsByTeacherID(int id)
+        //{
+        //    GroupManager teacher = new GroupManager();
+        //    return teacher.GetAllStudents(id);
+        //}
+               
         public List<QuestionAnswerDTO> GetCorrectAnswerByTestID(int testID)
         {
             TestManager teacher = new TestManager();
-            return teacher.GetCorrectAnswerByTestID( testID);
+            return teacher.GetCorrectAnswerByTestID(testID);
 
-        }
+        } //  в идеаде - один то мэни - почитать
 
         public List<TestDTO> GetTestByGroupId(int GroupID)
         {
@@ -49,56 +35,44 @@ namespace TestingSystem.Data
             return teacher.GetTestByGroupId(GroupID);
         }
 
-        
-        public List<AllStudentTestsDTO> GetAllStudentTests(int id)
+        public List<AllStudentTestsDTO> GetAllStudentTests(int id) // конкретные студент - лучшая попытка и макс балл. GetAllTestsByUserID
+
         {
             UserManager teacher = new UserManager();
             return teacher.GetStudentVsTests(id);
-
         }
 
-
-        public List<TestDTO> GetExpiredTestOfStudent(int userID)
+        public List<TestDTO> GetExpiredTestOfStudent(int userID)// на вход надо user id
         {
             TestManager teacher = new TestManager();
-            return teacher.GetLateAttempt( userID);
-
+            return teacher.GetLateAttempt(userID);
         }
-
-        public List<FeedbackByTestIDDTO> GetFeedbackByTestID(FeedbackByTestIDDTO feedback)
-        {
-            FeedbackManager teacher = new FeedbackManager();
-            return teacher.GetFeedbackByTest(feedback);
-
-        }
-
-
-        public List<TestAttemptDTO> GetStudentIncompleteTests(int id)
+        
+        public List<TestAttemptDTO> GetStudentIncompleteTests(int id) // не приступал
         {
             UserManager teacher = new UserManager();
             return teacher.GetIncompleteTests(id);
-
         }
 
+        public List<QuestionAnswerDTO> GetQuestionAndAnswerByAttempt(int attemptID) // один ко многим
 
-      
-
-        public List<QuestionAnswerDTO> GetQuestionAndAnswerByAttempt(int attemptID)
         {
             TestManager teacher = new TestManager();
-            return teacher.GetQuestionAndAnswerFromAttempt(attemptID);
+            return teacher.GetQuestionAndAnswerFromAttempt( attemptID);
+
+        }
+        //Лучшая попытка конкретного теста конкретного юзера -  все студенты *
+
+   
+        public List<AttemptResultDTO> GetBestResultsOfStudentsByTestId(int testId) //Лучшие Результаты всех студентов для тестов группы 
+        {
+            AttemptManager teacher = new AttemptManager();
+            return teacher.GetBestResultsOfStudentsByTestId(testId);
 
         }
 
 
-
-        //Лучшая попытка конкретного теста конкретного юзера
-
-        //Лучшие Результаты всех студентов для тестов группы   Test_BestGroupResult
-        //Лучшие Результаты всех студентов для теста   GetStudentVsTests  ??
-
-
-        public List<AttemptResultDTO> GetAttemptByUserIdTestId(UserIdTestIdDTO attempt)
+        public List<AttemptResultDTO> GetAttemptsByUserIdTestId(UserIdTestIdDTO attempt)
         {
             AttemptManager teacher = new AttemptManager();
             return teacher.GetAttemptByUserIdTestId(attempt);
@@ -110,7 +84,7 @@ namespace TestingSystem.Data
             TestManager teacher = new TestManager();
             return teacher.GetTestVSTagSearchOr(tag1, tag2, tag3);
 
-        }
+        }// поговорить со Славой после исправления (null, default)
 
         public List<SearchTestByTagDTO> GetTestVSTagSearchAnd(string tag1, string tag2, string tag3)
         {
@@ -118,13 +92,33 @@ namespace TestingSystem.Data
             return teacher.GetTestVSTagSearchAnd(tag1, tag2, tag3);
 
         }
-        public List<TestDTO> GetTestByTagpAndGroup(TagGroupDTO dto)
+        public List<TestDTO> GetTestByTagpAndGroup(TagGroupDTO dto) //нужно передать название tag + integer GroupID 
+                                                                        
         {
             TestManager teacher = new TestManager();
             return teacher.GetTestByTagpAndGroup(dto);
 
         }
+                
+        public int DeleteConcreteAttempt(AttemptDTO attempt)  // добавить метод - удалить конкретного попытку конкретного студента
+        {
+            TestManager teacher = new TestManager();
+            return teacher.DeleteConcreteAttempt(attempt);
 
+        }
+
+        public void DeleteTestByGroupId(int id) // добавить метод - убрать тест у группы
+        {
+            TestGroupCRUD testdeletion = new TestGroupCRUD();
+            testdeletion.DeleteByTestId(id);
+        }
+
+       
+        public void SetTestForGroup(TestGroupDTO testgroup)   // добавить метод - назначить тест - записать из круда
+        {
+            TestGroupCRUD teacher = new TestGroupCRUD();
+            teacher.Add(testgroup);
+        }
         
     }
 }
