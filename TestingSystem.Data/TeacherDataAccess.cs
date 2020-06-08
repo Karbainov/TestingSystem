@@ -7,6 +7,7 @@ using System.Data;
 using TestingSystem.Data.DTO;
 using Dapper;
 using TestingSystem.Data.StoredProcedure;
+using TestingSystem.Data.StoredProcedure.CRUD;
 
 namespace TestingSystem.Data
 {
@@ -80,9 +81,6 @@ namespace TestingSystem.Data
 
         }
 
-
-      
-
         public List<QuestionAnswerDTO> GetQuestionAndAnswerByAttempt(int attemptID)
         {
             TestManager teacher = new TestManager();
@@ -125,6 +123,11 @@ namespace TestingSystem.Data
 
         }
 
+        public void SetTestForGroup(TestGroupDTO testgroup)
+        {
+            TestGroupCRUD teacher = new TestGroupCRUD();
+            teacher.Add(testgroup);
+        }
         
     }
 }
