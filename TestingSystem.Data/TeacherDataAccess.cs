@@ -16,11 +16,11 @@ namespace TestingSystem.Data
 
        // уничтожить GetGroupByTeacherID. в группе создать свойство листюзеров 
 
-        public List<UserDTO> GetStudentsFromGroup(int id)
-        {
-            GroupManager teacher = new GroupManager();
-            return teacher.GetAllStudents(id);
-        }
+        //public List<UserDTO> GetGroupsAndStudentsByTeacherID(int id)
+        //{
+        //    GroupManager teacher = new GroupManager();
+        //    return teacher.GetAllStudents(id);
+        //}
                
         public List<QuestionAnswerDTO> GetCorrectAnswerByTestID(int testID)
         {
