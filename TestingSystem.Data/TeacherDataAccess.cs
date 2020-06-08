@@ -13,15 +13,13 @@ namespace TestingSystem.Data
 {
     public class TeacherDataAccess
     {
+                
+        public List<GroupDTO> GetGroupsAndStudentsByTeacherID(int TeacherID) // уничтожили GetGroupByTeacherID. в группе создать свойство листюзеров 
+        {
+           UserManager teacher = new UserManager();
+           return teacher.GetGroupsAndStudentsByTeacherID(TeacherID);
+        }
 
-       // уничтожить GetGroupByTeacherID. в группе создать свойство листюзеров 
-
-        //public List<UserDTO> GetGroupsAndStudentsByTeacherID(int id)
-        //{
-        //    GroupManager teacher = new GroupManager();
-        //    return teacher.GetAllStudents(id);
-        //}
-               
         public List<QuestionAnswerDTO> GetCorrectAnswerByTestID(int testID)
         {
             TestManager teacher = new TestManager();
@@ -61,16 +59,18 @@ namespace TestingSystem.Data
             return teacher.GetQuestionAndAnswerFromAttempt( attemptID);
 
         }
-        //Лучшая попытка конкретного теста конкретного юзера -  все студенты *
 
-   
+        public List<AllStudentTestsDTO> GetBestResultOfTestByGroupID(int groupID) //Лучшая попытка конкретного теста конкретного юзера -  все студенты *
+        {
+            TestManager teacher = new TestManager();
+            return teacher.GetBestResultOfTestByGroupID(groupID);
+        }
+      
         public List<AttemptResultDTO> GetBestResultsOfStudentsByTestId(int testId) //Лучшие Результаты всех студентов для тестов группы 
         {
             AttemptManager teacher = new AttemptManager();
             return teacher.GetBestResultsOfStudentsByTestId(testId);
-
         }
-
 
         public List<AttemptResultDTO> GetAttemptsByUserIdTestId(UserIdTestIdDTO attempt)
         {
@@ -92,7 +92,7 @@ namespace TestingSystem.Data
             return teacher.GetTestVSTagSearchAnd(tag1, tag2, tag3);
 
         }
-        public List<TestDTO> GetTestByTagpAndGroup(TagGroupDTO dto) //нужно передать название tag + integer GroupID 
+        public List<TestDTO> GetTestByTagpAndGroup(TagGroupDTO dto) //корректный
                                                                         
         {
             TestManager teacher = new TestManager();
@@ -100,21 +100,21 @@ namespace TestingSystem.Data
 
         }
                 
-        public int DeleteConcreteAttempt(AttemptDTO attempt)  // добавить метод - удалить конкретного попытку конкретного студента
+        public int DeleteConcreteAttempt(AttemptDTO attempt)  //  метод - удалить конкретного попытку конкретного студента
         {
             TestManager teacher = new TestManager();
             return teacher.DeleteConcreteAttempt(attempt);
 
         }
 
-        public void DeleteTestByGroupId(int id) // добавить метод - убрать тест у группы
+        public void DeleteTestByGroupId(int id) //  метод - убрать тест у группы
         {
             TestGroupCRUD testdeletion = new TestGroupCRUD();
             testdeletion.DeleteByTestId(id);
         }
 
        
-        public void SetTestForGroup(TestGroupDTO testgroup)   // добавить метод - назначить тест - записать из круда
+        public void SetTestForGroup(TestGroupDTO testgroup)   // метод - назначить тест - записать из круда
         {
             TestGroupCRUD teacher = new TestGroupCRUD();
             teacher.Add(testgroup);
