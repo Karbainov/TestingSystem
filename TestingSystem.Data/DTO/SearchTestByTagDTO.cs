@@ -6,23 +6,25 @@ namespace TestingSystem.Data.DTO
 {
     public class SearchTestByTagDTO
     {
-        public int id { get; set; }
-        public string name { get; set; }
-        public DateTime durationTime { get; set; }
-        public string tag1 { get; set; }
-        public string tag2 { get; set; }
-        public string tag3 { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public DateTime DurationTime { get; set; }
+        public int SuccessScore { get; set; }
+        public string Tag1 { get; set; }
+        public string Tag2 { get; set; }
+        public string Tag3 { get; set; }
 
         public SearchTestByTagDTO() { }
 
-        public SearchTestByTagDTO(int id, string name, DateTime durationTime, string tag1, string tag2, string tag3)
+        public SearchTestByTagDTO(int id, string name, DateTime durationTime, int successScore, string tag1, string tag2, string tag3)
         {
-            this.id = id;
-            this.name = name;
-            this.durationTime = durationTime;
-            this.tag1 = tag1;
-            this.tag2 = tag2;
-            this.tag3 = tag3;
+            this.Id = id;
+            this.Name = name;
+            this.DurationTime = durationTime;
+            this.SuccessScore = successScore;
+            this.Tag1 = tag1;
+            this.Tag2 = tag2;
+            this.Tag3 = tag3;
         }
     }
 }
