@@ -17,7 +17,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             {
                 string sqlExpression = "Group_Add @name,@startDate,@endDate ";
                 int groupID = connection.Query<int>(sqlExpression, group).FirstOrDefault();
-                group.id = groupID;
+                group.Id = groupID;
                 return groupID;
             }
         }

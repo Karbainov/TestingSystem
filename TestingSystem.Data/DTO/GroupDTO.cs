@@ -7,22 +7,33 @@ namespace TestingSystem.Data.DTO
 {
     public class GroupDTO
     {
-        public int id { get; set; }
-        public string name { get; set; }
-        public DateTime startDate { get; set; }
-        public DateTime endDate { get; set; }
+        public int TeacherID { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
 
         public GroupDTO()
         {
 
         }
 
-        public GroupDTO(int id, string name, DateTime startDate, DateTime endDate)
+        public GroupDTO(int TeacherID, int Id, string Name, DateTime StartDate, DateTime EndDate, string FirstName, string LastName, string Email, string Phone)
         {
-            this.id = id;
-            this.name = name;
-            this.startDate = startDate;
-            this.endDate = endDate;
+            this.TeacherID = TeacherID;
+            this.Id = Id;
+            this.Name = Name;
+            this.StartDate = StartDate;
+            this.EndDate = EndDate;
+            this.FirstName = FirstName;
+            this.LastName = LastName;
+            this.Phone = Phone;
+            this.Email = Email;
+
         }
 
     }
