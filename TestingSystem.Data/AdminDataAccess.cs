@@ -15,6 +15,19 @@ namespace TestingSystem.Data
             UserCRUD user = new UserCRUD();
             user.Create(userC);
         }
+
+        public List<UserDTO> GetAllUsers()
+        {
+
+            UserCRUD user = new UserCRUD();
+            return user.GetAll();
+        }
+        public UserDTO GetUserbyID (int id)
+        {
+            UserCRUD user = new UserCRUD();
+            return user.GetByID(id);
+        }
+
         public void UserUpdate(UserDTO userU)
         {
             
@@ -33,7 +46,7 @@ namespace TestingSystem.Data
             group.Add(groupC);
         }
 
-        public List<GroupDTO> GetAllGroup()
+        public List<GroupDTO> GetAllGroups()
         {
             GroupCRUD group = new GroupCRUD();
             return group.GetAll();  ////?? Горина добавила 
