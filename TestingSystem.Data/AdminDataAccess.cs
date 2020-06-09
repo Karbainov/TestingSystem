@@ -32,12 +32,25 @@ namespace TestingSystem.Data
             GroupCRUD group = new GroupCRUD();
             group.Add(groupC);
         }
+
+        public List<GroupDTO> GetAllGroup()
+        {
+            GroupCRUD group = new GroupCRUD();
+            return group.GetAll();  ////?? Горина добавила 
+        }
+
+        public GroupDTO GetGroupById(int id)
+        {
+            GroupCRUD group = new GroupCRUD();
+            return group.GetById(id);  //// Горина добавила GetById
+        }
+
         public void GroupUpdate(GroupDTO groupU)
         {
             GroupCRUD group = new GroupCRUD();
             group.Update(groupU);
         }
-        public void Delete(int id)
+        public void GroupDelete(int id)   // скорректировала название Горина
         {
             GroupCRUD group = new GroupCRUD();
             group.Delete(id);
@@ -87,11 +100,12 @@ namespace TestingSystem.Data
             UserRoleCRUD roleCRUD = new UserRoleCRUD();
             roleCRUD.Delete(userRoleDTO);
         }
-       
+
         public List<RoleDTO> GetRole()
         {
             RoleCRUD role = new RoleCRUD();
             return role.Read();
         }
+        
     }
 }

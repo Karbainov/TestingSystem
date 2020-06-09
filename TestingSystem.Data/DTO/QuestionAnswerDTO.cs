@@ -16,6 +16,8 @@ namespace TestingSystem.Data.DTO
         public string AValue { get; set; }
         public bool Correct { get; set; }
 
+        // все поля question  и список answer
+
 
         public QuestionAnswerDTO(int ID, int TestID, string QValue, int TypeID, byte AnswersCount, byte Weight, int _questionID, string _AValue, bool _correct)
         { 

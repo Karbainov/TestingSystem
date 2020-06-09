@@ -27,6 +27,30 @@ namespace TestingSystem.Data
 
         } //  в идеаде - один то мэни - почитать
 
+
+        //var remainingHorsemen = new Dictionary<int, Person>();
+        //connection.Query<Person, Country, Book, Person>(sql, (2 аргумента) =>
+
+//        //books
+//    if(personEntity.Books == null)
+//    {
+//        personEntity.Books = new List<Book>();
+//    }
+
+//    if (book != null)
+//    {
+//        if (!personEntity.Books.Any(x => x.BookId == book.BookId))
+//        {
+//            personEntity.Books.Add(book);
+//        }
+//    }
+
+//    return personEntity;
+//}, 
+//splitOn: "CountryId,BookId");
+
+
+
         public List<TestDTO> GetTestByGroupId(int GroupID)
         {
             TestManager teacher = new TestManager();
@@ -79,17 +103,17 @@ namespace TestingSystem.Data
 
         }
 
-        public List<SearchTestByTagDTO> GetTestVSTagSearchOr(string tag1, string tag2, string tag3)
+        public List<SearchTestByTagDTO> GetTestVSTagSearchOr(params string[] tag)
         {
             TestManager teacher = new TestManager();
-            return teacher.GetTestVSTagSearchOr(tag1, tag2, tag3);
+            return teacher.GetTestVSTagSearchOr(tag);
 
-        }// поговорить со Славой после исправления (null, default)
+        }
 
-        public List<SearchTestByTagDTO> GetTestVSTagSearchAnd(string tag1, string tag2, string tag3)
+        public List<SearchTestByTagDTO> GetTestVSTagSearchAnd(params string[] tag)
         {
             TestManager teacher = new TestManager();
-            return teacher.GetTestVSTagSearchAnd(tag1, tag2, tag3);
+            return teacher.GetTestVSTagSearchAnd(tag);
 
         }
         public List<TestDTO> GetTestByTagpAndGroup(TagGroupDTO dto) //корректный
