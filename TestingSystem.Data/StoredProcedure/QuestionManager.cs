@@ -14,9 +14,19 @@ namespace TestingSystem.Data.StoredProcedure
         public int DeleteQuestionFromTest(int questionId)
         {
             var connection = Connection.GetConnection();
+            IDbTransaction transaction = connection.BeginTransaction();
             string sqlExpression = "Question_DeleteFromTest";
-            connection.Execute(sqlExpression, new { questionId }, commandType: CommandType.StoredProcedure);
-            return questionId;
+            try
+            {
+                connection.Execute(sqlExpression, new { questionId }, commandType: CommandType.StoredProcedure);
+                transaction.Commit();
+                return questionId;
+            }
+            catch
+            {
+                transaction.Rollback();
+                return 0;
+            }            
         }
 
         public List<QuestionDTO> GetQuestionsByTestID(int TestID)
