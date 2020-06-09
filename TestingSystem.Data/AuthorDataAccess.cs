@@ -92,6 +92,12 @@ namespace TestingSystem.Data
             return q.GetAll();
         }
 
+        public QuestionDTO GetQuestionById(int id)
+        {
+            QuestionCRUD q = new QuestionCRUD();
+            return q.GetById(id);
+        }
+
         public List<QuestionDTO> GetQuestionsByTestID(int testId)
         {
             QuestionCRUD q = new QuestionCRUD();
@@ -108,13 +114,7 @@ namespace TestingSystem.Data
         {
             QuestionCRUD q = new QuestionCRUD();
             q.Update(question);
-        }
-
-        public void DeleteQuestion(QuestionDTO question)
-        {
-            QuestionCRUD q = new QuestionCRUD();
-            q.Delete(question.ID);
-        }
+        }        
 
 
         //TypeCRUD 
