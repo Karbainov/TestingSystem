@@ -26,10 +26,10 @@ namespace TestingSystem.Controllers.Controllers
 
              
         [HttpGet]  // htpps://localhost/group
-        public void Get()
+        public List<GroupDTO> Get()
         {
             AdminDataAccess adm = new AdminDataAccess();
-            adm.GetAllGroup();
+            return adm.GetAllGroups();
         }
 
                
