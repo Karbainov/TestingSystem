@@ -164,10 +164,10 @@ namespace TestingSystem.Data
             return ts.GetById(id);
         }
 
-        public void UpdateTest(TestDTO test)
+        public int UpdateTest(TestDTO test)
         {
             TestCRUD ts = new TestCRUD();
-            ts.Update(test);
+            return ts.Update(test);
         }
 
 
@@ -226,10 +226,11 @@ namespace TestingSystem.Data
 
         //From QuestionManager
 
-        public void DeleteQuestionFromTest(int questionId)
+        public int DeleteQuestionFromTest(int questionId)
         {
             QuestionManager question = new QuestionManager();
             question.DeleteQuestionFromTest(questionId);
+            return questionId;
         }
         
 

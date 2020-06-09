@@ -11,11 +11,12 @@ namespace TestingSystem.Data.StoredProcedure
 {
     public class QuestionManager
     {
-        public void DeleteQuestionFromTest(int questionId)
+        public int DeleteQuestionFromTest(int questionId)
         {
             var connection = Connection.GetConnection();
             string sqlExpression = "Question_DeleteFromTest";
             connection.Execute(sqlExpression, new { questionId }, commandType: CommandType.StoredProcedure);
+            return questionId;
         }
 
         public List<QuestionDTO> GetQuestionsByTestID(int TestID)
