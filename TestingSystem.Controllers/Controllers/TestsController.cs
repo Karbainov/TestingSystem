@@ -54,7 +54,69 @@ namespace TestingSystem.Controllers.Controllers
             return tt.GetTestVSTagSearchOr(tag);     
         }
 
+        [HttpPost("Author/Tests/AddTest/GetQuestion/AddQuestion")]
 
+        public int AddQuestion(QuestionDTO question)
+        {
+            AuthorDataAccess aq = new AuthorDataAccess();
+            return aq.AddQuestion(question);
+        }
 
+        [HttpPost("Author/Tests/AddTest/GetQuestion/AddAnswer")]
+
+        public int AddAnswer(AnswerDTO answer)
+        {
+            AuthorDataAccess aa = new AuthorDataAccess();
+            return aa.AddAnswer(answer);
+        }
+
+        [HttpPut("Author/Tests/AddTest/GetQuestion/UpdateQuestion")]
+
+        public void UpdateQuestion(QuestionDTO question)
+        {
+            AuthorDataAccess uq = new AuthorDataAccess();
+            uq.UpdateQuestion(question);
+        }
+
+        [HttpPut("Author/Tests/AddTest/GetQuestion/UpdateAnswer")]
+
+        public void UpdateAnswer(AnswerDTO answer)
+        {
+            AuthorDataAccess ua = new AuthorDataAccess();
+            ua.UpdateAnswer(answer);
+        }
+
+        [HttpGet("Author/Tests/AddTest/GetQuestion")]
+
+        public QuestionDTO GetQuestionById(int id)
+        {
+            AuthorDataAccess gq = new AuthorDataAccess();
+            return gq.GetQuestionById(id);
+        }
+
+        [HttpGet("Author/Tests/AddTest/GetQuestion/GetAnswer")]
+
+        public List<AnswerDTO> GetAnswerByQuestionId(int questonId)
+        {
+            AuthorDataAccess ga = new AuthorDataAccess();
+            return ga.GetAnswerByQuestionId(questonId);
+        }
+
+        [HttpDelete("Author/Tests/AddTest/GetQuestion/DeleteQuestion")]
+
+        public int DeleteQuestionFromTest(int questionId)
+        {
+            AuthorDataAccess dq = new AuthorDataAccess();
+            dq.DeleteQuestionFromTest(questionId);
+            return questionId;
+        }
+
+        [HttpDelete("Author/Tests/AddTest/GetQuestion/DeleteAnswer")]
+
+        public void DeleteAnswer(int id)
+        {
+            AuthorDataAccess da = new AuthorDataAccess();
+            da.DeleteAnswer(id);
+        }
     }
 }
