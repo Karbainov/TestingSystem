@@ -43,18 +43,20 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             return newTest;
         }
 
-        public void Update(TestDTO test)
+        public int Update(TestDTO test)
         {
             var connection = Connection.GetConnection();
             string sqlExpression = "Test_Update";
             connection.Execute(sqlExpression, test, commandType: CommandType.StoredProcedure);
+            return test.ID;
         }
 
-        public void Delete(int id)
+        public int Delete(int id)
         {
             var connection = Connection.GetConnection();
             string sqlExpression = "Test_Delete";
             connection.Execute(sqlExpression, new { id }, commandType: CommandType.StoredProcedure);
+            return id;
         }
     }
 }
