@@ -199,16 +199,16 @@ namespace TestingSystem.Data
 
         //From TestManager
 
-        public List<SearchTestByTagDTO> GetTestVSTagSearchOr(string tag1, string tag2, string tag3)
+        public List<SearchTestByTagDTO> GetTestVSTagSearchOr(params string[] tag)
         {
             TestManager tm = new TestManager();
-            return tm.GetTestVSTagSearchOr(tag1, tag2, tag3);
+            return tm.GetTestVSTagSearchOr(tag);
         }
 
-        public List<SearchTestByTagDTO> GetTestVSTagSearchAnd(string tag1, string tag2, string tag3)
+        public List<SearchTestByTagDTO> GetTestVSTagSearchAnd(params string[] tag)
         {
             TestManager tm = new TestManager();
-            return tm.GetTestVSTagSearchAnd(tag1, tag2, tag3);
+            return tm.GetTestVSTagSearchAnd(tag);
         }              
 
         public List<TagDTO> GetTagsInTest(TestDTO tests)
