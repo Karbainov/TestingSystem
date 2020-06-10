@@ -109,7 +109,7 @@ namespace TestingSystem.Controllers.Controllers
             return tg.GetAllTag();
         }
 
-        [HttpPost("Author/Tests/Tags/AddTest")] //создание тега
+        [HttpPost("Author/Tests/Tags/AddTag")] //создание тега
 
         public int AddTag(TagDTO tag)
         {
