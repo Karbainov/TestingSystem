@@ -21,7 +21,7 @@ namespace TestingSystem.API.Controllers
         }
 
 
-        [HttpGet("Author/Tests")]  //вывод списка тестов
+        [HttpGet("Author")]  //вывод списка тестов
 
         public List<TestDTO> GetAllTest() 
         {
@@ -29,15 +29,15 @@ namespace TestingSystem.API.Controllers
             return at.GetAllTest();       
         }
 
-        [HttpPost("Author/Tests/AddTest")]  //создание теста
+        [HttpPost("AddTest/Author")]  //создание теста
 
-        public int AddTest(TestDTO test)
+        public int PostTest(TestDTO test)
         {
             AuthorDataAccess at = new AuthorDataAccess();
             return at.AddTest(test);
         }
 
-        [HttpGet("Author/Tests/SearchTestByTag")]  //поиск теста по тегу
+        [HttpGet("SearchTestByTag/Author")]  //поиск теста по тегу
 
         public List<SearchTestByTagDTO> GetTestVSTagSearch(params string[] tag) // добавить метод вывода по нескольким тегам одновременно
         {
@@ -45,7 +45,7 @@ namespace TestingSystem.API.Controllers
             return tt.GetTestVSTagSearchOr(tag);
         }
 
-        [HttpGet("Author/Tests/id")]  //вывод информации о конкретном тесте
+        [HttpGet("{id}/Author")]  //вывод информации о конкретном тесте
 
         public TestDTO GetByIdTest(int id) 
         {
@@ -53,15 +53,15 @@ namespace TestingSystem.API.Controllers
             return ti.GetByIdTest(id);
         }
 
-        [HttpPut("Author/Tests/id")]  //изменение информации о конкретном тесте
+        [HttpPut("{id}/Author")]  //изменение информации о конкретном тесте
        
-        public int UpdateTestById(TestDTO test) 
+        public int PutTestById(TestDTO test) 
         {
             AuthorDataAccess ut = new AuthorDataAccess();
             return ut.UpdateTest(test);
         }
 
-        [HttpDelete("Author/Tests/id")]  //удаление конкретного тесте
+        [HttpDelete("{id}/Author")]  //удаление конкретного тесте
 
         public int DeleteTestById(int id) 
         {
@@ -69,7 +69,7 @@ namespace TestingSystem.API.Controllers
             return dt.DeleteTest(id);
         }
 
-        [HttpGet("Author/Tests/id/Questions")]  //вывод всех вопросов из конкретного теста
+        [HttpGet("{id}/Questions/Author")]  //вывод всех вопросов из конкретного теста
 
         public List<QuestionDTO> GetQuestionsByTestID(int testId)
         {
@@ -77,7 +77,7 @@ namespace TestingSystem.API.Controllers
             return qt.GetQuestionsByTestID(testId);
         }
 
-        [HttpGet("Author/Tests/id/Tags")]  //вывод всех тегов конкретного теста
+        [HttpGet("{id}/Tags/Author")]  //вывод всех тегов конкретного теста
 
         public List<TagDTO> GetTagsInTest(TestDTO tests) 
         {
@@ -85,15 +85,15 @@ namespace TestingSystem.API.Controllers
             return tt.GetTagsInTest(tests);
         }
 
-        [HttpPost("Author/Tests/id/Tags/id")] //добавление тега к конкретному тесту
+        [HttpPost("{id}/Tags/Author")] //добавление тега к конкретному тесту
 
-        public int TestTagCreate(TestTagDTO testtag) 
+        public int PostTagByTest(TestTagDTO testtag) 
         {
             AuthorDataAccess tt = new AuthorDataAccess();
             return tt.TestTagCreate(testtag);
         }
 
-        [HttpDelete("Author/Tests/id/Tags/id")] //удаление тега из конкретного теста
+        [HttpDelete("{id}/Tags/{tagId}/Author")] //удаление тега из конкретного теста
 
         public void DeleteByTestIdTagId(int testId, int tagId)
         {
@@ -101,7 +101,7 @@ namespace TestingSystem.API.Controllers
             tt.DeleteByTestIdTagId(testId, tagId);
         }
 
-        [HttpGet("Author/Tests/Tags")]  //вывод списка тегов
+        [HttpGet("Tags/Author")]  //вывод списка тегов
 
         public List<TagDTO> GetAllTag()
         {
@@ -109,16 +109,16 @@ namespace TestingSystem.API.Controllers
             return tg.GetAllTag();
         }
 
-        [HttpPost("Author/Tests/Tags/AddTag")] //создание тега
+        [HttpPost("Tags/Author")] //создание тега
 
-        public int AddTag(TagDTO tag)
+        public int PostTag(TagDTO tag)
         {
             AuthorDataAccess at = new AuthorDataAccess();
             return at.AddTag(tag);
         }
 
 
-        [HttpPut("Author/Tests/Tags/id")] //изменение конкретного тега
+        [HttpPut("Tags/{id}/Author")] //изменение конкретного тега
 
         public void UpdateTag(TagDTO tag) 
         {
@@ -126,7 +126,7 @@ namespace TestingSystem.API.Controllers
             ut.UpdateTag(tag);
         }
 
-        [HttpDelete("Author/Tests/Tags/id")] //удаление конкретного тега
+        [HttpDelete("Tags/{id}/Author")] //удаление конкретного тега
 
         public void DeleteTag(int id) 
         {
@@ -135,67 +135,73 @@ namespace TestingSystem.API.Controllers
         }
 
 
+        // создание вопроса с ответами
+        [HttpPost("{id}/{quId}/Author")] // создание вопроса конкретного теста
 
-        [HttpPost("Author/Tests/id/Questionid/")]
-
-        public int AddQuestion(QuestionDTO question)
+        public int PostQuestion(QuestionDTO question)
         {
             AuthorDataAccess aq = new AuthorDataAccess();
             return aq.AddQuestion(question);
         }
 
-        [HttpPost("Author/Tests/id/Questionid/Answer")]
+        [HttpPost("{id}/{quId}/Author")] // создание ответа для вопроса
 
-        public int AddAnswer(AnswerDTO answer)
+        public int PostAnswer(AnswerDTO answer)
         {
             AuthorDataAccess aa = new AuthorDataAccess();
             return aa.AddAnswer(answer);
         }
 
-        [HttpPut("Author/Tests/id/Questionid")]
+        // изменение вопроса с ответами
 
-        public void UpdateQuestion(QuestionDTO question)
+        [HttpPut("{id}/{quId}/Author")] // изменение конкретного вопроса
+
+        public void PutQuestion(QuestionDTO question)
         {
             AuthorDataAccess uq = new AuthorDataAccess();
             uq.UpdateQuestion(question);
         }
 
-        [HttpPut("Author/Tests/id/Questionid/Answer")]
+        [HttpPut("{id}/{quId}/Author")] // изменение ответа конкретного вопроса
 
-        public void UpdateAnswer(AnswerDTO answer)
+        public void PutAnswer(AnswerDTO answer)
         {
             AuthorDataAccess ua = new AuthorDataAccess();
             ua.UpdateAnswer(answer);
         }
 
-        [HttpGet("Author/Tests/id/Questionid")]
+        // вывод вопроса с ответами
 
-        public QuestionDTO GetQuestionById(int id)
+        [HttpGet("{id}/{quId}/Author")] // вывод конкретного вопроса
+
+        public QuestionDTO GetQuestionById([FromBody] int id)
         {
             AuthorDataAccess gq = new AuthorDataAccess();
             return gq.GetQuestionById(id);
         }
 
-        [HttpGet("Author/Tests/id/Questionid/Answer")]
+        [HttpGet("{id}/{quId}/Author")] // вывод ответы к конкретному вопросу
 
-        public List<AnswerDTO> GetAnswerByQuestionId(int questonId)
+        public List<AnswerDTO> GetAnswerByQuestionId([FromBody] int questonId)
         {
             AuthorDataAccess ga = new AuthorDataAccess();
             return ga.GetAnswerByQuestionId(questonId);
         }
 
-        [HttpDelete("Author/Tests/id/Questionid")]
+        // удаление вопроса с ответами
 
-        public int DeleteQuestionFromTest(int questionId)
+        [HttpDelete("{id}/{quId}/Author")]
+
+        public int DeleteQuestionFromTest([FromBody] int questionId)
         {
             AuthorDataAccess dq = new AuthorDataAccess();
             dq.DeleteQuestionFromTest(questionId);
             return questionId;
         }
 
-        [HttpDelete("Author/Tests/id/Questionid/Answer")]
+        [HttpDelete("{id}/{quId}/Author")]
 
-        public void DeleteAnswer(int id)
+        public void DeleteAnswer([FromBody] int id)
         {
             AuthorDataAccess da = new AuthorDataAccess();
             da.DeleteAnswer(id);
