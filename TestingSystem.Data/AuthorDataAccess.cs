@@ -204,7 +204,11 @@ namespace TestingSystem.Data
 
         //From FeedbackManager
 
-        
+        public int UpdateProcessedInFeedback(int id)
+        {
+            FeedbackManager feedback = new FeedbackManager();
+            return feedback.UpdateProcessedInFeedback(id);
+        }
 
 
 
@@ -232,6 +236,12 @@ namespace TestingSystem.Data
         {
             TestManager tm = new TestManager();
             tm.DeleteTest(test.ID);
+        }
+
+        public List<TagDTO> GetTagsWhichAreNotInTest(int testId)
+        {
+            TestManager tags = new TestManager();
+            return tags.GetTagsWhichAreNotInTest(testId);
         }
 
 

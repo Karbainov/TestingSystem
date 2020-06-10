@@ -59,6 +59,13 @@ namespace TestingSystem.Data.StoredProcedure
             }
         }
 
+        public List<TagDTO> GetTagsWhichAreNotInTest(int testId)
+        {
+            var connection = Connection.GetConnection();
+            string sqlExpression = "Tags_GetWhichAreNotInTest ";
+            return connection.Query<TagDTO>(sqlExpression, new { testId }, commandType: CommandType.StoredProcedure).ToList();            
+        }
+
         public List<TestDTO> GetTestByTagpAndGroup(TagGroupDTO dto)
         {
             using (IDbConnection connection = Connection.GetConnection())
