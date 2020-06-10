@@ -238,6 +238,12 @@ namespace TestingSystem.Data
             tm.DeleteTest(test.ID);
         }
 
+        public List<TagDTO> GetTagsWhichAreNotInTest(int testId)
+        {
+            TestManager tags = new TestManager();
+            return tags.GetTagsWhichAreNotInTest(testId);
+        }
+
 
         //From QuestionManager
 
