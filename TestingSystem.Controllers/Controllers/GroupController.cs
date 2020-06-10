@@ -10,7 +10,7 @@ using TestingSystem.Data.DTO;
 using TestingSystem.Data.StoredProcedure.CRUD;
 using TestingSystem.Data;
 
-namespace TestingSystem.API.Controllers
+namespace TestingSystem.Controllers.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -46,6 +46,27 @@ namespace TestingSystem.API.Controllers
         {
             AdminDataAccess adm = new AdminDataAccess();
             return adm.GetGroupById(id);
+        }
+        
+        [HttpGet("{id}/user")]
+        public GroupDTO GetUserListByGroupId(int id)
+        {
+            AdminDataAccess adm = new AdminDataAccess();
+            return adm.GetGroupById(id); // изменить
+        }
+        
+        [HttpPost("{groupID}/student/{userID}")] // GET http://localhost:5557/group/id/student/id	
+        public void PostStudentInGroup(int userID, int groupID)
+        {
+            AdminDataAccess adm = new AdminDataAccess();
+            adm.StudentAdd(userID, groupID);
+        }
+        
+        [HttpPost("{groupID}/teacher/{userID}")] // GET http://localhost:5557/group/id/teacher/id	
+        public void PostTeacherInGroup(int userID, int groupID)
+        {
+            AdminDataAccess adm = new AdminDataAccess();
+            adm.TeacherAdd(userID, groupID);
         }
         
         [HttpPut]
