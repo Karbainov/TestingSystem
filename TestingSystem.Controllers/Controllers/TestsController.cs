@@ -20,8 +20,8 @@ namespace TestingSystem.Controllers.Controllers
             _logger = logger;
         }
 
-        [HttpGet("Author/Tests")]
 
+        [HttpGet("Author/Tests")]  //вывод списка тестов
 
         public List<TestDTO> GetAllTest() 
         {
@@ -29,7 +29,7 @@ namespace TestingSystem.Controllers.Controllers
             return at.GetAllTest();       
         }
 
-        [HttpPost("Author/Tests/AddTest")]
+        [HttpPost("Author/Tests/AddTest")]  //создание теста
 
         public int AddTest(TestDTO test)
         {
@@ -37,7 +37,40 @@ namespace TestingSystem.Controllers.Controllers
             return at.AddTest(test);
         }
 
-        [HttpPost("Author/Tests/AddTest/AddTag")]
+        [HttpGet("Author/Tests/id")]  //вывод информации о конкретном тесте
+
+        public TestDTO GetByIdTest(int id) 
+        {
+            AuthorDataAccess ti = new AuthorDataAccess();
+            return ti.GetByIdTest(id);
+        }
+
+        [HttpGet("Author/Tests/id/Questions")]
+
+        public List<QuestionDTO> GetQuestionsByTestID(int testId)
+        {
+            AuthorDataAccess qt =new AuthorDataAccess();
+            return qt.GetQuestionsByTestID(testId);
+        }
+
+
+        [HttpGet("Author/Tests/SearchTestByTag")]  //поиск теста по тегу
+
+        public List<SearchTestByTagDTO> GetTestVSTagSearch(params string[] tag) // добавить метод вывода по нескольким тегам одновременно
+        {
+            AuthorDataAccess tt = new AuthorDataAccess();
+            return tt.GetTestVSTagSearchOr(tag);     
+        }
+
+        [HttpGet("Author/Tests/Tags")]  //вывод списка тегов
+
+        public List<TagDTO> GetAllTag()
+        {
+            AuthorDataAccess tg = new AuthorDataAccess();
+            return tg.GetAllTag();
+        }
+
+        [HttpPost("Author/Tests/Tags/AddTest")] //создание тега
 
         public int AddTag(TagDTO tag)
         {
@@ -46,13 +79,7 @@ namespace TestingSystem.Controllers.Controllers
         }
 
 
-        [HttpPost("Author/Tests/SearchTestByTag")]
 
-        public List<SearchTestByTagDTO> GetTestVSTagSearch(params string[] tag) // добавить метод вывода по нескольким тегам одновременно
-        {
-            AuthorDataAccess tt = new AuthorDataAccess();
-            return tt.GetTestVSTagSearchOr(tag);     
-        }
 
         [HttpPost("Author/Tests/AddTest/GetQuestion/AddQuestion")]
 

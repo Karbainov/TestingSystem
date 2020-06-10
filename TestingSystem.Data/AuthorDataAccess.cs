@@ -177,7 +177,14 @@ namespace TestingSystem.Data
             TagCRUD tg = new TagCRUD();
             return tg.Add(tag);
         }
-        
+
+        public List<TagDTO> GetAllTag() 
+        {
+            TagCRUD tg = new TagCRUD();
+            return tg.GetAll();
+        }
+
+
         public void UpdateTag(TagDTO tag)
         {
             TagCRUD tg = new TagCRUD();
@@ -232,10 +239,10 @@ namespace TestingSystem.Data
             question.DeleteQuestionFromTest(questionId);
             return questionId;
         }
-        
+
 
         //From AttemptManager
 
-       
+
     }
 }
