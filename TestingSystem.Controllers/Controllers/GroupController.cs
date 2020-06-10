@@ -10,7 +10,7 @@ using TestingSystem.Data.DTO;
 using TestingSystem.Data.StoredProcedure.CRUD;
 using TestingSystem.Data;
 
-namespace TestingSystem.Controllers.Controllers
+namespace TestingSystem.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]

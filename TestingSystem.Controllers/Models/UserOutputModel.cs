@@ -1,15 +1,15 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using TestingSystem.Data.DTO;
 using TestingSystem.Data.StoredProcedure;
 using TestingSystem.Data.StoredProcedure.CRUD;
 
-namespace TestingSystem.Controllers
+namespace TestingSystem.API.InputOutputModels
 {
-    public class GroupOutputModel
+    public class UserOutputModel
     {
-        public int groupID;
-        public List<GroupDTO> group;
+        public int userID;
+        public List<UserDTO> user;
     }
 }

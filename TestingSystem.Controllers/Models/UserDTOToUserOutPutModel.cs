@@ -8,7 +8,7 @@ using TestingSystem.Data.StoredProcedure;
 using TestingSystem.Data.StoredProcedure.CRUD;
 
 
-namespace TestingSystem.Controllers.InputOutputModels
+namespace TestingSystem.API.InputOutputModels
 {
     public class UserDTOToUserOutPutModel
     {

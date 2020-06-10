@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 using TestingSystem.Data;
 using TestingSystem.Data.DTO;
 
-namespace TestingSystem.Controllers.Controllers
+namespace TestingSystem.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
