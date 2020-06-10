@@ -37,6 +37,14 @@ namespace TestingSystem.Controllers.Controllers
             return at.AddTest(test);
         }
 
+        [HttpGet("Author/Tests/SearchTestByTag")]  //поиск теста по тегу
+
+        public List<SearchTestByTagDTO> GetTestVSTagSearch(params string[] tag) // добавить метод вывода по нескольким тегам одновременно
+        {
+            AuthorDataAccess tt = new AuthorDataAccess();
+            return tt.GetTestVSTagSearchOr(tag);
+        }
+
         [HttpGet("Author/Tests/id")]  //вывод информации о конкретном тесте
 
         public TestDTO GetByIdTest(int id) 
@@ -45,7 +53,26 @@ namespace TestingSystem.Controllers.Controllers
             return ti.GetByIdTest(id);
         }
 
-        [HttpGet("Author/Tests/id/Questions")]
+        [HttpPut("Author/Tests/id")]  //изменение информации о конкретном тесте
+       
+        public int UpdateTestById(TestDTO test) 
+        {
+            AuthorDataAccess ut = new AuthorDataAccess();
+            return ut.UpdateTest(test);
+        }
+
+        [HttpDelete("Author/Tests/id")]  //удаление конкретного тесте
+
+        public int DeleteTestById(int id) 
+        {
+            AuthorDataAccess dt = new AuthorDataAccess();
+            return dt.DeleteTest(id);
+        }
+
+
+
+
+        [HttpGet("Author/Tests/id/Questions")]  //вывод всех вопросов из конкретного теста
 
         public List<QuestionDTO> GetQuestionsByTestID(int testId)
         {
@@ -53,13 +80,28 @@ namespace TestingSystem.Controllers.Controllers
             return qt.GetQuestionsByTestID(testId);
         }
 
+        [HttpGet("Author/Tests/id/Tags")]  //вывод всех тегов конкретного теста
 
-        [HttpGet("Author/Tests/SearchTestByTag")]  //поиск теста по тегу
-
-        public List<SearchTestByTagDTO> GetTestVSTagSearch(params string[] tag) // добавить метод вывода по нескольким тегам одновременно
+        public List<TagDTO> GetTagsInTest(TestDTO tests) 
         {
             AuthorDataAccess tt = new AuthorDataAccess();
-            return tt.GetTestVSTagSearchOr(tag);     
+            return tt.GetTagsInTest(tests);
+        }
+
+        [HttpPost("Author/Tests/id/Tags/id")] //добавление тега к конкретному тесту
+
+        public int TestTagCreate(TestTagDTO testtag) 
+        {
+            AuthorDataAccess tt = new AuthorDataAccess();
+            return tt.TestTagCreate(testtag);
+        }
+
+        [HttpDelete("Author/Tests/id/Tags/id")] //удаление тега из конкретного теста
+
+        public void DeleteByTestIdTagId(int testId, int tagId)
+        {
+            AuthorDataAccess tt = new AuthorDataAccess();
+            tt.DeleteByTestIdTagId(testId, tagId);
         }
 
         [HttpGet("Author/Tests/Tags")]  //вывод списка тегов

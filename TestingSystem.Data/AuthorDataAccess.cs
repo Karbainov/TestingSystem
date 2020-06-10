@@ -42,8 +42,8 @@ namespace TestingSystem.Data
         {
             TestTagCRUD tt = new TestTagCRUD();
             return tt.Add(testtag);
-        }        
-        
+        }
+
         public void Update(TestTagDTO testtag)
         {
             TestTagCRUD tt = new TestTagCRUD();
@@ -170,6 +170,11 @@ namespace TestingSystem.Data
             return ts.Update(test);
         }
 
+        public int DeleteTest(int id) 
+        {
+            TestCRUD dt = new TestCRUD();
+            return dt.Delete(id);
+        }
 
         //TagCRUD
         public int AddTag(TagDTO tag)
@@ -183,7 +188,6 @@ namespace TestingSystem.Data
             TagCRUD tg = new TagCRUD();
             return tg.GetAll();
         }
-
 
         public void UpdateTag(TagDTO tag)
         {
