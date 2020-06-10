@@ -81,5 +81,26 @@ namespace TestingSystem.Controllers.Controllers
             adm.UserDelete(user);
 
         }
+        [HttpGet("Tests/{UserID}")]
+        public List<TestAttemptDTO> GetStudentTests(int UserID)
+        {
+            StudentDataAccess student = new StudentDataAccess();
+            List<TestAttemptDTO> tests = student.GetCompleteTest(UserID);
+            tests.AddRange(student.GetIncompleteTest(UserID));
+            return tests;
+        }
+        [HttpGet("Tests/{UserID}/{TestID}")]
+        public List<AttemptResultDTO> GetAttemptsByUserIDTestID(int UserID,int TestID)
+        {
+            StudentDataAccess student = new StudentDataAccess();
+            UserIdTestIdDTO dTO = new UserIdTestIdDTO(UserID, TestID);
+            return student.GetAttemptsByUserIdTestId(dTO);
+        }
+        [HttpGet("Attempt/{AttemptID}")]
+        public List<QuestionAnswerDTO> GetQuestionAndAnswerByAttemptID(int AttemptID)
+        {
+            TeacherDataAccess teacher = new TeacherDataAccess();
+            return teacher.GetQuestionAndAnswerByAttempt(AttemptID);
+        }
     }
 }

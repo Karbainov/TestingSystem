@@ -49,5 +49,11 @@ namespace TestingSystem.Data
             QuestionManager manager = new QuestionManager();
             return manager.GetQuestionsByTestID(id);
         }
+        public List<AttemptResultDTO> GetAttemptsByUserIdTestId(UserIdTestIdDTO attempt)
+        {
+            AttemptManager teacher = new AttemptManager();
+            return teacher.GetAttemptByUserIdTestId(attempt);
+
+        }
     }
 }

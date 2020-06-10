@@ -34,7 +34,7 @@ namespace TestingSystem.Data.StoredProcedure
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Attempt_GetQuestionAndAnswer @AttemptID";
-                return connection.Query<QuestionAnswerDTO>(sqlExpression,new{ attemptID}).ToList();
+                return connection.Query<QuestionAnswerDTO>(sqlExpression,new{ attemptID }).ToList();
             }
            
         }
