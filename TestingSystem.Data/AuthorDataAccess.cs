@@ -204,7 +204,11 @@ namespace TestingSystem.Data
 
         //From FeedbackManager
 
-        
+        public int UpdateProcessedInFeedback(int id)
+        {
+            FeedbackManager feedback = new FeedbackManager();
+            return feedback.UpdateProcessedInFeedback(id);
+        }
 
 
 
