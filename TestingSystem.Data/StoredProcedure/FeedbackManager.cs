@@ -39,5 +39,13 @@ namespace TestingSystem.Data.StoredProcedure
                 return connection.Query<FeedbackDTO>(sqlExpression, commandType: CommandType.StoredProcedure).ToList();
             }
         }
+
+        public int UpdateProcessedInFeedback(int id)
+        {
+            var connection = Connection.GetConnection();
+            string sqlExpression = "Feedback_UpdateProcessed";
+            connection.Execute(sqlExpression, new { id }, commandType: CommandType.StoredProcedure);
+            return id;
+        }
     }
 }
