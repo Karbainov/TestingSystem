@@ -89,15 +89,15 @@ namespace TestingSystem.Controllers.Controllers
             tests.AddRange(student.GetIncompleteTest(UserID));
             return tests;
         }
-        [HttpGet("user/{UserID}/{TestID}")]
+        [HttpGet("Tests/{UserID}/{TestID}")]
         public List<AttemptResultDTO> GetAttemptsByUserIDTestID(int UserID,int TestID)
         {
             StudentDataAccess student = new StudentDataAccess();
             UserIdTestIdDTO dTO = new UserIdTestIdDTO(UserID, TestID);
             return student.GetAttemptsByUserIdTestId(dTO);
         }
-        [HttpGet("/{UserID}/{TestID}/{AttemptID}")]
-        public List<QuestionAnswerDTO> GetQuestionAndAnswerByAttemptID(int UserID, int TestID,int AttemptID)
+        [HttpGet("Attempt/{AttemptID}")]
+        public List<QuestionAnswerDTO> GetQuestionAndAnswerByAttemptID(int AttemptID)
         {
             TeacherDataAccess teacher = new TeacherDataAccess();
             return teacher.GetQuestionAndAnswerByAttempt(AttemptID);
