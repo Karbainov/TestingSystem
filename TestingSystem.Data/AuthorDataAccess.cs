@@ -42,8 +42,8 @@ namespace TestingSystem.Data
         {
             TestTagCRUD tt = new TestTagCRUD();
             return tt.Add(testtag);
-        }        
-        
+        }
+
         public void Update(TestTagDTO testtag)
         {
             TestTagCRUD tt = new TestTagCRUD();
@@ -92,6 +92,12 @@ namespace TestingSystem.Data
             return q.GetAll();
         }
 
+        public QuestionDTO GetQuestionById(int id)
+        {
+            QuestionCRUD q = new QuestionCRUD();
+            return q.GetById(id);
+        }
+
         public List<QuestionDTO> GetQuestionsByTestID(int testId)
         {
             QuestionCRUD q = new QuestionCRUD();
@@ -108,13 +114,7 @@ namespace TestingSystem.Data
         {
             QuestionCRUD q = new QuestionCRUD();
             q.Update(question);
-        }
-
-        public void DeleteQuestion(QuestionDTO question)
-        {
-            QuestionCRUD q = new QuestionCRUD();
-            q.Delete(question.ID);
-        }
+        }        
 
 
         //TypeCRUD 
@@ -170,6 +170,11 @@ namespace TestingSystem.Data
             return ts.Update(test);
         }
 
+        public int DeleteTest(int id) 
+        {
+            TestCRUD dt = new TestCRUD();
+            return dt.Delete(id);
+        }
 
         //TagCRUD
         public int AddTag(TagDTO tag)
@@ -177,7 +182,13 @@ namespace TestingSystem.Data
             TagCRUD tg = new TagCRUD();
             return tg.Add(tag);
         }
-        
+
+        public List<TagDTO> GetAllTag() 
+        {
+            TagCRUD tg = new TagCRUD();
+            return tg.GetAll();
+        }
+
         public void UpdateTag(TagDTO tag)
         {
             TagCRUD tg = new TagCRUD();
@@ -199,16 +210,16 @@ namespace TestingSystem.Data
 
         //From TestManager
 
-        public List<SearchTestByTagDTO> GetTestVSTagSearchOr(string tag1, string tag2, string tag3)
+        public List<SearchTestByTagDTO> GetTestVSTagSearchOr(params string[] tag)
         {
             TestManager tm = new TestManager();
-            return tm.GetTestVSTagSearchOr(tag1, tag2, tag3);
+            return tm.GetTestVSTagSearchOr(tag);
         }
 
-        public List<SearchTestByTagDTO> GetTestVSTagSearchAnd(string tag1, string tag2, string tag3)
+        public List<SearchTestByTagDTO> GetTestVSTagSearchAnd(params string[] tag)
         {
             TestManager tm = new TestManager();
-            return tm.GetTestVSTagSearchAnd(tag1, tag2, tag3);
+            return tm.GetTestVSTagSearchAnd(tag);
         }              
 
         public List<TagDTO> GetTagsInTest(TestDTO tests)
@@ -232,10 +243,10 @@ namespace TestingSystem.Data
             question.DeleteQuestionFromTest(questionId);
             return questionId;
         }
-        
+
 
         //From AttemptManager
 
-       
+
     }
 }
