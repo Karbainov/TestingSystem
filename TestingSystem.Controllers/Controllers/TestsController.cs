@@ -69,9 +69,6 @@ namespace TestingSystem.Controllers.Controllers
             return dt.DeleteTest(id);
         }
 
-
-
-
         [HttpGet("Author/Tests/id/Questions")]  //вывод всех вопросов из конкретного теста
 
         public List<QuestionDTO> GetQuestionsByTestID(int testId)
@@ -120,6 +117,22 @@ namespace TestingSystem.Controllers.Controllers
             return at.AddTag(tag);
         }
 
+
+        [HttpPut("Author/Tests/Tags/id")] //изменение конкретного тега
+
+        public void UpdateTag(TagDTO tag) 
+        {
+            AuthorDataAccess ut = new AuthorDataAccess();
+            ut.UpdateTag(tag);
+        }
+
+        [HttpDelete("Author/Tests/Tags/id")] //удаление конкретного тега
+
+        public void DeleteTag(int id) 
+        {
+            AuthorDataAccess dt = new AuthorDataAccess();
+            dt.DeleteTag(id);
+        }
 
 
 
