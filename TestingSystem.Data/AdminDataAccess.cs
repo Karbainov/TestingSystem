@@ -68,8 +68,9 @@ namespace TestingSystem.Data
             GroupCRUD group = new GroupCRUD();
             group.Delete(id);
         }
-        public void StudentAdd (StudentGroupDTO studentA) 
+        public void StudentAdd (int userID, int groupID) 
         {
+            StudentGroupDTO studentA = new StudentGroupDTO(1, userID, groupID);
             StudentGroup student = new StudentGroup();
             student.Add(studentA);
         }
@@ -78,15 +79,16 @@ namespace TestingSystem.Data
             StudentGroup student = new StudentGroup();
             student.DeleteByID(studentD.ID);
         }
-        public void TeacherAdd(TeacherGroupDTO teacherA)
+        public void TeacherAdd(int userID, int groupID)
         {
-            TeacherGroup student = new TeacherGroup();
-            student.Add(teacherA);
+            TeacherGroupDTO teacherA = new TeacherGroupDTO(1, userID, groupID);
+            TeacherGroup teacher = new TeacherGroup();
+            teacher.Add(teacherA);
         }
         public void TeacherDelete(TeacherGroupDTO teacherD)
         {
-            TeacherGroup student = new TeacherGroup();
-            student.DeleteByID(teacherD.ID);
+            TeacherGroup teacher = new TeacherGroup();
+            teacher.DeleteByID(teacherD.ID);
         }
         public void AddRoleToUser(UserRoleDTO dTO)
         {

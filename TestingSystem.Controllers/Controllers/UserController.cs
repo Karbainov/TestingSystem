@@ -11,7 +11,7 @@ using TestingSystem.Data.StoredProcedure.CRUD;
 using TestingSystem.Data;
 
 
-namespace TestingSystem.API.Controllers
+namespace TestingSystem.Controllers.Controllers
 {
         [ApiController]
         [Route("[controller]")]
@@ -43,15 +43,16 @@ namespace TestingSystem.API.Controllers
             adm.UserCreate(user);
 
         }
-
+        /*
         [HttpGet]
         public List<UserRoleDTO> GetAllUsersRoles()
         {
             AdminDataAccess adm = new AdminDataAccess();
             return adm.GetAllUserRoles();
         }
+        */
 
-        [HttpGet("{roleID}")]
+        [HttpGet("role/{roleID}")]
         public List<UserRoleDTO> GetUserRolesByRoleID(int roleID)
         {
             AdminDataAccess adm = new AdminDataAccess();
@@ -81,7 +82,7 @@ namespace TestingSystem.API.Controllers
             adm.UserDelete(user);
 
         }
-        [HttpGet("Tests/{UserID}")]
+        [HttpGet("{UserID}/Tests")]
         public List<TestAttemptDTO> GetStudentTests(int UserID)
         {
             StudentDataAccess student = new StudentDataAccess();
@@ -89,14 +90,14 @@ namespace TestingSystem.API.Controllers
             tests.AddRange(student.GetIncompleteTest(UserID));
             return tests;
         }
-        [HttpGet("Tests/{UserID}/{TestID}")]
+        [HttpGet("{UserID}/Tests/{TestID}")]
         public List<AttemptResultDTO> GetAttemptsByUserIDTestID(int UserID,int TestID)
         {
             StudentDataAccess student = new StudentDataAccess();
             UserIdTestIdDTO dTO = new UserIdTestIdDTO(UserID, TestID);
             return student.GetAttemptsByUserIdTestId(dTO);
         }
-        [HttpGet("Attempt/{AttemptID}")]
+        [HttpGet("Attempt/{AttemptID}")]	
         public List<QuestionAnswerDTO> GetQuestionAndAnswerByAttemptID(int AttemptID)
         {
             TeacherDataAccess teacher = new TeacherDataAccess();
