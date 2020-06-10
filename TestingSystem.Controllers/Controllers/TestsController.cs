@@ -136,7 +136,7 @@ namespace TestingSystem.Controllers.Controllers
 
 
 
-        [HttpPost("Author/Tests/AddTest/GetQuestion/AddQuestion")]
+        [HttpPost("Author/Tests/id/Questionid/")]
 
         public int AddQuestion(QuestionDTO question)
         {
@@ -144,7 +144,7 @@ namespace TestingSystem.Controllers.Controllers
             return aq.AddQuestion(question);
         }
 
-        [HttpPost("Author/Tests/AddTest/GetQuestion/AddAnswer")]
+        [HttpPost("Author/Tests/id/Questionid/Answer")]
 
         public int AddAnswer(AnswerDTO answer)
         {
@@ -152,7 +152,7 @@ namespace TestingSystem.Controllers.Controllers
             return aa.AddAnswer(answer);
         }
 
-        [HttpPut("Author/Tests/AddTest/GetQuestion/UpdateQuestion")]
+        [HttpPut("Author/Tests/id/Questionid")]
 
         public void UpdateQuestion(QuestionDTO question)
         {
@@ -160,7 +160,7 @@ namespace TestingSystem.Controllers.Controllers
             uq.UpdateQuestion(question);
         }
 
-        [HttpPut("Author/Tests/AddTest/GetQuestion/UpdateAnswer")]
+        [HttpPut("Author/Tests/id/Questionid/Answer")]
 
         public void UpdateAnswer(AnswerDTO answer)
         {
@@ -168,7 +168,7 @@ namespace TestingSystem.Controllers.Controllers
             ua.UpdateAnswer(answer);
         }
 
-        [HttpGet("Author/Tests/AddTest/GetQuestion")]
+        [HttpGet("Author/Tests/id/Questionid")]
 
         public QuestionDTO GetQuestionById(int id)
         {
@@ -176,7 +176,7 @@ namespace TestingSystem.Controllers.Controllers
             return gq.GetQuestionById(id);
         }
 
-        [HttpGet("Author/Tests/AddTest/GetQuestion/GetAnswer")]
+        [HttpGet("Author/Tests/id/Questionid/Answer")]
 
         public List<AnswerDTO> GetAnswerByQuestionId(int questonId)
         {
@@ -184,7 +184,7 @@ namespace TestingSystem.Controllers.Controllers
             return ga.GetAnswerByQuestionId(questonId);
         }
 
-        [HttpDelete("Author/Tests/AddTest/GetQuestion/DeleteQuestion")]
+        [HttpDelete("Author/Tests/id/Questionid")]
 
         public int DeleteQuestionFromTest(int questionId)
         {
@@ -193,7 +193,7 @@ namespace TestingSystem.Controllers.Controllers
             return questionId;
         }
 
-        [HttpDelete("Author/Tests/AddTest/GetQuestion/DeleteAnswer")]
+        [HttpDelete("Author/Tests/id/Questionid/Answer")]
 
         public void DeleteAnswer(int id)
         {
