@@ -8,7 +8,7 @@ namespace TestingSystem.Data.DTO
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public DateTime DurationTime { get; set; }
+        public TimeSpan DurationTime { get; set; }
         public int SuccessScore { get; set; }
         public string Tag1 { get; set; }
         public string Tag2 { get; set; }
@@ -16,7 +16,7 @@ namespace TestingSystem.Data.DTO
 
         public SearchTestByTagDTO() { }
 
-        public SearchTestByTagDTO(int id, string name, DateTime durationTime, int successScore, string tag1, string tag2, string tag3)
+        public SearchTestByTagDTO(int id, string name, TimeSpan durationTime, int successScore, string tag1, string tag2, string tag3)
         {
             this.Id = id;
             this.Name = name;
