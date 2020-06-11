@@ -9,8 +9,8 @@ using TestingSystem.Data.DTO;
 
 namespace TestingSystem.API.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("[controller]")]
     public class TestsController : ControllerBase
     {
         private readonly ILogger<TestsController> _logger;
