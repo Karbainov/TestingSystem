@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace TestingSystem.API.Models.Input
 {
-    public class TestModel
+    public class TestIdInput
     {
         public string Name { get; set; }
-        public TimeSpan DurationTime { get; set; }        
+        public TimeSpan DurationTime { get; set; }
     }
 }
