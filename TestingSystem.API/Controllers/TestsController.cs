@@ -23,13 +23,13 @@ namespace TestingSystem.API.Controllers
 
         [HttpGet("Author")]  //вывод списка тестов
 
-        public List<TestDTO> GetAllTest() 
+        public List<TestDTO> GetAllTest()
         {
-            AuthorDataAccess at =new AuthorDataAccess();
-            return at.GetAllTest();       
+            AuthorDataAccess at = new AuthorDataAccess();
+            return at.GetAllTest();
         }
 
-        [HttpPost("AddTest/Author")]  //создание теста
+        [HttpPost("AddTest{Testid}/Author")]  //создание теста
 
         public int PostTest(TestDTO test)
         {
@@ -45,23 +45,23 @@ namespace TestingSystem.API.Controllers
             return tt.GetTestVSTagSearchOr(tag);
         }
 
-        [HttpGet("{id}/Author")]  //вывод информации о конкретном тесте
+        [HttpGet("{Testid}/Author")]  //вывод информации о конкретном тесте
 
-        public TestDTO GetByIdTest(int id) 
+        public TestDTO GetByIdTest(int id)
         {
             AuthorDataAccess ti = new AuthorDataAccess();
             return ti.GetByIdTest(id);
         }
 
-        [HttpPut("{id}/Author")]  //изменение информации о конкретном тесте
-       
-        public int PutTestById(TestDTO test) 
+        [HttpPut("{Testid}/Author")]  //изменение информации о конкретном тесте
+
+        public int PutTestById(TestDTO test)
         {
             AuthorDataAccess ut = new AuthorDataAccess();
             return ut.UpdateTest(test);
         }
 
-        [HttpDelete("{id}/Author")]  //удаление конкретного тесте
+        [HttpDelete("{Testid}/Author")]  //удаление конкретного тесте
 
         public int DeleteTestById(int id) 
         {
@@ -69,7 +69,7 @@ namespace TestingSystem.API.Controllers
             return dt.DeleteTest(id);
         }
 
-        [HttpGet("{id}/Questions/Author")]  //вывод всех вопросов из конкретного теста
+        [HttpGet("{Testid}/Questions/Author")]  //вывод всех вопросов из конкретного теста
 
         public List<QuestionDTO> GetQuestionsByTestID(int testId)
         {
@@ -77,7 +77,7 @@ namespace TestingSystem.API.Controllers
             return qt.GetQuestionsByTestID(testId);
         }
 
-        [HttpGet("{id}/Tags/Author")]  //вывод всех тегов конкретного теста
+        [HttpGet("{Testid}/Tags/Author")]  //вывод всех тегов конкретного теста
 
         public List<TagDTO> GetTagsInTest(TestDTO tests) 
         {
@@ -85,7 +85,7 @@ namespace TestingSystem.API.Controllers
             return tt.GetTagsInTest(tests);
         }
 
-        [HttpPost("{id}/Tags/Author")] //добавление тега к конкретному тесту
+        [HttpPost("{Testid}/Tags/Author")] //добавление тега к конкретному тесту
 
         public int PostTagByTest(TestTagDTO testtag) 
         {
@@ -93,7 +93,7 @@ namespace TestingSystem.API.Controllers
             return tt.TestTagCreate(testtag);
         }
 
-        [HttpDelete("{id}/Tags/{tagId}/Author")] //удаление тега из конкретного теста
+        [HttpDelete("{Testid}/Tags/{tagId}/Author")] //удаление тега из конкретного теста
 
         public void DeleteByTestIdTagId(int testId, int tagId)
         {
@@ -118,7 +118,7 @@ namespace TestingSystem.API.Controllers
         }
 
 
-        [HttpPut("Tags/{id}/Author")] //изменение конкретного тега
+        [HttpPut("Tags/{Tagid}/Author")] //изменение конкретного тега
 
         public void UpdateTag(TagDTO tag) 
         {
@@ -126,7 +126,7 @@ namespace TestingSystem.API.Controllers
             ut.UpdateTag(tag);
         }
 
-        [HttpDelete("Tags/{id}/Author")] //удаление конкретного тега
+        [HttpDelete("Tags/{Tagid}/Author")] //удаление конкретного тега
 
         public void DeleteTag(int id) 
         {
@@ -136,7 +136,7 @@ namespace TestingSystem.API.Controllers
 
 
         // создание вопроса с ответами
-        [HttpPost("{id}/{quId}/Author")] // создание вопроса конкретного теста
+        [HttpPost("{Testid}/{quId}/Author")] // создание вопроса конкретного теста
 
         public int PostQuestion(QuestionDTO question)
         {
@@ -144,7 +144,7 @@ namespace TestingSystem.API.Controllers
             return aq.AddQuestion(question);
         }
 
-        [HttpPost("{id}/{quId}/Author")] // создание ответа для вопроса
+        [HttpPost("{Testid}/{quId}/Author")] // создание ответа для вопроса
 
         public int PostAnswer(AnswerDTO answer)
         {
@@ -154,7 +154,7 @@ namespace TestingSystem.API.Controllers
 
         // изменение вопроса с ответами
 
-        [HttpPut("{id}/{quId}/Author")] // изменение конкретного вопроса
+        [HttpPut("{Testid}/{quId}/Author")] // изменение конкретного вопроса
 
         public void PutQuestion(QuestionDTO question)
         {
@@ -162,7 +162,7 @@ namespace TestingSystem.API.Controllers
             uq.UpdateQuestion(question);
         }
 
-        [HttpPut("{id}/{quId}/Author")] // изменение ответа конкретного вопроса
+        [HttpPut("{Testid}/{quId}/Author")] // изменение ответа конкретного вопроса
 
         public void PutAnswer(AnswerDTO answer)
         {
@@ -172,7 +172,7 @@ namespace TestingSystem.API.Controllers
 
         // вывод вопроса с ответами
 
-        [HttpGet("{id}/{quId}/Author")] // вывод конкретного вопроса
+        [HttpGet("{Testid}/{quId}/Author")] // вывод конкретного вопроса
 
         public QuestionDTO GetQuestionById([FromBody] int id)
         {
@@ -180,7 +180,7 @@ namespace TestingSystem.API.Controllers
             return gq.GetQuestionById(id);
         }
 
-        [HttpGet("{id}/{quId}/Author")] // вывод ответы к конкретному вопросу
+        [HttpGet("{Testid}/{quId}/Author")] // вывод ответы к конкретному вопросу
 
         public List<AnswerDTO> GetAnswerByQuestionId([FromBody] int questonId)
         {
@@ -190,7 +190,7 @@ namespace TestingSystem.API.Controllers
 
         // удаление вопроса с ответами
 
-        [HttpDelete("{id}/{quId}/Author")]
+        [HttpDelete("{Testid}/{quId}/Author")]
 
         public int DeleteQuestionFromTest([FromBody] int questionId)
         {
@@ -199,7 +199,7 @@ namespace TestingSystem.API.Controllers
             return questionId;
         }
 
-        [HttpDelete("{id}/{quId}/Author")]
+        [HttpDelete("{Testid}/{quId}/Author")]
 
         public void DeleteAnswer([FromBody] int id)
         {
