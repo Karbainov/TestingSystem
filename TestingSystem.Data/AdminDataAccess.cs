@@ -34,11 +34,10 @@ namespace TestingSystem.Data
             UserCRUD user = new UserCRUD();
             user.Update( userU);
         }
-        public void UserDelete(UserDTO userD)
+        public void UserDelete(int id)
         {
-            
             UserCRUD user = new UserCRUD();
-            user.Create( userD);
+            user.Delete(id);
         }
         public void GroupCreate(GroupDTO groupC)
         {

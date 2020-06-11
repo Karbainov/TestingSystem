@@ -9,6 +9,7 @@ using System.Text;
 using TestingSystem.Data.DTO;
 using TestingSystem.Data.StoredProcedure.CRUD;
 using TestingSystem.Data;
+using TestingSystem.API.Models.Input;
 
 
 namespace TestingSystem.API.Controllers
@@ -37,10 +38,11 @@ namespace TestingSystem.API.Controllers
 
 
         [HttpPost]
-        public void Post([FromBody] UserDTO user)
+        public void Post([FromBody] UserInputModel user)
         {
+            Map mapper = new Map();
             AdminDataAccess adm = new AdminDataAccess();
-            adm.UserCreate(user);
+            adm.UserCreate(mapper.ConvertUserInputModelToGroupDTO(user));
 
         }
         /*
@@ -67,19 +69,20 @@ namespace TestingSystem.API.Controllers
         }
 
         [HttpPut]
-        public void Put([FromBody] UserDTO user)
+        public void Put([FromBody] UserInputModel user)
         {
+            Map mapper = new Map();
             AdminDataAccess adm = new AdminDataAccess();
-            adm.UserUpdate(user);
+            adm.UserUpdate(mapper.ConvertUserInputModelToGroupDTO(user));
 
         }
 
         [HttpDelete]
 
-        public void Delete([FromBody] UserDTO user)
+        public void Delete([FromBody] int id)
         {
             AdminDataAccess adm = new AdminDataAccess();
-            adm.UserDelete(user);
+            adm.UserDelete(id);
 
         }
         [HttpGet("{UserID}/Tests")]
