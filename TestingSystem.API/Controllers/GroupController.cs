@@ -86,5 +86,18 @@ namespace TestingSystem.API.Controllers
 
         }
 
+        [HttpDelete] // удаляем студента из группы
+        public void DeleteStudent([FromBody]StudentGroupDTO studentD)
+        {
+            AdminDataAccess adm = new AdminDataAccess();
+            adm.StudentDelete(studentD);
+        }
+
+        [HttpDelete] // удаляем учителя из группы
+        public void DeleteTeacher([FromBody]TeacherGroupDTO teacherD)
+        {
+            AdminDataAccess adm = new AdminDataAccess();
+            adm.TeacherDelete(teacherD);
+        }
     }
 }
