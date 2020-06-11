@@ -55,7 +55,7 @@ namespace TestingSystem.API.Controllers
         */
 
         [HttpGet("role/{roleID}")]
-        public List<UserRoleDTO> GetUserRolesByRoleID(int roleID)
+        public List<UserRoleDTO> GetUsersByRoleID(int roleID)
         {
             AdminDataAccess adm = new AdminDataAccess();
             return adm.GetUserRolesByRoleID(roleID);

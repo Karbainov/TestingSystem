@@ -10,6 +10,7 @@ using TestingSystem.Data.DTO;
 using TestingSystem.Data.StoredProcedure.CRUD;
 using TestingSystem.Data;
 using TestingSystem.API.Models.Input;
+using TestingSystem.API.Models.Output;
 
 namespace TestingSystem.API
 {
@@ -19,6 +20,12 @@ namespace TestingSystem.API
         {
             UserDTO user = new UserDTO(userIn.ID, userIn.FirstName, userIn.LastName, userIn.BirthDate, userIn.Login, userIn.Password, userIn.Email, userIn.Phone);
             return user;
+        }
+
+        public UserOutputModel ConvertUserDTOToUserOutputModel(UserDTO user)
+        {
+            UserOutputModel userOut = new UserOutputModel(user.ID, user.FirstName, user.LastName, user.BirthDate, user.Login, user.Password, user.Email, user.Phone);
+            return userOut;
         }
 
     }
