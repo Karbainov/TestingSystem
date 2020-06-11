@@ -20,30 +20,29 @@ namespace TestingSystem.API.Controllers
             _logger = logger;
         }
 
+        //главная страница
 
         [HttpGet("Author")]  //вывод списка тестов
 
-        public List<TestDTO> GetAllTest()
-        {
+        public List<TestDTO> /*outputmodel*/ GetAllTest()
+        {            
             AuthorDataAccess at = new AuthorDataAccess();
             return at.GetAllTest();
+            /*вызываем мапинг, чтобы преобразовать DTO в OutputModel*/
         }
 
-        [HttpPost("AddTest{Testid}/Author")]  //создание теста
 
-        public int PostTest(TestDTO test)
-        {
-            AuthorDataAccess at = new AuthorDataAccess();
-            return at.AddTest(test);
-        }
-
-        [HttpGet("SearchTestByTag/Author")]  //поиск теста по тегу
+        [HttpGet("SearchTestByTag/Author")]  //поиск теста по тегу     URL надо как-то изменить?
 
         public List<SearchTestByTagDTO> GetTestVSTagSearch(params string[] tag) // добавить метод вывода по нескольким тегам одновременно
         {
             AuthorDataAccess tt = new AuthorDataAccess();
             return tt.GetTestVSTagSearchOr(tag);
         }
+
+
+
+        //страница с конкретным тестом
 
         [HttpGet("{Testid}/Author")]  //вывод информации о конкретном тесте
 
@@ -53,6 +52,34 @@ namespace TestingSystem.API.Controllers
             return ti.GetByIdTest(id);
         }
 
+
+        [HttpGet("{Testid}/Author")]  //вывод всех вопросов из конкретного теста
+
+        public List<QuestionDTO> GetQuestionsByTestID([FromBody]int testId)
+        {
+            AuthorDataAccess qt = new AuthorDataAccess();
+            return qt.GetQuestionsByTestID(testId);
+        }
+
+
+        [HttpGet("{Testid}/Author")]  //вывод всех тегов конкретного теста
+
+        public List<TagDTO> GetTagsInTest([FromBody]TestDTO tests)
+        {
+            AuthorDataAccess tt = new AuthorDataAccess();
+            return tt.GetTagsInTest(tests);
+        }
+
+
+        [HttpPost("{Testid}/Author")]  //создание теста
+
+        public int PostTest(TestDTO test)
+        {
+            AuthorDataAccess at = new AuthorDataAccess();
+            return at.AddTest(test);
+        }
+
+
         [HttpPut("{Testid}/Author")]  //изменение информации о конкретном тесте
 
         public int PutTestById(TestDTO test)
@@ -61,29 +88,21 @@ namespace TestingSystem.API.Controllers
             return ut.UpdateTest(test);
         }
 
+
         [HttpDelete("{Testid}/Author")]  //удаление конкретного тесте
 
-        public int DeleteTestById(int id) 
+        public int DeleteTestById(int id)
         {
             AuthorDataAccess dt = new AuthorDataAccess();
             return dt.DeleteTest(id);
-        }
+        }  
+        
 
-        [HttpGet("{Testid}/Questions/Author")]  //вывод всех вопросов из конкретного теста
 
-        public List<QuestionDTO> GetQuestionsByTestID(int testId)
-        {
-            AuthorDataAccess qt =new AuthorDataAccess();
-            return qt.GetQuestionsByTestID(testId);
-        }
 
-        [HttpGet("{Testid}/Tags/Author")]  //вывод всех тегов конкретного теста
 
-        public List<TagDTO> GetTagsInTest(TestDTO tests) 
-        {
-            AuthorDataAccess tt = new AuthorDataAccess();
-            return tt.GetTagsInTest(tests);
-        }
+
+        //страница с тэгами
 
         [HttpPost("{Testid}/Tags/Author")] //добавление тега к конкретному тесту
 
