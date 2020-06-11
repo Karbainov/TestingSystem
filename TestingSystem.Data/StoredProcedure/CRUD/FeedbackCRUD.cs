@@ -31,15 +31,12 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             }
         }
 
-        //public List<FeedbackDTO> FeedbackGetByID(FeedbackDTO feedback)
-        //{
-        //    using (IDbConnection connection = Connection.GetConnection())
-        //    {
-        //        string sqlExpression = "Feedback_getId @ID";
-
-        //        return connection.Query<FeedbackDTO>(sqlExpression, feedback).ToList();
-        //    }
-        //}
+        public FeedbackDTO FeedbackGetByID(int id)
+        {
+            var connection = Connection.GetConnection();
+            string sqlExpression = "Feedback_getId";            
+            return connection.Query<FeedbackDTO>(sqlExpression, new { id }, commandType: CommandType.StoredProcedure).FirstOrDefault();            
+        }
 
         public void FeedbackUpdate (FeedbackDTO feedback)
         {

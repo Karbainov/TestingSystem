@@ -40,6 +40,13 @@ namespace TestingSystem.Data.StoredProcedure
             }
         }
 
+        public List<FeedbackDTO> GetNotProcessedFeedback()
+        {
+            var connection = Connection.GetConnection();
+            string sqlExpression = "Feedback_NotProcessed";
+            return connection.Query<FeedbackDTO>(sqlExpression, commandType: CommandType.StoredProcedure).ToList();            
+        }
+
         public int UpdateProcessedInFeedback(int id)
         {
             var connection = Connection.GetConnection();

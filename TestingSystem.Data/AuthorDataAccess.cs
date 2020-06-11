@@ -71,7 +71,7 @@ namespace TestingSystem.Data
 
         //FeedbackCRUD        
 
-        public List<FeedbackDTO> GetAllFeedback()
+        public List<FeedbackDTO> GetAllFeedbacks()
         {
             FeedbackCRUD fb = new FeedbackCRUD();
             return fb.FeedbackGetAll();
@@ -176,6 +176,7 @@ namespace TestingSystem.Data
             return dt.Delete(id);
         }
 
+
         //TagCRUD
         public int AddTag(TagDTO tag)
         {
@@ -210,6 +211,17 @@ namespace TestingSystem.Data
             return feedback.UpdateProcessedInFeedback(id);
         }
 
+        public List<FeedbackDTO> GetProcessedFeedbacks()
+        {
+            FeedbackManager feedback = new FeedbackManager();
+            return feedback.FeedbackProcessed();
+        }
+
+        public List<FeedbackDTO> GetNotProcessedFeedbacks()
+        {
+            FeedbackManager feedback = new FeedbackManager();
+            return feedback.GetNotProcessedFeedback();
+        }
 
 
         //From TestManager
