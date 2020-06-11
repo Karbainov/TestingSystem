@@ -11,12 +11,16 @@ namespace TestingSystem.API.Models.Output
         public string Name { get; set; }
         public TimeSpan DurationTime { get; set; }
 
-        public int QuestionId { get; set; }        
-        public string QuestionValue { get; set; }        
-        public byte Weight { get; set; }
+        public List<?> questions;
+        //public int QuestionId { get; set; }        
+        //public string QuestionValue { get; set; }        
+        //public byte Weight { get; set; }
 
-        public int AnswerId { get; set; }        
-        public string AnswerValue { get; set; }
-        public bool Correct { get; set; }
+        public List<?> answers;
+        //public int AnswerId { get; set; }        
+        //public string AnswerValue { get; set; }
+        //public bool Correct { get; set; }
+
+        public List<?> tags;
     }
 }
