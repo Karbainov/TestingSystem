@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using TestingSystem.Data;
 using TestingSystem.Data.DTO;
+using TestingSystem.API.Models.Output;
 
 namespace TestingSystem.API.Controllers
 {
@@ -24,11 +25,11 @@ namespace TestingSystem.API.Controllers
 
         [HttpGet("Author")]  //вывод списка тестов
 
-        public List<TestDTO> /*outputmodel*/ GetAllTest()
-        {            
+        public List<TestModel> /*outputmodel*/ GetAllTest()
+        {
+            Mapper mapper = new Mapper();
             AuthorDataAccess at = new AuthorDataAccess();
-            return at.GetAllTest();
-            /*вызываем мапинг, чтобы преобразовать DTO в OutputModel*/
+            return mapper.TestDTOToTestModelList(at.GetAllTest());
         }
 
 
