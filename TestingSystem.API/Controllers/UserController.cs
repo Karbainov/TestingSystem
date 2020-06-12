@@ -9,6 +9,8 @@ using System.Text;
 using TestingSystem.Data.DTO;
 using TestingSystem.Data.StoredProcedure.CRUD;
 using TestingSystem.Data;
+using TestingSystem.API.Models.Input;
+using TestingSystem.API.Models.Output;
 
 
 namespace TestingSystem.API.Controllers
@@ -29,18 +31,25 @@ namespace TestingSystem.API.Controllers
 
 
         [HttpGet]
-        public List<UserDTO> Get()
+        public List<UserOutputModel> Get()
         {
+            List<UserOutputModel> allUsers = new List<UserOutputModel>();
+            Map mapper = new Map();
             AdminDataAccess adm = new AdminDataAccess();
-            return adm.GetAllUsers();
+            foreach(UserDTO user in adm.GetAllUsers())
+            {
+                allUsers.Add(mapper.ConvertUserDTOToUserOutputModel(user));
+            }
+            return allUsers;
         }
 
 
         [HttpPost]
-        public void Post([FromBody] UserDTO user)
+        public void Post([FromBody] UserInputModel user)
         {
+            Map mapper = new Map();
             AdminDataAccess adm = new AdminDataAccess();
-            adm.UserCreate(user);
+            adm.UserCreate(mapper.ConvertUserInputModelToGroupDTO(user));
 
         }
         /*
@@ -53,33 +62,35 @@ namespace TestingSystem.API.Controllers
         */
 
         [HttpGet("role/{roleID}")]
-        public List<UserRoleDTO> GetUserRolesByRoleID(int roleID)
+        public List<UserRoleDTO> GetUsersByRoleID(int roleID)
         {
             AdminDataAccess adm = new AdminDataAccess();
             return adm.GetUserRolesByRoleID(roleID);
         }
 
         [HttpGet("{id}")]
-        public UserDTO GetUserById(int id)
+        public UserOutputModel GetUserById(int id)
         {
+            Map mapper = new Map();
             AdminDataAccess adm = new AdminDataAccess();
-            return adm.GetUserbyID(id);
+            return mapper.ConvertUserDTOToUserOutputModel(adm.GetUserbyID(id));
         }
 
         [HttpPut]
-        public void Put([FromBody] UserDTO user)
+        public void Put([FromBody] UserInputModel user)
         {
+            Map mapper = new Map();
             AdminDataAccess adm = new AdminDataAccess();
-            adm.UserUpdate(user);
+            adm.UserUpdate(mapper.ConvertUserInputModelToGroupDTO(user));
 
         }
 
         [HttpDelete]
 
-        public void Delete([FromBody] UserDTO user)
+        public void Delete([FromBody] int id)
         {
             AdminDataAccess adm = new AdminDataAccess();
-            adm.UserDelete(user);
+            adm.UserDelete(id);
 
         }
         [HttpGet("{UserID}/Tests")]
