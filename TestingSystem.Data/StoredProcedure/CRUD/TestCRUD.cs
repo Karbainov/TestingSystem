@@ -19,19 +19,15 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
         {
             var connection = Connection.GetConnection();
             connection.Open();
-            string sqlExpression = "Test_Add @name, @durationTime, @successScore";
-            int testID = connection.Query<int>(sqlExpression, test).FirstOrDefault();
-            test.ID = testID;
-            return test.ID;
+            string sqlExpression = "Test_Add @name, @durationTime, @successScore, @questionNumber";
+            return connection.Query<int>(sqlExpression, test).FirstOrDefault();            
         }
 
         public List<TestDTO> GetAll()
         {
             var connection = Connection.GetConnection();            
-            string sqlExpression = "Test_GetAll";           
-            List<TestDTO> tests = new List<TestDTO>();
-            tests = connection.Query<TestDTO>(sqlExpression).ToList();
-            return tests;
+            string sqlExpression = "Test_GetAll";        
+            return connection.Query<TestDTO>(sqlExpression).ToList();            
         }
 
         public TestDTO GetById(int id)
