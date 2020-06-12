@@ -54,7 +54,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             {
                 string sqlExpression = "Feedback_delete @ID";
 
-                connection.Query<int>(sqlExpression, feedback.Id);
+                connection.Query<int>(sqlExpression, feedback.ID);
             }
         }
     }
