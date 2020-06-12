@@ -10,6 +10,7 @@ using TestingSystem.Data.DTO;
 using TestingSystem.Data.StoredProcedure.CRUD;
 using TestingSystem.Data;
 using TestingSystem.API.Models.Input;
+using TestingSystem.API.Models.Output;
 
 
 namespace TestingSystem.API.Controllers
@@ -30,10 +31,16 @@ namespace TestingSystem.API.Controllers
 
 
         [HttpGet]
-        public List<UserDTO> Get()
+        public List<UserOutputModel> Get()
         {
+            List<UserOutputModel> allUsers = new List<UserOutputModel>();
+            Map mapper = new Map();
             AdminDataAccess adm = new AdminDataAccess();
-            return adm.GetAllUsers();
+            foreach(UserDTO user in adm.GetAllUsers())
+            {
+                allUsers.Add(mapper.ConvertUserDTOToUserOutputModel(user));
+            }
+            return allUsers;
         }
 
 
@@ -62,10 +69,11 @@ namespace TestingSystem.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public UserDTO GetUserById(int id)
+        public UserOutputModel GetUserById(int id)
         {
+            Map mapper = new Map();
             AdminDataAccess adm = new AdminDataAccess();
-            return adm.GetUserbyID(id);
+            return mapper.ConvertUserDTOToUserOutputModel(adm.GetUserbyID(id));
         }
 
         [HttpPut]
