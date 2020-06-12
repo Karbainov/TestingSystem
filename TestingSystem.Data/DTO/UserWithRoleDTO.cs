@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using TestingSystem.Data;
+
 namespace TestingSystem.Data.DTO
 {
     public class UserWithRoleDTO

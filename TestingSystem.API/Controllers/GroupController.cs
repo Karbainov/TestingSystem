@@ -9,6 +9,7 @@ using System.Text;
 using TestingSystem.Data.DTO;
 using TestingSystem.Data.StoredProcedure.CRUD;
 using TestingSystem.Data;
+using TestingSystem.API;
 
 namespace TestingSystem.API.Controllers
 {
@@ -25,19 +26,21 @@ namespace TestingSystem.API.Controllers
         }
 
              
-        [HttpGet]  // htpps://localhost/group
-        public List<GroupDTO> Get()
+        [HttpGet("admin")]  // htpps://localhost/group
+        public List<GroupOutputModel> GetAllGroups()
         {
+            Mapper mapper = new Mapper();
             AdminDataAccess adm = new AdminDataAccess();
-            return adm.GetAllGroups();
+            return mapper.UserGroupDTOUserWithRoleDTOGroupToGroupOutputModelModel(adm.GetAllGroups());
+           
         }
 
                
-        [HttpPost]
-        public void Post([FromBody]GroupDTO groupC)
+        [HttpPost("admin")]
+        public void PostGroup([FromBody] GroupOutputModel group)
         {
             AdminDataAccess adm = new AdminDataAccess();
-            adm.GroupCreate(groupC);
+            adm.GroupCreate(group);
            
         }
 
@@ -70,7 +73,7 @@ namespace TestingSystem.API.Controllers
         }
         
         [HttpPut]
-        public void Put([FromBody]GroupDTO groupU)
+        public void PutGroup([FromBody]GroupDTO groupU)
         {
             AdminDataAccess adm = new AdminDataAccess();
             adm.GroupUpdate(groupU);
@@ -79,7 +82,7 @@ namespace TestingSystem.API.Controllers
 
         [HttpDelete] //url удаляем из group
 
-        public void Delete([FromBody] int id)
+        public void DeleteGroupById([FromBody] int id)
         {
             AdminDataAccess adm = new AdminDataAccess();
             adm.GroupDelete(id);
