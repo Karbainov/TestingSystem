@@ -10,6 +10,7 @@ using TestingSystem.Data.DTO;
 using TestingSystem.Data.StoredProcedure.CRUD;
 using TestingSystem.Data;
 using TestingSystem.API;
+using TestingSystem.API.Models.Output;
 
 namespace TestingSystem.API.Controllers
 {
@@ -31,8 +32,18 @@ namespace TestingSystem.API.Controllers
         {
             Mapper mapper = new Mapper();
             AdminDataAccess adm = new AdminDataAccess();
-            return mapper.UserGroupDTOUserWithRoleDTOGroupToGroupOutputModelModel(adm.GetAllGroups());
-           
+            List<GroupOutputModel> groupOutputModels = new List<GroupOutputModel>();
+
+            //adm.GetAllGroups();
+            //для каждой группы
+            //q=все студенты
+            //w=все тичеры
+            //список add mapper.UserGroupDTOUserWithRoleDTOGroupToGroupOutputModelModel(q,w,одна группа);
+
+
+            return groupOutputModels;
+
+
         }
 
                

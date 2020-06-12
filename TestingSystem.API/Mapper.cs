@@ -24,16 +24,16 @@ namespace TestingSystem.API
         public List<TestModel> TestDTOToTestModelList(List<TestDTO> dtoList)
         {
             List<TestModel> modelList = new List<TestModel>();
-            foreach(TestDTO testDTO in dtoList)
+            foreach (TestDTO testDTO in dtoList)
             {
                 modelList.Add(TestDTOToTestModel(testDTO));
             }
             return modelList;
         }
-        
+
         // все для группМодел
         // UserWithRoleDTO превращаем в список teachers
-                
+
         public TeacherModel UserWithRoleDTOToTeacherModel(UserWithRoleDTO teachers)
         {
             return new TeacherModel()
@@ -85,7 +85,7 @@ namespace TestingSystem.API
             }
             return modelstudentList;
         }
-        public GroupOutputModel UserGroupDTOUserWithRoleDTOGroupToGroupOutputModelModel(List <UserGroupDTO> st, List <UserWithRoleDTO> t, GroupNewDTO g)
+        public GroupOutputModel UserGroupDTOUserWithRoleDTOGroupToGroupOutputModelModel(List<UserGroupDTO> st, List<UserWithRoleDTO> t, GroupDTO g)
         {
             return new GroupOutputModel
             {
@@ -93,12 +93,10 @@ namespace TestingSystem.API
                 Name = g.Name,
                 StartDate = g.StartDate,
                 EndDate = g.EndDate,
-                List <StudentModel> students = new List<StudentModel>();
-                students.UserGroupDTOToStudentModelList(st),
-                List<TeacherModel> teachers = new List<TeacherModel>();
-                teachers.UserWithRoleDTOToTeacherModelList(t);
-             };
+                students = UserGroupDTOToStudentModelList(st),
+                teachers = UserWithRoleDTOToTeacherModelList(t)
+            };
         }
 
     }
-
+}
