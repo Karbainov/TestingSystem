@@ -9,6 +9,90 @@ namespace TestingSystem.Data
 {
     public class AuthorDataAccess
     {
+        //Запросы на основной странице "Тест" (список тестов/список фидбэков/список тэгов)
+
+        public List<TestDTO> GetAllTest()       //вывод списка всех тестов
+        {
+            TestCRUD tests = new TestCRUD();
+            return tests.GetAll();
+        }
+
+        public List<SearchTestByTagDTO> GetTestVSTagSearchOr(params string[] tag)    //ищем тесты по тэгу(или)
+        {
+            TestManager tests = new TestManager();
+            return tests.GetTestVSTagSearchOr(tag);
+        }
+
+        public List<SearchTestByTagDTO> GetTestVSTagSearchAnd(params string[] tag)     //ищем тесты по тэгу(и)
+        {
+            TestManager tests = new TestManager();
+            return tests.GetTestVSTagSearchAnd(tag);
+        }
+
+        public List<FeedbackDTO> GetProcessedFeedbacks()       //список обработанных фидбэков (сортировка по дате убыв.)
+        {
+            FeedbackManager feedbacks = new FeedbackManager();
+            return feedbacks.GetProcessedFeedback();
+        }
+
+        public List<FeedbackDTO> GetNotProcessedFeedbacks()    //список необработанных фидбэков (сортировка по дате)
+        {
+            FeedbackManager feedbacks = new FeedbackManager();
+            return feedbacks.GetNotProcessedFeedback();
+        }
+
+        public List<FeedbackDTO> GetAllFeedbacks()       //список всех фидбэков (сортировка по дате убыв.)
+        {
+            FeedbackCRUD feedbacks = new FeedbackCRUD();
+            return feedbacks.FeedbackGetAll();
+        }
+
+        public List<FeedbackDTO> GetFeedbackByTest(int testId)    //список фидбэков конкретного теста (сортировка по дате убыв.)
+        {
+            FeedbackManager feedbacks = new FeedbackManager();
+            return feedbacks.GetFeedbackByTest(testId);
+        }
+
+        public List<FeedbackDTO> GetFeedbackByDate(DateTime dateTime1, DateTime dateTime2)  //список фидбэков конкретных дат (сортировка по дате)
+        {
+            FeedbackManager feedbacks = new FeedbackManager();
+            return feedbacks.GetFeedbackByDate(dateTime1, dateTime2);
+        }
+
+        public List<TagDTO> GetAllTag()     //список всех тэгов
+        {
+            TagCRUD tags = new TagCRUD();
+            return tags.GetAll();
+        }
+
+        public int AddTag(TagDTO tg)       //создать тэг
+        {
+            TagCRUD tag = new TagCRUD();
+            return tag.Add(tg);
+        }
+
+        public void UpdateTag(TagDTO tag)   //редактировать тэг
+        {
+            TagCRUD tg = new TagCRUD();
+            tg.Update(tag);
+        }
+
+        public void DeleteTag(int id)       //удалить тэг
+        {
+            TagCRUD tag = new TagCRUD();
+            tag.Delete(id);
+        }
+
+
+
+
+
+
+
+
+
+
+
         //AnswerCRUD 
 
         public int AddAnswer(AnswerDTO answer)
@@ -71,11 +155,7 @@ namespace TestingSystem.Data
 
         //FeedbackCRUD        
 
-        public List<FeedbackDTO> GetAllFeedbacks()
-        {
-            FeedbackCRUD fb = new FeedbackCRUD();
-            return fb.FeedbackGetAll();
-        }        
+        
 
 
         //QuestionCRUD
@@ -152,11 +232,7 @@ namespace TestingSystem.Data
             return ts.Add(test);
         }
 
-        public List<TestDTO> GetAllTest()
-        {
-            TestCRUD ts = new TestCRUD();
-            return ts.GetAll();
-        }
+        
 
         public TestDTO GetByIdTest(int id)
         {
@@ -184,12 +260,7 @@ namespace TestingSystem.Data
             return tg.Add(tag);
         }
 
-        public List<TagDTO> GetAllTag() 
-        {
-            TagCRUD tg = new TagCRUD();
-            return tg.GetAll();
-        }
-
+       
         public void UpdateTag(TagDTO tag)
         {
             TagCRUD tg = new TagCRUD();
@@ -211,32 +282,12 @@ namespace TestingSystem.Data
             return feedback.UpdateProcessedInFeedback(id);
         }
 
-        public List<FeedbackDTO> GetProcessedFeedbacks()
-        {
-            FeedbackManager feedback = new FeedbackManager();
-            return feedback.FeedbackProcessed();
-        }
-
-        public List<FeedbackDTO> GetNotProcessedFeedbacks()
-        {
-            FeedbackManager feedback = new FeedbackManager();
-            return feedback.GetNotProcessedFeedback();
-        }
+        
 
 
         //From TestManager
 
-        public List<SearchTestByTagDTO> GetTestVSTagSearchOr(params string[] tag)
-        {
-            TestManager tm = new TestManager();
-            return tm.GetTestVSTagSearchOr(tag);
-        }
-
-        public List<SearchTestByTagDTO> GetTestVSTagSearchAnd(params string[] tag)
-        {
-            TestManager tm = new TestManager();
-            return tm.GetTestVSTagSearchAnd(tag);
-        }              
+        
 
         public List<TagDTO> GetTagsInTest(TestDTO tests)
         {
