@@ -6,6 +6,9 @@ namespace TestingSystem.Data.DTO
 {
     public class FeedbackByDateDTO
     {
+
+
+        //не нужна
         public DateTime DateTime { get; set; }
         public string QuestionValue { get; set; }
         public string UserFirstName { get; set; }

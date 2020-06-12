@@ -13,25 +13,23 @@ namespace TestingSystem.Data.StoredProcedure
     {
         
 
-        public List<FeedbackByDateDTO> GetFeedbackByDate(DateTime dateTime1, DateTime dateTime2)
+        public List<FeedbackDTO> GetFeedbackByDate(DateTime dateTime1, DateTime dateTime2)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "GetFeedbackByDateTime";
-                return connection.Query<FeedbackByDateDTO>(sqlExpression, new { dateTime1, dateTime2 }, commandType: CommandType.StoredProcedure).ToList();
+                return connection.Query<FeedbackDTO>(sqlExpression, new { dateTime1, dateTime2 }, commandType: CommandType.StoredProcedure).ToList();
             }
         }
 
-        public List<FeedbackByTestIDDTO> GetFeedbackByTest(FeedbackByTestIDDTO feedback)
+        public List<FeedbackDTO> GetFeedbackByTest(int testId)
         {
             var connection = Connection.GetConnection();
-            string sqlExpression = "GetTestFeedback";
-            List<FeedbackByTestIDDTO> fb = new List<FeedbackByTestIDDTO>();
-            fb = connection.Query<FeedbackByTestIDDTO>(sqlExpression, feedback, commandType: CommandType.StoredProcedure).ToList();
-            return fb;
+            string sqlExpression = "GetTestFeedback";            
+            return connection.Query<FeedbackDTO>(sqlExpression, testId, commandType: CommandType.StoredProcedure).ToList();            
         }
 
-        public List<FeedbackDTO> FeedbackProcessed()
+        public List<FeedbackDTO> GetProcessedFeedback()
         {
             using (IDbConnection connection = Connection.GetConnection())
             {

@@ -6,6 +6,9 @@ namespace TestingSystem.Data.DTO
 {
    public class FeedbackByTestIDDTO
     {
+        
+
+        //модель не нужна
         public int testID { get; set; }
         public string message { get; set; }
         public string value { get; set; }

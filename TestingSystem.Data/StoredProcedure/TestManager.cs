@@ -120,6 +120,7 @@ namespace TestingSystem.Data.StoredProcedure
                 string sqlExpression = "DeleteTest";
                 connection.Execute(sqlExpression, ID, commandType: CommandType.StoredProcedure);
         }
+
         public List<AllStudentTestsDTO> GetBestResultOfTestByGroupID(int groupID)
         {
             using(IDbConnection connection = Connection.GetConnection())
