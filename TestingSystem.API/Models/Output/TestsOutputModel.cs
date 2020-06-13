@@ -9,8 +9,8 @@ namespace TestingSystem.API.Models.Output
     {
         //модель для вывода всех тестов(только названия)/фидбэков/тэгов
 
-        public List<TestOutputModel> tests { get; set; }
-        public List<TagOutputModel> tags { get; set; }
-        public List<FeedbackOutputModel> feedbacks { get; set; }
+        public List<TestOutputModel> Tests { get; set; }
+        public List<TagOutputModel> Tags { get; set; }
+        public List<FeedbackOutputModel> Feedbacks { get; set; }
     }
 }

@@ -55,5 +55,10 @@ namespace TestingSystem.Data
             return teacher.GetAttemptByUserIdTestId(attempt);
 
         }
+        public UserDTO GetUser(int id)
+        {
+            UserCRUD user = new UserCRUD();
+            return user.GetByID(id);
+        }
     }
 }

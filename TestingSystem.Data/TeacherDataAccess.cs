@@ -143,6 +143,10 @@ namespace TestingSystem.Data
             TestGroupCRUD teacher = new TestGroupCRUD();
             teacher.Add(testgroup);
         }
-        
+        public List<QuestionAnswerDTO> GetAllAnswerByAttemptID(int attemptID)
+        {
+            AttemptManager b = new AttemptManager();
+            return b.GetAllAnswersByAttemptId(attemptID);
+        }
     }
 }

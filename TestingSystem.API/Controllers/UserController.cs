@@ -102,26 +102,32 @@ namespace TestingSystem.API.Controllers
             adm.UserDelete(id);
 
         }
-        [HttpGet("{UserID}/Tests")]
-        public List<TestAttemptDTO> GetStudentTests(int UserID)
+        [HttpGet("{UserID}/user")]
+        public StudentOutputModel GetStudentTests(int UserID)
         {
             StudentDataAccess student = new StudentDataAccess();
+            Mapper mapper = new Mapper();
             List<TestAttemptDTO> tests = student.GetCompleteTest(UserID);
             tests.AddRange(student.GetIncompleteTest(UserID));
-            return tests;
+            StudentOutputModel model = mapper.UserDTOTestAttemptDTOToStudentModel(student.GetUser(UserID), mapper.TestAttemptDTOToTestAttemptModel(tests));
+            return model;
         }
-        [HttpGet("{UserID}/Tests/{TestID}")]
-        public List<AttemptResultDTO> GetAttemptsByUserIDTestID(int UserID,int TestID)
+        [HttpGet("Tests/{UserID}/{TestID}")]
+        public List<AttemptResultOutputModel> GetAttemptsByUserIDTestID(int UserID, int TestID)
         {
             StudentDataAccess student = new StudentDataAccess();
+            Mapper mapper = new Mapper();
             UserIdTestIdDTO dTO = new UserIdTestIdDTO(UserID, TestID);
-            return student.GetAttemptsByUserIdTestId(dTO);
+            List<AttemptResultOutputModel> model = mapper.attemptDTOToAttemptModel(student.GetAttemptsByUserIdTestId(dTO));
+            return model;
         }
-        [HttpGet("Attempt/{AttemptID}")]	
-        public List<QuestionAnswerDTO> GetQuestionAndAnswerByAttemptID(int AttemptID)
+        [HttpGet("Attempt/{AttemptID}")]
+        public List<QuestionAnswerOutputModel> GetQuestionAndAnswerByAttemptID(int attemptID)
         {
             TeacherDataAccess teacher = new TeacherDataAccess();
-            return teacher.GetQuestionAndAnswerByAttempt(AttemptID);
+            Mapper mapper = new Mapper();
+            List<QuestionAnswerOutputModel> model = mapper.QuestionAnswerDTOToQuestionAnswerModel(teacher.GetQuestionAndAnswerByAttempt(attemptID));
+            return model;
         }
     }
 }
