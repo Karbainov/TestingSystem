@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TestingSystem.API.Models.Input;
 using TestingSystem.API.Models.Output;
 using TestingSystem.Data.DTO;
 
@@ -73,5 +74,36 @@ namespace TestingSystem.API
             }
             return modelList;
         }
+
+        //список тэгов
+        public TagOutputModel TagDTOToTagOutputModel(TagDTO tagDTO)
+        {
+            return new TagOutputModel()
+            {
+                ID = tagDTO.ID,                
+                Name = tagDTO.Name,
+            };
+        }
+
+        public List<TagOutputModel> TagDTOToTagModelList(List<TagDTO> dtoList)
+        {
+            List<TagOutputModel> modelList = new List<TagOutputModel>();
+            foreach (TagDTO tagDTO in dtoList)
+            {
+                modelList.Add(TagDTOToTagOutputModel(tagDTO));
+            }
+            return modelList;
+        }
+
+        //создать тэг, изменить тэг
+        public TagDTO TagInputModelToTagDTO(TagInputModel tagmodel)
+        {
+            return new TagDTO()
+            {
+                ID = tagmodel.ID,
+                Name = tagmodel.Name,
+            };
+        }
+
     }
 }

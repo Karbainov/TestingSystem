@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using TestingSystem.Data;
 using TestingSystem.Data.DTO;
 using TestingSystem.API.Models.Output;
+using TestingSystem.API.Models.Input;
 
 namespace TestingSystem.API.Controllers
 {
@@ -23,7 +24,7 @@ namespace TestingSystem.API.Controllers
 
 
         //Запросы на основной странице "Test" (список тестов/список фидбэков/список тэгов)
-
+        
         [HttpGet("Author")]  //вывод списка всех тестов
 
         public List<TestOutputModel> GetAllTest()
@@ -96,16 +97,47 @@ namespace TestingSystem.API.Controllers
             return mapper.FeedbackDTOToFeedbackModelList(feedbacks.GetFeedbackByDate(dateTime1, dateTime2));
         }
 
+        [HttpGet("Tags/Author")]      //cписок всех тегов
+
+        public List<TagOutputModel> GetAllTags()
+        {
+            Mapper mapper = new Mapper();
+            AuthorDataAccess tags = new AuthorDataAccess();
+            return mapper.TagDTOToTagModelList(tags.GetAllTag());
+        }
+
+        [HttpPost("Tags/Author")]      //создание тега
+
+        public int PostTag(TagInputModel tagmodel)
+        {
+            Mapper mapper = new Mapper();
+            TagDTO tagdto = mapper.TagInputModelToTagDTO(tagmodel);
+            AuthorDataAccess tag = new AuthorDataAccess();
+            return tag.AddTag(tagdto);            
+        }
+
+        [HttpPut("Tags/{Tagid}/Author")]      //изменение конкретного тега
+
+        public void PutTag(TagInputModel tagmodel)
+        {
+            Mapper mapper = new Mapper();
+            TagDTO tagdto = mapper.TagInputModelToTagDTO(tagmodel);
+            AuthorDataAccess tag = new AuthorDataAccess();
+            tag.UpdateTag(tagdto);
+        }
+
+        [HttpDelete("Tags/{Tagid}/Author")]    //удаление конкретного тега
+
+        public void DeleteTag(int id)
+        {
+            AuthorDataAccess tag = new AuthorDataAccess();
+            tag.DeleteTag(id);
+        }
 
 
 
+        //Запросы на странице конкретного теста "Id" (тест с информацией, вопросы, ответы теста)
 
-
-
-
-
-
-        //страница с конкретным тестом
 
         [HttpGet("{Testid}/Author")]  //вывод информации о конкретном тесте
 
@@ -183,38 +215,7 @@ namespace TestingSystem.API.Controllers
             tt.DeleteByTestIdTagId(testId, tagId);
         }
 
-        [HttpGet("Tags/Author")]  //вывод списка тегов
-
-        public List<TagDTO> GetAllTag()
-        {
-            AuthorDataAccess tg = new AuthorDataAccess();
-            return tg.GetAllTag();
-        }
-
-        [HttpPost("Tags/Author")] //создание тега
-
-        public int PostTag(TagDTO tag)
-        {
-            AuthorDataAccess at = new AuthorDataAccess();
-            return at.AddTag(tag);
-        }
-
-
-        [HttpPut("Tags/{Tagid}/Author")] //изменение конкретного тега
-
-        public void UpdateTag(TagDTO tag) 
-        {
-            AuthorDataAccess ut = new AuthorDataAccess();
-            ut.UpdateTag(tag);
-        }
-
-        [HttpDelete("Tags/{Tagid}/Author")] //удаление конкретного тега
-
-        public void DeleteTag(int id) 
-        {
-            AuthorDataAccess dt = new AuthorDataAccess();
-            dt.DeleteTag(id);
-        }
+        
 
 
         // создание вопроса с ответами
