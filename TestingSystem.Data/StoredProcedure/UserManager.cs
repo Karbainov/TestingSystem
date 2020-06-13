@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
@@ -57,19 +57,8 @@ namespace TestingSystem.Data.StoredProcedure
                         return userEntry;
                     },
                     splitOn: "RoleID")
-                //.Distinct()
                 .ToList();
                 userPositions = new List<UserPositionDTO>(userDictionary.Values);
-                //foreach(UserPositionDTO u in userDictionary.Values)
-                //{
-                //    Console.WriteLine($"{u.FirstName}, {u.LastName}, {u.BirthDate}, {u.Login}, {u.Password}, {u.Email}, {u.Phone}");
-                //    foreach (RoleDTO r in u.Roles)
-                //    {
-                //        Console.WriteLine($"{r.RoleID}, {r.Name}");
-                //    }
-                //    Console.WriteLine("-", 50);
-                //}
-                //userPositions = usPos.Query<UserPositionDTO>("User_Position").ToList();
             }
             
             return userPositions;
