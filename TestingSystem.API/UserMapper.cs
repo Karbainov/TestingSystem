@@ -14,7 +14,7 @@ using TestingSystem.API.Models.Output;
 
 namespace TestingSystem.API
 {
-    public class Map
+    public class UserMapper
     {
         public UserDTO ConvertUserInputModelToGroupDTO (UserInputModel userIn)
         {
@@ -28,5 +28,15 @@ namespace TestingSystem.API
             return userOut;
         }
 
+        public UserWithRolesOutputModel ConvertUserPositionDTOToUserWithRolesOutputModel(UserPositionDTO user)
+        {
+            List<string> userRoles = new List<string>();
+            foreach(RoleIdDTO n in user.Roles)
+            {
+                userRoles.Add(n.Name);
+            }
+            UserWithRolesOutputModel userOut = new UserWithRolesOutputModel(user.Id, user.FirstName, user.LastName, user.BirthDate, user.Login, user.Password, user.Email, user.Phone, userRoles);
+            return userOut;
+        }
     }
 }

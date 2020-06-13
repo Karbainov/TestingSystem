@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Text;
 using TestingSystem.Data.DTO;
 using TestingSystem.Data.StoredProcedure.CRUD;
+using TestingSystem.Data.StoredProcedure;
 
 namespace TestingSystem.Data
 {
@@ -94,10 +95,10 @@ namespace TestingSystem.Data
             UserRoleCRUD roleCRUD = new UserRoleCRUD();
             roleCRUD.Create(dTO);
         }
-        public List<UserRoleDTO> GetAllUserRoles()
+        public List<UserPositionDTO> GetAllUsersWithRoles()
         {
-            UserRoleCRUD roleCRUD = new UserRoleCRUD();
-            return roleCRUD.Read();
+            UserManager adm = new UserManager();
+            return adm.GetUserVSRole();
         }
         public List<UserRoleDTO> GetUserRolesByUserID(int userID)
         {
