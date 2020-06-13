@@ -51,5 +51,27 @@ namespace TestingSystem.API
             }
             return modelList;
         }
+
+        //список фидбэков
+        public FeedbackOutputModel FeedbackDTOToFeedbackOutputModel(FeedbackDTO feedbackDTO)
+        {
+            return new FeedbackOutputModel()
+            {
+                ID = feedbackDTO.ID,    
+                Message = feedbackDTO.Message,
+                DateTime = feedbackDTO.DateTime,
+                Processed = feedbackDTO.Processed,
+            };
+        }
+
+        public List<FeedbackOutputModel> FeedbackDTOToFeedbackModelList(List<FeedbackDTO> dtoList)
+        {
+            List<FeedbackOutputModel> modelList = new List<FeedbackOutputModel>();
+            foreach (FeedbackDTO feedbackDTO in dtoList)
+            {
+                modelList.Add(FeedbackDTOToFeedbackOutputModel(feedbackDTO));
+            }
+            return modelList;
+        }
     }
 }

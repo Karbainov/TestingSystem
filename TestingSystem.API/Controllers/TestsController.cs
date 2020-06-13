@@ -35,7 +35,7 @@ namespace TestingSystem.API.Controllers
 
         [HttpGet("SearchTestByTagOr/Author")]  //поиск теста по тегу     
 
-        public List<TestOutputModel> GetTestVSTagSearchOr(params string[] tag) 
+        public List<TestOutputModel> GetTestVSTagSearchOr(params string[] tag)
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess tests = new AuthorDataAccess();
@@ -44,12 +44,59 @@ namespace TestingSystem.API.Controllers
 
         [HttpGet("SearchTestByTagAnd/Author")]  //поиск теста по тегу     
 
-        public List<TestOutputModel> GetTestVSTagSearchAnd(params string[] tag) 
+        public List<TestOutputModel> GetTestVSTagSearchAnd(params string[] tag)
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess tests = new AuthorDataAccess();
-            return mapper.SearchTestByTagDTOToTestModelList(tests.GetTestVSTagSearchAnd(tag));            
+            return mapper.SearchTestByTagDTOToTestModelList(tests.GetTestVSTagSearchAnd(tag));
         }
+
+        [HttpGet("ProcessedFeedbacks/Author")]    //список обработанных фидбэков
+
+        public List<FeedbackOutputModel> GetProcessedFeedbacks()
+        {
+            Mapper mapper = new Mapper();
+            AuthorDataAccess feedbacks = new AuthorDataAccess();
+            return mapper.FeedbackDTOToFeedbackModelList(feedbacks.GetProcessedFeedbacks());
+        }
+
+        [HttpGet("NotProcessedFeedbacks/Author")]    //список необработанных фидбэков
+
+        public List<FeedbackOutputModel> GetNotProcessedFeedbacks()
+        {
+            Mapper mapper = new Mapper();
+            AuthorDataAccess feedbacks = new AuthorDataAccess();
+            return mapper.FeedbackDTOToFeedbackModelList(feedbacks.GetNotProcessedFeedbacks());
+        }
+
+        [HttpGet("Feedbacks/Author")]    //список всех фидбэков
+
+        public List<FeedbackOutputModel> GetAllFeedbacks()
+        {
+            Mapper mapper = new Mapper();
+            AuthorDataAccess feedbacks = new AuthorDataAccess();
+            return mapper.FeedbackDTOToFeedbackModelList(feedbacks.GetAllFeedbacks());
+        }
+
+        [HttpGet("FeedbacksByTest/Author")]    //список фидбэков конкретных тестов
+
+        public List<FeedbackOutputModel> GetFeedbackByTest(int testId)
+        {
+            Mapper mapper = new Mapper();
+            AuthorDataAccess feedbacks = new AuthorDataAccess();
+            return mapper.FeedbackDTOToFeedbackModelList(feedbacks.GetFeedbackByTest(testId));
+        }
+
+        [HttpGet("FeedbacksByDate/Author")]    //список фидбэков конкретных дат
+
+        public List<FeedbackOutputModel> GetFeedbackByDate(DateTime dateTime1, DateTime dateTime2)
+        {
+            Mapper mapper = new Mapper();
+            AuthorDataAccess feedbacks = new AuthorDataAccess();
+            return mapper.FeedbackDTOToFeedbackModelList(feedbacks.GetFeedbackByDate(dateTime1, dateTime2));
+        }
+
+
 
 
 
