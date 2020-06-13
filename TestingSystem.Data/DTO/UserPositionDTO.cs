@@ -14,15 +14,14 @@ namespace TestingSystem.Data.DTO
         public string Password { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
-        public int RoleId { get; set; }
-        public string Position { get; set; }
+        public List<RoleIdDTO> Roles { get; set; }
 
         public UserPositionDTO()
         {
 
         }
 
-        public UserPositionDTO(int id, string firstName, string lastName, DateTime birthdate, string login, string password, string email, string phone, int roleId, string position)
+        public UserPositionDTO(int id, string firstName, string lastName, DateTime birthdate, string login, string password, string email, string phone, List<RoleIdDTO> roles)
         {
             this.Id = id;
             this.FirstName = firstName;
@@ -32,8 +31,7 @@ namespace TestingSystem.Data.DTO
             this.Password = password;
             this.Email = email;
             this.Phone = phone;
-            this.RoleId = roleId;
-            this.Position = position;
+            this.Roles = Roles;
         }
     }
 }
