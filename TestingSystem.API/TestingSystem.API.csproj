@@ -18,9 +18,5 @@
     <ProjectReference Include="..\TestingSystem.Data\TestingSystem.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\Input\" />
-  </ItemGroup>
-
 
 </Project>

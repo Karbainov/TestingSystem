@@ -9,14 +9,14 @@ namespace TestingSystem.Data.DTO
         public int Id { get; set; }
         public string Name { get; set; }
         public TimeSpan DurationTime { get; set; }
-        public int SuccessScore { get; set; }
+        public byte SuccessScore { get; set; }
         public string Tag1 { get; set; }
         public string Tag2 { get; set; }
         public string Tag3 { get; set; }
 
         public SearchTestByTagDTO() { }
 
-        public SearchTestByTagDTO(int id, string name, TimeSpan durationTime, int successScore, string tag1, string tag2, string tag3)
+        public SearchTestByTagDTO(int id, string name, TimeSpan durationTime, byte successScore, string tag1, string tag2, string tag3)
         {
             this.Id = id;
             this.Name = name;
