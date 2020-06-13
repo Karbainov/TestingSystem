@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
@@ -34,12 +34,33 @@ namespace TestingSystem.Data.StoredProcedure
         {
 
             IDbConnection usPos = Connection.GetConnection();
-            List<UserPositionDTO> userPositions = new List<UserPositionDTO>();
+            List<UserPositionDTO> userPositions;
             using (usPos)
             {
-                userPositions = usPos.Query<UserPositionDTO>("User_Position").ToList();
-            }
+                var userDictionary = new Dictionary<int, UserPositionDTO>();
 
+
+                usPos.Query<UserPositionDTO, RoleIdDTO, UserPositionDTO>(
+                    "User_Position",
+                    (user, roles) =>
+                    {
+                        UserPositionDTO userEntry;
+
+                        if (!userDictionary.TryGetValue(user.Id, out userEntry))
+                        {
+                            userEntry = user;
+                            userEntry.Roles = new List<RoleIdDTO>();
+                            userDictionary.Add(userEntry.Id, userEntry);
+                        }
+
+                        userEntry.Roles.Add(roles);
+                        return userEntry;
+                    },
+                    splitOn: "RoleID")
+                .ToList();
+                userPositions = new List<UserPositionDTO>(userDictionary.Values);
+            }
+            
             return userPositions;
         }
 
