@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dapper;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using TestingSystem.Data.DTO;
@@ -9,7 +10,7 @@ namespace TestingSystem.Data
 {
     public class AuthorDataAccess
     {
-        //Запросы на основной странице "Тест" (список тестов/список фидбэков/список тэгов)
+        //Запросы на основной странице "Test" (список тестов/список фидбэков/список тэгов)
 
         public List<TestDTO> GetAllTest()       //вывод списка всех тестов
         {
@@ -71,10 +72,10 @@ namespace TestingSystem.Data
             return tag.Add(tg);
         }
 
-        public void UpdateTag(TagDTO tag)   //редактировать тэг
+        public void UpdateTag(TagDTO tg)   //редактировать тэг
         {
-            TagCRUD tg = new TagCRUD();
-            tg.Update(tag);
+            TagCRUD tag = new TagCRUD();
+            tag.Update(tg);
         }
 
         public void DeleteTag(int id)       //удалить тэг
@@ -84,242 +85,203 @@ namespace TestingSystem.Data
         }
 
 
+        //Запросы на странице конкретного теста "Id" (тест с информацией, вопросы, ответы теста)
 
-
-
-
-
-
-
-
-
-        //AnswerCRUD 
-
-        public int AddAnswer(AnswerDTO answer)
+        public int AddTest(TestDTO t)     //добавить новый тест
         {
-            AnswerCRUD answr = new AnswerCRUD();
-            return answr.AnswerAdd(answer);
-        }
-       
-        public List<AnswerDTO> GetAnswerByQuestionId(int questonId)
-        {
-            AnswerCRUD answr = new AnswerCRUD();
-            return answr.AnswerGetByQuestionId(questonId);
+            TestCRUD test = new TestCRUD();
+            return test.Add(t);
         }
 
-        public void UpdateAnswer(AnswerDTO answer)
+        public int UpdateTest(TestDTO t)   //изменить информацию о тесте
         {
-            AnswerCRUD answr = new AnswerCRUD();
-            answr.Update(answer);
+            TestCRUD test = new TestCRUD();
+            return test.Update(t);
         }
 
-        public void DeleteAnswer(int id)
+        public int DeleteTest(int id)       //удалить тест
         {
-            AnswerCRUD answr = new AnswerCRUD();
-            answr.Delete(id);
+            TestCRUD test = new TestCRUD();
+            return test.Delete(id);
         }
 
-
-        //Test_TegCRUD
-
-        public int TestTagCreate(TestTagDTO testtag)
-        {
-            TestTagCRUD tt = new TestTagCRUD();
-            return tt.Add(testtag);
-        }
-
-        public void Update(TestTagDTO testtag)
-        {
-            TestTagCRUD tt = new TestTagCRUD();
-            tt.Update(testtag);
-        }       
-
-        public void DeleteByTagId(int tagId)
-        {
-            TestTagCRUD tt = new TestTagCRUD();
-            tt.DeleteByTagId(tagId);
-        }
-
-        public void DeleteByTestId(int testId)
-        {
-            TestTagCRUD tt = new TestTagCRUD();
-            tt.DeleteByTestId(testId);
-        }
-
-        public void DeleteByTestIdTagId(int testId, int tagId)
-        {
-            TestTagCRUD tt = new TestTagCRUD();
-            tt.DeleteByTestIdTagId(testId, tagId);
-        }
-
-
-        //FeedbackCRUD        
-
-        
-
-
-        //QuestionCRUD
-
-        public int AddQuestion(QuestionDTO question)
-        {
-            QuestionCRUD q = new QuestionCRUD();
-            return q.Add(question);
-        }
-
-        public List<QuestionDTO> GetAllQuestions()
-        {
-            QuestionCRUD q = new QuestionCRUD();
-            return q.GetAll();
-        }
-
-        public QuestionDTO GetQuestionById(int id)
-        {
-            QuestionCRUD q = new QuestionCRUD();
-            return q.GetById(id);
-        }
-
-        public List<QuestionDTO> GetQuestionsByTestID(int testId)
-        {
-            QuestionCRUD q = new QuestionCRUD();
-            return q.GetByTestID(testId);
-        }
-
-        public List<QuestionDTO> GetQuestionsByTypeID(int typeId)
-        {
-            QuestionCRUD q = new QuestionCRUD();
-            return q.GetByTypeID(typeId);
-        }        
-
-        public void UpdateQuestion(QuestionDTO question)
-        {
-            QuestionCRUD q = new QuestionCRUD();
-            q.Update(question);
-        }        
-
-
-        //TypeCRUD 
-
-        //public int AddType(TypeDTO type)
-        //{
-        //    TypeCRUD typeCRUD = new TypeCRUD();
-        //    return typeCRUD.Add(type);
-        //}
-
-        //public List<TypeDTO> GetAllTypes()
-        //{
-        //    TypeCRUD typeCRUD = new TypeCRUD();
-        //    return typeCRUD.GetAll();
-        //}        
-
-        //public void UpdateType(TypeDTO type)
-        //{
-        //    TypeCRUD typeCRUD = new TypeCRUD();
-        //    typeCRUD.Update(type);
-        //}
-
-        //public void DeleteType(TypeDTO type)
-        //{
-        //    TypeCRUD typeCRUD = new TypeCRUD();
-        //    typeCRUD.Delete(type.ID);
-        //}
-        
-
-        //TestCRUD
-
-        public int AddTest(TestDTO test)
-        {
-            TestCRUD ts = new TestCRUD();
-            return ts.Add(test);
-        }
-
-        
-
-        public TestDTO GetByIdTest(int id)
-        {
-            TestCRUD ts = new TestCRUD();
-            return ts.GetById(id);
-        }
-
-        public int UpdateTest(TestDTO test)
-        {
-            TestCRUD ts = new TestCRUD();
-            return ts.Update(test);
-        }
-
-        public int DeleteTest(int id) 
-        {
-            TestCRUD dt = new TestCRUD();
-            return dt.Delete(id);
-        }
-
-
-        //TagCRUD
-        public int AddTag(TagDTO tag)
-        {
-            TagCRUD tg = new TagCRUD();
-            return tg.Add(tag);
-        }
-
-       
-        public void UpdateTag(TagDTO tag)
-        {
-            TagCRUD tg = new TagCRUD();
-            tg.Update(tag);
-        }
-
-        public void DeleteTag(int id)
-        {
-            TagCRUD tg = new TagCRUD();
-            tg.Delete(id);
-        }
-
-
-        //From FeedbackManager
-
-        public int UpdateProcessedInFeedback(int id)
-        {
-            FeedbackManager feedback = new FeedbackManager();
-            return feedback.UpdateProcessedInFeedback(id);
-        }
-
-        
-
-
-        //From TestManager
-
-        
-
-        public List<TagDTO> GetTagsInTest(TestDTO tests)
+        public List<TestQuestionsDTO> GetTestWithAllQuestionsById(int testid)   //вывод теста с информацией и вопросами
         {
             TestManager test = new TestManager();
-            return test.GetTestTags(tests);
+            return test.GetTestWithAllQuestionsById(testid);
         }
 
-        public void DeleteTest(TestDTO test)
+        public List<AnswerDTO> GetAllAnswersInTest(int testid)        //список всех ответов теста с указанием айди вопроса
         {
-            TestManager tm = new TestManager();
-            tm.DeleteTest(test.ID);
+            TestManager answers = new TestManager();
+            return answers.GetAllAnswersInTest(testid);
         }
 
-        public List<TagDTO> GetTagsWhichAreNotInTest(int testId)
+        public List<TagDTO> GetTagsInTest(TestDTO tests)         //список всех тэгов теста
+        {
+            TestManager tags = new TestManager();
+            return tags.GetTestTags(tests);
+        }
+
+        public List<TagDTO> GetTagsWhichAreNotInTest(int testId)    //список тэгов, которых нет в этом тесте, чтобы выбрать для добавления
         {
             TestManager tags = new TestManager();
             return tags.GetTagsWhichAreNotInTest(testId);
         }
 
+        public void DeleteByTestIdTagId(int testId, int tagId)    //удалить тэг из конкретного теста
+        {
+            TestTagCRUD tag = new TestTagCRUD();
+            tag.DeleteByTestIdTagId(testId, tagId);
+        }
 
-        //From QuestionManager
+        public int TestTagCreate(TestTagDTO testtag)        //добавить тэг из списка тэгов к конкретному тесту
+        {
+            TestTagCRUD tag = new TestTagCRUD();
+            return tag.Add(testtag);
+        }
 
-        public int DeleteQuestionFromTest(int questionId)
+
+        //Запросы на странице конкретного вопроса у теста "Id/QuestionId" (вопрос с полной информацией, ответы на этот вопрос)
+
+        public int AddQuestion(QuestionDTO q)       //создать вопрос к тесту
+        {
+            QuestionCRUD question = new QuestionCRUD();
+            return question.Add(q);
+        }
+
+        public QuestionDTO GetQuestionById(int id)   //вывести вопрос теста
+        {
+            QuestionCRUD question = new QuestionCRUD();
+            return question.GetById(id);
+        }
+
+        public void UpdateQuestion(QuestionDTO question)   //редактировать вопрос теста с пересчетом результатов
+        {
+            QuestionCRUD q = new QuestionCRUD();
+            q.Update(question);
+        }
+
+        public int DeleteQuestionFromTest(int questionId)  //удалить вопрос из теста с пересчетом результатов
         {
             QuestionManager question = new QuestionManager();
             question.DeleteQuestionFromTest(questionId);
             return questionId;
         }
 
+        public int AddAnswer(AnswerDTO ans)     //добавить ответ к вопросу
+        {
+            AnswerCRUD answer = new AnswerCRUD();
+            return answer.AnswerAdd(ans);
+        }
 
-        //From AttemptManager
+        public List<AnswerDTO> GetAnswerByQuestionId(int questonId)     //список ответов на конкретный вопрос
+        {
+            AnswerCRUD answers = new AnswerCRUD();
+            return answers.AnswerGetByQuestionId(questonId);
+        }
+
+        public void UpdateAnswer(AnswerDTO ans)    //редактировать ответ
+        {
+            AnswerCRUD answer = new AnswerCRUD();
+            answer.Update(ans);
+        }
+
+        public void DeleteAnswer(int id)    //удалить ответ
+        {
+            AnswerCRUD answer = new AnswerCRUD();
+            answer.Delete(id);
+        }
 
 
+        //Запросы на странице конкретного фидбэка "FeedbackId" (вся информация по фидбэку)
+
+        public FeedbackQuestionDTO GetFeedbackWithQuestion(int id)     //вывод фидбэка (с именем пользователя, названием теста и вопросом)
+        {
+            FeedbackManager feedback = new FeedbackManager();
+            return feedback.GetFeedbackWithQuestion(id);
+        }
+
+        public List<AnswerDTO> GetAllAnswersByFeedbackId(int feedbackId)   //список ответов на вопрос, к которому написан фидбэк
+        {
+            FeedbackManager answer = new FeedbackManager();
+            return answer.GetAllAnswersByFeedbackId(feedbackId);
+        }
+
+        public int UpdateProcessedInFeedback(int id)      //отметить, что фидбэк просмотрен (можно вернуть на непросмотренный)
+        {
+            FeedbackManager feedback = new FeedbackManager();
+            return feedback.UpdateProcessedInFeedback(id);
+        }
+
+
+
+
+
+
+
+
+
+        //Методы, которые могут пригодиться?
+
+        public TestDTO GetByIdTest(int id)    //вывод только теста по айди
+        {
+            TestCRUD ts = new TestCRUD();
+            return ts.GetById(id);
+        }
+        
+        public void DeleteByTagId(int tagId)   //удалить тэг из всех тестов
+        {
+            TestTagCRUD tt = new TestTagCRUD();
+            tt.DeleteByTagId(tagId);
+        }
+
+        public void DeleteByTestId(int testId)   //удалить все тэги из теста
+        {
+            TestTagCRUD tt = new TestTagCRUD();
+            tt.DeleteByTestId(testId);
+        }
+
+        public List<QuestionDTO> GetAllQuestions()   //список всех существующих вопросов
+        {
+            QuestionCRUD q = new QuestionCRUD();
+            return q.GetAll();
+        }        
+
+        public List<QuestionDTO> GetQuestionsByTestID(int testId)  //список всех вопросов теста
+        {
+            QuestionCRUD q = new QuestionCRUD();
+            return q.GetByTestID(testId);
+        }
+
+        public List<QuestionDTO> GetQuestionsByTypeID(int typeId)  //список всех вопросов по конкретному типу
+        {
+            QuestionCRUD q = new QuestionCRUD();
+            return q.GetByTypeID(typeId);
+        }
+
+        public int AddType(TypeDTO type)   //добавить тип вопросов
+        {
+            TypeCRUD typeCRUD = new TypeCRUD();
+            return typeCRUD.Add(type);
+        }
+
+        public List<TypeDTO> GetAllTypes()  //список всех типов вопросов
+        {
+            TypeCRUD typeCRUD = new TypeCRUD();
+            return typeCRUD.GetAll();
+        }
+
+        public void UpdateType(TypeDTO type)   //поменять тип вопросов
+        {
+            TypeCRUD typeCRUD = new TypeCRUD();
+            typeCRUD.Update(type);
+        }
+
+        public void DeleteType(TypeDTO type)  //удалить тип вопросов
+        {
+            TypeCRUD typeCRUD = new TypeCRUD();
+            typeCRUD.Delete(type.ID);
+        }        
     }
 }

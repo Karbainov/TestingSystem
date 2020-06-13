@@ -52,5 +52,20 @@ namespace TestingSystem.Data.StoredProcedure
             connection.Execute(sqlExpression, new { id }, commandType: CommandType.StoredProcedure);
             return id;
         }
+
+        public FeedbackQuestionDTO GetFeedbackWithQuestion (int id)
+        {
+            var connection = Connection.GetConnection();
+            string sqlExpression = "FeedbackWithQuestionUserTest_GetById";
+            return connection.Query<FeedbackQuestionDTO>(sqlExpression, new { id }, commandType: CommandType.StoredProcedure).FirstOrDefault();
+        }
+
+        public List<AnswerDTO> GetAllAnswersByFeedbackId (int feedbackId)
+        {
+            var connection = Connection.GetConnection();
+            string sqlExpression = "Answers_GetByFeedbackId";
+            return connection.Query<AnswerDTO>(sqlExpression, new { feedbackId }, commandType: CommandType.StoredProcedure).ToList();
+        }
+
     }
 }
