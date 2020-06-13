@@ -28,7 +28,13 @@ namespace TestingSystem.API
             return userOut;
         }
 
-        public UserWithRolesOutputModel ConvertUserPositionDTOToUserWithRolesOutputModel(UserPositionDTO user)
+        public RoleOutputModel ConvertRoleDTOToRoleOutputModel(RoleDTO role) // скорее всего, нужен foreach, т.к. получаем не одну строку
+        {
+            RoleOutputModel roleOut = new RoleOutputModel(role.ID, role.Name);
+            return roleOut;
+        }
+
+        public UserWithRolesOutputModel ConvertUserPositionDTOToUserWithRolesOutputModel(UserPositionDTO user) // нужен ли foreach?
         {
             List<string> userRoles = new List<string>();
             foreach(RoleIdDTO n in user.Roles)

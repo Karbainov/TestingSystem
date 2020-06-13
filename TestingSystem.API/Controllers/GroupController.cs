@@ -55,14 +55,14 @@ namespace TestingSystem.API.Controllers
             return adm.GetGroupById(id); // изменить
         }
         
-        [HttpPost("{groupID}/student/{userID}")] // GET http://localhost:5557/group/id/student/id	
+        [HttpPost("{groupID}/student/{userID}")] // POST http://localhost:5557/group/5/student/82	
         public void PostStudentInGroup(int userID, int groupID)
         {
             AdminDataAccess adm = new AdminDataAccess();
             adm.StudentAdd(userID, groupID);
         }
         
-        [HttpPost("{groupID}/teacher/{userID}")] // GET http://localhost:5557/group/id/teacher/id	
+        [HttpPost("{groupID}/teacher/{userID}")] // POST http://localhost:5557/group/id/teacher/id	
         public void PostTeacherInGroup(int userID, int groupID)
         {
             AdminDataAccess adm = new AdminDataAccess();
@@ -87,17 +87,17 @@ namespace TestingSystem.API.Controllers
         }
 
         [HttpDelete] // удаляем студента из группы
-        public void DeleteStudent([FromBody]StudentGroupDTO studentD)
+        public void DeleteStudent([FromBody] int userId, int groupId) // как передать оба параметра из Body?
         {
             AdminDataAccess adm = new AdminDataAccess();
-            adm.StudentDelete(studentD);
+            adm.StudentDeleteByUserIdGroupId(userId, groupId);
         }
 
-        [HttpDelete] // удаляем учителя из группы
-        public void DeleteTeacher([FromBody]TeacherGroupDTO teacherD)
+        [HttpDelete] // удаляем студента из группы
+        public void DeleteTeacher([FromBody] int userId, int groupId) // как передать оба параметра из Body?
         {
             AdminDataAccess adm = new AdminDataAccess();
-            adm.TeacherDelete(teacherD);
+            adm.TeacherDeleteByUserIdGroupId(userId, groupId);
         }
     }
 }

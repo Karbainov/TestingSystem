@@ -45,12 +45,27 @@ namespace TestingSystem.API.Controllers
 
 
         [HttpPost]
-        public void Post([FromBody] UserInputModel user)
+        public void PostUser([FromBody] UserInputModel user)
         {
             UserMapper mapper = new UserMapper();
             AdminDataAccess adm = new AdminDataAccess();
             adm.UserCreate(mapper.ConvertUserInputModelToGroupDTO(user));
 
+        }
+        
+        [HttpGet("role")]
+        public List<RoleOutputModel> GetRole()
+        {
+            UserMapper mapper = new UserMapper();
+            AdminDataAccess adm = new AdminDataAccess();
+            List<RoleDTO> roles = adm.GetRole();
+            List<RoleOutputModel> rolesOut = new List<RoleOutputModel>();
+            foreach (RoleDTO r in roles)
+            {
+                rolesOut.Add(mapper.ConvertRoleDTOToRoleOutputModel(r));
+            }
+
+            return rolesOut;
         }
         
         [HttpGet]
@@ -69,14 +84,21 @@ namespace TestingSystem.API.Controllers
             return usersOut;
         }
         
-
+        
         [HttpGet("role/{roleID}")]
-        public List<UserRoleDTO> GetUsersByRoleID(int roleID)
+        public List<UserOutputModel> GetUsersByRoleID(int roleID)
         {
             AdminDataAccess adm = new AdminDataAccess();
-            return adm.GetUserRolesByRoleID(roleID);
+            List<UserOutputModel> allUsers = new List<UserOutputModel>();
+            UserMapper mapper = new UserMapper();
+            
+            foreach(UserDTO user in adm.GetUsersByRoleID(roleID))
+            {
+                allUsers.Add(mapper.ConvertUserDTOToUserOutputModel(user));
+            }
+            return allUsers;
         }
-
+        
         [HttpGet("{id}")]
         public UserOutputModel GetUserById(int id)
         {
