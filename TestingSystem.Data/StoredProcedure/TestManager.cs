@@ -129,13 +129,28 @@ namespace TestingSystem.Data.StoredProcedure
                 return connection.Query<AllStudentTestsDTO>(sqlExpression, new { groupID }).ToList();
             }
         }
+
+        public List<TestQuestionsDTO> GetTestWithAllQuestionsById (int testid)
+        {
+            var connection = Connection.GetConnection();
+            string sqlExpression = "GetAllQuestionsByTestID";
+            return connection.Query<TestQuestionsDTO>(sqlExpression, new { testid }, commandType: CommandType.StoredProcedure).ToList();
+        }
+
+        public List<AnswerDTO> GetAllAnswersInTest(int testid)
+        {
+            var connection = Connection.GetConnection();
+            string sqlExpression = "AnswersAll_GetByTestId";
+            return connection.Query<AnswerDTO>(sqlExpression, new { testid }, commandType: CommandType.StoredProcedure).ToList();
+        }
+
         //public List<TagDTO> GetTestTags (TestDTO tests )
         //{
         //    using (IDbConnection connection = Connection.GetConnection())
         //    {
         //        string sqlExpression = "GetTestTags @TestID";
         //        return connection.Query<TagDTO>(sqlExpression,  tests , commandType: CommandType.StoredProcedure).ToList();
-              
+
         //    }
         //}
 

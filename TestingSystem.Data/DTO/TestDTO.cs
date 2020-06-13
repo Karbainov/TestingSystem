@@ -9,14 +9,14 @@ namespace TestingSystem.Data.DTO
         public int ID { get; set; }
         public string Name { get; set; }
         public TimeSpan DurationTime { get; set; }
-        public int SuccessScore { get; set; }        
+        public byte SuccessScore { get; set; }        
         public int QuestionNumber { get; set; }        
 
         public TestDTO()
         {
         }
 
-        public TestDTO(int Id, string name, TimeSpan duration, int score, int questionNumber)
+        public TestDTO(int Id, string name, TimeSpan duration, byte score, int questionNumber)
         {
             ID = Id;
             Name = name;
