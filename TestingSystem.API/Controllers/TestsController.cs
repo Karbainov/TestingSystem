@@ -21,25 +21,40 @@ namespace TestingSystem.API.Controllers
             _logger = logger;
         }
 
-        //главная страница
 
-        [HttpGet("Author")]  //вывод списка тестов
+        //Запросы на основной странице "Test" (список тестов/список фидбэков/список тэгов)
 
-        public List<TestModel> /*outputmodel*/ GetAllTest()
+        [HttpGet("Author")]  //вывод списка всех тестов
+
+        public List<TestOutputModel> GetAllTest()
         {
             Mapper mapper = new Mapper();
-            AuthorDataAccess at = new AuthorDataAccess();
-            return mapper.TestDTOToTestModelList(at.GetAllTest());
+            AuthorDataAccess tests = new AuthorDataAccess();
+            return mapper.TestDTOToTestModelList(tests.GetAllTest());
         }
 
+        [HttpGet("SearchTestByTagOr/Author")]  //поиск теста по тегу     
 
-        [HttpGet("SearchTestByTag/Author")]  //поиск теста по тегу     URL надо как-то изменить?
-
-        public List<SearchTestByTagDTO> GetTestVSTagSearch(params string[] tag) // добавить метод вывода по нескольким тегам одновременно
+        public List<TestOutputModel> GetTestVSTagSearchOr(params string[] tag) 
         {
-            AuthorDataAccess tt = new AuthorDataAccess();
-            return tt.GetTestVSTagSearchOr(tag);
+            Mapper mapper = new Mapper();
+            AuthorDataAccess tests = new AuthorDataAccess();
+            return mapper.SearchTestByTagDTOToTestModelList(tests.GetTestVSTagSearchOr(tag));
         }
+
+        [HttpGet("SearchTestByTagAnd/Author")]  //поиск теста по тегу     
+
+        public List<TestOutputModel> GetTestVSTagSearchAnd(params string[] tag) 
+        {
+            Mapper mapper = new Mapper();
+            AuthorDataAccess tests = new AuthorDataAccess();
+            return mapper.SearchTestByTagDTOToTestModelList(tests.GetTestVSTagSearchAnd(tag));            
+        }
+
+
+
+
+
 
 
 
