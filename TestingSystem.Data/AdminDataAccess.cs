@@ -49,13 +49,13 @@ namespace TestingSystem.Data
         public List<GroupDTO> GetAllGroups()
         {
             GroupCRUD group = new GroupCRUD();
-            return group.GetAll();  ////?? Горина добавила 
+            return group.GetAll();  
         }
 
         public GroupDTO GetGroupById(int id)
         {
             GroupCRUD group = new GroupCRUD();
-            return group.GetById(id);  //// Горина добавила GetById
+            return group.GetById(id);  
         }
 
         public void GroupUpdate(GroupDTO groupU)
@@ -121,6 +121,16 @@ namespace TestingSystem.Data
             RoleCRUD role = new RoleCRUD();
             return role.Read();
         }
-        
+
+        public List<UserDTO> GetAllStudents(int id)
+        {
+            GroupManager gm = new GroupManager();
+            return gm.GetAllStudents(id);
+        }
+        public List<UserDTO> GetTeacherByGroupId(int Groupid)
+        {
+            GroupManager tc = new GroupManager();
+            return tc.GetTeacherByGroupId(Groupid);
+        }
     }
 }
