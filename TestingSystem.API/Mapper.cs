@@ -11,7 +11,7 @@ namespace TestingSystem.API
     public class Mapper
     {
         //список тестов
-        public TestOutputModel TestDTOToTestOutputModel(TestDTO testDTO)  
+        public TestOutputModel TestDTOToTestOutputModel(TestDTO testDTO)
         {
             return new TestOutputModel()
             {
@@ -26,7 +26,7 @@ namespace TestingSystem.API
         public List<TestOutputModel> TestDTOToTestModelList(List<TestDTO> dtoList) //формирует список тестов
         {
             List<TestOutputModel> modelList = new List<TestOutputModel>();
-            foreach(TestDTO testDTO in dtoList)
+            foreach (TestDTO testDTO in dtoList)
             {
                 modelList.Add(TestDTOToTestOutputModel(testDTO));
             }
@@ -34,16 +34,16 @@ namespace TestingSystem.API
         }
 
         //список тестов, найденных по тэгам
-        public TestOutputModel SearchTestByTagDTOToTestOutputModel (SearchTestByTagDTO searchTestByTagDTO) 
+        public TestOutputModel SearchTestByTagDTOToTestOutputModel(SearchTestByTagDTO searchTestByTagDTO)
         {
             return new TestOutputModel()
             {
                 ID = searchTestByTagDTO.Id,
-                Name = searchTestByTagDTO.Name,                
+                Name = searchTestByTagDTO.Name,
             };
         }
 
-        public List<TestOutputModel> SearchTestByTagDTOToTestModelList(List<SearchTestByTagDTO> dtoList) 
+        public List<TestOutputModel> SearchTestByTagDTOToTestModelList(List<SearchTestByTagDTO> dtoList)
         {
             List<TestOutputModel> modelList = new List<TestOutputModel>();
             foreach (SearchTestByTagDTO searchtestDTO in dtoList)
@@ -58,7 +58,7 @@ namespace TestingSystem.API
         {
             return new FeedbackOutputModel()
             {
-                ID = feedbackDTO.ID,    
+                ID = feedbackDTO.ID,
                 Message = feedbackDTO.Message,
                 DateTime = feedbackDTO.DateTime,
                 Processed = feedbackDTO.Processed,
@@ -80,7 +80,7 @@ namespace TestingSystem.API
         {
             return new TagOutputModel()
             {
-                ID = tagDTO.ID,                
+                ID = tagDTO.ID,
                 Name = tagDTO.Name,
             };
         }
@@ -104,6 +104,67 @@ namespace TestingSystem.API
                 Name = tagmodel.Name,
             };
         }
+        public List<AttemptResultOutputModel> attemptDTOToAttemptModel(List<AttemptResultDTO> attempt)
+        {
+            List<AttemptResultOutputModel> model = new List<AttemptResultOutputModel>();
+            foreach (AttemptResultDTO a in attempt)
+            {
+                AttemptResultOutputModel attempModel = new AttemptResultOutputModel()
+                {
+                    Datetime = a.Datetime,
+                    Duration = a.Duration,
+                    Number = a.Number,
+                    Result = a.Result,
+                    Status = a.Status
+                };
+                model.Add(attempModel);
+            }
+            return model;
+        }
+        public StudentOutputModel UserDTOTestAttemptDTOToStudentModel(UserDTO user, List<TestAttemptOutputModel> tests)
+        {
+            StudentOutputModel student = new StudentOutputModel(user.ID, user.FirstName, user.LastName, tests);
+            return student;
+        }
+
+
+        public List<QuestionAnswerOutputModel> QuestionAnswerDTOToQuestionAnswerModel(List<QuestionAnswerDTO> questionsAnswers)
+        {
+            List<QuestionAnswerOutputModel> model = new List<QuestionAnswerOutputModel>();
+            foreach (QuestionAnswerDTO a in questionsAnswers)
+            {
+                QuestionAnswerOutputModel questionAnswer = new QuestionAnswerOutputModel()
+                {
+                    ID = a.ID,
+                    QValue = a.QValue,
+                    AValue = a.AValue,
+                    Correct = a.Correct
+                };
+                model.Add(questionAnswer);
+            }
+            return model;
+        }
+
+        public List<TestAttemptOutputModel> TestAttemptDTOToTestAttemptModel(List<TestAttemptDTO> tests)
+        {
+            List<TestAttemptOutputModel> model = new List<TestAttemptOutputModel>();
+            foreach (TestAttemptDTO a in tests)
+            {
+                TestAttemptOutputModel test = new TestAttemptOutputModel()
+                {
+                    AttemptCount = a.AttemptCount,
+                    ID = a.ID,
+                    BestResult = a.BestResult,
+                    DurationTime = a.DurationTime,
+                    Name = a.Name,
+                    SuccessScore = a.SuccessScore
+                };
+                model.Add(test);
+            }
+            return model;
+        }
 
     }
+
 }
+
