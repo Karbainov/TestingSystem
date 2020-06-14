@@ -241,8 +241,39 @@ namespace TestingSystem.API
                 TagID = testtagmodel.TagID,                
             };
         }
+        //mapper для вывод группы 
+        public GroupOutputModel GroupDTOToGroupOutputModel(GroupDTO group)
+        {
+            return new GroupOutputModel()
+            {
+                Id = group.Id,
+                Name = group.Name,
+                StartDate = group.StartDate,
+                EndDate = group.EndDate,
+             };
+        }
 
+        //список group
+        public List<GroupOutputModel> GroupDTOToListGroupOutputModel(List<GroupDTO> list)
+        {
+            List<GroupOutputModel> listOutputmodels = new List<GroupOutputModel>();
+            foreach (GroupDTO group in list)
+            {
+                listOutputmodels.Add(GroupDTOToGroupOutputModel(group));
+            }
+            return listOutputmodels;
+        }
 
+        public GroupDTO GroupInputModelToGroupDTO(GroupInputModel group)
+        {
+            return new GroupDTO()
+            {
+                Id = group.Id,
+                Name = group.Name,
+                StartDate = group.StartDate,
+                EndDate = group.EndDate,
+            };
+        }
     }
 
 }

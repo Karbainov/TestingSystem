@@ -64,29 +64,28 @@ namespace TestingSystem.API.Controllers
             return groupOutputModels;
             
         }
-
-
+        
         [HttpPost]
-        public void Post([FromBody]GroupDTO groupC)
+        public void GroupPost([FromBody]GroupInputModel groupC)
         {
-            AdminDataAccess adm = new AdminDataAccess();
-            adm.GroupCreate(groupC);
-           
+            Mapper mapper = new Mapper();
+            GroupDTO groupdto = mapper.GroupInputModelToGroupDTO(groupC);
+            AdminDataAccess group = new AdminDataAccess();
+            group.GroupCreate(groupdto);
+
         }
 
         [HttpGet("{id}")]
-        public GroupDTO GetGroupById(int id)
+        public GroupOutputModel GetGroupById(int id)
         {
+            Mapper mapper = new Mapper();
             AdminDataAccess adm = new AdminDataAccess();
-            return adm.GetGroupById(id);
+            GroupOutputModel gom = mapper.GroupDTOToGroupOutputModel(adm.GetGroupById(id));
+            return gom;
         }
         
-        [HttpGet("{id}/user")]
-        public GroupDTO GetUserListByGroupId(int id)
-        {
-            AdminDataAccess adm = new AdminDataAccess();
-            return adm.GetGroupById(id); // изменить
-        }
+      
+        
         
         [HttpPost("{groupID}/student/{userID}")] // GET http://localhost:5557/group/id/student/id	
         public void PostStudentInGroup(int userID, int groupID)
@@ -101,12 +100,14 @@ namespace TestingSystem.API.Controllers
             AdminDataAccess adm = new AdminDataAccess();
             adm.TeacherAdd(userID, groupID);
         }
-        
+
         [HttpPut]
-        public void Put([FromBody]GroupDTO groupU)
+        public void GroupPut([FromBody]GroupInputModel groupU)
         {
-            AdminDataAccess adm = new AdminDataAccess();
-            adm.GroupUpdate(groupU);
+            Mapper mapper = new Mapper();
+            GroupDTO groupdto = mapper.GroupInputModelToGroupDTO(groupU);
+            AdminDataAccess group = new AdminDataAccess();
+            group.GroupUpdate(groupdto);
 
         }
 

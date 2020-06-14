@@ -49,13 +49,13 @@ namespace TestingSystem.Data
         public List<GroupDTO> GetAllGroups()
         {
             GroupCRUD group = new GroupCRUD();
-            return group.GetAll();  ////?? Горина добавила 
+            return group.GetAll();  
         }
 
         public GroupDTO GetGroupById(int id)
         {
             GroupCRUD group = new GroupCRUD();
-            return group.GetById(id);  //// Горина добавила GetById
+            return group.GetById(id);  
         }
 
         public void GroupUpdate(GroupDTO groupU)
