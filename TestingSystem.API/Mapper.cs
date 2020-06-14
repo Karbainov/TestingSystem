@@ -10,19 +10,20 @@ namespace TestingSystem.API
 {
     public class Mapper
     {
-        //список тестов
+        //тест
         public TestOutputModel TestDTOToTestOutputModel(TestDTO testDTO)
         {
             return new TestOutputModel()
             {
                 ID = testDTO.ID,
                 Name = testDTO.Name,
-                //SuccessScore = testDTO.SuccessScore,
-                //DurationTime = testDTO.DurationTime,
-                //QuestionNumber = testDTO.QuestionNumber,
+                SuccessScore = testDTO.SuccessScore,
+                DurationTime = testDTO.DurationTime,
+                QuestionNumber = testDTO.QuestionNumber,
             };
         }
-
+        
+        //список тестов
         public List<TestOutputModel> TestDTOToTestModelList(List<TestDTO> dtoList) //формирует список тестов
         {
             List<TestOutputModel> modelList = new List<TestOutputModel>();
@@ -33,7 +34,7 @@ namespace TestingSystem.API
             return modelList;
         }
 
-        //список тестов, найденных по тэгам
+        //тест, найденный по тэгам
         public TestOutputModel SearchTestByTagDTOToTestOutputModel(SearchTestByTagDTO searchTestByTagDTO)
         {
             return new TestOutputModel()
@@ -43,6 +44,7 @@ namespace TestingSystem.API
             };
         }
 
+        //список тестов, найденных по тегам
         public List<TestOutputModel> SearchTestByTagDTOToTestModelList(List<SearchTestByTagDTO> dtoList)
         {
             List<TestOutputModel> modelList = new List<TestOutputModel>();
@@ -53,7 +55,7 @@ namespace TestingSystem.API
             return modelList;
         }
 
-        //список фидбэков
+        //фидбэк
         public FeedbackOutputModel FeedbackDTOToFeedbackOutputModel(FeedbackDTO feedbackDTO)
         {
             return new FeedbackOutputModel()
@@ -65,6 +67,7 @@ namespace TestingSystem.API
             };
         }
 
+        //список фидбэков
         public List<FeedbackOutputModel> FeedbackDTOToFeedbackModelList(List<FeedbackDTO> dtoList)
         {
             List<FeedbackOutputModel> modelList = new List<FeedbackOutputModel>();
@@ -75,7 +78,7 @@ namespace TestingSystem.API
             return modelList;
         }
 
-        //список тэгов
+        //тэг
         public TagOutputModel TagDTOToTagOutputModel(TagDTO tagDTO)
         {
             return new TagOutputModel()
@@ -84,7 +87,8 @@ namespace TestingSystem.API
                 Name = tagDTO.Name,
             };
         }
-
+        
+        //список тэгов
         public List<TagOutputModel> TagDTOToTagModelList(List<TagDTO> dtoList)
         {
             List<TagOutputModel> modelList = new List<TagOutputModel>();
@@ -104,6 +108,8 @@ namespace TestingSystem.API
                 Name = tagmodel.Name,
             };
         }
+
+        //попытка
         public List<AttemptResultOutputModel> attemptDTOToAttemptModel(List<AttemptResultDTO> attempt)
         {
             List<AttemptResultOutputModel> model = new List<AttemptResultOutputModel>();
@@ -121,13 +127,15 @@ namespace TestingSystem.API
             }
             return model;
         }
+
+        //попытка студента по конкретному тесту
         public StudentOutputModel UserDTOTestAttemptDTOToStudentModel(UserDTO user, List<TestAttemptOutputModel> tests)
         {
             StudentOutputModel student = new StudentOutputModel(user.ID, user.FirstName, user.LastName, tests);
             return student;
         }
 
-
+        //список вопросов с ответами
         public List<QuestionAnswerOutputModel> QuestionAnswerDTOToQuestionAnswerModel(List<QuestionAnswerDTO> questionsAnswers)
         {
             List<QuestionAnswerOutputModel> model = new List<QuestionAnswerOutputModel>();
@@ -145,6 +153,7 @@ namespace TestingSystem.API
             return model;
         }
 
+        //список попыток теста
         public List<TestAttemptOutputModel> TestAttemptDTOToTestAttemptModel(List<TestAttemptDTO> tests)
         {
             List<TestAttemptOutputModel> model = new List<TestAttemptOutputModel>();
@@ -163,6 +172,76 @@ namespace TestingSystem.API
             }
             return model;
         }
+
+        //создать тест, изменить тест
+        public TestDTO TestInputModelToTestDTO(TestInputModel testmodel)
+        {
+            return new TestDTO()
+            {
+                ID = testmodel.ID,
+                Name = testmodel.Name,
+                DurationTime = testmodel.DurationTime,
+                SuccessScore = testmodel.SuccessScore,
+                QuestionNumber = testmodel.QuestionNumber,
+            };
+        }
+
+        //вопрос
+        public QuestionOutputModel QuestionDTOToQuestionOutputModel(QuestionDTO questionDTO)
+        {
+            return new QuestionOutputModel()
+            {
+                ID = questionDTO.ID,
+                Value = questionDTO.Value,
+                Weight = questionDTO.Weight,                
+            };
+        }
+
+        //список вопросов
+        public List<QuestionOutputModel> QuestionDTOToQuestionModelList(List<QuestionDTO> dtoList) 
+        {
+            List<QuestionOutputModel> modelList = new List<QuestionOutputModel>();
+            foreach (QuestionDTO questionDTO in dtoList)
+            {
+                modelList.Add(QuestionDTOToQuestionOutputModel(questionDTO));
+            }
+            return modelList;
+        }
+
+        //ответ
+        public AnswerOutputModel AnswerDTOToAnswerOutputModel(AnswerDTO answerDTO)
+        {
+            return new AnswerOutputModel()
+            {
+                ID = answerDTO.ID,
+                QuestionID = answerDTO.QuestionID,
+                Value = answerDTO.Value,
+                Correct = answerDTO.Correct,
+            };
+        }
+
+        //список ответов 
+        public List<AnswerOutputModel> AnswerDTOToAnswerModelList(List<AnswerDTO> dtoList)
+        {
+            List<AnswerOutputModel> modelList = new List<AnswerOutputModel>();
+            foreach (AnswerDTO answerDTO in dtoList)
+            {
+                modelList.Add(AnswerDTOToAnswerOutputModel(answerDTO));
+            }
+            return modelList;
+        }
+
+        //добавляем тэг в тест
+        public TestTagDTO TestTagInputModelToTestTagDTO(TestTagInputModel testtagmodel)
+        {
+            return new TestTagDTO()
+            {
+                ID = testtagmodel.ID,
+                TestID = testtagmodel.TestID,
+                TagID = testtagmodel.TagID,                
+            };
+        }
+
 
     }
 

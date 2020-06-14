@@ -5,10 +5,11 @@ using System.Threading.Tasks;
 
 namespace TestingSystem.API.Models.Output
 {
-    public class QuestionModel
+    public class QuestionOutputModel
     {
-        public string Question { get; set; }
+        public int ID { get; set; }
+        public string Value { get; set; }
         public int Weight { get; set; }
-        public List<string> Answers { get; set; }
+        //public List<string> Answers { get; set; }
     }
 }

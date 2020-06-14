@@ -103,12 +103,18 @@ namespace TestingSystem.Data
         {
             TestCRUD test = new TestCRUD();
             return test.Delete(id);
+        }        
+
+        public TestDTO GetByIdTest(int id)    //вывод конкретного теста с полной информацией
+        {
+            TestCRUD ts = new TestCRUD();
+            return ts.GetById(id);
         }
 
-        public List<TestQuestionsDTO> GetTestWithAllQuestionsById(int testid)   //вывод теста с информацией и вопросами
+        public List<QuestionDTO> GetQuestionsByTestID(int testId)  //список всех вопросов теста 
         {
-            TestManager test = new TestManager();
-            return test.GetTestWithAllQuestionsById(testid);
+            QuestionCRUD q = new QuestionCRUD();
+            return q.GetByTestID(testId);
         }
 
         public List<AnswerDTO> GetAllAnswersInTest(int testid)        //список всех ответов теста с указанием айди вопроса
@@ -224,12 +230,6 @@ namespace TestingSystem.Data
 
         //Методы, которые могут пригодиться?
 
-        public TestDTO GetByIdTest(int id)    //вывод только теста по айди
-        {
-            TestCRUD ts = new TestCRUD();
-            return ts.GetById(id);
-        }
-        
         public void DeleteByTagId(int tagId)   //удалить тэг из всех тестов
         {
             TestTagCRUD tt = new TestTagCRUD();
@@ -248,11 +248,7 @@ namespace TestingSystem.Data
             return q.GetAll();
         }        
 
-        public List<QuestionDTO> GetQuestionsByTestID(int testId)  //список всех вопросов теста
-        {
-            QuestionCRUD q = new QuestionCRUD();
-            return q.GetByTestID(testId);
-        }
+        
 
         public List<QuestionDTO> GetQuestionsByTypeID(int typeId)  //список всех вопросов по конкретному типу
         {
