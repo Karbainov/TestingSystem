@@ -85,7 +85,7 @@ namespace TestingSystem.API
             }
             return modelstudentList;
         }
-        public GroupOutputModel UserGroupDTOUserWithRoleDTOGroupToGroupOutputModelModel(List<UserGroupDTO> st, List<UserWithRoleDTO> t, GroupDTO g)
+        public GroupOutputModel UserGroupDTOUserWithRoleDTOGroupToGroupOutputModel(List<UserGroupDTO> st, List<UserWithRoleDTO> t, GroupDTO g)
         {
             return new GroupOutputModel
             {

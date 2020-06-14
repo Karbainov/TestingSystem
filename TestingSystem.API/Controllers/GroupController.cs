@@ -11,6 +11,7 @@ using TestingSystem.Data.StoredProcedure.CRUD;
 using TestingSystem.Data;
 using TestingSystem.API;
 using TestingSystem.API.Models.Output;
+using TestingSystem.Data.StoredProcedure;
 
 namespace TestingSystem.API.Controllers
 {
@@ -33,14 +34,37 @@ namespace TestingSystem.API.Controllers
             Mapper mapper = new Mapper();
             AdminDataAccess adm = new AdminDataAccess();
             List<GroupOutputModel> groupOutputModels = new List<GroupOutputModel>();
+                        
+            List<GroupDTO> groups =  adm.GetAllGroups();
+            foreach (GroupDTO g in groups)
+            {
+                GroupManager gr = new GroupManager();
+                GroupOutputModel www = new GroupOutputModel();
+                www.Id = g.Id;
+                www.Name = g.Name;
+                www.StartDate = g.StartDate;
+                www.EndDate = g.EndDate;
+                List<UserDTO> students= gr.GetAllStudents(g.Id);
+                List<UserOutputModel> studentsout = new List<UserOutputModel>();
+                foreach (UserDTO st in students)
+                {
+                    UserMapper um = new UserMapper();
+                    studentsout.Add(um.ConvertUserDTOToUserOutputModel(st));
 
-            //adm.GetAllGroups();
-            //для каждой группы
-            //q=все студенты
-            //w=все тичеры
-            //список add mapper.UserGroupDTOUserWithRoleDTOGroupToGroupOutputModelModel(q,w,одна группа);
+                }
+                List<UserDTO> teachers = gr.GetTeacherByGroupId(g.Id);
+                List<UserOutputModel> teachersout = new List<UserOutputModel>();
+                foreach (UserDTO tc in teachers)
+                {
+                    UserMapper tm = new UserMapper();
+                    usersout.Add(tm.ConvertUserDTOToUserOutputModel(tc));
+                }
+                www.students = studentsout;
+                www.teachers = teachersout;  //w=все тичеры
+                groupOutputModels.Add(www);
 
-
+               
+            }
             return groupOutputModels;
 
 
