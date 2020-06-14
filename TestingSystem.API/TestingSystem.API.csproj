@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TestingSystem.Business\TestingSystem.Business.csproj" />
     <ProjectReference Include="..\TestingSystem.Data\TestingSystem.Data.csproj" />
   </ItemGroup>
 
