@@ -121,6 +121,16 @@ namespace TestingSystem.Data
             RoleCRUD role = new RoleCRUD();
             return role.Read();
         }
-        
+
+        public List<UserDTO> GetAllStudents(int id)
+        {
+            GroupManager gm = new GroupManager();
+            return gm.GetAllStudents(id);
+        }
+        public List<UserDTO> GetTeacherByGroupId(int Groupid)
+        {
+            GroupManager tc = new GroupManager();
+            return tc.GetTeacherByGroupId(Groupid);
+        }
     }
 }

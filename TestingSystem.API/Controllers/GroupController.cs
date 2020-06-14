@@ -9,6 +9,9 @@ using System.Text;
 using TestingSystem.Data.DTO;
 using TestingSystem.Data.StoredProcedure.CRUD;
 using TestingSystem.Data;
+using TestingSystem.Data.StoredProcedure;
+using TestingSystem.API.Models.Output;
+using TestingSystem.API.Models.Input;
 
 namespace TestingSystem.API.Controllers
 {
@@ -24,15 +27,45 @@ namespace TestingSystem.API.Controllers
             _logger = logger;
         }
 
-             
-        [HttpGet]  // htpps://localhost/group
-        public List<GroupDTO> Get()
-        {
+        [HttpGet("admin")]  // htpps://localhost/group
+        public List<GroupOutputModel> GetAllGroups()
+        {         
             AdminDataAccess adm = new AdminDataAccess();
-            return adm.GetAllGroups();
+            List<GroupOutputModel> groupOutputModels = new List<GroupOutputModel>();
+            List<GroupDTO> groups = adm.GetAllGroups();
+            foreach (GroupDTO g in groups)
+            {
+                GroupOutputModel www = new GroupOutputModel();
+                AdminDataAccess gr = new AdminDataAccess();
+                www.Id = g.Id;
+                www.Name = g.Name;
+                www.StartDate = g.StartDate;
+                www.EndDate = g.EndDate;
+                List<UserDTO> students = gr.GetAllStudents(g.Id);
+                List<UserOutputModel> studentsout = new List<UserOutputModel>();
+                foreach (UserDTO st in students)
+                {
+                    UserMapper um = new UserMapper();
+                    studentsout.Add(um.ConvertUserDTOToUserOutputModel(st));
+                   
+                }
+                List<UserDTO> teachers = gr.GetTeacherByGroupId(g.Id);
+                List<UserOutputModel> teachersout = new List<UserOutputModel>();
+                foreach (UserDTO tc in teachers)
+                {
+                    UserMapper tm = new UserMapper();
+                    teachersout.Add(tm.ConvertUserDTOToUserOutputModel(tc));
+                }
+                www.Students = studentsout;
+                www.Teachers = teachersout;  
+                groupOutputModels.Add(www);
+
+            }
+            return groupOutputModels;
+            
         }
 
-               
+
         [HttpPost]
         public void Post([FromBody]GroupDTO groupC)
         {

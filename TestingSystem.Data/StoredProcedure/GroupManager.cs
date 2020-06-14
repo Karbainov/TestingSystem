@@ -9,7 +9,7 @@ using Dapper;
 
 namespace TestingSystem.Data.StoredProcedure
 {
-    class GroupManager
+  public class GroupManager
     {
         public List<GroupDTO> GetGroupByTeacherID( int id)//все группы преподавателя
         {

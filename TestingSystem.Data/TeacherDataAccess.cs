@@ -28,29 +28,7 @@ namespace TestingSystem.Data
         } //  в идеаде - один то мэни - почитать
 
 
-        //var remainingHorsemen = new Dictionary<int, Person>();
-        //connection.Query<Person, Country, Book, Person>(sql, (2 аргумента) =>
-
-//        //books
-//    if(personEntity.Books == null)
-//    {
-//        personEntity.Books = new List<Book>();
-//    }
-
-//    if (book != null)
-//    {
-//        if (!personEntity.Books.Any(x => x.BookId == book.BookId))
-//        {
-//            personEntity.Books.Add(book);
-//        }
-//    }
-
-//    return personEntity;
-//}, 
-//splitOn: "CountryId,BookId");
-
-
-
+     
         public List<TestDTO> GetTestByGroupId(int GroupID)
         {
             TestManager teacher = new TestManager();
