@@ -49,12 +49,12 @@ namespace TestingSystem.Data.StoredProcedure
            
         }
 
-        public List<TagDTO> GetTestTags(TestDTO tests)
+        public List<TagDTO> GetTestTags(int testID)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "GetTestTags @TestID";
-                return connection.Query<TagDTO>(sqlExpression, tests, commandType: CommandType.StoredProcedure).ToList();
+                return connection.Query<TagDTO>(sqlExpression, new { testID }, commandType: CommandType.StoredProcedure).ToList();
 
             }
         }

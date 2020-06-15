@@ -108,7 +108,7 @@ namespace TestingSystem.API.Controllers
 
         [HttpPost("Tags/Author")]      //создание тега
 
-        public int PostTag(TagInputModel tagmodel)
+        public int PostTag([FromBody]TagInputModel tagmodel)
         {
             Mapper mapper = new Mapper();
             TagDTO tagdto = mapper.TagInputModelToTagDTO(tagmodel);
@@ -116,9 +116,9 @@ namespace TestingSystem.API.Controllers
             return tag.AddTag(tagdto);            
         }
 
-        [HttpPut("Tags/{Tagid}/Author")]      //изменение конкретного тега
+        [HttpPut("Tags/Author")]      //изменение конкретного тега
 
-        public void PutTag(TagInputModel tagmodel)
+        public void PutTag([FromBody]TagInputModel tagmodel)
         {
             Mapper mapper = new Mapper();
             TagDTO tagdto = mapper.TagInputModelToTagDTO(tagmodel);
@@ -126,19 +126,19 @@ namespace TestingSystem.API.Controllers
             tag.UpdateTag(tagdto);
         }
 
-        [HttpDelete("Tags/{Tagid}/Author")]    //удаление конкретного тега
+        [HttpDelete("Tags/{tagId}/Author")]    //удаление конкретного тега
 
-        public void DeleteTag(int id)
+        public void DeleteTag(int tagId)
         {
             AuthorDataAccess tag = new AuthorDataAccess();
-            tag.DeleteTag(id);
+            tag.DeleteTag(tagId);
         }
 
 
 
         //Запросы на странице конкретного теста "Id" (тест с информацией, вопросы, ответы теста)
 
-        [HttpPost("{Testid}/Author")]       //создание теста
+        [HttpPost("Author")]       //создание теста
 
         public int PostTest(TestInputModel testmodel)
         {
@@ -148,9 +148,9 @@ namespace TestingSystem.API.Controllers
             return test.AddTest(testdto);            
         }
 
-        [HttpPut("{Testid}/Author")]        //изменение информации о конкретном тесте
+        [HttpPut("Author")]        //изменение информации о конкретном тесте
 
-        public int PutTestById(TestInputModel testmodel)
+        public int PutTestById([FromBody]TestInputModel testmodel)
         {
             Mapper mapper = new Mapper();
             TestDTO testdto = mapper.TestInputModelToTestDTO(testmodel);
@@ -158,69 +158,68 @@ namespace TestingSystem.API.Controllers
             return test.UpdateTest(testdto);            
         }
 
-        [HttpDelete("{Testid}/Author")]       //удаление конкретного тесте
+        [HttpDelete("{testId}/Author")]       //удаление конкретного тесте
 
-        public int DeleteTestById(int id)
+        public int DeleteTestById(int testId)
         {
             AuthorDataAccess test = new AuthorDataAccess();
-            return test.DeleteTest(id);
+            return test.DeleteTest(testId);
         }
 
-        [HttpGet("{Testid}/Author")]          //вывод информации о конкретном тесте
+        [HttpGet("{testId}/Author")]          //вывод информации о конкретном тесте
 
-        public TestOutputModel GetByIdTest(int id)
+        public TestOutputModel GetByIdTest(int testId)
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess test = new AuthorDataAccess();
-            return mapper.TestDTOToTestOutputModel(test.GetByIdTest(id));            
+            return mapper.TestDTOToTestOutputModel(test.GetByIdTest(testId));            
         }
 
-        [HttpGet("{Testid}/Author")]          //вывод всех вопросов из конкретного теста
+        [HttpGet("{testId}/Questions/Author")]          //вывод всех вопросов из конкретного теста
 
-        public List<QuestionOutputModel> GetQuestionsByTestID([FromBody]int testId)
+        public List<QuestionOutputModel> GetQuestionsByTestID(int testId)
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess questions = new AuthorDataAccess();
             return mapper.QuestionDTOToQuestionModelList(questions.GetQuestionsByTestID(testId));            
         }
 
-        [HttpGet("{Testid}/Author")]          //вывод всех ответов из конкретного теста
+        [HttpGet("{testId}/Answers/Author")]          //вывод всех ответов из конкретного теста
 
-        public List<AnswerOutputModel> GetAnswersByTestID([FromBody] int testId)
+        public List<AnswerOutputModel> GetAnswersByTestID(int testId)
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess answers = new AuthorDataAccess();
             return mapper.AnswerDTOToAnswerModelList(answers.GetAllAnswersInTest(testId));
         }
 
-        [HttpGet("{Testid}/Author")]         //вывод всех тегов конкретного теста
+        [HttpGet("{testId}/Tags/Author")]         //вывод всех тегов конкретного теста
 
-        public List<TagOutputModel> GetTagsInTest([FromBody]TestInputModel testmodel)
+        public List<TagOutputModel> GetTagsInTest(int testId)
         {
             Mapper mapper = new Mapper();
-            TestDTO testdto = mapper.TestInputModelToTestDTO(testmodel);
             AuthorDataAccess tags = new AuthorDataAccess();            
-            return mapper.TagDTOToTagModelList(tags.GetTagsInTest(testdto));            
+            return mapper.TagDTOToTagModelList(tags.GetTagsInTest(testId));            
         }
 
-        [HttpGet("{Testid}/Author")]          //вывод тегов, которых нет в тесте, для добавления
+        [HttpGet("{testId}/MissingTags/Author")]          //вывод тегов, которых нет в тесте, для добавления
 
-        public List<TagOutputModel> GetTagsWhichAreNotInTest([FromBody] int testId)
+        public List<TagOutputModel> GetTagsWhichAreNotInTest(int testId)
         {
             Mapper mapper = new Mapper();            
             AuthorDataAccess tags = new AuthorDataAccess();
             return mapper.TagDTOToTagModelList(tags.GetTagsWhichAreNotInTest(testId));
         }
 
-        [HttpDelete("Tags/{Tagid}/Author")]     //удаление тэга из конкретного теста
+        [HttpDelete("{testId}/Tags/{tagid}/Author")]     //удаление тэга из конкретного теста
 
-        public void DeleteTagFromTest([FromBody] int testId, int tagId)
+        public void DeleteTagFromTest(int testId, int tagId)
         {
             AuthorDataAccess tag = new AuthorDataAccess();
             tag.DeleteByTestIdTagId(testId, tagId);
         }
 
-        [HttpPost("Tags/{Tagid}/Author")]      //добавление существующего тэга к конкретному тесту (создаем новую связь тест-тэг)
+        [HttpPost("Tags/Author")]      //добавление существующего тэга к конкретному тесту (создаем новую связь тест-тэг)
 
         public int PostTagInTest(TestTagInputModel testtagmodel)
         {
@@ -231,15 +230,7 @@ namespace TestingSystem.API.Controllers
         }
 
 
-
-
-
-
-
-
-
-
-
+        /* 
         //страница с тэгами
 
         [HttpPost("{Testid}/Tags/Author")] //добавление тега к конкретному тесту
@@ -257,9 +248,7 @@ namespace TestingSystem.API.Controllers
             AuthorDataAccess tt = new AuthorDataAccess();
             tt.DeleteByTestIdTagId(testId, tagId);
         }
-
-        
-
+        */
 
         // создание вопроса с ответами
         [HttpPost("{Testid}/{quId}/Author")] // создание вопроса конкретного теста
