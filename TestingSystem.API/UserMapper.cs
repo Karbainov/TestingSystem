@@ -21,6 +21,12 @@ namespace TestingSystem.API
             UserDTO user = new UserDTO(userIn.ID, userIn.FirstName, userIn.LastName, userIn.BirthDate, userIn.Login, userIn.Password, userIn.Email, userIn.Phone);
             return user;
         }
+        
+        public UserRoleDTO ConvertUserRoleInputModelToUserRoleDTO (UserRoleInputModel userRoleIn)
+        {
+            UserRoleDTO userRole = new UserRoleDTO(userRoleIn.ID, userRoleIn.UserID, userRoleIn.RoleID);
+            return userRole;
+        }
 
         public UserOutputModel ConvertUserDTOToUserOutputModel(UserDTO user)
         {

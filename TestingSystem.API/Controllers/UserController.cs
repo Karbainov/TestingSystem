@@ -53,6 +53,14 @@ namespace TestingSystem.API.Controllers
 
         }
         
+        [HttpPost("role")]
+        public void PostUserRole([FromBody] UserRoleInputModel userRole)
+        {
+            UserMapper mapper = new UserMapper();
+            AdminDataAccess adm = new AdminDataAccess();
+            adm.UserRoleCreate(mapper.ConvertUserRoleInputModelToUserRoleDTO(userRole));
+        }
+        
         [HttpGet("role")]
         public List<RoleOutputModel> GetRole()
         {

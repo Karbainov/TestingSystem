@@ -16,6 +16,12 @@ namespace TestingSystem.Data
             UserCRUD user = new UserCRUD();
             user.Create(userC);
         }
+        
+        public void UserRoleCreate(UserRoleDTO userRole)
+        {
+            UserRoleCRUD user = new UserRoleCRUD();
+            user.Create(userRole);
+        }
 
         public List<UserDTO> GetAllUsers()
         {

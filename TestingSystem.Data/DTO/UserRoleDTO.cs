@@ -11,9 +11,9 @@ namespace TestingSystem.Data.DTO
         public int RoleID { get; set; }
         public UserRoleDTO(int id, int userID, int roleID)
         {
-            ID = id;
-            UserID = userID;
-            RoleID = roleID;
+            this.ID = id;
+            this.UserID = userID;
+            this.RoleID = roleID;
         }
         public UserRoleDTO()
         {
