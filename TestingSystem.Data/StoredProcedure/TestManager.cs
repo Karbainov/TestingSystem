@@ -53,7 +53,7 @@ namespace TestingSystem.Data.StoredProcedure
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
-                string sqlExpression = "GetTestTags @TestID";
+                string sqlExpression = "GetTestTags";
                 return connection.Query<TagDTO>(sqlExpression, new { testID }, commandType: CommandType.StoredProcedure).ToList();
 
             }

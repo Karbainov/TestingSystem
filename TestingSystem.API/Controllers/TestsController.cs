@@ -166,8 +166,22 @@ namespace TestingSystem.API.Controllers
             return test.DeleteTest(testId);
         }
 
-        [HttpGet("{testId}/Author")]          //вывод информации о конкретном тесте
+        [HttpGet("{testId}/Author")]     //полная информация о тесте
+        public TestOutputModel GetTestInfo(int testId) 
+        {
+            Mapper mapper = new Mapper();
+            AuthorDataAccess ada = new AuthorDataAccess();
+            TestOutputModel model = mapper.TestDTOToTestOutputModel(ada.GetByIdTest(testId));
+            model.Questions = mapper.QuestionDTOToQuestionModelList(ada.GetQuestionsByTestID(testId));
+            model.Tags = mapper.TagDTOToTagModelList(ada.GetTagsInTest(testId));
+            foreach(QuestionOutputModel qom in model.Questions)
+            {
+                qom.Answers = mapper.AnswerDTOToAnswerModelList(ada.GetAnswerByQuestionId(qom.ID));
+            }
+            return model;
+        }
 
+        [HttpGet("{testId}/TestInfo/Author")]          //вывод информации о конкретном тесте
         public TestOutputModel GetByIdTest(int testId)
         {
             Mapper mapper = new Mapper();
