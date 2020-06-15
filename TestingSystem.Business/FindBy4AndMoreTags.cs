@@ -45,7 +45,7 @@ namespace TestingSystem.Business
             foreach (TestTagsModel a in tests)
             {
                 bool isFind = true;
-                for (int i = 0; i < tagId.Count; i++)
+                for (int i = 0; i < tagId.Count-1; i++)
                 {
                     if (!a.TagsID.Contains(tagId[i]))
                     {
@@ -62,7 +62,7 @@ namespace TestingSystem.Business
         public List<int> FindTagsID(List<TagDTO> tagDTOs, List<String> tags)
         {
             List<int> tagId = new List<int>();
-            for (int i = 0; i < tags.Count; i++)
+            for (int i = 0; i < tags.Count-1; i++)
             {
                 foreach (TagDTO a in tagDTOs)
                 {
