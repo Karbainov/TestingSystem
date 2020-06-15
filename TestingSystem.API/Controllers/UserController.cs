@@ -88,9 +88,9 @@ namespace TestingSystem.API.Controllers
 
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
 
-        public void Delete([FromBody] int id)
+        public void Delete(int id)
         {
             AdminDataAccess adm = new AdminDataAccess();
             adm.UserDelete(id);
