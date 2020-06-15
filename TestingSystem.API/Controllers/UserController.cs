@@ -58,15 +58,9 @@ namespace TestingSystem.API.Controllers
         {
             AdminDataAccess adm = new AdminDataAccess();
             List<UserPositionDTO> users = adm.GetAllUsersWithRoles();
-            List<UserWithRolesOutputModel> usersOut = new List<UserWithRolesOutputModel>();
             UserMapper mapper = new UserMapper();
 
-            foreach (UserPositionDTO u in users)
-            {
-                usersOut.Add(mapper.ConvertUserPositionDTOToUserWithRolesOutputModel(u));
-            }
-
-            return usersOut;
+            return mapper.ConvertUserPositionDTOsToUserWithRolesOutputModels(users);
         }
         
 
