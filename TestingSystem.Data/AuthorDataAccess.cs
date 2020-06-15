@@ -123,10 +123,10 @@ namespace TestingSystem.Data
             return answers.GetAllAnswersInTest(testid);
         }
 
-        public List<TagDTO> GetTagsInTest(TestDTO tests)         //список всех тэгов теста
+        public List<TagDTO> GetTagsInTest(int testId)         //список всех тэгов теста
         {
             TestManager tags = new TestManager();
-            return tags.GetTestTags(tests);
+            return tags.GetTestTags(testId);
         }
 
         public List<TagDTO> GetTagsWhichAreNotInTest(int testId)    //список тэгов, которых нет в этом тесте, чтобы выбрать для добавления
