@@ -38,5 +38,18 @@ namespace TestingSystem.API
             UserWithRolesOutputModel userOut = new UserWithRolesOutputModel(user.Id, user.FirstName, user.LastName, user.BirthDate, user.Login, user.Password, user.Email, user.Phone, userRoles);
             return userOut;
         }
+
+        public List<UserWithRolesOutputModel> ConvertUserPositionDTOsToUserWithRolesOutputModels(List<UserPositionDTO> users)
+        {
+            List<UserWithRolesOutputModel> usersOut = new List<UserWithRolesOutputModel>();
+            UserMapper mapper = new UserMapper();
+
+            foreach (UserPositionDTO u in users)
+            {
+                usersOut.Add(mapper.ConvertUserPositionDTOToUserWithRolesOutputModel(u));
+            }
+
+            return usersOut;
+        }
     }
 }
