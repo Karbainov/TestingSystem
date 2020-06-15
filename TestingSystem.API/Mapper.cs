@@ -192,8 +192,10 @@ namespace TestingSystem.API
             return new QuestionOutputModel()
             {
                 ID = questionDTO.ID,
+                TestID = questionDTO.TestID,
                 Value = questionDTO.Value,
-                Weight = questionDTO.Weight,                
+                Weight = questionDTO.Weight,      
+                AnswerCount = questionDTO.AnswersCount
             };
         }
 
