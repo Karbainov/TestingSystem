@@ -7,8 +7,7 @@ namespace TestingSystem.API.Models.Output
 {
     public class TestOutputModel
     {
-        //модель с названием тестов
-
+       
         public int ID { get; set; }
         public string Name { get; set; }        
         public TimeSpan DurationTime { get; set; }
@@ -16,8 +15,8 @@ namespace TestingSystem.API.Models.Output
         public int QuestionNumber { get; set; }
 
 
-        //public List<QuestionModel> Questions { get; set; }
-        //public List<string> Tags { get; set; }
+        public List<QuestionOutputModel> Questions { get; set; }
+        public List<TagOutputModel> Tags { get; set; }
         
     }
 }

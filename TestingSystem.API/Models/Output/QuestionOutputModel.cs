@@ -13,7 +13,7 @@ namespace TestingSystem.API.Models.Output
         public int AnswerCount { get; set; }
         public QuestionType Type { get; set; }
         public int Weight { get; set; }
-        //public List<string> Answers { get; set; }
+        public List<AnswerOutputModel> Answers { get; set; }
     }
 
     public enum QuestionType { SingleAnswer, MultipleAnswer, TextAnswer }
