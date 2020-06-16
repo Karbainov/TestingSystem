@@ -34,23 +34,41 @@ namespace TestingSystem.API.Controllers
             return mapper.TestDTOToTestModelList(tests.GetAllTest());
         }
 
-        [HttpGet("SearchTestByTagOr/Author")]  //поиск теста по тегу     
+        [HttpGet("SearchTest/Author")]  //поиск теста по тегу 
 
-        public List<TestOutputModel> GetTestVSTagSearchOr(params string[] tag)
+        public List<TestOutputModel> GetTestVSTagSearch([FromBody] SearchTestByTagInputModel sttim)
         {
+            bool caseSwitch =sttim.SwitchValue;
             Mapper mapper = new Mapper();
-            AuthorDataAccess tests = new AuthorDataAccess();
-            return mapper.SearchTestByTagDTOToTestModelList(tests.GetTestVSTagSearchOr(tag));
+            AuthorDataAccess search = new AuthorDataAccess();
+
+            switch (caseSwitch)
+            {
+                case true:
+                    return mapper.TestDTOToTestModelList(search.GetTestVSTagSearchAnd(sttim.Tag));
+                case false:                  
+                    return mapper.TestDTOToTestModelList(search.GetTestVSTagSearchOr(sttim.Tag));
+            }
         }
 
-        [HttpGet("SearchTestByTagAnd/Author")]  //поиск теста по тегу     
 
-        public List<TestOutputModel> GetTestVSTagSearchAnd(params string[] tag)
-        {
-            Mapper mapper = new Mapper();
-            AuthorDataAccess tests = new AuthorDataAccess();
-            return mapper.SearchTestByTagDTOToTestModelList(tests.GetTestVSTagSearchAnd(tag));
-        }
+        //[HttpGet("SearchTestByTagOr/Author")]  //поиск теста по тегу     
+
+        //public List<TestOutputModel> GetTestVSTagSearchOr(params string[] tag)
+        //{
+        //    Mapper mapper = new Mapper();
+        //    AuthorDataAccess tests = new AuthorDataAccess();
+        //    return mapper.SearchTestByTagDTOToTestModelList(tests.GetTestVSTagSearchOr(tag));
+        //}
+
+        //[HttpGet("SearchTestByTagAnd/Author")]  //поиск теста по тегу     
+
+        //public List<TestOutputModel> GetTestVSTagSearchAnd(params string[] tag)
+        //{
+        //    Mapper mapper = new Mapper();
+        //    AuthorDataAccess tests = new AuthorDataAccess();
+        //    return mapper.SearchTestByTagDTOToTestModelList(tests.GetTestVSTagSearchAnd(tag));
+        //}
 
         [HttpGet("ProcessedFeedbacks/Author")]    //список обработанных фидбэков
 

@@ -34,26 +34,26 @@ namespace TestingSystem.API
             return modelList;
         }
 
-        //тест, найденный по тэгам
-        public TestOutputModel SearchTestByTagDTOToTestOutputModel(SearchTestByTagDTO searchTestByTagDTO)
-        {
-            return new TestOutputModel()
-            {
-                ID = searchTestByTagDTO.Id,
-                Name = searchTestByTagDTO.Name,
-            };
-        }
+        ////тест, найденный по тэгам
+        //public TestOutputModel SearchTestByTagDTOToTestOutputModel(SearchTestByTagDTO searchTestByTagDTO)
+        //{
+        //    return new TestOutputModel()
+        //    {
+        //        ID = searchTestByTagDTO.Id,
+        //        Name = searchTestByTagDTO.Name,
+        //    };
+        //}
 
-        //список тестов, найденных по тегам
-        public List<TestOutputModel> SearchTestByTagDTOToTestModelList(List<SearchTestByTagDTO> dtoList)
-        {
-            List<TestOutputModel> modelList = new List<TestOutputModel>();
-            foreach (SearchTestByTagDTO searchtestDTO in dtoList)
-            {
-                modelList.Add(SearchTestByTagDTOToTestOutputModel(searchtestDTO));
-            }
-            return modelList;
-        }
+        ////список тестов, найденных по тегам
+        //public List<TestOutputModel> SearchTestByTagDTOToTestModelList(List<SearchTestByTagDTO> dtoList)
+        //{
+        //    List<TestOutputModel> modelList = new List<TestOutputModel>();
+        //    foreach (SearchTestByTagDTO searchtestDTO in dtoList)
+        //    {
+        //        modelList.Add(SearchTestByTagDTOToTestOutputModel(searchtestDTO));
+        //    }
+        //    return modelList;
+        //}
 
         //фидбэк
         public FeedbackOutputModel FeedbackDTOToFeedbackOutputModel(FeedbackDTO feedbackDTO)

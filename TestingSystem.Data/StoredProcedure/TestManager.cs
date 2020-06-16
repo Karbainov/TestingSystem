@@ -84,23 +84,23 @@ namespace TestingSystem.Data.StoredProcedure
             }
         }
 
-        public List<SearchTestByTagDTO> GetTestVSTagSearchOr(params string[] tag)
+        public List<TestDTO> GetTestVSTagSearchOr(params string[] tag)
         {
 
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "SearchTestByTagOr";
-                return connection.Query<SearchTestByTagDTO>(sqlExpression, new { tag }, commandType: CommandType.StoredProcedure).ToList();
+                return connection.Query<TestDTO>(sqlExpression, new { tag }, commandType: CommandType.StoredProcedure).ToList();
             }
         }
 
-        public List<SearchTestByTagDTO> GetTestVSTagSearchAnd(params string[] tag)
+        public List<TestDTO> GetTestVSTagSearchAnd(params string[] tag)
         {
 
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "SearchTestByTagAnd";
-                return connection.Query<SearchTestByTagDTO>(sqlExpression, new { tag }, commandType: CommandType.StoredProcedure).ToList();
+                return connection.Query<TestDTO>(sqlExpression, new { tag }, commandType: CommandType.StoredProcedure).ToList();
             }
         }
 
