@@ -18,13 +18,13 @@ namespace TestingSystem.Data
             return tests.GetAll();
         }
 
-        public List<SearchTestByTagDTO> GetTestVSTagSearchOr(params string[] tag)    //ищем тесты по тэгу(или)
+        public List<TestDTO> GetTestVSTagSearchOr(params string[] tag)    //ищем тесты по тэгу(или)
         {
             TestManager tests = new TestManager();
             return tests.GetTestVSTagSearchOr(tag);
         }
 
-        public List<SearchTestByTagDTO> GetTestVSTagSearchAnd(params string[] tag)     //ищем тесты по тэгу(и)
+        public List<TestDTO> GetTestVSTagSearchAnd(params string[] tag)     //ищем тесты по тэгу(и)
         {
             TestManager tests = new TestManager();
             return tests.GetTestVSTagSearchAnd(tag);

@@ -81,14 +81,14 @@ namespace TestingSystem.Data
 
         }
 
-        public List<SearchTestByTagDTO> GetTestVSTagSearchOr(params string[] tag)
+        public List<TestDTO> GetTestVSTagSearchOr(params string[] tag)
         {
             TestManager teacher = new TestManager();
             return teacher.GetTestVSTagSearchOr(tag);
 
         }
 
-        public List<SearchTestByTagDTO> GetTestVSTagSearchAnd(params string[] tag)
+        public List<TestDTO> GetTestVSTagSearchAnd(params string[] tag)
         {
             TestManager teacher = new TestManager();
             return teacher.GetTestVSTagSearchAnd(tag);
