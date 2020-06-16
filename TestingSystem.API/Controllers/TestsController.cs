@@ -89,11 +89,11 @@ namespace TestingSystem.API.Controllers
 
         [HttpGet("feedbacks-by-date/Author")]    //список фидбэков конкретных дат
 
-        public List<FeedbackOutputModel> GetFeedbackByDate(DateTime dateTime1, DateTime dateTime2)
+        public List<FeedbackOutputModel> GetFeedbackByDate(DateTimeInputModel date)
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess feedbacks = new AuthorDataAccess();
-            return mapper.FeedbackDTOToFeedbackModelList(feedbacks.GetFeedbackByDate(dateTime1, dateTime2));
+            return mapper.FeedbackDTOToFeedbackModelList(feedbacks.GetFeedbackByDate(date.StringConverToDateTime(date.DateTime1), date.StringConverToDateTime(date.DateTime2)));
         }
 
         [HttpGet("tags/Author")]      //cписок всех тегов
