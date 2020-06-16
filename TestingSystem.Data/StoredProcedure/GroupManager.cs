@@ -37,5 +37,21 @@ namespace TestingSystem.Data.StoredProcedure
             List<UserDTO> teachers = connection.Query<UserDTO>(sqlExpression, new { Groupid }, commandType: CommandType.StoredProcedure).ToList();
             return teachers;
         }
+
+        public void DeleteStudentFromGroup(int userID, int groupID)
+        {
+            var connection = Connection.GetConnection();
+            connection.Open();
+            string sqlExpression = "DeleteStudentFromGroup";
+            connection.Execute(sqlExpression, new { userID, groupID}, commandType: CommandType.StoredProcedure);
+        }
+
+        public void DeleteTeacherFromGroup(int userID, int groupID)
+        {
+            var connection = Connection.GetConnection();
+            connection.Open();
+            string sqlExpression = "DeleteTeacherFromGroup";
+            connection.Execute(sqlExpression, new { userID, groupID }, commandType: CommandType.StoredProcedure);
+        }
     }
 }

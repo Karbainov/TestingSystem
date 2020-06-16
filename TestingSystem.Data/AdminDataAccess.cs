@@ -132,5 +132,15 @@ namespace TestingSystem.Data
             GroupManager tc = new GroupManager();
             return tc.GetTeacherByGroupId(Groupid);
         }
+        public void DeleteStudentFromGroup(int userID, int groupID)
+        {
+            GroupManager gm = new GroupManager();
+            gm.DeleteStudentFromGroup(userID, groupID);
+        }
+        public void DeleteTeacherFromGroup(int userID, int groupID)
+        {
+            GroupManager gm = new GroupManager();
+            gm.DeleteTeacherFromGroup(userID, groupID);
+        }
     }
 }
