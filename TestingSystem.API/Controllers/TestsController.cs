@@ -34,7 +34,7 @@ namespace TestingSystem.API.Controllers
             return mapper.TestDTOToTestModelList(tests.GetAllTest());
         }
 
-        [HttpGet("SearchTest/Author")]  //поиск теста по тегу 
+        [HttpGet("search-test-by-tags/Author")]  //поиск теста по тегу 
 
         public List<TestOutputModel> GetTestVSTagSearch([FromBody] SearchTestByTagInputModel sttim)
         {
@@ -51,26 +51,7 @@ namespace TestingSystem.API.Controllers
             }
         }
 
-
-        //[HttpGet("SearchTestByTagOr/Author")]  //поиск теста по тегу     
-
-        //public List<TestOutputModel> GetTestVSTagSearchOr(params string[] tag)
-        //{
-        //    Mapper mapper = new Mapper();
-        //    AuthorDataAccess tests = new AuthorDataAccess();
-        //    return mapper.SearchTestByTagDTOToTestModelList(tests.GetTestVSTagSearchOr(tag));
-        //}
-
-        //[HttpGet("SearchTestByTagAnd/Author")]  //поиск теста по тегу     
-
-        //public List<TestOutputModel> GetTestVSTagSearchAnd(params string[] tag)
-        //{
-        //    Mapper mapper = new Mapper();
-        //    AuthorDataAccess tests = new AuthorDataAccess();
-        //    return mapper.SearchTestByTagDTOToTestModelList(tests.GetTestVSTagSearchAnd(tag));
-        //}
-
-        [HttpGet("ProcessedFeedbacks/Author")]    //список обработанных фидбэков
+        [HttpGet("processed-feedbacks/Author")]    //список обработанных фидбэков
 
         public List<FeedbackOutputModel> GetProcessedFeedbacks()
         {
@@ -79,7 +60,7 @@ namespace TestingSystem.API.Controllers
             return mapper.FeedbackDTOToFeedbackModelList(feedbacks.GetProcessedFeedbacks());
         }
 
-        [HttpGet("NotProcessedFeedbacks/Author")]    //список необработанных фидбэков
+        [HttpGet("not-processed-feedbacks/Author")]    //список необработанных фидбэков
 
         public List<FeedbackOutputModel> GetNotProcessedFeedbacks()
         {
@@ -88,7 +69,7 @@ namespace TestingSystem.API.Controllers
             return mapper.FeedbackDTOToFeedbackModelList(feedbacks.GetNotProcessedFeedbacks());
         }
 
-        [HttpGet("Feedbacks/Author")]    //список всех фидбэков
+        [HttpGet("feedbacks/Author")]    //список всех фидбэков
 
         public List<FeedbackOutputModel> GetAllFeedbacks()
         {
@@ -97,7 +78,7 @@ namespace TestingSystem.API.Controllers
             return mapper.FeedbackDTOToFeedbackModelList(feedbacks.GetAllFeedbacks());
         }
 
-        [HttpGet("FeedbacksByTest/Author")]    //список фидбэков конкретных тестов
+        [HttpGet("feedbacks/{testId}/Author")]    //список фидбэков конкретных тестов
 
         public List<FeedbackOutputModel> GetFeedbackByTest(int testId)
         {
@@ -106,7 +87,7 @@ namespace TestingSystem.API.Controllers
             return mapper.FeedbackDTOToFeedbackModelList(feedbacks.GetFeedbackByTest(testId));
         }
 
-        [HttpGet("FeedbacksByDate/Author")]    //список фидбэков конкретных дат
+        [HttpGet("feedbacks-by-date/Author")]    //список фидбэков конкретных дат
 
         public List<FeedbackOutputModel> GetFeedbackByDate(DateTime dateTime1, DateTime dateTime2)
         {
@@ -115,7 +96,7 @@ namespace TestingSystem.API.Controllers
             return mapper.FeedbackDTOToFeedbackModelList(feedbacks.GetFeedbackByDate(dateTime1, dateTime2));
         }
 
-        [HttpGet("Tags/Author")]      //cписок всех тегов
+        [HttpGet("tags/Author")]      //cписок всех тегов
 
         public List<TagOutputModel> GetAllTags()
         {
@@ -124,7 +105,7 @@ namespace TestingSystem.API.Controllers
             return mapper.TagDTOToTagModelList(tags.GetAllTag());
         }
 
-        [HttpPost("Tags/Author")]      //создание тега
+        [HttpPost("tags/Author")]      //создание тега
 
         public int PostTag([FromBody]TagInputModel tagmodel)
         {
@@ -134,7 +115,7 @@ namespace TestingSystem.API.Controllers
             return tag.AddTag(tagdto);            
         }
 
-        [HttpPut("Tags/Author")]      //изменение конкретного тега
+        [HttpPut("tags/Author")]      //изменение конкретного тега
 
         public void PutTag([FromBody]TagInputModel tagmodel)
         {
@@ -144,7 +125,7 @@ namespace TestingSystem.API.Controllers
             tag.UpdateTag(tagdto);
         }
 
-        [HttpDelete("Tags/{tagId}/Author")]    //удаление конкретного тега
+        [HttpDelete("tags/{tagId}/Author")]    //удаление конкретного тега
 
         public void DeleteTag(int tagId)
         {
@@ -199,7 +180,7 @@ namespace TestingSystem.API.Controllers
             return model;
         }
 
-        [HttpGet("{testId}/TestInfo/Author")]          //вывод информации о конкретном тесте
+        [HttpGet("{testId}/test-info/Author")]          //вывод информации о конкретном тесте
         public TestOutputModel GetByIdTest(int testId)
         {
             Mapper mapper = new Mapper();
@@ -207,7 +188,7 @@ namespace TestingSystem.API.Controllers
             return mapper.TestDTOToTestOutputModel(test.GetByIdTest(testId));            
         }
 
-        [HttpGet("{testId}/Questions/Author")]          //вывод всех вопросов из конкретного теста
+        [HttpGet("{testId}/questions/Author")]          //вывод всех вопросов из конкретного теста
 
         public List<QuestionOutputModel> GetQuestionsByTestID(int testId)
         {
@@ -216,7 +197,7 @@ namespace TestingSystem.API.Controllers
             return mapper.QuestionDTOToQuestionModelList(questions.GetQuestionsByTestID(testId));            
         }
 
-        [HttpGet("{testId}/Answers/Author")]          //вывод всех ответов из конкретного теста
+        [HttpGet("{testId}/answers/Author")]          //вывод всех ответов из конкретного теста
 
         public List<AnswerOutputModel> GetAnswersByTestID(int testId)
         {
@@ -225,7 +206,7 @@ namespace TestingSystem.API.Controllers
             return mapper.AnswerDTOToAnswerModelList(answers.GetAllAnswersInTest(testId));
         }
 
-        [HttpGet("{testId}/Tags/Author")]         //вывод всех тегов конкретного теста
+        [HttpGet("{testId}/tags/Author")]         //вывод всех тегов конкретного теста
 
         public List<TagOutputModel> GetTagsInTest(int testId)
         {
@@ -234,7 +215,7 @@ namespace TestingSystem.API.Controllers
             return mapper.TagDTOToTagModelList(tags.GetTagsInTest(testId));            
         }
 
-        [HttpGet("{testId}/MissingTags/Author")]          //вывод тегов, которых нет в тесте, для добавления
+        [HttpGet("{testId}/missing-tags/Author")]          //вывод тегов, которых нет в тесте, для добавления
 
         public List<TagOutputModel> GetTagsWhichAreNotInTest(int testId)
         {
@@ -243,7 +224,7 @@ namespace TestingSystem.API.Controllers
             return mapper.TagDTOToTagModelList(tags.GetTagsWhichAreNotInTest(testId));
         }
 
-        [HttpDelete("{testId}/Tags/{tagid}/Author")]     //удаление тэга из конкретного теста
+        [HttpDelete("{testId}/tags/{tagid}/Author")]     //удаление тэга из конкретного теста
 
         public void DeleteTagFromTest(int testId, int tagId)
         {
