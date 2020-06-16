@@ -41,11 +41,30 @@ namespace TestingSystem.Business
             return weightTypes;
         }
 
-        
+
+        //public Dictionary<int, List<QuestionWithListAnswersDTO>> PickQuestionsForAttempt(Dictionary<int, List<QuestionWithListAnswersDTO>> questions, TestDTO test)
+        //{
+        //    Dictionary<int, List<QuestionWithListAnswersDTO>> attemptquestions = new Dictionary<int, List<QuestionWithListAnswersDTO>>();
+
+        //    int totalQtyOfQuestions;
+
+        //    foreach ((KeyValuePair <K,V>) in questions)
+
+        //    { }
 
 
+        //    return attemptquestions;
+        //}
+        //public  List<QuestionWithListAnswersDTO> ConvertDictionaryToLIst(Dictionary<int, List<QuestionWithListAnswersDTO>> questions)
+        //{
+        //    List<QuestionWithListAnswersDTO> attemptquestions = new List<QuestionWithListAnswersDTO>();
+        //    foreach (int w in questions)
 
+        //    { 
+            
+        //    }
 
-
+        //    return attemptquestions;
+        //}
     }
 }

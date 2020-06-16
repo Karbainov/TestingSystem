@@ -66,12 +66,7 @@ namespace TestingSystem.Data.StoredProcedure
 
 
 
-        //public int CountQtyOfQuestionWeights()
-        //{
-        //    var connection = Connection.GetConnection();
-        //    string sqlExpression = "CountWeightCategoriesOfQuestions";
-        //    return connection.Execute(sqlExpression, commandType: CommandType.StoredProcedure);
-        //}
+        
 
         public List<QuestionWithListAnswersDTO> GetQuestionsAndAnswers(int testID)
         {
@@ -82,7 +77,7 @@ namespace TestingSystem.Data.StoredProcedure
             {
                 var questionDictionary = new Dictionary<int, QuestionWithListAnswersDTO>();
                 connection.Query<QuestionWithListAnswersDTO, AnswerWithoutCorrectnessDTO, QuestionWithListAnswersDTO>(
-                    "GetAllQuestionsAndAnswersByTestId", new { testID }, commandType: CommandType.StoredProcedure,
+                    "GetAllQuestionsAndAnswersByTestId", new { testID }, commandType: CommandType.StoredProcedure,  // Спросить Макса
                     (question, answers) =>
                     {
                         QuestionWithListAnswersDTO questionEntry;
