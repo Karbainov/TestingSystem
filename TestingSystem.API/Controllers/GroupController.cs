@@ -121,17 +121,17 @@ namespace TestingSystem.API.Controllers
         }
 
         [HttpDelete] // удаляем студента из группы
-        public void DeleteStudent([FromBody]StudentGroupDTO studentD)
+        public void DeleteStudentFromGroup(int studentID, int groupID)
         {
             AdminDataAccess adm = new AdminDataAccess();
-            adm.StudentDelete(studentD);
+            adm.DeleteStudentFromGroup(studentID, groupID);
         }
 
         [HttpDelete] // удаляем учителя из группы
-        public void DeleteTeacher([FromBody]TeacherGroupDTO teacherD)
+        public void DeleteTeacherFromGroup(int studentID, int groupID)
         {
             AdminDataAccess adm = new AdminDataAccess();
-            adm.TeacherDelete(teacherD);
+            adm.DeleteTeacherFromGroup(studentID, groupID);
         }
     }
 }
