@@ -60,5 +60,23 @@ namespace TestingSystem.Data
             UserCRUD user = new UserCRUD();
             return user.GetByID(id);
         }
+
+        public List<QuestionWithListAnswersDTO> GetQuestionsAndAnswers (int testID)
+        {
+            QuestionManager test = new QuestionManager();
+            return test.GetQuestionsAndAnswers(testID);
+
+        }
+
+        public TestDTO GetTestWithDurationAndQuestionNumber(int id)
+        {
+            TestManager test = new TestManager();
+            return test.GetTestWithDurationAndQuestionNumber(id);
+
+        }
+
+
+        
+
     }
 }

@@ -144,6 +144,16 @@ namespace TestingSystem.Data.StoredProcedure
             return connection.Query<AnswerDTO>(sqlExpression, new { testid }, commandType: CommandType.StoredProcedure).ToList();
         }
 
+
+        public TestDTO GetTestWithDurationAndQuestionNumber(int id)
+        {
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "Test_GetDurationAndQuestionNumber";
+                return connection.Query<TestDTO>(sqlExpression, new { id }, commandType: CommandType.StoredProcedure).FirstOrDefault();
+            }
+        }
+
         //public List<TagDTO> GetTestTags (TestDTO tests )
         //{
         //    using (IDbConnection connection = Connection.GetConnection())

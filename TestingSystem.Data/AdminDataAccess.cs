@@ -142,5 +142,8 @@ namespace TestingSystem.Data
             GroupManager gm = new GroupManager();
             gm.DeleteTeacherFromGroup(userID, groupID);
         }
+
+
+        
     }
 }

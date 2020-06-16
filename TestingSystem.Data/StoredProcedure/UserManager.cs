@@ -38,8 +38,6 @@ namespace TestingSystem.Data.StoredProcedure
             using (usPos)
             {
                 var userDictionary = new Dictionary<int, UserPositionDTO>();
-
-
                 usPos.Query<UserPositionDTO, RoleIdDTO, UserPositionDTO>(
                     "User_Position",
                     (user, roles) =>

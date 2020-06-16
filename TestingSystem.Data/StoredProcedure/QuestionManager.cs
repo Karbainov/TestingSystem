@@ -60,6 +60,49 @@ namespace TestingSystem.Data.StoredProcedure
                     transaction.Rollback();
                 }
             }
+           
+
+        }
+
+
+
+        //public int CountQtyOfQuestionWeights()
+        //{
+        //    var connection = Connection.GetConnection();
+        //    string sqlExpression = "CountWeightCategoriesOfQuestions";
+        //    return connection.Execute(sqlExpression, commandType: CommandType.StoredProcedure);
+        //}
+
+        public List<QuestionWithListAnswersDTO> GetQuestionsAndAnswers(int testID)
+        {
+
+            IDbConnection connection = Connection.GetConnection();
+            List<QuestionWithListAnswersDTO> questions;
+            using (connection)
+            {
+                var questionDictionary = new Dictionary<int, QuestionWithListAnswersDTO>();
+                connection.Query<QuestionWithListAnswersDTO, AnswerWithoutCorrectnessDTO, QuestionWithListAnswersDTO>(
+                    "GetAllQuestionsAndAnswersByTestId", new { testID }, commandType: CommandType.StoredProcedure,
+                    (question, answers) =>
+                    {
+                        QuestionWithListAnswersDTO questionEntry;
+
+                        if (!questionDictionary.TryGetValue(question.Id, out questionEntry))
+                        {
+                            questionEntry = question;
+                            questionEntry.Answers = new List<AnswerWithoutCorrectnessDTO>();
+                            questionDictionary.Add(questionEntry.Id, questionEntry);
+                        }
+
+                        questionEntry.Answers.Add(answers);
+                        return questionEntry;
+                    },
+                    splitOn: "QuestionId")
+                .ToList();
+                questions = new List<QuestionWithListAnswersDTO>(questionDictionary.Values);
+            }
+
+            return questions;
         }
     }
 }
