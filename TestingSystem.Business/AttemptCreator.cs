@@ -58,7 +58,7 @@ namespace TestingSystem.Business
             return attemptquestions;
         }
 
-        public List<int> GetRandomIndexes (int upRange, int quantity)
+        private List<int> GetRandomIndexes (int upRange, int quantity)
         {
             List<int> randomIndexes = new List<int>();
             Random random = new Random();
@@ -73,6 +73,18 @@ namespace TestingSystem.Business
             return randomIndexes;
 
         }
+
+        private List<QuestionWithListAnswersDTO> CutListbyIndexes(List<QuestionWithListAnswersDTO> questions, List<int> indexes)
+        {
+            List<QuestionWithListAnswersDTO> questionsCuttedVersion = new List<QuestionWithListAnswersDTO>();
+            foreach (int i in indexes)
+            {
+                questionsCuttedVersion.Add(questions[i]);
+            }
+
+            return questionsCuttedVersion;
+        }
+
         public List<QuestionWithListAnswersDTO> ConvertDictionaryToLIst(Dictionary<int, List<QuestionWithListAnswersDTO>> questions)
         {
             List<QuestionWithListAnswersDTO> attemptquestions = new List<QuestionWithListAnswersDTO>();
