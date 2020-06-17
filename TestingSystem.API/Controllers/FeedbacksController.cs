@@ -61,26 +61,26 @@ namespace TestingSystem.API.Controllers
         //Запросы на странице конкретного фидбэка "FeedbackId" (вся информация по фидбэку)
 
         [HttpGet("feedbacks/{id}/Author")]     //вывод фидбэка (с именем пользователя, названием теста и вопросом)
-        public FeedbackQuestionOutputModel GetFeedbackWithQuestion(int id)
+        public IActionResult GetFeedbackWithQuestion(int id)
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess feedback = new AuthorDataAccess();
-            return mapper.FeedbackQuestionDTOToFeedbackQuestionOutputModel(feedback.GetFeedbackWithQuestion(id));
+            return Json(mapper.FeedbackQuestionDTOToFeedbackQuestionOutputModel(feedback.GetFeedbackWithQuestion(id)));
         }
 
         [HttpGet("feedbacks/{id}/Author")]
-        public List<AnswerOutputModel> GetAllAnswersByFeedbackId([FromBody] int id)    //список ответов на вопрос, к которому написан фидбэк
+        public IActionResult GetAllAnswersByFeedbackId([FromBody] int id)    //список ответов на вопрос, к которому написан фидбэк
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess answers = new AuthorDataAccess();
-            return mapper.AnswerDTOToAnswerModelList(answers.GetAllAnswersByFeedbackId(id));
+            return Json(mapper.AnswerDTOToAnswerModelList(answers.GetAllAnswersByFeedbackId(id)));
         }
 
         [HttpPut("feedbacks/{id}/Author")]
-        public int PutProcessedInFeedback([FromBody] int id)      //отметить, что фидбэк просмотрен (можно вернуть на непросмотренный)
+        public IActionResult PutProcessedInFeedback([FromBody] int id)      //отметить, что фидбэк просмотрен (можно вернуть на непросмотренный)
         {
             AuthorDataAccess feedback = new AuthorDataAccess();
-            return feedback.UpdateProcessedInFeedback(id);
+            return Json(feedback.UpdateProcessedInFeedback(id));
         }
     }
 }
