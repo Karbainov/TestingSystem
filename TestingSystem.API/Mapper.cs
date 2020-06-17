@@ -276,6 +276,46 @@ namespace TestingSystem.API
                 EndDate = group.EndDate,
             };
         }
+
+        //создать вопрос
+        public QuestionDTO QuestionInputModelToQuestionDTO(QuestionInputModel questionmodel)
+        {
+            return new QuestionDTO()
+            {
+                TestID = questionmodel.TestID,
+                Value = questionmodel.Value,
+                TypeID = questionmodel.TypeID,
+                AnswersCount = questionmodel.AnswersCount,
+                Weight = questionmodel.Weight,
+            };
+        }
+
+        //создать ответ
+        public AnswerDTO AnswerInputModelToAnswerDTO(AnswerInputModel answermodel)
+        {
+            return new AnswerDTO()
+            {
+                QuestionID = answermodel.QuestionID,
+                Value = answermodel.Value,
+                Correct = answermodel.Correct,                
+            };
+        }
+
+        //полный фидбэк с вопросом, тестом и именем пользователя
+        public FeedbackQuestionOutputModel FeedbackQuestionDTOToFeedbackQuestionOutputModel(FeedbackQuestionDTO feedbackquestionDTO)
+        {
+            return new FeedbackQuestionOutputModel()
+            {
+                ID = feedbackquestionDTO.ID,
+                Message = feedbackquestionDTO.Message,
+                DateTime = feedbackquestionDTO.DateTime,
+                FirstName = feedbackquestionDTO.FirstName,
+                LastName = feedbackquestionDTO.LastName,
+                TestName = feedbackquestionDTO.TestName,
+                Question = feedbackquestionDTO.Question,
+                Processed = feedbackquestionDTO.Processed,
+            };
+        }
     }
 
 }
