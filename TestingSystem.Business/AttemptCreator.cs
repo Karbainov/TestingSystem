@@ -34,7 +34,7 @@ namespace TestingSystem.Business
                 }
                 else
                 {
-                     weightTypes[q.Weight].Add(q);  // спросить у Максима
+                    weightTypes[q.Weight].Add(q);  // спросить у Максима
                 }
             }
 
@@ -42,29 +42,47 @@ namespace TestingSystem.Business
         }
 
 
-        //public Dictionary<int, List<QuestionWithListAnswersDTO>> PickQuestionsForAttempt(Dictionary<int, List<QuestionWithListAnswersDTO>> questions, TestDTO test)
-        //{
-        //    Dictionary<int, List<QuestionWithListAnswersDTO>> attemptquestions = new Dictionary<int, List<QuestionWithListAnswersDTO>>();
+        public Dictionary<int, List<QuestionWithListAnswersDTO>> PickQuestionsForAttempt(Dictionary<int, List<QuestionWithListAnswersDTO>> questions, TestDTO test)
+        {
+            Dictionary<int, List<QuestionWithListAnswersDTO>> attemptquestions = new Dictionary<int, List<QuestionWithListAnswersDTO>>();
 
-        //    int totalQtyOfQuestions;
+            int totalQtyOfQuestions = 0;
 
-        //    foreach ((KeyValuePair <K,V>) in questions)
+            foreach (var q in questions)
 
-        //    { }
-
-
-        //    return attemptquestions;
-        //}
-        //public  List<QuestionWithListAnswersDTO> ConvertDictionaryToLIst(Dictionary<int, List<QuestionWithListAnswersDTO>> questions)
-        //{
-        //    List<QuestionWithListAnswersDTO> attemptquestions = new List<QuestionWithListAnswersDTO>();
-        //    foreach (int w in questions)
-
-        //    { 
+            {
+                totalQtyOfQuestions += q.Value.Count();
+            }
             
-        //    }
 
-        //    return attemptquestions;
-        //}
+            return attemptquestions;
+        }
+
+        public List<int> GetRandomIndexes (int upRange, int quantity)
+        {
+            List<int> randomIndexes = new List<int>();
+            Random random = new Random();
+            while(randomIndexes.Count() < quantity)
+            {
+                int index = random.Next(0, upRange + 1);
+                if(!randomIndexes.Contains(index))
+                {
+                    randomIndexes.Add(index);
+                }
+            }
+            return randomIndexes;
+
+        }
+        public List<QuestionWithListAnswersDTO> ConvertDictionaryToLIst(Dictionary<int, List<QuestionWithListAnswersDTO>> questions)
+        {
+            List<QuestionWithListAnswersDTO> attemptquestions = new List<QuestionWithListAnswersDTO>();
+            foreach (int w in questions)
+
+            {
+
+            }
+
+            return attemptquestions;
+        }
     }
 }
