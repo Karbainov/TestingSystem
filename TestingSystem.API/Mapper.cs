@@ -237,8 +237,7 @@ namespace TestingSystem.API
         public TestTagDTO TestTagInputModelToTestTagDTO(TestTagInputModel testtagmodel)
         {
             return new TestTagDTO()
-            {
-                ID = testtagmodel.ID,
+            {                
                 TestID = testtagmodel.TestID,
                 TagID = testtagmodel.TagID,                
             };

@@ -35,7 +35,7 @@ namespace TestingSystem.API.Controllers
 
         [HttpGet("search-test-by-tags/Author")]    //поиск теста по тегу 
         public IActionResult GetTestVSTagSearch([FromBody] SearchTestByTagInputModel sttim)
-        {
+        {            
             bool caseSwitch =sttim.SwitchValue;
             Mapper mapper = new Mapper();
             AuthorDataAccess search = new AuthorDataAccess();
@@ -50,36 +50,54 @@ namespace TestingSystem.API.Controllers
         }        
 
         [HttpGet("tags/Author")]      //cписок всех тегов
-        public List<TagOutputModel> GetAllTags()
+        public IActionResult GetAllTags()
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess tags = new AuthorDataAccess();
-            return mapper.TagDTOToTagModelList(tags.GetAllTag());
+            return Json(mapper.TagDTOToTagModelList(tags.GetAllTag()));
         }
 
         [HttpPost("tag/Author")]      //создание тега
-        public int PostTag([FromBody]TagInputModel tagmodel)     //спросить у Макса
+        public IActionResult PostTag([FromBody]TagInputModel tagmodel)           //спросить у Макса
         {
-            Mapper mapper = new Mapper();
-            TagDTO tagdto = mapper.TagInputModelToTagDTO(tagmodel);
-            AuthorDataAccess tag = new AuthorDataAccess();
-            return tag.AddTag(tagdto);            
+            if(tagmodel.Name != "")
+            {
+                Mapper mapper = new Mapper();
+                TagDTO tagdto = mapper.TagInputModelToTagDTO(tagmodel);
+                AuthorDataAccess tag = new AuthorDataAccess();
+                return Json(tag.AddTag(tagdto));
+            }
+            else
+            {
+                return new BadRequestResult();
+            }
+            
         }
 
         [HttpPut("tag/Author")]      //изменение конкретного тега
-        public void PutTag([FromBody]TagInputModel tagmodel)
+        public IActionResult PutTag([FromBody]TagInputModel tagmodel)
         {
-            Mapper mapper = new Mapper();
-            TagDTO tagdto = mapper.TagInputModelToTagDTO(tagmodel);
-            AuthorDataAccess tag = new AuthorDataAccess();
-            tag.UpdateTag(tagdto);
+            if (tagmodel.Name != "")
+            {
+                Mapper mapper = new Mapper();
+                TagDTO tagdto = mapper.TagInputModelToTagDTO(tagmodel);
+                AuthorDataAccess tag = new AuthorDataAccess();
+                tag.UpdateTag(tagdto);
+                return new OkResult();
+            }
+            else
+            {
+                return new BadRequestResult();
+            }
+            
         }
 
         [HttpDelete("tag/{tagId}/Author")]    //удаление конкретного тега
-        public void DeleteTag(int tagId)
+        public IActionResult DeleteTag(int tagId)
         {
             AuthorDataAccess tag = new AuthorDataAccess();
             tag.DeleteTag(tagId);
+            return Json("Не знаю, что выводить");
         }
 
 
@@ -87,32 +105,32 @@ namespace TestingSystem.API.Controllers
         //Запросы на странице конкретного теста "Id" (тест с информацией, вопросы, ответы теста)
 
         [HttpPost("Author")]       //создание теста
-        public int PostTest(TestInputModel testmodel)
-        {
+        public IActionResult PostTest(TestInputModel testmodel)
+        {            
             Mapper mapper = new Mapper();
             TestDTO testdto = mapper.TestInputModelToTestDTO(testmodel);
             AuthorDataAccess test = new AuthorDataAccess();
-            return test.AddTest(testdto);            
+            return Json(test.AddTest(testdto));            
         }
 
         [HttpPut("{testId}/Author")]        //изменение информации о конкретном тесте
-        public int PutTestById([FromBody]TestInputModel testmodel)
+        public IActionResult PutTestById([FromBody]TestInputModel testmodel)
         {
             Mapper mapper = new Mapper();
             TestDTO testdto = mapper.TestInputModelToTestDTO(testmodel);
             AuthorDataAccess test = new AuthorDataAccess();
-            return test.UpdateTest(testdto);            
+            return Json(test.UpdateTest(testdto));            
         }
 
         [HttpDelete("{testId}/Author")]       //удаление конкретного тесте
-        public int DeleteTestById(int testId)
+        public IActionResult DeleteTestById(int testId)
         {
             AuthorDataAccess test = new AuthorDataAccess();
-            return test.DeleteTest(testId);
+            return Json(test.DeleteTest(testId));
         }
 
         [HttpGet("{testId}/Author")]     //полная информация о тесте
-        public TestOutputModel GetTestInfo(int testId) 
+        public IActionResult GetTestInfo(int testId) 
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess ada = new AuthorDataAccess();
@@ -123,63 +141,64 @@ namespace TestingSystem.API.Controllers
             {
                 qom.Answers = mapper.AnswerDTOToAnswerModelList(ada.GetAnswerByQuestionId(qom.ID));
             }
-            return model;
+            return Json(model);
         }
 
         //[HttpGet("{testId}/test-info/Author")]          //вывод информации о конкретном тесте
-        //public TestOutputModel GetByIdTest(int testId)
+        //public IActionResult GetByIdTest(int testId)
         //{
         //    Mapper mapper = new Mapper();
         //    AuthorDataAccess test = new AuthorDataAccess();
-        //    return mapper.TestDTOToTestOutputModel(test.GetByIdTest(testId));            
+        //    return Json(mapper.TestDTOToTestOutputModel(test.GetByIdTest(testId)));            
         //}
 
         //[HttpGet("{testId}/questions/Author")]          //вывод всех вопросов из конкретного теста
-        //public List<QuestionOutputModel> GetQuestionsByTestID(int testId)
+        //public IActionResult GetQuestionsByTestID(int testId)
         //{
         //    Mapper mapper = new Mapper();
         //    AuthorDataAccess questions = new AuthorDataAccess();
-        //    return mapper.QuestionDTOToQuestionModelList(questions.GetQuestionsByTestID(testId));            
+        //    return Json(mapper.QuestionDTOToQuestionModelList(questions.GetQuestionsByTestID(testId)));            
         //}
 
         //[HttpGet("{testId}/answers/Author")]          //вывод всех ответов из конкретного теста
-        //public List<AnswerOutputModel> GetAnswersByTestID(int testId)
+        //public IActionResult GetAnswersByTestID(int testId)
         //{
         //    Mapper mapper = new Mapper();
         //    AuthorDataAccess answers = new AuthorDataAccess();
-        //    return mapper.AnswerDTOToAnswerModelList(answers.GetAllAnswersInTest(testId));
+        //    return Json(mapper.AnswerDTOToAnswerModelList(answers.GetAllAnswersInTest(testId)));
         //}
 
         //[HttpGet("{testId}/tags/Author")]         //вывод всех тегов конкретного теста
-        //public List<TagOutputModel> GetTagsInTest(int testId)
+        //public IActionResult GetTagsInTest(int testId)
         //{
         //    Mapper mapper = new Mapper();
         //    AuthorDataAccess tags = new AuthorDataAccess();            
-        //    return mapper.TagDTOToTagModelList(tags.GetTagsInTest(testId));            
+        //    return Json(mapper.TagDTOToTagModelList(tags.GetTagsInTest(testId)));            
         //}
 
         [HttpGet("{testid}/missing-tags/Author")]          //вывод тегов, которых нет в тесте, для добавления
-        public List<TagOutputModel> GetTagsWhichAreNotInTest(int testid)
+        public IActionResult GetTagsWhichAreNotInTest(int testid)
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess tags = new AuthorDataAccess();
-            return mapper.TagDTOToTagModelList(tags.GetTagsWhichAreNotInTest(testId));
+            return Json(mapper.TagDTOToTagModelList(tags.GetTagsWhichAreNotInTest(testid)));
         }
 
         [HttpDelete("{testid}/tag/{tagid}/Author")]     //удаление тэга из конкретного теста
-        public void DeleteTagFromTest(int testid, int tagid)
+        public IActionResult DeleteTagFromTest(int testid, int tagid)
         {
             AuthorDataAccess tag = new AuthorDataAccess();
             tag.DeleteByTestIdTagId(testid, tagid);
+            return Json("Не знаю, что выводить");
         }
 
         [HttpPost("{testId}/tag/{tagid}/Author")]      //добавление существующего тэга к конкретному тесту (создаем новую связь тест-тэг)
-        public int PostTagInTest(TestTagInputModel testtagmodel)
+        public IActionResult PostTagInTest(TestTagInputModel testtagmodel)
         {
             Mapper mapper = new Mapper();
             TestTagDTO testtagdto = mapper.TestTagInputModelToTestTagDTO(testtagmodel);
             AuthorDataAccess tag = new AuthorDataAccess();
-            return tag.TestTagCreate(testtagdto);
+            return Json(tag.TestTagCreate(testtagdto));
         }
 
 
@@ -187,70 +206,73 @@ namespace TestingSystem.API.Controllers
         //Запросы на странице конкретного вопроса у теста "Id/QuestionId" (вопрос с полной информацией, ответы на этот вопрос)
         
         [HttpPost("{testid}/question/Author")]       // создание вопроса конкретного теста
-        public int PostQuestion(QuestionInputModel questionmodel)
+        public IActionResult PostQuestion(QuestionInputModel questionmodel)
         {
             Mapper mapper = new Mapper();
             QuestionDTO questiondto = mapper.QuestionInputModelToQuestionDTO(questionmodel);
             AuthorDataAccess question = new AuthorDataAccess();
-            return question.AddQuestion(questiondto);            
+            return Json(question.AddQuestion(questiondto));            
         }
 
         //[HttpGet("{testid}/question/{quid}/Author")]       // вывод вопроса
-        //public QuestionOutputModel GetQuestionById([FromBody] int quid)
+        //public IActionResult GetQuestionById([FromBody] int quid)
         //{
         //    Mapper mapper = new Mapper();
         //    AuthorDataAccess question = new AuthorDataAccess();
-        //    return mapper.QuestionDTOToQuestionOutputModel(question.GetQuestionById(quid));            
+        //    return Json(mapper.QuestionDTOToQuestionOutputModel(question.GetQuestionById(quid)));            
         //}
 
         [HttpPut("question/{quid}/Author")]      // изменение конкретного вопроса из теста
-        public void PutQuestion(QuestionInputModel questionmodel)
+        public IActionResult PutQuestion(QuestionInputModel questionmodel)
         {
             Mapper mapper = new Mapper();
             QuestionDTO questiondto = mapper.QuestionInputModelToQuestionDTO(questionmodel);
             AuthorDataAccess question = new AuthorDataAccess();
-            question.UpdateQuestion(questiondto);            
+            question.UpdateQuestion(questiondto);
+            return Json("Не знаю, что выводить");
         }
 
         [HttpDelete("question/{quid}/Author")]     //удаление вопроса из теста
-        public int DeleteQuestionFromTest(int quid)
+        public IActionResult DeleteQuestionFromTest(int quid)
         {
             AuthorDataAccess question = new AuthorDataAccess();
             question.DeleteQuestionFromTest(quid);
-            return quid;
+            return Json(quid);
         }
 
         [HttpPost("question/{quid}/answer/Author")]       //создать ответ для вопроса
-        public int PostAnswer(AnswerInputModel answermodel)
+        public IActionResult PostAnswer(AnswerInputModel answermodel)
         {
             Mapper mapper = new Mapper();
             AnswerDTO answerdto = mapper.AnswerInputModelToAnswerDTO(answermodel);
             AuthorDataAccess answer = new AuthorDataAccess();
-            return answer.AddAnswer(answerdto);            
+            return Json(answer.AddAnswer(answerdto));            
         }
 
         //[HttpGet("{testid}/question/{quid}/answers/Author")]       //список ответов на конкретный вопрос
-        //public List<AnswerOutputModel> GetAnswerByQuestionId(int quid)
+        //public IActionResult GetAnswerByQuestionId(int quid)
         //{
         //    Mapper mapper = new Mapper();
         //    AuthorDataAccess answers = new AuthorDataAccess();
-        //    return mapper.AnswerDTOToAnswerModelList(answers.GetAnswerByQuestionId(quid));            
+        //    return Json(mapper.AnswerDTOToAnswerModelList(answers.GetAnswerByQuestionId(quid)));            
         //}
 
         [HttpPut("answer/{anid}/Author")]     //редактировать ответ
-        public void PutAnswer(AnswerInputModel answermodel)
+        public IActionResult PutAnswer(AnswerInputModel answermodel)
         {
             Mapper mapper = new Mapper();
             AnswerDTO answerdto = mapper.AnswerInputModelToAnswerDTO(answermodel);
             AuthorDataAccess answer = new AuthorDataAccess();
-            answer.UpdateAnswer(answerdto);            
+            answer.UpdateAnswer(answerdto);
+            return Json("Не знаю, что выводить");
         }
 
         [HttpDelete("answer/{anid}/Author")]   //удалить ответ
-        public void DeleteAnswer(int anid)
+        public IActionResult DeleteAnswer(int anid)
         {
             AuthorDataAccess answer = new AuthorDataAccess();
             answer.DeleteAnswer(anid);
+            return Json("Не знаю, что выводить");
         }        
     }
 }
