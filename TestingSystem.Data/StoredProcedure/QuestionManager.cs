@@ -77,7 +77,7 @@ namespace TestingSystem.Data.StoredProcedure
             {
                 var questionDictionary = new Dictionary<int, QuestionWithListAnswersDTO>();
                 connection.Query<QuestionWithListAnswersDTO, AnswerWithoutCorrectnessDTO, QuestionWithListAnswersDTO>(
-                    "GetAllQuestionsAndAnswersByTestId", new { testID }, commandType: CommandType.StoredProcedure,  // Спросить Макса
+                    "GetAllQuestionsAndAnswersByTestId",  // Спросить Макса
                     (question, answers) =>
                     {
                         QuestionWithListAnswersDTO questionEntry;
@@ -92,7 +92,9 @@ namespace TestingSystem.Data.StoredProcedure
                         questionEntry.Answers.Add(answers);
                         return questionEntry;
                     },
-                    splitOn: "QuestionId")
+                     new { testID },
+                    splitOn: "QuestionId",
+                    commandType: CommandType.StoredProcedure)
                 .ToList();
                 questions = new List<QuestionWithListAnswersDTO>(questionDictionary.Values);
             }
