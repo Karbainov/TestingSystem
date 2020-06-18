@@ -59,11 +59,41 @@ namespace TestingSystem.Business
 
             int currentQuantityOfQuestions = CountAllQuestionsInDictionary(attemptquestions);
 
-            while(currentQuantityOfQuestions > test.QuestionNumber)
+            if (test.QuestionNumber >= attemptquestions.Count())
             {
-
+                while (currentQuantityOfQuestions > test.QuestionNumber)
+                {
+                    foreach (var question in attemptquestions)
+                    {
+                        if (question.Value.Count() > 1)
+                        {
+                            question.Value.RemoveAt(0);
+                            currentQuantityOfQuestions--;
+                            if (currentQuantityOfQuestions <= test.QuestionNumber)
+                            {
+                                break;
+                            }
+                        }
+                    }
+                }
             }
-            
+            else
+            {
+                while (currentQuantityOfQuestions > test.QuestionNumber)
+                {
+                    foreach (var question in attemptquestions)
+                    {
+                        
+                            question.Value.RemoveAt(0);
+                            currentQuantityOfQuestions--;
+                            if (currentQuantityOfQuestions <= test.QuestionNumber)
+                            {
+                                break;
+                            }
+                        
+                    }
+                }
+            }
             return attemptquestions;
 
         }
