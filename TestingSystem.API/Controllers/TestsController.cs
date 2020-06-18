@@ -69,7 +69,7 @@ namespace TestingSystem.API.Controllers
             }
             else
             {
-                return new BadRequestResult();
+                return new BadRequestObjectResult("Введите тег");
             }
             
         }
@@ -87,7 +87,7 @@ namespace TestingSystem.API.Controllers
             }
             else
             {
-                return new BadRequestResult();
+                return new BadRequestObjectResult("Введите желаемое значение тега!");
             }
             
         }
@@ -106,11 +106,30 @@ namespace TestingSystem.API.Controllers
 
         [HttpPost("Author")]       //создание теста
         public IActionResult PostTest(TestInputModel testmodel)
-        {            
-            Mapper mapper = new Mapper();
-            TestDTO testdto = mapper.TestInputModelToTestDTO(testmodel);
-            AuthorDataAccess test = new AuthorDataAccess();
-            return Json(test.AddTest(testdto));            
+        {
+            if (testmodel.Name != "" && testmodel.DurationTime != "" && testmodel.SuccessScore != "" && testmodel.QuestionNumber != "")
+            {
+                Mapper mapper = new Mapper();
+                TestDTO testdto = mapper.TestInputModelToTestDTO(testmodel);
+                AuthorDataAccess test = new AuthorDataAccess();
+                return Json(test.AddTest(testdto));
+            }
+            else if (testmodel.Name == "")
+            {
+                return new BadRequestObjectResult("Введите имя теста!");
+            }
+            else if (testmodel.DurationTime == "")
+            {
+                return new BadRequestObjectResult("Введите время для прохождения теста!");
+            }
+            else if (testmodel.SuccessScore == "")
+            {
+                return new BadRequestObjectResult("Введите мин балл для прохождения теста!");
+            }
+            else 
+            {
+                return new BadRequestObjectResult("Введите количество вопросов в тесте!");
+            }           
         }
 
         [HttpPut("{testId}/Author")]        //изменение информации о конкретном тесте
