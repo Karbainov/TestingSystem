@@ -138,5 +138,11 @@ namespace TestingSystem.Data
             return role.Read();
         }
         
+        public List<RoleDTO> GetRoleByUserId(int userId)
+        {
+            UserManager role = new UserManager();
+            return role.GetRoleByUserId(userId);
+        }
+        
     }
 }

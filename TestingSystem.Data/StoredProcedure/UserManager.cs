@@ -29,6 +29,14 @@ namespace TestingSystem.Data.StoredProcedure
             string sqlExpression = "AddUserWithRole @FirstName, @LastName, @BirthDate, @Login, @Password, @Email, @Phone, @RoleID";
             connection.Execute(sqlExpression, user);
         }
+        
+        public List<RoleDTO> GetRoleByUserId (int userId)
+        {
+            var connection = Connection.GetConnection();
+            connection.Open();
+            string sqlExpression = "GetRoleByUserId ";
+            return connection.Query<RoleDTO>(sqlExpression, new {userId}, commandType: CommandType.StoredProcedure).ToList();
+        }
 
         public List<UserPositionDTO> GetUserVSRole()
         {

@@ -76,6 +76,20 @@ namespace TestingSystem.API.Controllers
             return rolesOut;
         }
         
+        [HttpGet("{userId}/role")]
+        public List<RoleOutputModel> GetRoleByUserId(int userId)
+        {
+            UserMapper mapper = new UserMapper();
+            AdminDataAccess adm = new AdminDataAccess();
+            List<RoleDTO> roles = adm.GetRoleByUserId(userId);
+            List<RoleOutputModel> rolesOut = new List<RoleOutputModel>();
+            foreach (RoleDTO r in roles)
+            {
+                rolesOut.Add(mapper.ConvertRoleDTOToRoleOutputModel(r));
+            }
+            return rolesOut;
+        }
+        
         [HttpGet]
         public List<UserWithRolesOutputModel> GetAllUsersWithRoles()
         {
