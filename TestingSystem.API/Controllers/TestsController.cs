@@ -69,7 +69,7 @@ namespace TestingSystem.API.Controllers
             }
             else
             {
-                return new BadRequestObjectResult("Введите тег");
+                return new BadRequestObjectResult("Введите название тега");
             }
             
         }
@@ -87,7 +87,7 @@ namespace TestingSystem.API.Controllers
             }
             else
             {
-                return new BadRequestObjectResult("Введите желаемое значение тега!");
+                return new BadRequestObjectResult("Введите название тега!");
             }
             
         }
@@ -97,7 +97,7 @@ namespace TestingSystem.API.Controllers
         {
             AuthorDataAccess tag = new AuthorDataAccess();
             tag.DeleteTag(tagId);
-            return Json("Не знаю, что выводить");
+            return new OkResult();
         }
 
 
@@ -107,38 +107,34 @@ namespace TestingSystem.API.Controllers
         [HttpPost("Author")]       //создание теста
         public IActionResult PostTest(TestInputModel testmodel)
         {
-            if (testmodel.Name != "" && testmodel.DurationTime != "" && testmodel.SuccessScore != "" && testmodel.QuestionNumber != "")
+            if (testmodel.Name != "" && testmodel.DurationTime.HasValue && testmodel.SuccessScore.HasValue && testmodel.QuestionNumber.HasValue)
             {
                 Mapper mapper = new Mapper();
                 TestDTO testdto = mapper.TestInputModelToTestDTO(testmodel);
                 AuthorDataAccess test = new AuthorDataAccess();
                 return Json(test.AddTest(testdto));
             }
-            else if (testmodel.Name == "")
-            {
-                return new BadRequestObjectResult("Введите имя теста!");
-            }
-            else if (testmodel.DurationTime == "")
-            {
-                return new BadRequestObjectResult("Введите время для прохождения теста!");
-            }
-            else if (testmodel.SuccessScore == "")
-            {
-                return new BadRequestObjectResult("Введите мин балл для прохождения теста!");
-            }
             else 
             {
-                return new BadRequestObjectResult("Введите количество вопросов в тесте!");
-            }           
+                return new BadRequestObjectResult("Не все поля заполнены");
+            }
+            
         }
 
         [HttpPut("{testId}/Author")]        //изменение информации о конкретном тесте
         public IActionResult PutTestById([FromBody]TestInputModel testmodel)
         {
-            Mapper mapper = new Mapper();
-            TestDTO testdto = mapper.TestInputModelToTestDTO(testmodel);
-            AuthorDataAccess test = new AuthorDataAccess();
-            return Json(test.UpdateTest(testdto));            
+            if (testmodel.Name != "" && testmodel.DurationTime.HasValue && testmodel.SuccessScore.HasValue && testmodel.QuestionNumber.HasValue)
+            {
+                Mapper mapper = new Mapper();
+                TestDTO testdto = mapper.TestInputModelToTestDTO(testmodel);
+                AuthorDataAccess test = new AuthorDataAccess();
+                return Json(test.UpdateTest(testdto));
+            }
+            else
+            {
+                return new BadRequestObjectResult("Не все поля заполнены");
+            }
         }
 
         [HttpDelete("{testId}/Author")]       //удаление конкретного тесте
@@ -208,7 +204,7 @@ namespace TestingSystem.API.Controllers
         {
             AuthorDataAccess tag = new AuthorDataAccess();
             tag.DeleteByTestIdTagId(testid, tagid);
-            return Json("Не знаю, что выводить");
+            return new OkResult();
         }
 
         [HttpPost("{testId}/tag/{tagid}/Author")]      //добавление существующего тэга к конкретному тесту (создаем новую связь тест-тэг)
@@ -227,28 +223,42 @@ namespace TestingSystem.API.Controllers
         [HttpPost("{testid}/question/Author")]       // создание вопроса конкретного теста
         public IActionResult PostQuestion(QuestionInputModel questionmodel)
         {
-            Mapper mapper = new Mapper();
-            QuestionDTO questiondto = mapper.QuestionInputModelToQuestionDTO(questionmodel);
-            AuthorDataAccess question = new AuthorDataAccess();
-            return Json(question.AddQuestion(questiondto));            
+            if (questionmodel.Value != "" && questionmodel.TypeID.HasValue && questionmodel.AnswersCount.HasValue && questionmodel.Weight.HasValue)
+            {
+                Mapper mapper = new Mapper();
+                QuestionDTO questiondto = mapper.QuestionInputModelToQuestionDTO(questionmodel);
+                AuthorDataAccess question = new AuthorDataAccess();
+                return Json(question.AddQuestion(questiondto));
+            }
+            else
+            {
+                return new BadRequestObjectResult("Не все поля заполнены");
+            }
         }
 
-        //[HttpGet("{testid}/question/{quid}/Author")]       // вывод вопроса
+        //[HttpGet("question/{quid}/Author")]       // вывод вопроса
         //public IActionResult GetQuestionById([FromBody] int quid)
         //{
         //    Mapper mapper = new Mapper();
         //    AuthorDataAccess question = new AuthorDataAccess();
-        //    return Json(mapper.QuestionDTOToQuestionOutputModel(question.GetQuestionById(quid)));            
+        //    return Json(mapper.QuestionDTOToQuestionOutputModel(question.GetQuestionById(quid)));
         //}
 
         [HttpPut("question/{quid}/Author")]      // изменение конкретного вопроса из теста
         public IActionResult PutQuestion(QuestionInputModel questionmodel)
         {
-            Mapper mapper = new Mapper();
-            QuestionDTO questiondto = mapper.QuestionInputModelToQuestionDTO(questionmodel);
-            AuthorDataAccess question = new AuthorDataAccess();
-            question.UpdateQuestion(questiondto);
-            return Json("Не знаю, что выводить");
+            if (questionmodel.Value != "" && questionmodel.TypeID.HasValue && questionmodel.AnswersCount.HasValue && questionmodel.Weight.HasValue)
+            {
+                Mapper mapper = new Mapper();
+                QuestionDTO questiondto = mapper.QuestionInputModelToQuestionDTO(questionmodel);
+                AuthorDataAccess question = new AuthorDataAccess();
+                question.UpdateQuestion(questiondto);
+                return new OkResult();
+            }
+            else
+            {
+                return new BadRequestObjectResult("Не все поля заполнены");
+            }
         }
 
         [HttpDelete("question/{quid}/Author")]     //удаление вопроса из теста
@@ -262,10 +272,17 @@ namespace TestingSystem.API.Controllers
         [HttpPost("question/{quid}/answer/Author")]       //создать ответ для вопроса
         public IActionResult PostAnswer(AnswerInputModel answermodel)
         {
-            Mapper mapper = new Mapper();
-            AnswerDTO answerdto = mapper.AnswerInputModelToAnswerDTO(answermodel);
-            AuthorDataAccess answer = new AuthorDataAccess();
-            return Json(answer.AddAnswer(answerdto));            
+            if (answermodel.Value != "" && answermodel.Correct.HasValue)
+            {
+                Mapper mapper = new Mapper();
+                AnswerDTO answerdto = mapper.AnswerInputModelToAnswerDTO(answermodel);
+                AuthorDataAccess answer = new AuthorDataAccess();
+                return Json(answer.AddAnswer(answerdto));
+            }
+            else
+            {
+                return new BadRequestObjectResult("Не все поля заполнены");
+            }
         }
 
         //[HttpGet("{testid}/question/{quid}/answers/Author")]       //список ответов на конкретный вопрос
@@ -279,11 +296,18 @@ namespace TestingSystem.API.Controllers
         [HttpPut("answer/{anid}/Author")]     //редактировать ответ
         public IActionResult PutAnswer(AnswerInputModel answermodel)
         {
-            Mapper mapper = new Mapper();
-            AnswerDTO answerdto = mapper.AnswerInputModelToAnswerDTO(answermodel);
-            AuthorDataAccess answer = new AuthorDataAccess();
-            answer.UpdateAnswer(answerdto);
-            return Json("Не знаю, что выводить");
+            if (answermodel.Value != "" && answermodel.Correct.HasValue)
+            {
+                Mapper mapper = new Mapper();
+                AnswerDTO answerdto = mapper.AnswerInputModelToAnswerDTO(answermodel);
+                AuthorDataAccess answer = new AuthorDataAccess();
+                answer.UpdateAnswer(answerdto);
+                return new OkResult();
+            }
+            else
+            {
+                return new BadRequestObjectResult("Не все поля заполнены");
+            }
         }
 
         [HttpDelete("answer/{anid}/Author")]   //удалить ответ
@@ -291,7 +315,7 @@ namespace TestingSystem.API.Controllers
         {
             AuthorDataAccess answer = new AuthorDataAccess();
             answer.DeleteAnswer(anid);
-            return Json("Не знаю, что выводить");
+            return new OkResult();
         }        
     }
 }
