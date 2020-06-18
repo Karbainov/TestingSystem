@@ -170,8 +170,8 @@ namespace TestingSystem.Data
 
         public int DeleteQuestionFromTest(int questionId)  //удалить вопрос из теста с пересчетом результатов
         {
-            QuestionManager question = new QuestionManager();
-            question.DeleteQuestionFromTest(questionId);
+            QuestionCRUD question = new QuestionCRUD();
+            question.Delete(questionId);
             return questionId;
         }
 
