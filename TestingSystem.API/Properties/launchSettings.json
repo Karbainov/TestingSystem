@@ -20,7 +20,7 @@
     "TestingSystem.Controllers": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "weatherforecast",
+      "launchUrl": "testingsystem",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

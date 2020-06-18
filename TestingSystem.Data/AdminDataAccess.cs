@@ -126,10 +126,11 @@ namespace TestingSystem.Data
             UserRoleCRUD roleCRUD = new UserRoleCRUD();
             return roleCRUD.GetUsersByRoleID(roleID);
         }
-        public void DeleteUsersRole(UserRoleDTO userRoleDTO)
+        public void UserRoleDelete(int userId, int roleId)
         {
-            UserRoleCRUD roleCRUD = new UserRoleCRUD();
-            roleCRUD.Delete(userRoleDTO);
+            UserRoleCRUD userRoleCRUD = new UserRoleCRUD();
+            UserRoleDTO userRoleDTO = new UserRoleDTO(0, userId, roleId);
+            userRoleCRUD.Delete(userRoleDTO);
         }
 
         public List<RoleDTO> GetRole()

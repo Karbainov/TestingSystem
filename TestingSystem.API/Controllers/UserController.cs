@@ -129,17 +129,22 @@ namespace TestingSystem.API.Controllers
             UserMapper mapper = new UserMapper();
             AdminDataAccess adm = new AdminDataAccess();
             adm.UserUpdate(mapper.ConvertUserInputModelToGroupDTO(user));
-
+        }
+        
+        [HttpDelete("{userId}/role/{roleId}")]
+        public void DeleteUserRole(int userId, int roleId)
+        {
+            AdminDataAccess adm = new AdminDataAccess();
+            adm.UserRoleDelete(userId, roleId);
         }
 
         [HttpDelete("{id}")]
-
         public void Delete(int id)
         {
             AdminDataAccess adm = new AdminDataAccess();
             adm.UserDelete(id);
-
         }
+        
         [HttpGet("{UserID}/user")]
         public StudentOutputModel GetStudentTests(int UserID)
         {
