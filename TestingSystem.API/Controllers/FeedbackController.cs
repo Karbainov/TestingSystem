@@ -21,7 +21,7 @@ namespace TestingSystem.API.Controllers
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess feedbacks = new AuthorDataAccess();
-            return Json(mapper.FeedbackDTOToFeedbackModelList(feedbacks.GetProcessedFeedbacks()));
+            return Json(mapper.ConvertFeedbackDTOToFeedbackModelList(feedbacks.GetProcessedFeedbacks()));
         }
 
         [HttpGet("not-processed-feedbacks/Author")]    //список необработанных фидбэков
@@ -29,7 +29,7 @@ namespace TestingSystem.API.Controllers
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess feedbacks = new AuthorDataAccess();
-            return Json(mapper.FeedbackDTOToFeedbackModelList(feedbacks.GetNotProcessedFeedbacks()));
+            return Json(mapper.ConvertFeedbackDTOToFeedbackModelList(feedbacks.GetNotProcessedFeedbacks()));
         }
 
         [HttpGet("feedbacks/Author")]    //список всех фидбэков
@@ -37,7 +37,7 @@ namespace TestingSystem.API.Controllers
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess feedbacks = new AuthorDataAccess();
-            return Json(mapper.FeedbackDTOToFeedbackModelList(feedbacks.GetAllFeedbacks()));
+            return Json(mapper.ConvertFeedbackDTOToFeedbackModelList(feedbacks.GetAllFeedbacks()));
         }
 
         [HttpGet("feedbacks/{testId}/Author")]    //список фидбэков конкретных тестов
@@ -45,7 +45,7 @@ namespace TestingSystem.API.Controllers
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess feedbacks = new AuthorDataAccess();
-            return Json(mapper.FeedbackDTOToFeedbackModelList(feedbacks.GetFeedbackByTest(testId)));
+            return Json(mapper.ConvertFeedbackDTOToFeedbackModelList(feedbacks.GetFeedbackByTest(testId)));
         }
 
         [HttpGet("feedbacks-by-date/Author")]    //список фидбэков конкретных дат
@@ -53,7 +53,7 @@ namespace TestingSystem.API.Controllers
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess feedbacks = new AuthorDataAccess();
-            return Json(mapper.FeedbackDTOToFeedbackModelList(feedbacks.GetFeedbackByDate(date.StringConverToDateTime(date.DateTime1), date.StringConverToDateTime(date.DateTime2))));
+            return Json(mapper.ConvertFeedbackDTOToFeedbackModelList(feedbacks.GetFeedbackByDate(date.StringConverToDateTime(date.DateTime1), date.StringConverToDateTime(date.DateTime2))));
         }
 
 
@@ -65,7 +65,7 @@ namespace TestingSystem.API.Controllers
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess feedback = new AuthorDataAccess();
-            return Json(mapper.FeedbackQuestionDTOToFeedbackQuestionOutputModel(feedback.GetFeedbackWithQuestion(id)));
+            return Json(mapper.ConvertFeedbackQuestionDTOToFeedbackQuestionOutputModel(feedback.GetFeedbackWithQuestion(id)));
         }
 
         [HttpGet("feedbacks/{id}/Author")]
@@ -73,7 +73,7 @@ namespace TestingSystem.API.Controllers
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess answers = new AuthorDataAccess();
-            return Json(mapper.AnswerDTOToAnswerModelList(answers.GetAllAnswersByFeedbackId(id)));
+            return Json(mapper.ConvertAnswerDTOToAnswerModelList(answers.GetAllAnswersByFeedbackId(id)));
         }
 
         [HttpPut("feedbacks/{id}/Author")]

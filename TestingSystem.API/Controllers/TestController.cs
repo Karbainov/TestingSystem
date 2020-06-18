@@ -30,7 +30,7 @@ namespace TestingSystem.API.Controllers
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess tests = new AuthorDataAccess();
-            return Json(mapper.TestDTOToTestModelList(tests.GetAllTest()));
+            return Json(mapper.ConvertTestDTOToTestModelList(tests.GetAllTest()));
         }
 
         [HttpGet("search-test-by-tags/Author")]    //поиск теста по тегу 
@@ -43,9 +43,9 @@ namespace TestingSystem.API.Controllers
             switch (caseSwitch)
             {
                 case true:
-                    return Json(mapper.TestDTOToTestModelList(search.GetTestVSTagSearchAnd(sttim.Tag)));
+                    return Json(mapper.ConvertTestDTOToTestModelList(search.GetTestVSTagSearchAnd(sttim.Tag)));
                 case false:                  
-                    return Json(mapper.TestDTOToTestModelList(search.GetTestVSTagSearchOr(sttim.Tag)));
+                    return Json(mapper.ConvertTestDTOToTestModelList(search.GetTestVSTagSearchOr(sttim.Tag)));
             }
         }        
 
@@ -54,7 +54,7 @@ namespace TestingSystem.API.Controllers
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess tags = new AuthorDataAccess();
-            return Json(mapper.TagDTOToTagModelList(tags.GetAllTag()));
+            return Json(mapper.ConvertTagDTOToTagModelList(tags.GetAllTag()));
         }
 
         [HttpPost("tag/Author")]      //создание тега
@@ -63,7 +63,7 @@ namespace TestingSystem.API.Controllers
             if(tagmodel.Name != "")
             {
                 Mapper mapper = new Mapper();
-                TagDTO tagdto = mapper.TagInputModelToTagDTO(tagmodel);
+                TagDTO tagdto = mapper.ConvertTagInputModelToTagDTO(tagmodel);
                 AuthorDataAccess tag = new AuthorDataAccess();
                 return Json(tag.AddTag(tagdto));
             }
@@ -80,7 +80,7 @@ namespace TestingSystem.API.Controllers
             if (tagmodel.Name != "")
             {
                 Mapper mapper = new Mapper();
-                TagDTO tagdto = mapper.TagInputModelToTagDTO(tagmodel);
+                TagDTO tagdto = mapper.ConvertTagInputModelToTagDTO(tagmodel);
                 AuthorDataAccess tag = new AuthorDataAccess();
                 tag.UpdateTag(tagdto);
                 return new OkResult();
@@ -110,7 +110,7 @@ namespace TestingSystem.API.Controllers
             if (testmodel.Name != "" && testmodel.DurationTime.HasValue && testmodel.SuccessScore.HasValue && testmodel.QuestionNumber.HasValue)
             {
                 Mapper mapper = new Mapper();
-                TestDTO testdto = mapper.TestInputModelToTestDTO(testmodel);
+                TestDTO testdto = mapper.ConvertTestInputModelToTestDTO(testmodel);
                 AuthorDataAccess test = new AuthorDataAccess();
                 return Json(test.AddTest(testdto));
             }
@@ -127,7 +127,7 @@ namespace TestingSystem.API.Controllers
             if (testmodel.Name != "" && testmodel.DurationTime.HasValue && testmodel.SuccessScore.HasValue && testmodel.QuestionNumber.HasValue)
             {
                 Mapper mapper = new Mapper();
-                TestDTO testdto = mapper.TestInputModelToTestDTO(testmodel);
+                TestDTO testdto = mapper.ConvertTestInputModelToTestDTO(testmodel);
                 AuthorDataAccess test = new AuthorDataAccess();
                 return Json(test.UpdateTest(testdto));
             }
@@ -149,12 +149,12 @@ namespace TestingSystem.API.Controllers
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess ada = new AuthorDataAccess();
-            TestOutputModel model = mapper.TestDTOToTestOutputModel(ada.GetByIdTest(testId));
-            model.Questions = mapper.QuestionDTOToQuestionModelList(ada.GetQuestionsByTestID(testId));
-            model.Tags = mapper.TagDTOToTagModelList(ada.GetTagsInTest(testId));
+            TestOutputModel model = mapper.ConvertTestDTOToTestOutputModel(ada.GetByIdTest(testId));
+            model.Questions = mapper.ConvertQuestionDTOToQuestionModelList(ada.GetQuestionsByTestID(testId));
+            model.Tags = mapper.ConvertTagDTOToTagModelList(ada.GetTagsInTest(testId));
             foreach(QuestionOutputModel qom in model.Questions)
             {
-                qom.Answers = mapper.AnswerDTOToAnswerModelList(ada.GetAnswerByQuestionId(qom.ID));
+                qom.Answers = mapper.ConvertAnswerDTOToAnswerModelList(ada.GetAnswerByQuestionId(qom.ID));
             }
             return Json(model);
         }
@@ -196,7 +196,7 @@ namespace TestingSystem.API.Controllers
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess tags = new AuthorDataAccess();
-            return Json(mapper.TagDTOToTagModelList(tags.GetTagsWhichAreNotInTest(testid)));
+            return Json(mapper.ConvertTagDTOToTagModelList(tags.GetTagsWhichAreNotInTest(testid)));
         }
 
         [HttpDelete("{testid}/tag/{tagid}/Author")]     //удаление тэга из конкретного теста
@@ -211,7 +211,7 @@ namespace TestingSystem.API.Controllers
         public IActionResult PostTagInTest(TestTagInputModel testtagmodel)
         {
             Mapper mapper = new Mapper();
-            TestTagDTO testtagdto = mapper.TestTagInputModelToTestTagDTO(testtagmodel);
+            TestTagDTO testtagdto = mapper.ConvertTestTagInputModelToTestTagDTO(testtagmodel);
             AuthorDataAccess tag = new AuthorDataAccess();
             return Json(tag.TestTagCreate(testtagdto));
         }
@@ -226,7 +226,7 @@ namespace TestingSystem.API.Controllers
             if (questionmodel.Value != "" && questionmodel.TypeID.HasValue && questionmodel.AnswersCount.HasValue && questionmodel.Weight.HasValue)
             {
                 Mapper mapper = new Mapper();
-                QuestionDTO questiondto = mapper.QuestionInputModelToQuestionDTO(questionmodel);
+                QuestionDTO questiondto = mapper.ConvertQuestionInputModelToQuestionDTO(questionmodel);
                 AuthorDataAccess question = new AuthorDataAccess();
                 return Json(question.AddQuestion(questiondto));
             }
@@ -250,7 +250,7 @@ namespace TestingSystem.API.Controllers
             if (questionmodel.Value != "" && questionmodel.TypeID.HasValue && questionmodel.AnswersCount.HasValue && questionmodel.Weight.HasValue)
             {
                 Mapper mapper = new Mapper();
-                QuestionDTO questiondto = mapper.QuestionInputModelToQuestionDTO(questionmodel);
+                QuestionDTO questiondto = mapper.ConvertQuestionInputModelToQuestionDTO(questionmodel);
                 AuthorDataAccess question = new AuthorDataAccess();
                 question.UpdateQuestion(questiondto);
                 return new OkResult();
@@ -275,7 +275,7 @@ namespace TestingSystem.API.Controllers
             if (answermodel.Value != "" && answermodel.Correct.HasValue)
             {
                 Mapper mapper = new Mapper();
-                AnswerDTO answerdto = mapper.AnswerInputModelToAnswerDTO(answermodel);
+                AnswerDTO answerdto = mapper.ConvertAnswerInputModelToAnswerDTO(answermodel);
                 AuthorDataAccess answer = new AuthorDataAccess();
                 return Json(answer.AddAnswer(answerdto));
             }
@@ -299,7 +299,7 @@ namespace TestingSystem.API.Controllers
             if (answermodel.Value != "" && answermodel.Correct.HasValue)
             {
                 Mapper mapper = new Mapper();
-                AnswerDTO answerdto = mapper.AnswerInputModelToAnswerDTO(answermodel);
+                AnswerDTO answerdto = mapper.ConvertAnswerInputModelToAnswerDTO(answermodel);
                 AuthorDataAccess answer = new AuthorDataAccess();
                 answer.UpdateAnswer(answerdto);
                 return new OkResult();
