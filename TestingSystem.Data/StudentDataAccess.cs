@@ -61,7 +61,7 @@ namespace TestingSystem.Data
             return user.GetByID(id);
         }
 
-        public List<QuestionWithListAnswersDTO> GetQuestionsAndAnswers (int testID)
+        public List<QuestionWithListAnswersDTO> GetQuestionsAndAnswers(int testID)
         {
             QuestionManager test = new QuestionManager();
             return test.GetQuestionsAndAnswers(testID);
@@ -75,8 +75,19 @@ namespace TestingSystem.Data
 
         }
 
+        public int AddAttemptForAttemptCreator(int userId, int testId)
+        {
+            AttemptDTO attempt = new AttemptDTO()
+            {
+                userID = userId,
+                testID = testId,
+                dateTime = DateTime.Now
 
-        
+            };
+            AttemptManager student = new AttemptManager();
+            return student.AddAttemptAutoNumber(attempt);
 
+
+        }
     }
 }

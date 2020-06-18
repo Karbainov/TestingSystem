@@ -46,32 +46,54 @@ namespace TestingSystem.Business
         {
             Dictionary<int, List<QuestionWithListAnswersDTO>> attemptquestions = new Dictionary<int, List<QuestionWithListAnswersDTO>>();
 
-            double totalQtyOfQuestions = 0;
+            double totalQtyOfQuestions = (double) CountAllQuestionsInDictionary(questions);
             
-
-            foreach (var q in questions)
-
-            {
-                totalQtyOfQuestions += q.Value.Count();
-            }
 
             foreach (var question in questions)
             {
-                var randomIndexes = GetRandomIndexes(question.Value.Count(), (int)Math.Ceiling((double)question.Value.Count() / totalQtyOfQuestions));
+                var randomIndexes = GetRandomIndexes(question.Value.Count(), test.QuestionNumber * (int)Math.Ceiling((double)question.Value.Count() / totalQtyOfQuestions));
                 attemptquestions.Add(question.Key, CutListbyIndexes(question.Value, randomIndexes));
             }
+            //attemptquestions - словарь с ключами по весу, и со значениями - листы вопросов с этим весом, урезанный список,
+            //но, вероятно, вопросов больше на 1-2-3, чем надо в попытке
 
+            int currentQuantityOfQuestions = CountAllQuestionsInDictionary(attemptquestions);
+
+            while(currentQuantityOfQuestions > test.QuestionNumber)
+            {
+
+            }
+            
             return attemptquestions;
 
         }
+        private List<QuestionWithListAnswersDTO> ConvertDictionaryToList(Dictionary<int, List<QuestionWithListAnswersDTO>> dictionary)
+        {
+            List<QuestionWithListAnswersDTO> questions = new List<QuestionWithListAnswersDTO>();
+            foreach(var question in dictionary)
+            {
+                questions.AddRange(question.Value);
+            }
+            return questions;
+        }
 
+        private int CountAllQuestionsInDictionary (Dictionary<int, List<QuestionWithListAnswersDTO>> questions)
+        {
+            int quantity = 0;
+            foreach (var q in questions)
+
+            {
+                quantity += q.Value.Count();
+            }
+            return quantity;
+        }
         private List<int> GetRandomIndexes (int upRange, int quantity)
         {
             List<int> randomIndexes = new List<int>();
             Random random = new Random();
             while(randomIndexes.Count() != quantity)
             {
-                int index = random.Next(0, upRange + 1);
+                int index = random.Next(0, upRange);
                 if(!randomIndexes.Contains(index))
                 {
                     randomIndexes.Add(index);
@@ -94,16 +116,17 @@ namespace TestingSystem.Business
             return questionsCuttedVersion;
         }
 
-        public List<QuestionWithListAnswersDTO> ConvertDictionaryToLIst(Dictionary<int, List<QuestionWithListAnswersDTO>> questions)
-        {
-            List<QuestionWithListAnswersDTO> attemptquestions = new List<QuestionWithListAnswersDTO>();
-            foreach (int w in questions)
+        //private 
+        //public List<QuestionWithListAnswersDTO> ConvertDictionaryToLIst(Dictionary<int, List<QuestionWithListAnswersDTO>> questions)
+        //{
+        //    List<QuestionWithListAnswersDTO> attemptquestions = new List<QuestionWithListAnswersDTO>();
+        //    foreach (int w in questions)
 
-            {
+        //    {
 
-            }
+        //    }
 
-            return attemptquestions;
-        }
+        //    return attemptquestions;
+        //}
     }
 }

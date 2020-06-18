@@ -12,9 +12,12 @@ namespace TestingSystem.Data.StoredProcedure
     {
         public List<AttemptResultDTO> GetAttemptByUserIdTestId(UserIdTestIdDTO attempt)
         {
-            var connection = Connection.GetConnection();
-            string sqlExpression = "Attempt_GetByUserIdTestId";            
-            return connection.Query<AttemptResultDTO>(sqlExpression, attempt, commandType: CommandType.StoredProcedure).ToList();
+
+            using (var connection = Connection.GetConnection())
+            {
+                string sqlExpression = "Attempt_GetByUserIdTestId";
+                return connection.Query<AttemptResultDTO>(sqlExpression, attempt, commandType: CommandType.StoredProcedure).ToList();
+            }
         }
         
         public List<QuestionAnswerDTO> GetAllAnswersByAttemptId(int attemptId)
@@ -46,11 +49,13 @@ namespace TestingSystem.Data.StoredProcedure
             }
         }
 
-        public List<AttemptDTO> AddAttemptAutoNumber(AttemptDTO attempt)
+        public int AddAttemptAutoNumber(AttemptDTO attempt)
         {
-            var connection = Connection.GetConnection();
-            string sqlExpression = "AddAttemptAutoNumber @userID, @testID, @userResult, @dateTime, @durationTime";
-            return connection.Query<AttemptDTO>(sqlExpression, attempt, commandType: CommandType.StoredProcedure).ToList();
+            using (var connection = Connection.GetConnection())
+            {
+                string sqlExpression = "AddAttemptAutoNumber @userID, @testID, @userResult, @dateTime, @durationTime";
+                return connection.Query<int>(sqlExpression, attempt, commandType: CommandType.StoredProcedure).FirstOrDefault();
+            }
         }
     }
 }
