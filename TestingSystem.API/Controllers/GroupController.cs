@@ -25,16 +25,16 @@ namespace TestingSystem.API.Controllers
         public GroupController(ILogger<GroupController> logger)
         {
             _logger = logger;
-        }
-
+        }
+
         [HttpGet("admin")]  // htpps://localhost/group
         public List<GroupOutputModel> GetAllGroups()
         {         
-            AdminDataAccess adm = new AdminDataAccess();
-            List<GroupOutputModel> groupOutputModels = new List<GroupOutputModel>();
+            AdminDataAccess adm = new AdminDataAccess();
+            List<GroupOutputModel> groupOutputModels = new List<GroupOutputModel>();
             List<GroupDTO> groups = adm.GetAllGroups();
             foreach (GroupDTO g in groups)
-            {
+            {
                 GroupOutputModel www = new GroupOutputModel();
                 AdminDataAccess gr = new AdminDataAccess();
                 www.Id = g.Id;
@@ -46,7 +46,7 @@ namespace TestingSystem.API.Controllers
                 foreach (UserDTO st in students)
                 {
                     UserMapper um = new UserMapper();
-                    studentsout.Add(um.ConvertUserDTOToUserOutputModel(st));
+                    studentsout.Add(um.ConvertUserDTOToUserOutputModel(st));
                    
                 }
                 List<UserDTO> teachers = gr.GetTeacherByGroupId(g.Id);
@@ -58,55 +58,54 @@ namespace TestingSystem.API.Controllers
                 }
                 www.Students = studentsout;
                 www.Teachers = teachersout;  
-                groupOutputModels.Add(www);
-
+                groupOutputModels.Add(www);
+
             }
             return groupOutputModels;
             
-        }
-        
+        }
+        
         [HttpPost]
         public void GroupPost([FromBody]GroupInputModel groupC)
         {
-            Mapper mapper = new Mapper();
-            GroupDTO groupdto = mapper.GroupInputModelToGroupDTO(groupC);
-            AdminDataAccess group = new AdminDataAccess();
-            group.GroupCreate(groupdto);
-
+            Mapper mapper = new Mapper();
+            GroupDTO groupdto = mapper.GroupInputModelToGroupDTO(groupC);
+            AdminDataAccess group = new AdminDataAccess();
+            group.GroupCreate(groupdto);
+
         }
 
         [HttpGet("{id}")]
         public GroupOutputModel GetGroupById(int id)
         {
-            Mapper mapper = new Mapper();
+            Mapper mapper = new Mapper();
             AdminDataAccess adm = new AdminDataAccess();
-            GroupOutputModel gom = mapper.GroupDTOToGroupOutputModel(adm.GetGroupById(id));
+            GroupOutputModel gom = mapper.GroupDTOToGroupOutputModel(adm.GetGroupById(id));
             return gom;
         }
         
       
         
-        
-        [HttpPost("{groupID}/student/{userID}")] // GET http://localhost:5557/group/id/student/id	
+        [HttpPost("{groupID}/student/{userID}")] // POST http://localhost:5557/group/5/student/82	
         public void PostStudentInGroup(int userID, int groupID)
         {
             AdminDataAccess adm = new AdminDataAccess();
             adm.StudentAdd(userID, groupID);
         }
         
-        [HttpPost("{groupID}/teacher/{userID}")] // GET http://localhost:5557/group/id/teacher/id	
+        [HttpPost("{groupID}/teacher/{userID}")] // POST http://localhost:5557/group/id/teacher/id	
         public void PostTeacherInGroup(int userID, int groupID)
         {
             AdminDataAccess adm = new AdminDataAccess();
             adm.TeacherAdd(userID, groupID);
-        }
-
+        }
+
         [HttpPut]
         public void GroupPut([FromBody]GroupInputModel groupU)
-        {
-            Mapper mapper = new Mapper();
-            GroupDTO groupdto = mapper.GroupInputModelToGroupDTO(groupU);
-            AdminDataAccess group = new AdminDataAccess();
+        {
+            Mapper mapper = new Mapper();
+            GroupDTO groupdto = mapper.GroupInputModelToGroupDTO(groupU);
+            AdminDataAccess group = new AdminDataAccess();
             group.GroupUpdate(groupdto);
 
         }

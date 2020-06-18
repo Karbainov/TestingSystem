@@ -53,7 +53,7 @@ namespace TestingSystem.API.Controllers
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess feedbacks = new AuthorDataAccess();
-            return Json(mapper.FeedbackDTOToFeedbackModelList(feedbacks.GetFeedbackByDate(date.StringConverToDateTime(date.DateTime1), date.StringConverToDateTime(date.DateTime2)));
+            return Json(mapper.FeedbackDTOToFeedbackModelList(feedbacks.GetFeedbackByDate(date.StringConverToDateTime(date.DateTime1), date.StringConverToDateTime(date.DateTime2))));
         }
 
 

@@ -52,5 +52,14 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
                 return connection.Query<UserRoleDTO>(sqlExpression, new {roleID }).ToList();
             }
         }
+        
+        public List<UserDTO> GetUsersByRoleID( int roleID)
+        {
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "GetUsersByRoleId";
+                return connection.Query<UserDTO>(sqlExpression, new { roleID }, commandType: CommandType.StoredProcedure).ToList();
+            }
+        }
     }
 }

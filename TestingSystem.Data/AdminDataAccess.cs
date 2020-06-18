@@ -16,6 +16,12 @@ namespace TestingSystem.Data
             UserCRUD user = new UserCRUD();
             user.Create(userC);
         }
+        
+        public void UserRoleCreate(UserRoleDTO userRole)
+        {
+            UserRoleCRUD user = new UserRoleCRUD();
+            user.Create(userRole);
+        }
 
         public List<UserDTO> GetAllUsers()
         {
@@ -79,6 +85,16 @@ namespace TestingSystem.Data
             StudentGroup student = new StudentGroup();
             student.DeleteByID(studentD.ID);
         }
+        public void StudentDeleteByUserIdGroupId(int userId, int groupId)
+        {
+            StudentGroup student = new StudentGroup();
+            student.DeleteByUserIdGroupId(userId, groupId);
+        }
+        public void TeacherDeleteByUserIdGroupId(int userId, int groupId)
+        {
+            TeacherGroup teacher = new TeacherGroup();
+            teacher.DeleteByUserIdGroupId(userId, groupId);
+        }
         public void TeacherAdd(int userID, int groupID)
         {
             TeacherGroupDTO teacherA = new TeacherGroupDTO(1, userID, groupID);
@@ -105,12 +121,12 @@ namespace TestingSystem.Data
             UserRoleCRUD roleCRUD = new UserRoleCRUD();
             return roleCRUD.ReadByUserID(userID);
         }
-        public List<UserRoleDTO> GetUserRolesByRoleID(int roleID)
+        public List<UserDTO> GetUsersByRoleID(int roleID)
         {
             UserRoleCRUD roleCRUD = new UserRoleCRUD();
-            return roleCRUD.ReadByRoleID(roleID);
+            return roleCRUD.GetUsersByRoleID(roleID);
         }
-        public void DeliteUsersRole(UserRoleDTO userRoleDTO)
+        public void DeleteUsersRole(UserRoleDTO userRoleDTO)
         {
             UserRoleCRUD roleCRUD = new UserRoleCRUD();
             roleCRUD.Delete(userRoleDTO);
@@ -142,5 +158,12 @@ namespace TestingSystem.Data
             GroupManager gm = new GroupManager();
             gm.DeleteTeacherFromGroup(userID, groupID);
         }
+        
+        public List<RoleDTO> GetRoleByUserId(int userId)
+        {
+            UserManager role = new UserManager();
+            return role.GetRoleByUserId(userId);
+        }
+        
     }
 }

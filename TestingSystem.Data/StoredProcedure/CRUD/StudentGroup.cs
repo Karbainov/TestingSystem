@@ -61,6 +61,14 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
                 connection.Execute(sqlExpression, new { id }, commandType: CommandType.StoredProcedure);
             }
         }
+        public void DeleteByUserIdGroupId(int userId, int groupId)
+        {
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "Student_Group_DeleteByUserIdGroupId";
+                connection.Execute(sqlExpression, new { userId, groupId }, commandType: CommandType.StoredProcedure);
+            }
+        }
         public void DeleteByUserID(int userId)
         {
             using (IDbConnection connection = Connection.GetConnection())
