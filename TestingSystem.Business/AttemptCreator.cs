@@ -46,23 +46,30 @@ namespace TestingSystem.Business
         {
             Dictionary<int, List<QuestionWithListAnswersDTO>> attemptquestions = new Dictionary<int, List<QuestionWithListAnswersDTO>>();
 
-            int totalQtyOfQuestions = 0;
+            double totalQtyOfQuestions = 0;
+            
 
             foreach (var q in questions)
 
             {
                 totalQtyOfQuestions += q.Value.Count();
             }
-            
+
+            foreach (var question in questions)
+            {
+                var randomIndexes = GetRandomIndexes(question.Value.Count(), (int)Math.Ceiling((double)question.Value.Count() / totalQtyOfQuestions));
+                attemptquestions.Add(question.Key, CutListbyIndexes(question.Value, randomIndexes));
+            }
 
             return attemptquestions;
+
         }
 
         private List<int> GetRandomIndexes (int upRange, int quantity)
         {
             List<int> randomIndexes = new List<int>();
             Random random = new Random();
-            while(randomIndexes.Count() < quantity)
+            while(randomIndexes.Count() != quantity)
             {
                 int index = random.Next(0, upRange + 1);
                 if(!randomIndexes.Contains(index))
@@ -71,6 +78,8 @@ namespace TestingSystem.Business
                 }
             }
             return randomIndexes;
+
+
 
         }
 
