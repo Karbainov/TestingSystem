@@ -88,7 +88,13 @@ namespace TestingSystem.Data
             return test.GetDurationAndQuestionNumber(testId);
         }
 
-        
+
+
+        public List<QuestionWithListAnswersDTO> GetQuestionsAndAnswers(int testID)
+        {
+            TestManager test = new TestManager();
+            return test.GetQuestionsAndAnswers(testID);
+        }
 
     }
 }  

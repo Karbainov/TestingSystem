@@ -17,27 +17,27 @@ namespace TestingSystem.Data.StoredProcedure
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Test_Attempt_GetLate @UserID";
-                return connection.Query<TestDTO>(sqlExpression,new { userID }).ToList();
+                return connection.Query<TestDTO>(sqlExpression, new { userID }).ToList();
             }
-            
+
         }
         public List<QuestionAnswerDTO> GetCorrectAnswerByTestID(int testID)//нахождение правильных ответов теста
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Answer_GetCorrectByTestID @TestID";
-                return connection.Query<QuestionAnswerDTO>(sqlExpression,new { testID }).ToList();
+                return connection.Query<QuestionAnswerDTO>(sqlExpression, new { testID }).ToList();
             }
-            
+
         }
         public List<QuestionAnswerDTO> GetQuestionAndAnswerFromAttempt(int attemptID)//все вопросы и ответы попытки
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Attempt_GetQuestionAndAnswer @AttemptID";
-                return connection.Query<QuestionAnswerDTO>(sqlExpression,new{ attemptID }).ToList();
+                return connection.Query<QuestionAnswerDTO>(sqlExpression, new { attemptID }).ToList();
             }
-           
+
         }
 
         public int DeleteConcreteAttempt(AttemptDTO attempt)//удаление попытки 
@@ -47,7 +47,7 @@ namespace TestingSystem.Data.StoredProcedure
                 string sqlExpression = "Attempt_DeleteConcrete @UserID,@TestID,@Number";
                 return connection.Execute(sqlExpression, attempt);
             }
-           
+
         }
 
         public List<TagDTO> GetTestTags(int testID)
@@ -64,7 +64,7 @@ namespace TestingSystem.Data.StoredProcedure
         {
             var connection = Connection.GetConnection();
             string sqlExpression = "Tags_GetWhichAreNotInTest ";
-            return connection.Query<TagDTO>(sqlExpression, new { testId }, commandType: CommandType.StoredProcedure).ToList();            
+            return connection.Query<TagDTO>(sqlExpression, new { testId }, commandType: CommandType.StoredProcedure).ToList();
         }
 
         public List<TestDTO> GetTestByTagpAndGroup(TagGroupDTO dto)
@@ -117,21 +117,21 @@ namespace TestingSystem.Data.StoredProcedure
 
         public void DeleteTest(int ID)
         {
-                var connection = Connection.GetConnection();
-                string sqlExpression = "DeleteTest";
-                connection.Execute(sqlExpression, ID, commandType: CommandType.StoredProcedure);
+            var connection = Connection.GetConnection();
+            string sqlExpression = "DeleteTest";
+            connection.Execute(sqlExpression, ID, commandType: CommandType.StoredProcedure);
         }
 
         public List<AllStudentTestsDTO> GetBestResultOfTestByGroupID(int groupID)
         {
-            using(IDbConnection connection = Connection.GetConnection())
+            using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Test_BestGroupResult @GroupID";
                 return connection.Query<AllStudentTestsDTO>(sqlExpression, new { groupID }).ToList();
             }
         }
 
-        public List<TestQuestionsDTO> GetTestWithAllQuestionsById (int testid)
+        public List<TestQuestionsDTO> GetTestWithAllQuestionsById(int testid)
         {
             var connection = Connection.GetConnection();
             string sqlExpression = "GetAllQuestionsByTestID";
@@ -146,18 +146,48 @@ namespace TestingSystem.Data.StoredProcedure
         }
 
 
-
-        public TestDTO GetDurationAndQuestionNumber(int testid)
+        public TestDTO GetDurationAndQuestionNumber(int id)
         {
-           
-            using (var connection = Connection.GetConnection())
+            using (IDbConnection connection = Connection.GetConnection())
             {
-                string sqlExpression ="GetDurationAndQuestionNumber @testid";
-                return connection.Query<TestDTO>(sqlExpression, new { testid }, commandType: CommandType.StoredProcedure).FirstOrDefault();
-                
+                string sqlExpression = "Test_GetDurationAndQuestionNumber";
+                return connection.Query<TestDTO>(sqlExpression, new { id }, commandType: CommandType.StoredProcedure).FirstOrDefault();
             }
         }
-               
+
+        public List<QuestionWithListAnswersDTO> GetQuestionsAndAnswers(int testID)
+        {
+
+            IDbConnection connection = Connection.GetConnection();
+            List<QuestionWithListAnswersDTO> questions;
+            using (connection)
+            {
+                var questionDictionary = new Dictionary<int, QuestionWithListAnswersDTO>();
+                connection.Query<QuestionWithListAnswersDTO, AnswerWithoutCorrectnessDTO, QuestionWithListAnswersDTO>(
+                    "GetAllQuestionsAndAnswersByTestId",
+                    (question, answers) =>
+                    {
+                        QuestionWithListAnswersDTO questionEntry;
+
+                        if (!questionDictionary.TryGetValue(question.Id, out questionEntry))
+                        {
+                            questionEntry = question;
+                            questionEntry.Answers = new List<AnswerWithoutCorrectnessDTO>();
+                            questionDictionary.Add(questionEntry.Id, questionEntry);
+                        }
+
+                        questionEntry.Answers.Add(answers);
+                        return questionEntry;
+                    },
+                    new { testID },
+                    splitOn: "QuestionId",
+                    commandType: CommandType.StoredProcedure)
+                .ToList();
+
+                questions = new List<QuestionWithListAnswersDTO>(questionDictionary.Values);
+            }
+            return questions;
+        }
         //public List<TagDTO> GetTestTags (TestDTO tests )
         //{
         //    using (IDbConnection connection = Connection.GetConnection())
@@ -176,5 +206,6 @@ namespace TestingSystem.Data.StoredProcedure
         //        return connection.Query<TestDTO>(sqlExpression, dto, commandType: CommandType.StoredProcedure).ToList();
         //    }
         //}
+    
     }
 }

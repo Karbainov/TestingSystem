@@ -45,8 +45,9 @@ namespace TestingSystem.Data.StoredProcedure
                 connection.Execute(sqlExpression, new { id }, commandType: CommandType.StoredProcedure);
             }
         }
+       
 
-        public int AddAttemptAutoNumber(AttemptDTO attempt)
+            public int AddAttemptAutoNumber(AttemptDTO attempt)
         {
             using (var connection = Connection.GetConnection())
             {
