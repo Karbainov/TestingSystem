@@ -90,21 +90,21 @@ namespace TestingSystem.Data.StoredProcedure
             }
         }
         
-        public List<UserDTO> GetUsersByRoleID(int roleID)
+        public List<UserDTO> GetUsersByRoleID(int roleId)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "GetUsersByRoleId";
-                return connection.Query<UserDTO>(sqlExpression, new { roleID }, commandType: CommandType.StoredProcedure).ToList();
+                return connection.Query<UserDTO>(sqlExpression, new { roleId }, commandType: CommandType.StoredProcedure).ToList();
             }
         }
 
-        public List<GroupDTO> GetGroupsAndStudentsByTeacherID(int TeacherID) 
+        public List<GroupDTO> GetGroupsAndStudentsByTeacherID(int teacherId) 
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "GetGroupsAndStudentsByTeacherID";
-                return connection.Query<GroupDTO>(sqlExpression, new { TeacherID }, commandType: CommandType.StoredProcedure).ToList();
+                return connection.Query<GroupDTO>(sqlExpression, new { teacherId }, commandType: CommandType.StoredProcedure).ToList();
             }
         }
     }

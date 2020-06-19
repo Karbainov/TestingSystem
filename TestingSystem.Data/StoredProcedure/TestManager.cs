@@ -11,30 +11,30 @@ namespace TestingSystem.Data.StoredProcedure
 {
     public class TestManager
     {
-        public List<TestDTO> GetLateAttempt(int userID)//просроченные тесты студента
+        public List<TestDTO> GetLateAttempt(int userId)//просроченные тесты студента
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Test_Attempt_GetLate @UserID";
-                return connection.Query<TestDTO>(sqlExpression,new { userID }).ToList();
+                return connection.Query<TestDTO>(sqlExpression,new { userId }).ToList();
             }
             
         }
-        public List<QuestionAnswerDTO> GetCorrectAnswerByTestID(int testID)//нахождение правильных ответов теста
+        public List<QuestionAnswerDTO> GetCorrectAnswerByTestID(int testId)//нахождение правильных ответов теста
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Answer_GetCorrectByTestID @TestID";
-                return connection.Query<QuestionAnswerDTO>(sqlExpression,new { testID }).ToList();
+                return connection.Query<QuestionAnswerDTO>(sqlExpression,new { testId }).ToList();
             }
             
         }
-        public List<QuestionAnswerDTO> GetQuestionAndAnswerFromAttempt(int attemptID)//все вопросы и ответы попытки
+        public List<QuestionAnswerDTO> GetQuestionAndAnswerFromAttempt(int attemptId)//все вопросы и ответы попытки
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Attempt_GetQuestionAndAnswer @AttemptID";
-                return connection.Query<QuestionAnswerDTO>(sqlExpression,new{ attemptID }).ToList();
+                return connection.Query<QuestionAnswerDTO>(sqlExpression,new{ attemptId }).ToList();
             }
            
         }
@@ -49,12 +49,12 @@ namespace TestingSystem.Data.StoredProcedure
            
         }
 
-        public List<TagDTO> GetTestTags(int testID)
+        public List<TagDTO> GetTestTags(int testId)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "GetTestTags";
-                return connection.Query<TagDTO>(sqlExpression, new { testID }, commandType: CommandType.StoredProcedure).ToList();
+                return connection.Query<TagDTO>(sqlExpression, new { testId }, commandType: CommandType.StoredProcedure).ToList();
 
             }
         }
@@ -75,12 +75,12 @@ namespace TestingSystem.Data.StoredProcedure
             }
         }
 
-        public List<TestDTO> GetTestByGroupId(int GroupID)
+        public List<TestDTO> GetTestByGroupId(int groupId)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "GetTestsByGroupId";
-                return connection.Query<TestDTO>(sqlExpression, new { GroupID }, commandType: CommandType.StoredProcedure).ToList();
+                return connection.Query<TestDTO>(sqlExpression, new { groupId }, commandType: CommandType.StoredProcedure).ToList();
             }
         }
 
@@ -104,44 +104,44 @@ namespace TestingSystem.Data.StoredProcedure
             }
         }
 
-        public List<TestAttemptDTO> GetCompletedTestsByUserID(int UserID)
+        public List<TestAttemptDTO> GetCompletedTestsByUserID(int userId)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "GetCompletedTestsByUserID";
-                return connection.Query<TestAttemptDTO>(sqlExpression, new { UserID }, commandType: CommandType.StoredProcedure).ToList();
+                return connection.Query<TestAttemptDTO>(sqlExpression, new { userId }, commandType: CommandType.StoredProcedure).ToList();
 
             }
         }
 
-        public void DeleteTest(int ID)
+        public void DeleteTest(int Id)
         {
                 var connection = Connection.GetConnection();
                 string sqlExpression = "DeleteTest";
-                connection.Execute(sqlExpression, ID, commandType: CommandType.StoredProcedure);
+                connection.Execute(sqlExpression, Id, commandType: CommandType.StoredProcedure);
         }
 
-        public List<AllStudentTestsDTO> GetBestResultOfTestByGroupID(int groupID)
+        public List<AllStudentTestsDTO> GetBestResultOfTestByGroupID(int groupId)
         {
             using(IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Test_BestGroupResult @GroupID";
-                return connection.Query<AllStudentTestsDTO>(sqlExpression, new { groupID }).ToList();
+                return connection.Query<AllStudentTestsDTO>(sqlExpression, new { groupId }).ToList();
             }
         }
 
-        public List<TestQuestionsDTO> GetTestWithAllQuestionsById (int testid)
+        public List<TestQuestionsDTO> GetTestWithAllQuestionsById (int testId)
         {
             var connection = Connection.GetConnection();
             string sqlExpression = "GetAllQuestionsByTestID";
-            return connection.Query<TestQuestionsDTO>(sqlExpression, new { testid }, commandType: CommandType.StoredProcedure).ToList();
+            return connection.Query<TestQuestionsDTO>(sqlExpression, new { testId }, commandType: CommandType.StoredProcedure).ToList();
         }
 
-        public List<AnswerDTO> GetAllAnswersInTest(int testid)
+        public List<AnswerDTO> GetAllAnswersInTest(int testId)
         {
             var connection = Connection.GetConnection();
             string sqlExpression = "AnswersAll_GetByTestId";
-            return connection.Query<AnswerDTO>(sqlExpression, new { testid }, commandType: CommandType.StoredProcedure).ToList();
+            return connection.Query<AnswerDTO>(sqlExpression, new { testId }, commandType: CommandType.StoredProcedure).ToList();
         }
 
         //public List<TagDTO> GetTestTags (TestDTO tests )
