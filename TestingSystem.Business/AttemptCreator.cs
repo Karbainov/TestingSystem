@@ -1,3 +1,6 @@
+        //    {
+
+        //    }
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +20,7 @@ namespace TestingSystem.Business
             StudentDataAccess student = new StudentDataAccess();
             var questions = CreateListOfQuestions(userId, testId);
             var sortedquestions = CreateDictionary(questions);
-            var test = student.GetTestbyId(testId);
+            var test = student.GetTestById(testId);
             var cuttedquestions = PickQuestionsForAttempt(sortedquestions, test);
             var attemptQuestions = ConvertDictionaryToList(cuttedquestions);
             var attemptId = AddQuestionsToAttemptInDatabase(userId, testId, attemptQuestions);

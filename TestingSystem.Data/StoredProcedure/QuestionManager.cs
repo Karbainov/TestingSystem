@@ -60,16 +60,46 @@ namespace TestingSystem.Data.StoredProcedure
                     transaction.Rollback();
                 }
             }
+           
+
         }
 
-        public List<QuestionWithListAnswersDTO> GetQuestionsAndAnswers(int testId)
+
+
+        
+
+        public List<QuestionWithListAnswersDTO> GetQuestionsAndAnswers(int testID)
         {
-            using (var connection = Connection.GetConnection())
+
+            IDbConnection connection = Connection.GetConnection();
+            List<QuestionWithListAnswersDTO> questions;
+            using (connection)
             {
-                string sqlExpression = "// не помню хранимку, которая возвращает "; //надо добавить хранимку 
-                return connection.Query<QuestionWithListAnswersDTO>(sqlExpression, new { testId }, commandType: CommandType.StoredProcedure).ToList();
+                var questionDictionary = new Dictionary<int, QuestionWithListAnswersDTO>();
+                connection.Query<QuestionWithListAnswersDTO, AnswerWithoutCorrectnessDTO, QuestionWithListAnswersDTO>(
+                    "GetAllQuestionsAndAnswersByTestId",  // Спросить Макса
+                    (question, answers) =>
+                    {
+                        QuestionWithListAnswersDTO questionEntry;
+
+                        if (!questionDictionary.TryGetValue(question.Id, out questionEntry))
+                        {
+                            questionEntry = question;
+                            questionEntry.Answers = new List<AnswerWithoutCorrectnessDTO>();
+                            questionDictionary.Add(questionEntry.Id, questionEntry);
+                        }
+
+                        questionEntry.Answers.Add(answers);
+                        return questionEntry;
+                    },
+                     new { testID },
+                    splitOn: "QuestionId",
+                    commandType: CommandType.StoredProcedure)
+                .ToList();
+                questions = new List<QuestionWithListAnswersDTO>(questionDictionary.Values);
             }
 
+            return questions;
         }
     }
 }
