@@ -8,6 +8,9 @@ using TestingSystem.Data;
 using TestingSystem.Data.DTO;
 using TestingSystem.API.Models.Output;
 using TestingSystem.API.Models.Input;
+using TestingSystem.Business.Models;
+using TestingSystem.Business;
+
 
 namespace TestingSystem.API.Controllers
 {
@@ -317,7 +320,15 @@ namespace TestingSystem.API.Controllers
             answer.DeleteAnswer(anid);
             return new OkResult();
         }
-        
 
+        //[HttpGet("{testid}/{userId}/Student")]
+
+        //public IActionResult GetTestAttempt (int testId, int userdId) 
+        //{
+        //    AttemptCreator studentattempt = new AttemptCreator();
+        //    var attempt = studentattempt.CreateAttempt(userdId, testId);
+            
+        //   return Json(new Mapper().AttemptBusinessModelToConcreateAttemptOutputModel(attempt()));
+        //}
     }
 }

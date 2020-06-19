@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using TestingSystem.API.Models.Input;
 using TestingSystem.API.Models.Output;
 using TestingSystem.Data.DTO;
+using TestingSystem.Business;
+using TestingSystem.Business.Models;
 
 namespace TestingSystem.API
 {
@@ -315,7 +317,66 @@ namespace TestingSystem.API
                 Processed = feedbackquestionDTO.Processed,
             };
         }
-    }
 
+        public AnswerWithoutCorrectnessOutputModel AnswerWithoutCorrectnessDTOToAnswerWithoutCorrectnessOutputModel(AnswerWithoutCorrectnessDTO answers)
+        {
+            AnswerWithoutCorrectnessOutputModel newanswers = new AnswerWithoutCorrectnessOutputModel()
+            {
+                ID = answers.ID,
+                QuestionId = answers.QuestionId,
+                Value = answers.Value,
+
+            };
+
+            return newanswers;
+        }
+
+        public QuestionWithListAnswersOutputModel QuestionWithListAnswersDTOToQuestionWithListAnswersOutputModel(QuestionWithListAnswersDTO question)
+        {
+            QuestionWithListAnswersOutputModel newquestion = new QuestionWithListAnswersOutputModel();
+            {
+                newquestion.Id = question.Id;
+                newquestion.Value = question.Value;
+                newquestion.TypeID = question.TypeID;
+                newquestion.Weight = question.Weight;
+
+                foreach (var answer in question.Answers)
+
+                {
+                    newquestion.Answers.Add(new Mapper().AnswerWithoutCorrectnessDTOToAnswerWithoutCorrectnessOutputModel(answer));
+            
+                }
+                         
+                return newquestion;
+            }
+        }
+
+        public List<QuestionWithListAnswersOutputModel> QuestionWithListAnswersDTOsToQuestionWithListAnswersOutputModels(List <QuestionWithListAnswersDTO> questions)
+        {
+            List<QuestionWithListAnswersOutputModel> newquestions = new List<QuestionWithListAnswersOutputModel>();
+
+            foreach (var question in questions)
+
+            {
+                newquestions.Add(new Mapper().QuestionWithListAnswersDTOToQuestionWithListAnswersOutputModel(question));
+
+            }
+            return newquestions;
+
+        }
+
+        public ConcreateAttemptOutputModel AttemptBusinessModelToConcreateAttemptOutputModel (AttemptBusinessModel questions, int userId, int testId)
+        {
+            ConcreateAttemptOutputModel concreatemodel = new ConcreateAttemptOutputModel();
+
+            concreatemodel.UserId = userId;
+            concreatemodel.TestId = testId;
+            concreatemodel.AttemptId = questions.AttemptId;
+            concreatemodel.DurationTime = questions.DurationTime;
+            concreatemodel.TestName = questions.TestName;
+            concreatemodel.Questions = new Mapper().QuestionWithListAnswersDTOsToQuestionWithListAnswersOutputModels(questions.Questions);
+            return concreatemodel;
+        }
+     }
 }
 
