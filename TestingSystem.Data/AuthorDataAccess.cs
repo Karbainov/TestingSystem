@@ -250,7 +250,7 @@ namespace TestingSystem.Data
 
         
 
-        public List<QuestionDTO> GetQuestionsByTypeID(int typeId)  //список всех вопросов по конкретному типу
+        public List<QuestionDTO> GetQuestionsByTypeId(int typeId)  //список всех вопросов по конкретному типу
         {
             QuestionCRUD q = new QuestionCRUD();
             return q.GetByTypeId(typeId);

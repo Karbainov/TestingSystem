@@ -14,25 +14,25 @@ namespace TestingSystem.Data
     public class TeacherDataAccess
     {
                 
-        public List<GroupDTO> GetGroupsAndStudentsByTeacherID(int TeacherID) // уничтожили GetGroupByTeacherID. в группе создать свойство листюзеров 
+        public List<GroupDTO> GetGroupsAndStudentsByTeacherId(int teacherId) // уничтожили GetGroupByTeacherID. в группе создать свойство листюзеров 
         {
            UserManager teacher = new UserManager();
-           return teacher.GetGroupsAndStudentsByTeacherID(TeacherID);
+           return teacher.GetGroupsAndStudentsByTeacherID(teacherId);
         }
 
-        public List<QuestionAnswerDTO> GetCorrectAnswerByTestID(int testID)
+        public List<QuestionAnswerDTO> GetCorrectAnswerByTestId(int testId)
         {
             TestManager teacher = new TestManager();
-            return teacher.GetCorrectAnswerByTestID(testID);
+            return teacher.GetCorrectAnswerByTestID(testId);
 
         } //  в идеаде - один то мэни - почитать
 
 
      
-        public List<TestDTO> GetTestByGroupId(int GroupID)
+        public List<TestDTO> GetTestByGroupId(int groupId)
         {
             TestManager teacher = new TestManager();
-            return teacher.GetTestByGroupId(GroupID);
+            return teacher.GetTestByGroupId(groupId);
         }
 
         public List<AllStudentTestsDTO> GetAllStudentTests(int id) // конкретные студент - лучшая попытка и макс балл. GetAllTestsByUserID
@@ -42,10 +42,10 @@ namespace TestingSystem.Data
             return teacher.GetStudentVsTests(id);
         }
 
-        public List<TestDTO> GetExpiredTestOfStudent(int userID)// на вход надо user id
+        public List<TestDTO> GetExpiredTestOfStudent(int userId)// на вход надо user id
         {
             TestManager teacher = new TestManager();
-            return teacher.GetLateAttempt(userID);
+            return teacher.GetLateAttempt(userId);
         }
         
         public List<TestAttemptDTO> GetStudentIncompleteTests(int id) // не приступал
@@ -54,18 +54,18 @@ namespace TestingSystem.Data
             return teacher.GetIncompleteTests(id);
         }
 
-        public List<QuestionAnswerDTO> GetQuestionAndAnswerByAttempt(int attemptID) // один ко многим
+        public List<QuestionAnswerDTO> GetQuestionAndAnswerByAttempt(int attemptId) // один ко многим
 
         {
             TestManager teacher = new TestManager();
-            return teacher.GetQuestionAndAnswerFromAttempt( attemptID);
+            return teacher.GetQuestionAndAnswerFromAttempt( attemptId);
 
         }
 
-        public List<AllStudentTestsDTO> GetBestResultOfTestByGroupID(int groupID) //Лучшая попытка конкретного теста конкретного юзера -  все студенты *
+        public List<AllStudentTestsDTO> GetBestResultOfTestByGroupId(int groupId) //Лучшая попытка конкретного теста конкретного юзера -  все студенты *
         {
             TestManager teacher = new TestManager();
-            return teacher.GetBestResultOfTestByGroupID(groupID);
+            return teacher.GetBestResultOfTestByGroupID(groupId);
         }
       
         public List<AttemptResultDTO> GetBestResultsOfStudentsByTestId(int testId) //Лучшие Результаты всех студентов для тестов группы 
@@ -94,7 +94,7 @@ namespace TestingSystem.Data
             return teacher.GetTestVSTagSearchAnd(tag);
 
         }
-        public List<TestDTO> GetTestByTagpAndGroup(TagGroupDTO dto) //корректный
+        public List<TestDTO> GetTestByTagIdGroupId(TagGroupDTO dto) //корректный
                                                                         
         {
             TestManager teacher = new TestManager();
@@ -121,10 +121,10 @@ namespace TestingSystem.Data
             TestGroupCRUD teacher = new TestGroupCRUD();
             teacher.Add(testgroup);
         }
-        public List<QuestionAnswerDTO> GetAllAnswerByAttemptID(int attemptID)
+        public List<QuestionAnswerDTO> GetAllAnswerByAttemptId(int attemptId)
         {
             AttemptManager b = new AttemptManager();
-            return b.GetAllAnswersByAttemptId(attemptID);
+            return b.GetAllAnswersByAttemptId(attemptId);
         }
     }
 }
