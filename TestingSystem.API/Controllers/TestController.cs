@@ -107,7 +107,7 @@ namespace TestingSystem.API.Controllers
         [HttpPost("Author")]       //создание теста
         public IActionResult PostTest(TestInputModel testmodel)
         {
-            if (testmodel.Name != "" && testmodel.DurationTime.HasValue && testmodel.SuccessScore.HasValue && testmodel.QuestionNumber.HasValue)
+            if (testmodel.Name != "" && testmodel.DurationTime != "" && testmodel.SuccessScore.HasValue && testmodel.QuestionNumber.HasValue)
             {
                 Mapper mapper = new Mapper();
                 TestDTO testdto = mapper.ConvertTestInputModelToTestDTO(testmodel);
@@ -124,7 +124,7 @@ namespace TestingSystem.API.Controllers
         [HttpPut("{testId}/Author")]        //изменение информации о конкретном тесте
         public IActionResult PutTestById([FromBody]TestInputModel testmodel)
         {
-            if (testmodel.Name != "" && testmodel.DurationTime.HasValue && testmodel.SuccessScore.HasValue && testmodel.QuestionNumber.HasValue)
+            if (testmodel.Name != "" && testmodel.DurationTime != "" && testmodel.SuccessScore.HasValue && testmodel.QuestionNumber.HasValue)
             {
                 Mapper mapper = new Mapper();
                 TestDTO testdto = mapper.ConvertTestInputModelToTestDTO(testmodel);
