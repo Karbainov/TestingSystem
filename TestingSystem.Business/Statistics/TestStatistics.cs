@@ -33,7 +33,7 @@ namespace TestingSystem.Business.Statistics
                 }
             }
 
-            return results.Keys.ToList();
+            return results.Values.ToList();
         }
 
         public double AverageResult(int id)

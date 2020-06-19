@@ -11,6 +11,6 @@ namespace TestingSystem.Data.DTO.DTOsForStatistics
         public int TypeID { get; set; }
         public byte AnswersCount { get; set; }
         public byte Weight { get; set; }
-        public List<int> AnswerIds { get; set; }
+        public List<int> AnswersId { get; set; }
     }
 }
