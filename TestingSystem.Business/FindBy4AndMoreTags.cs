@@ -22,12 +22,23 @@ namespace TestingSystem.Business
         }
         public List<string> CreateListFromString(string tags)
         {
-           
-            List<string> listOfTags = new List<string>(tags.Split(new char[] { ',',' '}).ToList<string>());
-            foreach(string a in listOfTags)
+            for (int i = 0; i < tags.Length ; i++)
             {
-                a.Trim();
+                if(tags[i] ==' ')
+                {
+                    
+                    tags =tags.Remove(i,1);
+                    i--;
+                }
             }
+            for(int i = 0; i<tags.Length-1;i++)
+            {
+                if(tags[i]==','&&tags[i+1]==',')
+                {
+                    tags =tags.Remove(i);
+                }
+            }
+            List<string> listOfTags = new List<string>(tags.Split(new char[] {','}).ToList<string>());
             return listOfTags;
         }
         public List<TestDTO> GetAllRightTests(List<TestTagsModel> models)
@@ -62,7 +73,7 @@ namespace TestingSystem.Business
         public List<int> FindTagsID(List<TagDTO> tagDTOs, List<String> tags)
         {
             List<int> tagId = new List<int>();
-            for (int i = 0; i < tags.Count-1; i++)
+            for (int i = 0; i < tags.Count; i++)
             {
                 foreach (TagDTO a in tagDTOs)
                 {
@@ -77,7 +88,7 @@ namespace TestingSystem.Business
         public List<TestTagsModel> TestTagDTOToTestTagsModel(List<TestTagDTO> testTagDTOs)
         {
             List<TestTagsModel> tests = new List<TestTagsModel>();
-            bool isadd = false;
+            bool isadd ;
             foreach (TestTagDTO a in testTagDTOs)
             {
                 isadd = false;
@@ -94,9 +105,11 @@ namespace TestingSystem.Business
                 {
                     TestTagsModel newTs = new TestTagsModel();
                     newTs.TestID = a.TestID;
+                    newTs.TagsID = new List<int>();
                     newTs.TagsID.Add(a.TagID);
                     tests.Add(newTs);
                 }
+                
             }
             return tests;
         }
