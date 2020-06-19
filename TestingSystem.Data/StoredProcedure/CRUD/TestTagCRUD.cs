@@ -11,14 +11,12 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
 {
     public class TestTagCRUD
     {
-        public int Add(TestTagDTO testtag)
+        public int Add(TestTagDTO testTag)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Test_Tag_Add @testId, @tagId";
-                int testtagID = connection.Query<int>(sqlExpression, testtag).FirstOrDefault();
-                testtag.ID = testtagID;
-                return testtagID;
+                return connection.Query<int>(sqlExpression, testTag).FirstOrDefault();
             }
         }
 
@@ -76,7 +74,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             }
         }
 
-        public void DeleteById(int id)
+        public void Delete(int id)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {

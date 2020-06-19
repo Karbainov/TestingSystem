@@ -11,8 +11,6 @@ namespace TestingSystem.Data.StoredProcedure
 {
     public class FeedbackManager
     {
-        
-
         public List<FeedbackDTO> GetFeedbackByDate(DateTime dateTime1, DateTime dateTime2)
         {
             using (IDbConnection connection = Connection.GetConnection())

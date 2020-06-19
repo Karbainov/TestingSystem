@@ -11,58 +11,49 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
 {
     public class AttemptCRUD
     {
-        public AttemptCRUD()
-        {
-
-        }
-
-        public int AttemptAdd(AttemptDTO attempt)
+        public int Add(AttemptDTO attempt)
         {
             var connection = Connection.GetConnection();
             connection.Open();
             string sqlExpression = "Attempt_Add @number, @userID, @testID, @userResult, @dateTime, @durationTime";
-            int attemptID = connection.Query<int>(sqlExpression, attempt).FirstOrDefault();
-            attempt.id = attemptID;
-            return attempt.id;
+            return connection.Query<int>(sqlExpression, attempt).FirstOrDefault();
         }
         
-        public List<AttemptDTO> AttemptGetAll()
+        public List<AttemptDTO> GetAll()
         {
             var connection = Connection.GetConnection();
             string sqlExpression = "Attempt_GetALL";
-            List<AttemptDTO> attempt = new List<AttemptDTO>();
-            attempt = connection.Query<AttemptDTO>(sqlExpression).ToList();
-            return attempt;
+            return connection.Query<AttemptDTO>(sqlExpression).ToList();
         }
 
 
 
-        public List<AttemptDTO> AttemptByUserId(int userID)
+        public List<AttemptDTO> GetByUserId(int userId)
         {
             var connection = Connection.GetConnection();
             string sqlExpression = "Attempt_GetByUserID";
             
-            return connection.Query<AttemptDTO>(sqlExpression, new { userID }, commandType: CommandType.StoredProcedure).ToList();
+            return connection.Query<AttemptDTO>(sqlExpression, new { userId }, commandType: CommandType.StoredProcedure).ToList();
            
         }
 
 
 
-        public List<AttemptDTO> AttemptByTestId(int testID)
+        public List<AttemptDTO> GetByTestId(int testId)
         {
             var connection = Connection.GetConnection();
             string sqlExpression = "Attempt_GetByTestID";
-            return connection.Query<AttemptDTO>(sqlExpression, new { testID }, commandType: CommandType.StoredProcedure).ToList();
+            return connection.Query<AttemptDTO>(sqlExpression, new { testId }, commandType: CommandType.StoredProcedure).ToList();
         }
 
-        public void AttemptUpdate(AttemptDTO attempt)
+        public void Update(AttemptDTO attempt)
         {
             var connection = Connection.GetConnection();
             string sqlExpression = "Attempt_Update";
             connection.Execute(sqlExpression, attempt, commandType: CommandType.StoredProcedure);
         }
 
-        public void AttemptDelete(int id)
+        public void Delete(int id)
         {
             var connection = Connection.GetConnection();
             string sqlExpression = "Attempt_Delete";

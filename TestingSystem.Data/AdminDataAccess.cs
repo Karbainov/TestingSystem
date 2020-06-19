@@ -14,13 +14,13 @@ namespace TestingSystem.Data
         {
             
             UserCRUD user = new UserCRUD();
-            user.Create(userC);
+            user.Add(userC);
         }
         
         public void UserRoleCreate(UserRoleDTO userRole)
         {
             UserRoleCRUD user = new UserRoleCRUD();
-            user.Create(userRole);
+            user.Add(userRole);
         }
 
         public List<UserDTO> GetAllUsers()
@@ -74,16 +74,16 @@ namespace TestingSystem.Data
             GroupCRUD group = new GroupCRUD();
             group.Delete(id);
         }
-        public void StudentAdd (int userID, int groupID) 
+        public void StudentAdd (int userId, int groupId) 
         {
-            StudentGroupDTO studentA = new StudentGroupDTO(1, userID, groupID);
+            StudentGroupDTO studentA = new StudentGroupDTO(1, userId, groupId);
             StudentGroup student = new StudentGroup();
             student.Add(studentA);
         }
         public void StudentDelete(StudentGroupDTO studentD)
         {
             StudentGroup student = new StudentGroup();
-            student.DeleteByID(studentD.ID);
+            student.Delete(studentD.ID);
         }
         public void StudentDeleteByUserIdGroupId(int userId, int groupId)
         {
@@ -95,47 +95,48 @@ namespace TestingSystem.Data
             TeacherGroup teacher = new TeacherGroup();
             teacher.DeleteByUserIdGroupId(userId, groupId);
         }
-        public void TeacherAdd(int userID, int groupID)
+        public void TeacherAdd(int userId, int groupId)
         {
-            TeacherGroupDTO teacherA = new TeacherGroupDTO(1, userID, groupID);
+            TeacherGroupDTO teacherA = new TeacherGroupDTO(1, userId, groupId);
             TeacherGroup teacher = new TeacherGroup();
             teacher.Add(teacherA);
         }
         public void TeacherDelete(TeacherGroupDTO teacherD)
         {
             TeacherGroup teacher = new TeacherGroup();
-            teacher.DeleteByID(teacherD.ID);
+            teacher.Delete(teacherD.ID);
         }
-        public void AddRoleToUser(UserRoleDTO dTO)
+        public void AddRoleToUser(UserRoleDTO dto)
         {
             UserRoleCRUD roleCRUD = new UserRoleCRUD();
-            roleCRUD.Create(dTO);
+            roleCRUD.Add(dto);
         }
         public List<UserPositionDTO> GetAllUsersWithRoles()
         {
             UserManager adm = new UserManager();
             return adm.GetUserVSRole();
         }
-        public List<UserRoleDTO> GetUserRolesByUserID(int userID)
+        public List<UserRoleDTO> GetUserRolesByUserId(int userId)
         {
             UserRoleCRUD roleCRUD = new UserRoleCRUD();
-            return roleCRUD.ReadByUserID(userID);
+            return roleCRUD.GetByUserID(userId);
         }
-        public List<UserDTO> GetUsersByRoleID(int roleID)
+        public List<UserDTO> GetUsersByRoleID(int roleId)
         {
-            UserRoleCRUD roleCRUD = new UserRoleCRUD();
-            return roleCRUD.GetUsersByRoleID(roleID);
+            UserManager users = new UserManager();
+            return users.GetUsersByRoleID(roleId);
         }
-        public void DeleteUsersRole(UserRoleDTO userRoleDTO)
+        public void UserRoleDelete(int userId, int roleId)
         {
-            UserRoleCRUD roleCRUD = new UserRoleCRUD();
-            roleCRUD.Delete(userRoleDTO);
+            UserRoleCRUD userRoleCRUD = new UserRoleCRUD();
+            UserRoleDTO userRoleDTO = new UserRoleDTO(0, userId, roleId);
+            userRoleCRUD.Delete(userRoleDTO);
         }
 
         public List<RoleDTO> GetRole()
         {
             RoleCRUD role = new RoleCRUD();
-            return role.Read();
+            return role.GetAll();
         }
 
         public List<UserDTO> GetAllStudents(int id)
@@ -143,20 +144,20 @@ namespace TestingSystem.Data
             GroupManager gm = new GroupManager();
             return gm.GetAllStudents(id);
         }
-        public List<UserDTO> GetTeacherByGroupId(int Groupid)
+        public List<UserDTO> GetTeacherByGroupId(int groupId)
         {
             GroupManager tc = new GroupManager();
-            return tc.GetTeacherByGroupId(Groupid);
+            return tc.GetTeacherByGroupId(groupId);
         }
-        public void DeleteStudentFromGroup(int userID, int groupID)
+        public void DeleteStudentFromGroup(int userId, int groupId)
         {
             GroupManager gm = new GroupManager();
-            gm.DeleteStudentFromGroup(userID, groupID);
+            gm.DeleteStudentFromGroup(userId, groupId);
         }
-        public void DeleteTeacherFromGroup(int userID, int groupID)
+        public void DeleteTeacherFromGroup(int userId, int groupId)
         {
             GroupManager gm = new GroupManager();
-            gm.DeleteTeacherFromGroup(userID, groupID);
+            gm.DeleteTeacherFromGroup(userId, groupId);
         }
         
         public List<RoleDTO> GetRoleByUserId(int userId)

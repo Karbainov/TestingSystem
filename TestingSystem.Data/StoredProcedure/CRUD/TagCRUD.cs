@@ -15,9 +15,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Tag_Add @name";
-                int tagID = connection.Query<int>(sqlExpression, tag).FirstOrDefault();
-                tag.ID = tagID;
-                return tagID;
+                return connection.Query<int>(sqlExpression, tag).FirstOrDefault();
             }
         }
 

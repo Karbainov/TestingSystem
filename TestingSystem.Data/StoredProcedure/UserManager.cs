@@ -89,13 +89,22 @@ namespace TestingSystem.Data.StoredProcedure
                 return connection.Query<TestAttemptDTO>(sqlExpression, new { id }, commandType: CommandType.StoredProcedure).ToList();
             }
         }
+        
+        public List<UserDTO> GetUsersByRoleID(int roleId)
+        {
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "GetUsersByRoleId";
+                return connection.Query<UserDTO>(sqlExpression, new { roleId }, commandType: CommandType.StoredProcedure).ToList();
+            }
+        }
 
-        public List<GroupDTO> GetGroupsAndStudentsByTeacherID(int TeacherID) 
+        public List<GroupDTO> GetGroupsAndStudentsByTeacherID(int teacherId) 
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "GetGroupsAndStudentsByTeacherID";
-                return connection.Query<GroupDTO>(sqlExpression, new { TeacherID }, commandType: CommandType.StoredProcedure).ToList();
+                return connection.Query<GroupDTO>(sqlExpression, new { teacherId }, commandType: CommandType.StoredProcedure).ToList();
             }
         }
     }

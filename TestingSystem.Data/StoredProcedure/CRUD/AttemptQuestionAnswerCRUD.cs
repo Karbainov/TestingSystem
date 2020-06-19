@@ -16,9 +16,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             var connection = Connection.GetConnection();
             connection.Open();
             string sqlExpression = "Attempt_Question_Answer_Add @AttemptID, @QuestionID, @AnswerID";
-            int aQAID = connection.Query<int>(sqlExpression, aQA).FirstOrDefault();
-            aQA.ID = aQAID;
-            return aQA.ID;
+            return connection.Query<int>(sqlExpression, aQA).FirstOrDefault();
         }
 
         public List<AttemptQuestionAnswerDTO> GetAll()
@@ -26,8 +24,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             var connection = Connection.GetConnection();
             connection.Open();
             string sqlExpression = "Attempt_Question_Answer_GetAll";
-            List<AttemptQuestionAnswerDTO> aQA = connection.Query<AttemptQuestionAnswerDTO>(sqlExpression).ToList();
-            return aQA;
+            return connection.Query<AttemptQuestionAnswerDTO>(sqlExpression).ToList();
 
         }
 
@@ -36,38 +33,33 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             var connection = Connection.GetConnection();
             connection.Open();
             string sqlExpression = "Attempt_Question_Answer_GetById";
-            AttemptQuestionAnswerDTO aQA = connection.Query<AttemptQuestionAnswerDTO>(sqlExpression, new { id }, commandType: CommandType.StoredProcedure).FirstOrDefault();
-            return aQA;
+            return connection.Query<AttemptQuestionAnswerDTO>(sqlExpression, new { id }, commandType: CommandType.StoredProcedure).FirstOrDefault();
 
         }
 
-        public List<AttemptQuestionAnswerDTO> GetByAttemptID(int attemptId)
+        public List<AttemptQuestionAnswerDTO> GetByAttemptId(int attemptId)
         {
             var connection = Connection.GetConnection();
             connection.Open();
             string sqlExpression = "Attempt_Question_Answer_GetByAttemptId";
-            List<AttemptQuestionAnswerDTO> aQA = connection.Query<AttemptQuestionAnswerDTO>(sqlExpression, new { attemptId }, commandType: CommandType.StoredProcedure).ToList();
-            return aQA;
+            return connection.Query<AttemptQuestionAnswerDTO>(sqlExpression, new { attemptId }, commandType: CommandType.StoredProcedure).ToList();
         }
 
-        public List<AttemptQuestionAnswerDTO> GetByQuestionID(int questionId)
+        public List<AttemptQuestionAnswerDTO> GetByQuestionId(int questionId)
         {
             var connection = Connection.GetConnection();
             connection.Open();
             string sqlExpression = "Attempt_Question_Answer_GetByQuestionId";
-            List<AttemptQuestionAnswerDTO> aQA = connection.Query<AttemptQuestionAnswerDTO>(sqlExpression, new { questionId }, commandType: CommandType.StoredProcedure).ToList();
-            return aQA;
+            return connection.Query<AttemptQuestionAnswerDTO>(sqlExpression, new { questionId }, commandType: CommandType.StoredProcedure).ToList();
 
         }
         
-        public List<AttemptQuestionAnswerDTO> GetByAnswerID(int answerId)
+        public List<AttemptQuestionAnswerDTO> GetByAnswerId(int answerId)
         {
             var connection = Connection.GetConnection();
             connection.Open();
             string sqlExpression = "Attempt_Question_Answer_GetByAnswerId";
-            List<AttemptQuestionAnswerDTO> aQA = connection.Query<AttemptQuestionAnswerDTO>(sqlExpression, new { answerId }, commandType: CommandType.StoredProcedure).ToList();
-            return aQA;
-
+            return connection.Query<AttemptQuestionAnswerDTO>(sqlExpression, new { answerId }, commandType: CommandType.StoredProcedure).ToList();
         }
 
         public void Delete(int id)
@@ -77,21 +69,21 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             connection.Execute(sqlExpression, new { id }, commandType: CommandType.StoredProcedure);
         }
         
-        public void DeleteByAttemptID(int attemptId)
+        public void DeleteByAttemptId(int attemptId)
         {
             var connection = Connection.GetConnection();
             string sqlExpression = "Attempt_Question_Answer_DeleteByAttemptId";
             connection.Execute(sqlExpression, new { attemptId }, commandType: CommandType.StoredProcedure);
         }
         
-        public void DeleteByQuestionID(int questionId)
+        public void DeleteByQuestionId(int questionId)
         {
             var connection = Connection.GetConnection();
             string sqlExpression = "Attempt_Question_Answer_DeleteByQuestionId";
             connection.Execute(sqlExpression, new { questionId }, commandType: CommandType.StoredProcedure);
         }
         
-        public void DeleteByAnswerID(int answerId)
+        public void DeleteByAnswerId(int answerId)
         {
             var connection = Connection.GetConnection();
             string sqlExpression = "Attempt_Question_Answer_DeleteByAnswerId";

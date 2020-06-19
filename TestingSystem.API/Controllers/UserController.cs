@@ -129,17 +129,22 @@ namespace TestingSystem.API.Controllers
             UserMapper mapper = new UserMapper();
             AdminDataAccess adm = new AdminDataAccess();
             adm.UserUpdate(mapper.ConvertUserInputModelToGroupDTO(user));
-
+        }
+        
+        [HttpDelete("{userId}/role/{roleId}")]
+        public void DeleteUserRole(int userId, int roleId)
+        {
+            AdminDataAccess adm = new AdminDataAccess();
+            adm.UserRoleDelete(userId, roleId);
         }
 
         [HttpDelete("{id}")]
-
         public void Delete(int id)
         {
             AdminDataAccess adm = new AdminDataAccess();
             adm.UserDelete(id);
-
         }
+        
         [HttpGet("{UserID}/user")]
         public StudentOutputModel GetStudentTests(int UserID)
         {
@@ -147,7 +152,7 @@ namespace TestingSystem.API.Controllers
             Mapper mapper = new Mapper();
             List<TestAttemptDTO> tests = student.GetCompleteTest(UserID);
             tests.AddRange(student.GetIncompleteTest(UserID));
-            StudentOutputModel model = mapper.UserDTOTestAttemptDTOToStudentModel(student.GetUser(UserID), mapper.TestAttemptDTOToTestAttemptModel(tests));
+            StudentOutputModel model = mapper.ConvertUserDTOTestAttemptDTOToStudentModel(student.GetUser(UserID), mapper.ConvertTestAttemptDTOToTestAttemptModel(tests));
             return model;
         }
         [HttpGet("Tests/{UserID}/{TestID}")]
@@ -156,7 +161,7 @@ namespace TestingSystem.API.Controllers
             StudentDataAccess student = new StudentDataAccess();
             Mapper mapper = new Mapper();
             UserIdTestIdDTO dTO = new UserIdTestIdDTO(UserID, TestID);
-            List<AttemptResultOutputModel> model = mapper.attemptDTOToAttemptModel(student.GetAttemptsByUserIdTestId(dTO));
+            List<AttemptResultOutputModel> model = mapper.ConvertAttemptDTOToAttemptModel(student.GetAttemptsByUserIdTestId(dTO));
             return model;
         }
         [HttpGet("Attempt/{AttemptID}")]
@@ -164,7 +169,7 @@ namespace TestingSystem.API.Controllers
         {
             TeacherDataAccess teacher = new TeacherDataAccess();
             Mapper mapper = new Mapper();
-            List<QuestionAnswerOutputModel> model = mapper.QuestionAnswerDTOToQuestionAnswerModel(teacher.GetQuestionAndAnswerByAttempt(attemptID));
+            List<QuestionAnswerOutputModel> model = mapper.ConvertQuestionAnswerDTOToQuestionAnswerModel(teacher.GetQuestionAndAnswerByAttempt(attemptID));
             return model;
         }
     }

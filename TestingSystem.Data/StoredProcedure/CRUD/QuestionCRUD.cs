@@ -16,8 +16,8 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             var connection = Connection.GetConnection();
             connection.Open();
             string sqlExpression = "Question_Add @TestID, @Value, @TypeID, @AnswersCount, @Weight";
-            int questionID = connection.Query<int>(sqlExpression, question).FirstOrDefault();
-            question.ID = questionID;
+            int questionId = connection.Query<int>(sqlExpression, question).FirstOrDefault();
+            question.ID = questionId;
             return question.ID;
         }
 
@@ -41,22 +41,21 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
 
         }
 
-        public List<QuestionDTO> GetByTestID(int Testid)
+        public List<QuestionDTO> GetByTestId(int testId)
         {
             var connection = Connection.GetConnection();
             connection.Open();
             string sqlExpression = "Question_GetByTestId";
-            List<QuestionDTO> questions = connection.Query<QuestionDTO>(sqlExpression, new { Testid }, commandType: CommandType.StoredProcedure).ToList();
+            List<QuestionDTO> questions = connection.Query<QuestionDTO>(sqlExpression, new { testId }, commandType: CommandType.StoredProcedure).ToList();
             return questions;
         }
 
-        public List<QuestionDTO> GetByTypeID(int Typeid)
+        public List<QuestionDTO> GetByTypeId(int typeId)
         {
             var connection = Connection.GetConnection();
             connection.Open();
             string sqlExpression = "Question_GetByTypeId";
-            List<QuestionDTO> questions = connection.Query<QuestionDTO>(sqlExpression, new { Typeid }, commandType: CommandType.StoredProcedure).ToList();
-            return questions;
+            return connection.Query<QuestionDTO>(sqlExpression, new { typeId }, commandType: CommandType.StoredProcedure).ToList();
 
         }
 
