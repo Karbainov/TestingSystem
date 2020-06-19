@@ -180,7 +180,7 @@ namespace TestingSystem.API
             {
                 ID = testmodel.ID,
                 Name = testmodel.Name,
-                DurationTime = testmodel.DurationTime,
+                DurationTime = TimeSpan.Parse(testmodel.DurationTime),
                 SuccessScore = testmodel.SuccessScore,
                 QuestionNumber = testmodel.QuestionNumber,
             };
