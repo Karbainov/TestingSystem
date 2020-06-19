@@ -8,6 +8,7 @@ using TestingSystem.Data;
 using TestingSystem.Data.DTO;
 using TestingSystem.API.Models.Output;
 using TestingSystem.API.Models.Input;
+using TestingSystem.Business;
 
 namespace TestingSystem.API.Controllers
 {
@@ -22,7 +23,13 @@ namespace TestingSystem.API.Controllers
             _logger = logger;
         }
 
-
+        [HttpGet("search-test-by-tags/{tags}/Authors")]
+        public IActionResult GetTestByMoreThanThreeTags( string tags)
+        {
+            Mapper mapper = new Mapper();
+            FindBy4AndMoreTags search = new FindBy4AndMoreTags();
+            return Json(mapper.ConvertTestDTOToTestModelList(search.FindAnd(tags)));
+        }
         //Запросы на основной странице "Tests" (список тестов/список тэгов)
         
         [HttpGet("Author")]    //вывод списка всех тестов
@@ -39,13 +46,28 @@ namespace TestingSystem.API.Controllers
             bool caseSwitch =sttim.SwitchValue;
             Mapper mapper = new Mapper();
             AuthorDataAccess search = new AuthorDataAccess();
-
-            switch (caseSwitch)
+            FindBy4AndMoreTags searchBy4AndMoreTags = new FindBy4AndMoreTags();
+            if (caseSwitch)
             {
-                case true:
+                if (sttim.Tag.Length < 4)
+                {
                     return Json(mapper.ConvertTestDTOToTestModelList(search.GetTestVSTagSearchAnd(sttim.Tag)));
-                case false:                  
+                }
+                else
+                {
+                    return Json(mapper.ConvertTestDTOToTestModelList(searchBy4AndMoreTags.FindAnd(sttim.Tag)));
+                }
+            }
+            else
+            {
+                if (sttim.Tag.Length < 4)
+                {
                     return Json(mapper.ConvertTestDTOToTestModelList(search.GetTestVSTagSearchOr(sttim.Tag)));
+                }
+                else
+                {
+                    return Json(mapper.ConvertTestDTOToTestModelList(searchBy4AndMoreTags.FindOr(sttim.Tag)));
+                }
             }
         }        
 

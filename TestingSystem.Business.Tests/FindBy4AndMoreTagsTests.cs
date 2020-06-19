@@ -1,5 +1,7 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using TestingSystem.Business.Tests.Mocks;
+using TestingSystem.Data.DTO;
 
 namespace TestingSystem.Business.Tests
 {
@@ -47,5 +49,22 @@ namespace TestingSystem.Business.Tests
                 CollectionAssert.AreEqual(a.TagsID, actual[i].TagsID);
             }
         }
+        [TestCase(1)]
+        public void FindTest(int num)
+        {
+            FindMock mock = new FindMock();
+            FindBy4AndMoreTags tags = new FindBy4AndMoreTags();
+            List<TestDTO> actual = tags.Find(mock.GetActual(num));
+            CollectionAssert.AreEqual(mock.GetExpected(num), actual);
+        }
+        [TestCase(1)]
+        public void DeleteUselessTestsTest(int num)
+        {
+            DeleteUselessTestsMock mock = new DeleteUselessTestsMock();
+            FindBy4AndMoreTags tags = new FindBy4AndMoreTags();
+            List<TestTagsModel> actual = tags.DeleteUselessTests(mock.GetModel(num), mock.GetListOfInt(num));
+            CollectionAssert.AreEqual(mock.GetExspected(num), actual);
+        }
+
     }
 }
