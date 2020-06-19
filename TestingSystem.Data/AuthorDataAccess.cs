@@ -45,7 +45,7 @@ namespace TestingSystem.Data
         public List<FeedbackDTO> GetAllFeedbacks()       //список всех фидбэков (сортировка по дате убыв.)
         {
             FeedbackCRUD feedbacks = new FeedbackCRUD();
-            return feedbacks.FeedbackGetAll();
+            return feedbacks.GetAll();
         }
 
         public List<FeedbackDTO> GetFeedbackByTest(int testId)    //список фидбэков конкретного теста (сортировка по дате убыв.)
@@ -114,7 +114,7 @@ namespace TestingSystem.Data
         public List<QuestionDTO> GetQuestionsByTestID(int testId)  //список всех вопросов теста 
         {
             QuestionCRUD q = new QuestionCRUD();
-            return q.GetByTestID(testId);
+            return q.GetByTestId(testId);
         }
 
         public List<AnswerDTO> GetAllAnswersInTest(int testid)        //список всех ответов теста с указанием айди вопроса
@@ -170,21 +170,21 @@ namespace TestingSystem.Data
 
         public int DeleteQuestionFromTest(int questionId)  //удалить вопрос из теста с пересчетом результатов
         {
-            QuestionManager question = new QuestionManager();
-            question.DeleteQuestionFromTest(questionId);
+            QuestionCRUD question = new QuestionCRUD();
+            question.Delete(questionId);
             return questionId;
         }
 
         public int AddAnswer(AnswerDTO ans)     //добавить ответ к вопросу
         {
             AnswerCRUD answer = new AnswerCRUD();
-            return answer.AnswerAdd(ans);
+            return answer.Add(ans);
         }
 
         public List<AnswerDTO> GetAnswerByQuestionId(int questonId)     //список ответов на конкретный вопрос
         {
             AnswerCRUD answers = new AnswerCRUD();
-            return answers.AnswerGetByQuestionId(questonId);
+            return answers.GetByQuestionId(questonId);
         }
 
         public void UpdateAnswer(AnswerDTO ans)    //редактировать ответ
@@ -250,10 +250,10 @@ namespace TestingSystem.Data
 
         
 
-        public List<QuestionDTO> GetQuestionsByTypeID(int typeId)  //список всех вопросов по конкретному типу
+        public List<QuestionDTO> GetQuestionsByTypeId(int typeId)  //список всех вопросов по конкретному типу
         {
             QuestionCRUD q = new QuestionCRUD();
-            return q.GetByTypeID(typeId);
+            return q.GetByTypeId(typeId);
         }
 
         public int AddType(TypeDTO type)   //добавить тип вопросов

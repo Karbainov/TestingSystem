@@ -45,12 +45,49 @@ namespace TestingSystem.API.Controllers
 
 
         [HttpPost]
-        public void Post([FromBody] UserInputModel user)
+        public void PostUser([FromBody] UserInputModel user)
         {
             UserMapper mapper = new UserMapper();
             AdminDataAccess adm = new AdminDataAccess();
             adm.UserCreate(mapper.ConvertUserInputModelToGroupDTO(user));
 
+        }
+        
+        [HttpPost("role")]
+        public void PostUserRole([FromBody] UserRoleInputModel userRole)
+        {
+            UserMapper mapper = new UserMapper();
+            AdminDataAccess adm = new AdminDataAccess();
+            adm.UserRoleCreate(mapper.ConvertUserRoleInputModelToUserRoleDTO(userRole));
+        }
+        
+        [HttpGet("role")]
+        public List<RoleOutputModel> GetRole()
+        {
+            UserMapper mapper = new UserMapper();
+            AdminDataAccess adm = new AdminDataAccess();
+            List<RoleDTO> roles = adm.GetRole();
+            List<RoleOutputModel> rolesOut = new List<RoleOutputModel>();
+            foreach (RoleDTO r in roles)
+            {
+                rolesOut.Add(mapper.ConvertRoleDTOToRoleOutputModel(r));
+            }
+
+            return rolesOut;
+        }
+        
+        [HttpGet("{userId}/role")]
+        public List<RoleOutputModel> GetRoleByUserId(int userId)
+        {
+            UserMapper mapper = new UserMapper();
+            AdminDataAccess adm = new AdminDataAccess();
+            List<RoleDTO> roles = adm.GetRoleByUserId(userId);
+            List<RoleOutputModel> rolesOut = new List<RoleOutputModel>();
+            foreach (RoleDTO r in roles)
+            {
+                rolesOut.Add(mapper.ConvertRoleDTOToRoleOutputModel(r));
+            }
+            return rolesOut;
         }
         
         [HttpGet]
@@ -63,14 +100,21 @@ namespace TestingSystem.API.Controllers
             return mapper.ConvertUserPositionDTOsToUserWithRolesOutputModels(users);
         }
         
-
+        
         [HttpGet("role/{roleID}")]
-        public List<UserRoleDTO> GetUsersByRoleID(int roleID)
+        public List<UserOutputModel> GetUsersByRoleID(int roleID)
         {
             AdminDataAccess adm = new AdminDataAccess();
-            return adm.GetUserRolesByRoleID(roleID);
+            List<UserOutputModel> allUsers = new List<UserOutputModel>();
+            UserMapper mapper = new UserMapper();
+            
+            foreach(UserDTO user in adm.GetUsersByRoleID(roleID))
+            {
+                allUsers.Add(mapper.ConvertUserDTOToUserOutputModel(user));
+            }
+            return allUsers;
         }
-
+        
         [HttpGet("{id}")]
         public UserOutputModel GetUserById(int id)
         {
@@ -85,17 +129,22 @@ namespace TestingSystem.API.Controllers
             UserMapper mapper = new UserMapper();
             AdminDataAccess adm = new AdminDataAccess();
             adm.UserUpdate(mapper.ConvertUserInputModelToGroupDTO(user));
-
+        }
+        
+        [HttpDelete("{userId}/role/{roleId}")]
+        public void DeleteUserRole(int userId, int roleId)
+        {
+            AdminDataAccess adm = new AdminDataAccess();
+            adm.UserRoleDelete(userId, roleId);
         }
 
         [HttpDelete("{id}")]
-
         public void Delete(int id)
         {
             AdminDataAccess adm = new AdminDataAccess();
             adm.UserDelete(id);
-
         }
+        
         [HttpGet("{UserID}/user")]
         public StudentOutputModel GetStudentTests(int UserID)
         {
@@ -103,7 +152,7 @@ namespace TestingSystem.API.Controllers
             Mapper mapper = new Mapper();
             List<TestAttemptDTO> tests = student.GetCompleteTest(UserID);
             tests.AddRange(student.GetIncompleteTest(UserID));
-            StudentOutputModel model = mapper.UserDTOTestAttemptDTOToStudentModel(student.GetUser(UserID), mapper.TestAttemptDTOToTestAttemptModel(tests));
+            StudentOutputModel model = mapper.ConvertUserDTOTestAttemptDTOToStudentModel(student.GetUser(UserID), mapper.ConvertTestAttemptDTOToTestAttemptModel(tests));
             return model;
         }
         [HttpGet("Tests/{UserID}/{TestID}")]
@@ -112,7 +161,7 @@ namespace TestingSystem.API.Controllers
             StudentDataAccess student = new StudentDataAccess();
             Mapper mapper = new Mapper();
             UserIdTestIdDTO dTO = new UserIdTestIdDTO(UserID, TestID);
-            List<AttemptResultOutputModel> model = mapper.attemptDTOToAttemptModel(student.GetAttemptsByUserIdTestId(dTO));
+            List<AttemptResultOutputModel> model = mapper.ConvertAttemptDTOToAttemptModel(student.GetAttemptsByUserIdTestId(dTO));
             return model;
         }
         [HttpGet("Attempt/{AttemptID}")]
@@ -120,7 +169,7 @@ namespace TestingSystem.API.Controllers
         {
             TeacherDataAccess teacher = new TeacherDataAccess();
             Mapper mapper = new Mapper();
-            List<QuestionAnswerOutputModel> model = mapper.QuestionAnswerDTOToQuestionAnswerModel(teacher.GetQuestionAndAnswerByAttempt(attemptID));
+            List<QuestionAnswerOutputModel> model = mapper.ConvertQuestionAnswerDTOToQuestionAnswerModel(teacher.GetQuestionAndAnswerByAttempt(attemptID));
             return model;
         }
     }

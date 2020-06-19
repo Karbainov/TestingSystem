@@ -29,6 +29,14 @@ namespace TestingSystem.Data.StoredProcedure
             string sqlExpression = "AddUserWithRole @FirstName, @LastName, @BirthDate, @Login, @Password, @Email, @Phone, @RoleID";
             connection.Execute(sqlExpression, user);
         }
+        
+        public List<RoleDTO> GetRoleByUserId (int userId)
+        {
+            var connection = Connection.GetConnection();
+            connection.Open();
+            string sqlExpression = "GetRoleByUserId ";
+            return connection.Query<RoleDTO>(sqlExpression, new {userId}, commandType: CommandType.StoredProcedure).ToList();
+        }
 
         public List<UserPositionDTO> GetUserVSRole()
         {
@@ -81,13 +89,22 @@ namespace TestingSystem.Data.StoredProcedure
                 return connection.Query<TestAttemptDTO>(sqlExpression, new { id }, commandType: CommandType.StoredProcedure).ToList();
             }
         }
+        
+        public List<UserDTO> GetUsersByRoleID(int roleId)
+        {
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "GetUsersByRoleId";
+                return connection.Query<UserDTO>(sqlExpression, new { roleId }, commandType: CommandType.StoredProcedure).ToList();
+            }
+        }
 
-        public List<GroupDTO> GetGroupsAndStudentsByTeacherID(int TeacherID) 
+        public List<GroupDTO> GetGroupsAndStudentsByTeacherID(int teacherId) 
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "GetGroupsAndStudentsByTeacherID";
-                return connection.Query<GroupDTO>(sqlExpression, new { TeacherID }, commandType: CommandType.StoredProcedure).ToList();
+                return connection.Query<GroupDTO>(sqlExpression, new { teacherId }, commandType: CommandType.StoredProcedure).ToList();
             }
         }
     }

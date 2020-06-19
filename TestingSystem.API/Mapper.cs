@@ -11,7 +11,7 @@ namespace TestingSystem.API
     public class Mapper
     {
         //тест
-        public TestOutputModel TestDTOToTestOutputModel(TestDTO testDTO)
+        public TestOutputModel ConvertTestDTOToTestOutputModel(TestDTO testDTO)
         {
             return new TestOutputModel()
             {
@@ -24,12 +24,12 @@ namespace TestingSystem.API
         }
         
         //список тестов
-        public List<TestOutputModel> TestDTOToTestModelList(List<TestDTO> dtoList) //формирует список тестов
+        public List<TestOutputModel> ConvertTestDTOToTestModelList(List<TestDTO> dtoList) //формирует список тестов
         {
             List<TestOutputModel> modelList = new List<TestOutputModel>();
             foreach (TestDTO testDTO in dtoList)
             {
-                modelList.Add(TestDTOToTestOutputModel(testDTO));
+                modelList.Add(ConvertTestDTOToTestOutputModel(testDTO));
             }
             return modelList;
         }
@@ -56,7 +56,7 @@ namespace TestingSystem.API
         //}
 
         //фидбэк
-        public FeedbackOutputModel FeedbackDTOToFeedbackOutputModel(FeedbackDTO feedbackDTO)
+        public FeedbackOutputModel ConvertFeedbackDTOToFeedbackOutputModel(FeedbackDTO feedbackDTO)
         {
             return new FeedbackOutputModel()
             {
@@ -68,18 +68,18 @@ namespace TestingSystem.API
         }
 
         //список фидбэков
-        public List<FeedbackOutputModel> FeedbackDTOToFeedbackModelList(List<FeedbackDTO> dtoList)
+        public List<FeedbackOutputModel> ConvertFeedbackDTOToFeedbackModelList(List<FeedbackDTO> dtoList)
         {
             List<FeedbackOutputModel> modelList = new List<FeedbackOutputModel>();
             foreach (FeedbackDTO feedbackDTO in dtoList)
             {
-                modelList.Add(FeedbackDTOToFeedbackOutputModel(feedbackDTO));
+                modelList.Add(ConvertFeedbackDTOToFeedbackOutputModel(feedbackDTO));
             }
             return modelList;
         }
 
         //тэг
-        public TagOutputModel TagDTOToTagOutputModel(TagDTO tagDTO)
+        public TagOutputModel ConvertTagDTOToTagOutputModel(TagDTO tagDTO)
         {
             return new TagOutputModel()
             {
@@ -89,18 +89,18 @@ namespace TestingSystem.API
         }
         
         //список тэгов
-        public List<TagOutputModel> TagDTOToTagModelList(List<TagDTO> dtoList)
+        public List<TagOutputModel> ConvertTagDTOToTagModelList(List<TagDTO> dtoList)
         {
             List<TagOutputModel> modelList = new List<TagOutputModel>();
             foreach (TagDTO tagDTO in dtoList)
             {
-                modelList.Add(TagDTOToTagOutputModel(tagDTO));
+                modelList.Add(ConvertTagDTOToTagOutputModel(tagDTO));
             }
             return modelList;
         }
 
         //создать тэг, изменить тэг
-        public TagDTO TagInputModelToTagDTO(TagInputModel tagmodel)
+        public TagDTO ConvertTagInputModelToTagDTO(TagInputModel tagmodel)
         {
             return new TagDTO()
             {
@@ -110,7 +110,7 @@ namespace TestingSystem.API
         }
 
         //попытка
-        public List<AttemptResultOutputModel> attemptDTOToAttemptModel(List<AttemptResultDTO> attempt)
+        public List<AttemptResultOutputModel> ConvertAttemptDTOToAttemptModel(List<AttemptResultDTO> attempt)
         {
             List<AttemptResultOutputModel> model = new List<AttemptResultOutputModel>();
             foreach (AttemptResultDTO a in attempt)
@@ -129,14 +129,14 @@ namespace TestingSystem.API
         }
 
         //попытка студента по конкретному тесту
-        public StudentOutputModel UserDTOTestAttemptDTOToStudentModel(UserDTO user, List<TestAttemptOutputModel> tests)
+        public StudentOutputModel ConvertUserDTOTestAttemptDTOToStudentModel(UserDTO user, List<TestAttemptOutputModel> tests)
         {
             StudentOutputModel student = new StudentOutputModel(user.ID, user.FirstName, user.LastName, tests);
             return student;
         }
 
         //список вопросов с ответами
-        public List<QuestionAnswerOutputModel> QuestionAnswerDTOToQuestionAnswerModel(List<QuestionAnswerDTO> questionsAnswers)
+        public List<QuestionAnswerOutputModel> ConvertQuestionAnswerDTOToQuestionAnswerModel(List<QuestionAnswerDTO> questionsAnswers)
         {
             List<QuestionAnswerOutputModel> model = new List<QuestionAnswerOutputModel>();
             foreach (QuestionAnswerDTO a in questionsAnswers)
@@ -154,7 +154,7 @@ namespace TestingSystem.API
         }
 
         //список попыток теста
-        public List<TestAttemptOutputModel> TestAttemptDTOToTestAttemptModel(List<TestAttemptDTO> tests)
+        public List<TestAttemptOutputModel> ConvertTestAttemptDTOToTestAttemptModel(List<TestAttemptDTO> tests)
         {
             List<TestAttemptOutputModel> model = new List<TestAttemptOutputModel>();
             foreach (TestAttemptDTO a in tests)
@@ -174,7 +174,7 @@ namespace TestingSystem.API
         }
 
         //создать тест, изменить тест
-        public TestDTO TestInputModelToTestDTO(TestInputModel testmodel)
+        public TestDTO ConvertTestInputModelToTestDTO(TestInputModel testmodel)
         {
             return new TestDTO()
             {
@@ -187,7 +187,7 @@ namespace TestingSystem.API
         }
 
         //вопрос
-        public QuestionOutputModel QuestionDTOToQuestionOutputModel(QuestionDTO questionDTO)
+        public QuestionOutputModel ConvertQuestionDTOToQuestionOutputModel(QuestionDTO questionDTO)
         {
             return new QuestionOutputModel()
             {
@@ -200,18 +200,18 @@ namespace TestingSystem.API
         }
 
         //список вопросов
-        public List<QuestionOutputModel> QuestionDTOToQuestionModelList(List<QuestionDTO> dtoList) 
+        public List<QuestionOutputModel> ConvertQuestionDTOToQuestionModelList(List<QuestionDTO> dtoList) 
         {
             List<QuestionOutputModel> modelList = new List<QuestionOutputModel>();
             foreach (QuestionDTO questionDTO in dtoList)
             {
-                modelList.Add(QuestionDTOToQuestionOutputModel(questionDTO));
+                modelList.Add(ConvertQuestionDTOToQuestionOutputModel(questionDTO));
             }
             return modelList;
         }
 
         //ответ
-        public AnswerOutputModel AnswerDTOToAnswerOutputModel(AnswerDTO answerDTO)
+        public AnswerOutputModel ConvertAnswerDTOToAnswerOutputModel(AnswerDTO answerDTO)
         {
             return new AnswerOutputModel()
             {
@@ -223,18 +223,18 @@ namespace TestingSystem.API
         }
 
         //список ответов 
-        public List<AnswerOutputModel> AnswerDTOToAnswerModelList(List<AnswerDTO> dtoList)
+        public List<AnswerOutputModel> ConvertAnswerDTOToAnswerModelList(List<AnswerDTO> dtoList)
         {
             List<AnswerOutputModel> modelList = new List<AnswerOutputModel>();
             foreach (AnswerDTO answerDTO in dtoList)
             {
-                modelList.Add(AnswerDTOToAnswerOutputModel(answerDTO));
+                modelList.Add(ConvertAnswerDTOToAnswerOutputModel(answerDTO));
             }
             return modelList;
         }
 
         //добавляем тэг в тест
-        public TestTagDTO TestTagInputModelToTestTagDTO(TestTagInputModel testtagmodel)
+        public TestTagDTO ConvertTestTagInputModelToTestTagDTO(TestTagInputModel testtagmodel)
         {
             return new TestTagDTO()
             {                
@@ -243,7 +243,7 @@ namespace TestingSystem.API
             };
         }
         //mapper для вывод группы 
-        public GroupOutputModel GroupDTOToGroupOutputModel(GroupDTO group)
+        public GroupOutputModel ConvertGroupDTOToGroupOutputModel(GroupDTO group)
         {
             return new GroupOutputModel()
             {
@@ -255,17 +255,17 @@ namespace TestingSystem.API
         }
 
         //список group
-        public List<GroupOutputModel> GroupDTOToListGroupOutputModel(List<GroupDTO> list)
+        public List<GroupOutputModel> ConvertGroupDTOToListGroupOutputModel(List<GroupDTO> list)
         {
             List<GroupOutputModel> listOutputmodels = new List<GroupOutputModel>();
             foreach (GroupDTO group in list)
             {
-                listOutputmodels.Add(GroupDTOToGroupOutputModel(group));
+                listOutputmodels.Add(ConvertGroupDTOToGroupOutputModel(group));
             }
             return listOutputmodels;
         }
 
-        public GroupDTO GroupInputModelToGroupDTO(GroupInputModel group)
+        public GroupDTO ConvertGroupInputModelToGroupDTO(GroupInputModel group)
         {
             return new GroupDTO()
             {
@@ -277,7 +277,7 @@ namespace TestingSystem.API
         }
 
         //создать вопрос
-        public QuestionDTO QuestionInputModelToQuestionDTO(QuestionInputModel questionmodel)
+        public QuestionDTO ConvertQuestionInputModelToQuestionDTO(QuestionInputModel questionmodel)
         {
             return new QuestionDTO()
             {
@@ -290,7 +290,7 @@ namespace TestingSystem.API
         }
 
         //создать ответ
-        public AnswerDTO AnswerInputModelToAnswerDTO(AnswerInputModel answermodel)
+        public AnswerDTO ConvertAnswerInputModelToAnswerDTO(AnswerInputModel answermodel)
         {
             return new AnswerDTO()
             {
@@ -301,7 +301,7 @@ namespace TestingSystem.API
         }
 
         //полный фидбэк с вопросом, тестом и именем пользователя
-        public FeedbackQuestionOutputModel FeedbackQuestionDTOToFeedbackQuestionOutputModel(FeedbackQuestionDTO feedbackquestionDTO)
+        public FeedbackQuestionOutputModel ConvertFeedbackQuestionDTOToFeedbackQuestionOutputModel(FeedbackQuestionDTO feedbackquestionDTO)
         {
             return new FeedbackQuestionOutputModel()
             {

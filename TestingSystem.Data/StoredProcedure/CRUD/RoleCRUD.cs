@@ -11,13 +11,12 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
 {
     class RoleCRUD
     {
-        public int Create( string name)
+        public int Add(string name)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Role_Create @Name";
                 return  connection.Query<int>(sqlExpression, new{name}).FirstOrDefault();
-                
             }
         }
         public void Delete( int id)
@@ -37,25 +36,18 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             {
                 string sqlExpression = "Role_Update @Name,@ID";
                 connection.Query<int>(sqlExpression, role);
-               
             }
         }
-        public List<RoleDTO> Read()
-        {
-            
+        public List<RoleDTO> GetAll()
+        {  
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Role_Read ";
                 return  connection.Query<RoleDTO>(sqlExpression).ToList();
-                
             }
-            
         }
-        public List<RoleDTO> ReadById( int id)
+        public List<RoleDTO> GetById( int id)
         {
-            
-
-            
             using (IDbConnection connection = Connection.GetConnection())
             {
                 IDbTransaction transaction = connection.BeginTransaction();

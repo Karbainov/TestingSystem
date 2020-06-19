@@ -11,7 +11,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
 {
     class UserCRUD
     {
-        public int Create( UserDTO user)
+        public int Add( UserDTO user)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {

@@ -12,27 +12,27 @@ namespace TestingSystem.Data
         public void CreateFeedback(FeedbackDTO feedbackDTO)
         {
             FeedbackCRUD feedback = new FeedbackCRUD();
-            feedback.FeedbackAdd(feedbackDTO);
+            feedback.Add(feedbackDTO);
         }
-        public List<TestAttemptDTO> GetCompleteTest(int userID)
+        public List<TestAttemptDTO> GetCompleteTest(int userId)
         {
             TestManager manager = new TestManager();
-            return manager.GetCompletedTestsByUserID(userID);
+            return manager.GetCompletedTestsByUserID(userId);
         }
-        public List<TestAttemptDTO> GetIncompleteTest(int userID)
+        public List<TestAttemptDTO> GetIncompleteTest(int userId)
         {
             UserManager user = new UserManager();
-            return user.GetIncompleteTests(userID);
+            return user.GetIncompleteTests(userId);
         }
-        public List<AllStudentTestsDTO> GetAllStudentTests(int userID)
+        public List<AllStudentTestsDTO> GetAllStudentTests(int userId)
         {
             UserManager user = new UserManager();
-            return user.GetStudentVsTests(userID);
+            return user.GetStudentVsTests(userId);
         }
         public int AddAttempt(AttemptDTO dto)
         {
             AttemptCRUD attempt = new AttemptCRUD();
-            return attempt.AttemptAdd(dto);
+            return attempt.Add(dto);
         }
         public int AddAnswerToQuestion(AttemptQuestionAnswerDTO dto)
         {
@@ -42,7 +42,7 @@ namespace TestingSystem.Data
         public int AddAnswer(AnswerDTO dto)
         {
             AnswerCRUD answer = new AnswerCRUD();
-            return answer.AnswerAdd(dto);
+            return answer.Add(dto);
         }
         public List<QuestionDTO> GetQuestionsFromTest(int id)
         {

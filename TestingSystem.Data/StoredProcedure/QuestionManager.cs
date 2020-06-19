@@ -29,12 +29,12 @@ namespace TestingSystem.Data.StoredProcedure
             }            
         }
 
-        public List<QuestionDTO> GetQuestionsByTestID(int TestID)
+        public List<QuestionDTO> GetQuestionsByTestID(int testId)
         {
             using (IDbConnection connection = Connection.GetConnection()) 
             { 
                 string sqlExpression = "GetQuestionsByTestID";
-                return connection.Query<QuestionDTO>(sqlExpression, new { TestID }, commandType: CommandType.StoredProcedure).ToList();
+                return connection.Query<QuestionDTO>(sqlExpression, new { testId }, commandType: CommandType.StoredProcedure).ToList();
             }
         }
         

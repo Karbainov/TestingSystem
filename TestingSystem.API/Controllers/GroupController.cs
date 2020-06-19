@@ -27,14 +27,19 @@ namespace TestingSystem.API.Controllers
             _logger = logger;
         }
 
+
+
         [HttpGet("admin")]  // htpps://localhost/group
         public List<GroupOutputModel> GetAllGroups()
         {         
             AdminDataAccess adm = new AdminDataAccess();
+
             List<GroupOutputModel> groupOutputModels = new List<GroupOutputModel>();
+
             List<GroupDTO> groups = adm.GetAllGroups();
             foreach (GroupDTO g in groups)
             {
+
                 GroupOutputModel www = new GroupOutputModel();
                 AdminDataAccess gr = new AdminDataAccess();
                 www.Id = g.Id;
@@ -47,6 +52,7 @@ namespace TestingSystem.API.Controllers
                 {
                     UserMapper um = new UserMapper();
                     studentsout.Add(um.ConvertUserDTOToUserOutputModel(st));
+
                    
                 }
                 List<UserDTO> teachers = gr.GetTeacherByGroupId(g.Id);
@@ -60,18 +66,27 @@ namespace TestingSystem.API.Controllers
                 www.Teachers = teachersout;  
                 groupOutputModels.Add(www);
 
+
+
             }
             return groupOutputModels;
             
         }
+
         
+
         [HttpPost]
         public void GroupPost([FromBody]GroupInputModel groupC)
         {
             Mapper mapper = new Mapper();
-            GroupDTO groupdto = mapper.GroupInputModelToGroupDTO(groupC);
+
+            GroupDTO groupdto = mapper.ConvertGroupInputModelToGroupDTO(groupC);
+
             AdminDataAccess group = new AdminDataAccess();
+
             group.GroupCreate(groupdto);
+
+
 
         }
 
@@ -79,34 +94,41 @@ namespace TestingSystem.API.Controllers
         public GroupOutputModel GetGroupById(int id)
         {
             Mapper mapper = new Mapper();
+
             AdminDataAccess adm = new AdminDataAccess();
-            GroupOutputModel gom = mapper.GroupDTOToGroupOutputModel(adm.GetGroupById(id));
+            GroupOutputModel gom = mapper.ConvertGroupDTOToGroupOutputModel(adm.GetGroupById(id));
+
             return gom;
         }
         
       
         
-        
-        [HttpPost("{groupID}/student/{userID}")] // GET http://localhost:5557/group/id/student/id	
+        [HttpPost("{groupID}/student/{userID}")] // POST http://localhost:5557/group/5/student/82	
         public void PostStudentInGroup(int userID, int groupID)
         {
             AdminDataAccess adm = new AdminDataAccess();
             adm.StudentAdd(userID, groupID);
         }
         
-        [HttpPost("{groupID}/teacher/{userID}")] // GET http://localhost:5557/group/id/teacher/id	
+        [HttpPost("{groupID}/teacher/{userID}")] // POST http://localhost:5557/group/id/teacher/id	
         public void PostTeacherInGroup(int userID, int groupID)
         {
             AdminDataAccess adm = new AdminDataAccess();
             adm.TeacherAdd(userID, groupID);
         }
 
+
+
         [HttpPut]
         public void GroupPut([FromBody]GroupInputModel groupU)
         {
+
             Mapper mapper = new Mapper();
-            GroupDTO groupdto = mapper.GroupInputModelToGroupDTO(groupU);
+
+            GroupDTO groupdto = mapper.ConvertGroupInputModelToGroupDTO(groupU);
+
             AdminDataAccess group = new AdminDataAccess();
+
             group.GroupUpdate(groupdto);
 
         }
