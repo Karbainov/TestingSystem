@@ -16,9 +16,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Test_Group_Add @GroupId, @TestId, @startDate, @endDate";
-                int testgroupID = connection.Query<int>(sqlExpression, testgroup).FirstOrDefault();
-                testgroup.id = testgroupID;
-                return testgroupID;
+                return connection.Query<int>(sqlExpression, testgroup).FirstOrDefault();
             }
         }
 

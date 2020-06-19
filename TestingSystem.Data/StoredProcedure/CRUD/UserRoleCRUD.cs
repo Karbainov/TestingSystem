@@ -11,7 +11,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
 {
     class UserRoleCRUD
     {
-        public int Create(UserRoleDTO userRole)
+        public int Add(UserRoleDTO userRole)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -28,7 +28,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
                 return connection.Query<int>(sqlExpression, userRole).FirstOrDefault();
             }
         }
-        public List<UserRoleDTO> Read()
+        public List<UserRoleDTO> GetAll()
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -36,7 +36,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
                 return connection.Query<UserRoleDTO>(sqlExpression).ToList();
             }
         }
-        public List<UserRoleDTO> ReadByUserID(int userRole)
+        public List<UserRoleDTO> GetByUserID(int userRole)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -44,21 +44,12 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
                 return connection.Query<UserRoleDTO>(sqlExpression,new { userRole }).ToList();
             }
         }
-        public List<UserRoleDTO> ReadByRoleID(int roleID)
+        public List<UserRoleDTO> GetByRoleID(int roleID)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "User_Role_ReadByRoleID @RoleID";
                 return connection.Query<UserRoleDTO>(sqlExpression, new {roleID }).ToList();
-            }
-        }
-        
-        public List<UserDTO> GetUsersByRoleID(int roleID)
-        {
-            using (IDbConnection connection = Connection.GetConnection())
-            {
-                string sqlExpression = "GetUsersByRoleId";
-                return connection.Query<UserDTO>(sqlExpression, new { roleID }, commandType: CommandType.StoredProcedure).ToList();
             }
         }
     }

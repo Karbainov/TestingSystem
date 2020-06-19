@@ -16,9 +16,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Student_Group_Add @UserID, @GroupID";
-                int studentGroupID = connection.Query<int>(sqlExpression, studentGroup).FirstOrDefault();
-                studentGroup.ID = studentGroupID;
-                return studentGroupID;
+                return connection.Query<int>(sqlExpression, studentGroup).FirstOrDefault();
             }
         }
         public List<StudentGroupDTO> GetAll()
@@ -29,7 +27,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
                 return connection.Query<StudentGroupDTO>(sqlExpression).ToList();
             }
         }
-        public StudentGroupDTO GetByID(int id)
+        public StudentGroupDTO GetById(int id)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -37,7 +35,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
                 return connection.Query<StudentGroupDTO>(sqlExpression, new { id }, commandType: CommandType.StoredProcedure).FirstOrDefault();
             }
         }
-        public StudentGroupDTO GetByUserID(int userId)
+        public StudentGroupDTO GetByUserId(int userId)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -45,7 +43,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
                 return connection.Query<StudentGroupDTO>(sqlExpression, new { userId }, commandType: CommandType.StoredProcedure).FirstOrDefault();
             }
         }
-        public StudentGroupDTO GetByGroupID(int groupId)
+        public StudentGroupDTO GetByGroupId(int groupId)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -53,7 +51,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
                 return connection.Query<StudentGroupDTO>(sqlExpression, new { groupId }, commandType: CommandType.StoredProcedure).FirstOrDefault();
             }
         }
-        public void DeleteByID(int id)
+        public void Delete(int id)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -69,7 +67,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
                 connection.Execute(sqlExpression, new { userId, groupId }, commandType: CommandType.StoredProcedure);
             }
         }
-        public void DeleteByUserID(int userId)
+        public void DeleteByUserId(int userId)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -77,7 +75,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
                 connection.Execute(sqlExpression, new { userId }, commandType: CommandType.StoredProcedure);
             }
         }
-        public void DeleteByGroupID(int groupId)
+        public void DeleteByGroupId(int groupId)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {

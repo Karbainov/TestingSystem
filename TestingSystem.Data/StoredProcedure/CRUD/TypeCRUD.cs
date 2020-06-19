@@ -15,9 +15,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             using (System.Data.IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Type_Add @name";
-                int typeID = connection.Query<int>(sqlExpression, type).FirstOrDefault();
-                type.ID = typeID;
-                return typeID;
+                return connection.Query<int>(sqlExpression, type).FirstOrDefault();
             }
         }
 
@@ -30,12 +28,12 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             }
         }
 
-        public TypeDTO GetById(int TypeId)
+        public TypeDTO GetById(int typeId)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Type_GetById";
-                return connection.Query<TypeDTO>(sqlExpression, new { TypeId }, commandType: CommandType.StoredProcedure).FirstOrDefault();
+                return connection.Query<TypeDTO>(sqlExpression, new { typeId }, commandType: CommandType.StoredProcedure).FirstOrDefault();
             }
         }
 
@@ -48,12 +46,12 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             }
         }
 
-        public void Delete(int TypeId)
+        public void Delete(int typeId)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Type_Delete";
-                connection.Execute(sqlExpression, new { TypeId }, commandType: CommandType.StoredProcedure);
+                connection.Execute(sqlExpression, new { typeId }, commandType: CommandType.StoredProcedure);
             }
         }
     }

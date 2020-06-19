@@ -14,13 +14,13 @@ namespace TestingSystem.Data
         {
             
             UserCRUD user = new UserCRUD();
-            user.Create(userC);
+            user.Add(userC);
         }
         
         public void UserRoleCreate(UserRoleDTO userRole)
         {
             UserRoleCRUD user = new UserRoleCRUD();
-            user.Create(userRole);
+            user.Add(userRole);
         }
 
         public List<UserDTO> GetAllUsers()
@@ -83,7 +83,7 @@ namespace TestingSystem.Data
         public void StudentDelete(StudentGroupDTO studentD)
         {
             StudentGroup student = new StudentGroup();
-            student.DeleteByID(studentD.ID);
+            student.Delete(studentD.ID);
         }
         public void StudentDeleteByUserIdGroupId(int userId, int groupId)
         {
@@ -104,12 +104,12 @@ namespace TestingSystem.Data
         public void TeacherDelete(TeacherGroupDTO teacherD)
         {
             TeacherGroup teacher = new TeacherGroup();
-            teacher.DeleteByID(teacherD.ID);
+            teacher.Delete(teacherD.ID);
         }
         public void AddRoleToUser(UserRoleDTO dTO)
         {
             UserRoleCRUD roleCRUD = new UserRoleCRUD();
-            roleCRUD.Create(dTO);
+            roleCRUD.Add(dTO);
         }
         public List<UserPositionDTO> GetAllUsersWithRoles()
         {
@@ -119,12 +119,12 @@ namespace TestingSystem.Data
         public List<UserRoleDTO> GetUserRolesByUserID(int userID)
         {
             UserRoleCRUD roleCRUD = new UserRoleCRUD();
-            return roleCRUD.ReadByUserID(userID);
+            return roleCRUD.GetByUserID(userID);
         }
         public List<UserDTO> GetUsersByRoleID(int roleID)
         {
-            UserRoleCRUD roleCRUD = new UserRoleCRUD();
-            return roleCRUD.GetUsersByRoleID(roleID);
+            UserManager users = new UserManager();
+            return users.GetUsersByRoleID(roleID);
         }
         public void UserRoleDelete(int userId, int roleId)
         {
@@ -136,7 +136,7 @@ namespace TestingSystem.Data
         public List<RoleDTO> GetRole()
         {
             RoleCRUD role = new RoleCRUD();
-            return role.Read();
+            return role.GetAll();
         }
 
         public List<UserDTO> GetAllStudents(int id)

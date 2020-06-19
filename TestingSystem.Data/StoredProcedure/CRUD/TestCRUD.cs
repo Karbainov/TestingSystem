@@ -11,10 +11,6 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
 {
     public class TestCRUD
     {
-        public TestCRUD()
-        {
-        }
-
         public int Add(TestDTO test)
         {
             var connection = Connection.GetConnection();
