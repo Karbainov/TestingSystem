@@ -60,5 +60,43 @@ namespace TestingSystem.Data
             UserCRUD user = new UserCRUD();
             return user.GetByID(id);
         }
+
+
+        public int AddAttemptAutoNumber(AttemptDTO attempt)
+        {
+            AttemptManager newattempt = new AttemptManager();
+            return newattempt.AddAttemptAutoNumber(attempt);
+        }
+
+        public void AddQuestionToAttempt(int attemptId, int questionId)
+        {
+            AttemptManager newattempt = new AttemptManager();
+            newattempt.AddQuestionToAttempt(attemptId, questionId);
+        }
+
+        public TestDTO GetTestById(int testId)
+        {
+            TestManager test = new TestManager();
+            return test.GetDurationAndQuestionNumber(testId);
+        }
+
+        public List<QuestionWithListAnswersDTO> GetQuestionsAndAnswers(int testId)
+        {
+            TestManager test = new TestManager();
+            return test.GetQuestionsAndAnswers(testId);
+        }
+
+        public int AddAttemptForAttemptCreator(int userId, int testId)
+        {
+            AttemptDTO attempt = new AttemptDTO()
+            {
+                userID = userId,
+                testID = testId,
+                dateTime = DateTime.Now
+
+            };
+            AttemptManager student = new AttemptManager();
+            return student.AddAttemptAutoNumber(attempt);
+        }
     }
 }

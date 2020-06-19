@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using TestingSystem.API.Models.Input;
 using TestingSystem.API.Models.Output;
 using TestingSystem.Data.DTO;
+using TestingSystem.Data.StoredProcedure;
 
 namespace TestingSystem.API
 {
@@ -22,7 +23,7 @@ namespace TestingSystem.API
                 QuestionNumber = testDTO.QuestionNumber,
             };
         }
-        
+
         //список тестов
         public List<TestOutputModel> ConvertTestDTOToTestModelList(List<TestDTO> dtoList) //формирует список тестов
         {
@@ -87,7 +88,7 @@ namespace TestingSystem.API
                 Name = tagDTO.Name,
             };
         }
-        
+
         //список тэгов
         public List<TagOutputModel> ConvertTagDTOToTagModelList(List<TagDTO> dtoList)
         {
@@ -194,13 +195,13 @@ namespace TestingSystem.API
                 ID = questionDTO.ID,
                 TestID = questionDTO.TestID,
                 Value = questionDTO.Value,
-                Weight = questionDTO.Weight,      
+                Weight = questionDTO.Weight,
                 AnswerCount = questionDTO.AnswersCount
             };
         }
 
         //список вопросов
-        public List<QuestionOutputModel> ConvertQuestionDTOToQuestionModelList(List<QuestionDTO> dtoList) 
+        public List<QuestionOutputModel> ConvertQuestionDTOToQuestionModelList(List<QuestionDTO> dtoList)
         {
             List<QuestionOutputModel> modelList = new List<QuestionOutputModel>();
             foreach (QuestionDTO questionDTO in dtoList)
@@ -237,9 +238,9 @@ namespace TestingSystem.API
         public TestTagDTO ConvertTestTagInputModelToTestTagDTO(TestTagInputModel testtagmodel)
         {
             return new TestTagDTO()
-            {                
+            {
                 TestID = testtagmodel.TestID,
-                TagID = testtagmodel.TagID,                
+                TagID = testtagmodel.TagID,
             };
         }
         //mapper для вывод группы 
@@ -251,7 +252,7 @@ namespace TestingSystem.API
                 Name = group.Name,
                 StartDate = group.StartDate,
                 EndDate = group.EndDate,
-             };
+            };
         }
 
         //список group
@@ -263,6 +264,28 @@ namespace TestingSystem.API
                 listOutputmodels.Add(ConvertGroupDTOToGroupOutputModel(group));
             }
             return listOutputmodels;
+        }
+        public List<UserByLoginOutputModel> ConvertUserByLoginDTOToListUserByLoginOutputModel(string login)
+        {
+            UserManager manager = new UserManager();
+            List<UserByLoginDTO> list = manager.GetUserAndItRole(login);
+            List<UserByLoginOutputModel> model = new List<UserByLoginOutputModel>();
+            foreach (UserByLoginDTO a in list)
+            {
+                UserByLoginOutputModel userInf = new UserByLoginOutputModel()
+                {
+                    FirstName = a.FirstName,
+                    LastName = a.LastName,
+                    BirthDate = a.BirthDate,
+                    Login = a.Login,
+                    Password = a.Password,
+                    Email = a.Email,
+                    Phone = a.Phone,
+                    Role = a.Role
+                };
+                model.Add(userInf);
+            }
+            return model;
         }
 
         public GroupDTO ConvertGroupInputModelToGroupDTO(GroupInputModel group)
@@ -296,7 +319,7 @@ namespace TestingSystem.API
             {
                 QuestionID = answermodel.QuestionID,
                 Value = answermodel.Value,
-                Correct = answermodel.Correct,                
+                Correct = answermodel.Correct,
             };
         }
 

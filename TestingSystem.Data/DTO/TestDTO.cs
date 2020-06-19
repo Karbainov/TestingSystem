@@ -24,5 +24,12 @@ namespace TestingSystem.Data.DTO
             SuccessScore = score;
             QuestionNumber = questionNumber;
         }
+
+        public TestDTO(int Id, TimeSpan duration,  int questionNumber)
+        {
+            ID = Id;
+            DurationTime = duration;
+            QuestionNumber = questionNumber;
+        }
     }
 }

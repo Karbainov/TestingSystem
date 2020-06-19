@@ -107,5 +107,13 @@ namespace TestingSystem.Data.StoredProcedure
                 return connection.Query<GroupDTO>(sqlExpression, new { teacherId }, commandType: CommandType.StoredProcedure).ToList();
             }
         }
+        public List<UserByLoginDTO> GetUserAndItRole(string login)
+        {
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "GetUserAndItRole";
+                return connection.Query<UserByLoginDTO>(sqlExpression, new { login }, commandType: CommandType.StoredProcedure).ToList();
+            }
+        }
     }
 }
