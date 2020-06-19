@@ -10,7 +10,7 @@ using System.Data;
 namespace TestingSystem.Data.DTO
 {
    public class QuestionWithListAnswersDTO
-    {
+   {
 
         public int Id { get; set; }
        
@@ -20,5 +20,19 @@ namespace TestingSystem.Data.DTO
         public byte Weight { get; set; }
 
         public List <AnswerWithoutCorrectnessDTO> Answers { get; set; }
+
+        public QuestionWithListAnswersDTO(int Id, string Value, int TypeID, byte Weight, List<AnswerWithoutCorrectnessDTO> Answers)
+        {
+           
+        }
+
+        public QuestionWithListAnswersDTO()
+        {
+            
+        }
+
+
+
+
     }
 }

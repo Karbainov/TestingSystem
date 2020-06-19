@@ -13,10 +13,10 @@ namespace TestingSystem.Data.StoredProcedure
         public List<AttemptResultDTO> GetAttemptByUserIdTestId(UserIdTestIdDTO attempt)
         {
             var connection = Connection.GetConnection();
-            string sqlExpression = "Attempt_GetByUserIdTestId";            
+            string sqlExpression = "Attempt_GetByUserIdTestId";
             return connection.Query<AttemptResultDTO>(sqlExpression, attempt, commandType: CommandType.StoredProcedure).ToList();
         }
-        
+
         public List<QuestionAnswerDTO> GetAllAnswersByAttemptId(int attemptId)
         {
             using (IDbConnection connection = Connection.GetConnection())
@@ -26,7 +26,7 @@ namespace TestingSystem.Data.StoredProcedure
                 return connection.Query<QuestionAnswerDTO>(sqlExpression, attemptId, commandType: CommandType.StoredProcedure).ToList();
             }
         }
-        
+
         public List<AttemptResultDTO> GetBestResultsOfStudentsByTestId(int testId)
         {
             using (IDbConnection connection = Connection.GetConnection())
@@ -36,7 +36,7 @@ namespace TestingSystem.Data.StoredProcedure
                 return connection.Query<AttemptResultDTO>(sqlExpression, testId, commandType: CommandType.StoredProcedure).ToList();
             }
         }
-        
+
         public void UpdateResult(int id)
         {
             using (IDbConnection connection = Connection.GetConnection())
@@ -46,11 +46,37 @@ namespace TestingSystem.Data.StoredProcedure
             }
         }
 
-        public List<AttemptDTO> AddAttemptAutoNumber(AttemptDTO attempt)
+        public int AddAttemptAutoNumber(AttemptDTO attempt)
         {
-            var connection = Connection.GetConnection();
-            string sqlExpression = "AddAttemptAutoNumber @userID, @testID, @userResult, @dateTime, @durationTime";
-            return connection.Query<AttemptDTO>(sqlExpression, attempt, commandType: CommandType.StoredProcedure).ToList();
+            using (var connection = Connection.GetConnection())
+            {
+                string sqlExpression = "AddAttemptAutoNumber @userID, @testID, @userResult, @dateTime, @durationTime";
+                return connection.Query<int>(sqlExpression, attempt, commandType: CommandType.StoredProcedure).FirstOrDefault();
+            }
         }
+
+        public int AddAttemptForAttemptCreator(int userId, int testId)
+        {
+            AttemptDTO attempt = new AttemptDTO()
+            {
+                userID = userId,
+                testID = testId,
+                dateTime = DateTime.Now
+
+            };
+            AttemptManager student = new AttemptManager();
+            return student.AddAttemptAutoNumber(attempt);
+        }
+
+        public void AddQuestionToAttempt(int attemptID, int questionId)
+        {
+            using (var connection = Connection.GetConnection())
+            {
+                string sqlExpression = "AddQuestionToAttempt @attemptID, @questionId";
+                connection.Execute(sqlExpression, new { attemptID, questionId }, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+              
     }
 }

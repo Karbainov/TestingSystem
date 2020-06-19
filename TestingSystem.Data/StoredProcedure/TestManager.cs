@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using TestingSystem.Data.DTO;
+using TestingSystem.Data;
 
 namespace TestingSystem.Data.StoredProcedure
 {
@@ -144,6 +145,19 @@ namespace TestingSystem.Data.StoredProcedure
             return connection.Query<AnswerDTO>(sqlExpression, new { testid }, commandType: CommandType.StoredProcedure).ToList();
         }
 
+
+
+        public TestDTO GetDurationAndQuestionNumber(int testid)
+        {
+           
+            using (var connection = Connection.GetConnection())
+            {
+                string sqlExpression ="GetDurationAndQuestionNumber @testid";
+                return connection.Query<TestDTO>(sqlExpression, new { testid }, commandType: CommandType.StoredProcedure).FirstOrDefault();
+                
+            }
+        }
+               
         //public List<TagDTO> GetTestTags (TestDTO tests )
         //{
         //    using (IDbConnection connection = Connection.GetConnection())

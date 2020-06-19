@@ -61,5 +61,15 @@ namespace TestingSystem.Data.StoredProcedure
                 }
             }
         }
+
+        public List<QuestionWithListAnswersDTO> GetQuestionsAndAnswers(int testId)
+        {
+            using (var connection = Connection.GetConnection())
+            {
+                string sqlExpression = "// не помню хранимку, которая возвращает "; //надо добавить хранимку 
+                return connection.Query<QuestionWithListAnswersDTO>(sqlExpression, new { testId }, commandType: CommandType.StoredProcedure).ToList();
+            }
+
+        }
     }
 }

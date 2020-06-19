@@ -64,7 +64,7 @@ namespace TestingSystem.Business
 
             foreach (var question in questions)
             {
-                var randomIndexes = GetRandomIndexes(question.Value.Count(), test.QuestionNumber * (int)Math.Ceiling((double)question.Value.Count() / totalQtyOfQuestions));
+                var randomIndexes = GetRandomIndexes(question.Value.Count(), (int)test.QuestionNumber * (int)Math.Ceiling((double)question.Value.Count() / totalQtyOfQuestions));
                 attemptquestions.Add(question.Key, CutListbyIndexes(question.Value, randomIndexes));
             }
 
@@ -171,20 +171,6 @@ namespace TestingSystem.Business
 
             return questionsCuttedVersion;
         }
-
-
-
-        //private 
-        //public List<QuestionWithListAnswersDTO> ConvertDictionaryToLIst(Dictionary<int, List<QuestionWithListAnswersDTO>> questions)
-        //{
-        //    List<QuestionWithListAnswersDTO> attemptquestions = new List<QuestionWithListAnswersDTO>();
-        //    foreach (int w in questions)
-
-        //    {
-
-        //    }
-
-        //    return attemptquestions;
-        //}
+               
     }
 }
