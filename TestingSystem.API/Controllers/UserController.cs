@@ -17,7 +17,7 @@ namespace TestingSystem.API.Controllers
 {
         [ApiController]
         [Route("[controller]")]
-    public class UserController : ControllerBase
+    public class UserController : Controller
     {
 
 
@@ -91,18 +91,17 @@ namespace TestingSystem.API.Controllers
         }
         
         [HttpGet]
-        public List<UserWithRolesOutputModel> GetAllUsersWithRoles()
+        public IActionResult GetAllUsersWithRoles()
         {
             AdminDataAccess adm = new AdminDataAccess();
             List<UserPositionDTO> users = adm.GetAllUsersWithRoles();
             UserMapper mapper = new UserMapper();
-
-            return mapper.ConvertUserPositionDTOsToUserWithRolesOutputModels(users);
+            return Json(mapper.ConvertUserPositionDTOsToUserWithRolesOutputModels(users));
         }
         
         
         [HttpGet("role/{roleID}")]
-        public List<UserOutputModel> GetUsersByRoleID(int roleID)
+        public IActionResult GetUsersByRoleID(int roleID)
         {
             AdminDataAccess adm = new AdminDataAccess();
             List<UserOutputModel> allUsers = new List<UserOutputModel>();
@@ -112,15 +111,21 @@ namespace TestingSystem.API.Controllers
             {
                 allUsers.Add(mapper.ConvertUserDTOToUserOutputModel(user));
             }
-            return allUsers;
+            return Json(allUsers);
         }
         
         [HttpGet("{id}")]
-        public UserOutputModel GetUserById(int id)
+        public IActionResult GetUserById(int id)
         {
             UserMapper mapper = new UserMapper();
             AdminDataAccess adm = new AdminDataAccess();
-            return mapper.ConvertUserDTOToUserOutputModel(adm.GetUserbyID(id));
+            UserOutputModel user = new UserOutputModel();
+            UserDTO getUser = adm.GetUserbyID(id);
+            if (getUser == null) { return new BadRequestObjectResult("Пользователя с таким id не существует"); }
+            else {
+                user = mapper.ConvertUserDTOToUserOutputModel(getUser);
+                return Json(user); 
+            }
         }
 
         [HttpPut]
