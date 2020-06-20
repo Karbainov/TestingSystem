@@ -12,5 +12,6 @@ namespace TestingSystem.Data.DTO.DTOsForStatistics
         public byte AnswersCount { get; set; }
         public byte Weight { get; set; }
         public List<int> AnswersId { get; set; }
+        public List<int> CorrectId { get; set; }   //создать список с индексом корректных ответов
     }
 }
