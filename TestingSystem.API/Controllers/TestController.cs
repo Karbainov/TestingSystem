@@ -23,13 +23,7 @@ namespace TestingSystem.API.Controllers
             _logger = logger;
         }
 
-        [HttpGet("search-test-by-tags/{tags}/Authors")]
-        public IActionResult GetTestByMoreThanThreeTags( string tags)
-        {
-            Mapper mapper = new Mapper();
-            FindBy4AndMoreTags search = new FindBy4AndMoreTags();
-            return Json(mapper.ConvertTestDTOToTestModelList(search.FindAnd(tags)));
-        }
+        
         //Запросы на основной странице "Tests" (список тестов/список тэгов)
         
         [HttpGet("Author")]    //вывод списка всех тестов
