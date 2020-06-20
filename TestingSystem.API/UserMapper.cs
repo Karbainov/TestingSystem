@@ -16,7 +16,7 @@ namespace TestingSystem.API
 {
     public class UserMapper
     {
-        public UserDTO ConvertUserInputModelToGroupDTO (UserInputModel userIn)
+        public UserDTO ConvertUserInputModelToUserDTO (UserInputModel userIn)
         {
             UserDTO user = new UserDTO(userIn.ID, userIn.FirstName, userIn.LastName, userIn.BirthDate, userIn.Login, userIn.Password, userIn.Email, userIn.Phone);
             return user;

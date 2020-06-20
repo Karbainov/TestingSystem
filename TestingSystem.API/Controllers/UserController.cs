@@ -19,16 +19,12 @@ namespace TestingSystem.API.Controllers
         [Route("[controller]")]
     public class UserController : Controller
     {
-
-
-
         private readonly ILogger<GroupController> _logger;
 
         public UserController(ILogger<GroupController> logger)
         {
             _logger = logger;
         }
-
 
         //[HttpGet]
         //public List<UserOutputModel> Get()
@@ -43,14 +39,20 @@ namespace TestingSystem.API.Controllers
         //    return allUsers;
         //}
 
-
         [HttpPost]
-        public IActionResult PostUser([FromBody] UserInputModel user)
+        public IActionResult PostUser([FromBody] UserInputModel user) // нужно разобраться с ошибкой
         {
             UserMapper mapper = new UserMapper();
             AdminDataAccess adm = new AdminDataAccess();
-            adm.UserCreate(mapper.ConvertUserInputModelToGroupDTO(user));
-            return new OkResult();
+            try
+            {
+                adm.UserCreate(mapper.ConvertUserInputModelToUserDTO(user));
+                return new OkObjectResult("Пользователь создан");
+            }
+            catch
+            {
+                return new BadRequestObjectResult("Неверно введены данные");
+            }
         }
         
         [HttpPost("role")]
@@ -134,7 +136,7 @@ namespace TestingSystem.API.Controllers
         {
             UserMapper mapper = new UserMapper();
             AdminDataAccess adm = new AdminDataAccess();
-            int result = adm.UserUpdate(mapper.ConvertUserInputModelToGroupDTO(user));
+            int result = adm.UserUpdate(mapper.ConvertUserInputModelToUserDTO(user));
             if (result == 0)
             {
                 return new BadRequestObjectResult("Такого пользователя не существует");
@@ -154,7 +156,7 @@ namespace TestingSystem.API.Controllers
         {
             AdminDataAccess adm = new AdminDataAccess();
             adm.UserRoleDelete(userId, roleId);
-            return new OkResult();
+            return new OkObjectResult("Роль пользователя удалена");
         }
 
         [HttpDelete("{id}")]
@@ -162,10 +164,10 @@ namespace TestingSystem.API.Controllers
         {
             AdminDataAccess adm = new AdminDataAccess();
             adm.UserDelete(id);
-            return new OkResult();
+            return new OkObjectResult("Пользователь удалён");
         }
         
-        [HttpGet("{UserID}/user")]
+        [HttpGet("{UserID}/test")]
         public IActionResult GetStudentTests(int UserID)
         {
             StudentDataAccess student = new StudentDataAccess();
@@ -175,7 +177,7 @@ namespace TestingSystem.API.Controllers
             StudentOutputModel model = mapper.ConvertUserDTOTestAttemptDTOToStudentModel(student.GetUser(UserID), mapper.ConvertTestAttemptDTOToTestAttemptModel(tests));
             return Json(model);
         }
-        [HttpGet("Tests/{UserID}/{TestID}")]
+        [HttpGet("{UserID}/test/{TestID}")]
         public IActionResult GetAttemptsByUserIDTestID(int UserID, int TestID)
         {
             StudentDataAccess student = new StudentDataAccess();
