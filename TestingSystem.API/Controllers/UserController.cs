@@ -134,8 +134,19 @@ namespace TestingSystem.API.Controllers
         {
             UserMapper mapper = new UserMapper();
             AdminDataAccess adm = new AdminDataAccess();
-            adm.UserUpdate(mapper.ConvertUserInputModelToGroupDTO(user));
-            return new OkObjectResult("Пользователь обновлён");
+            int result = adm.UserUpdate(mapper.ConvertUserInputModelToGroupDTO(user));
+            if (result == 0)
+            {
+                return new BadRequestObjectResult("Такого пользователя не существует");
+            }
+            if (result == 1)
+            {
+                return new OkObjectResult("Пользователь обновлён");
+            }
+            else
+            {
+                return new BadRequestObjectResult("Ошибка базы данных");
+            }
         }
         
         [HttpDelete("{userId}/role/{roleId}")]

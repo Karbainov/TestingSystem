@@ -15,16 +15,16 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
-                string sqlExpression = "User_Create @FirstName,@LastName,@BirthDate,@Login,@Password,@Email,@Phone";
+                string sqlExpression = "User_Create @FirstName, @LastName, @BirthDate, @Login, @Password, @Email, @Phone";
                 return connection.Query<int>(sqlExpression, user).FirstOrDefault();
             }
             
         }
-        public int Update( UserDTO user)
+        public int Update(UserDTO user)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
-                string sqlExpression = "User_Update  @id,@FirstName,@LastName,@BirthDate,@Login,@Password,@Email,@Phone";
+                string sqlExpression = "User_Update  @id, @FirstName, @LastName, @BirthDate, @Login, @Password, @Email, @Phone";
                 return connection.Query<int>(sqlExpression, user).FirstOrDefault();
             }
            

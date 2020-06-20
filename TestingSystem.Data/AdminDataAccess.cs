@@ -35,11 +35,12 @@ namespace TestingSystem.Data
             return user.GetByID(id);
         }
 
-        public void UserUpdate(UserDTO userU)
+        public int UserUpdate(UserDTO userU)
         {
-            
             UserCRUD user = new UserCRUD();
-            user.Update( userU);
+            //user.Update(userU);
+            int result = user.Update(userU);
+            return result;
         }
         public void UserDelete(int id)
         {
