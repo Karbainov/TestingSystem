@@ -45,24 +45,25 @@ namespace TestingSystem.API.Controllers
 
 
         [HttpPost]
-        public void PostUser([FromBody] UserInputModel user)
+        public IActionResult PostUser([FromBody] UserInputModel user)
         {
             UserMapper mapper = new UserMapper();
             AdminDataAccess adm = new AdminDataAccess();
             adm.UserCreate(mapper.ConvertUserInputModelToGroupDTO(user));
-
+            return new OkResult();
         }
         
         [HttpPost("role")]
-        public void PostUserRole([FromBody] UserRoleInputModel userRole)
+        public IActionResult PostUserRole([FromBody] UserRoleInputModel userRole)
         {
             UserMapper mapper = new UserMapper();
             AdminDataAccess adm = new AdminDataAccess();
             adm.UserRoleCreate(mapper.ConvertUserRoleInputModelToUserRoleDTO(userRole));
+            return new OkResult();
         }
         
         [HttpGet("role")]
-        public List<RoleOutputModel> GetRole()
+        public IActionResult GetRole()
         {
             UserMapper mapper = new UserMapper();
             AdminDataAccess adm = new AdminDataAccess();
@@ -73,11 +74,11 @@ namespace TestingSystem.API.Controllers
                 rolesOut.Add(mapper.ConvertRoleDTOToRoleOutputModel(r));
             }
 
-            return rolesOut;
+            return Json(rolesOut);
         }
         
         [HttpGet("{userId}/role")]
-        public List<RoleOutputModel> GetRoleByUserId(int userId)
+        public IActionResult GetRoleByUserId(int userId)
         {
             UserMapper mapper = new UserMapper();
             AdminDataAccess adm = new AdminDataAccess();
@@ -87,7 +88,7 @@ namespace TestingSystem.API.Controllers
             {
                 rolesOut.Add(mapper.ConvertRoleDTOToRoleOutputModel(r));
             }
-            return rolesOut;
+            return Json(rolesOut);
         }
         
         [HttpGet]
@@ -134,7 +135,7 @@ namespace TestingSystem.API.Controllers
             UserMapper mapper = new UserMapper();
             AdminDataAccess adm = new AdminDataAccess();
             adm.UserUpdate(mapper.ConvertUserInputModelToGroupDTO(user));
-            return new OkObjectResult("Пользователь добавлен");
+            return new OkObjectResult("Пользователь обновлён");
         }
         
         [HttpDelete("{userId}/role/{roleId}")]
