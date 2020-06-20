@@ -31,7 +31,8 @@ namespace TestingSystem.API.Controllers
         {
             AdminDataAccess admin = new AdminDataAccess();
             Mapper mapper = new Mapper();
-            return Json(mapper.ConvertTestDTOToTestModelList(admin.GetDeletedTests()));
+            //return Json(mapper.ConvertTestDTOToTestModelList(admin.GetDeletedTests()));
+            return Json(mapper.ConvertTestQuestionTagDTOToTestOutputListModel(admin.GetDeletedTests()));
         }
         [HttpGet("Questions")]
         public IActionResult GetDeletedQuestions()
