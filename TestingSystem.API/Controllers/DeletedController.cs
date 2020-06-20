@@ -48,5 +48,29 @@ namespace TestingSystem.API.Controllers
             return Json(mapper.ConvertGroupDTOToListGroupOutputModel(admin.GetDeletedGroups()));
 
         }
+        [HttpPut("User/{id}")]
+        public IActionResult RestoreUser(int id)
+        {
+            AdminDataAccess admin = new AdminDataAccess();
+            return Json(admin.RestoreUser(id));
+        }
+        [HttpPut("Test/{id}")]
+        public IActionResult RestoreTest(int id)
+        {
+            AdminDataAccess admin = new AdminDataAccess();
+            return Json(admin.RestoreTest(id));
+        }
+        [HttpPut("Question/{id}")]
+        public IActionResult RestoreQuestion(int id)
+        {
+            AdminDataAccess admin = new AdminDataAccess();
+            return Json(admin.RestoreQuestion(id));
+        }
+        [HttpPut("Group/{id}")]
+        public IActionResult RestoreGroup(int id)
+        {
+            AdminDataAccess admin = new AdminDataAccess();
+            return Json(admin.RestoreGroup(id));
+        }
     }
 }

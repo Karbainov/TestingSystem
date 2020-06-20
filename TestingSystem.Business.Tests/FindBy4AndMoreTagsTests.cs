@@ -22,7 +22,16 @@ namespace TestingSystem.Business.Tests
             List<string> actual =tags.CreateListFromString(mock.GetActual(num));
             CollectionAssert.AreEqual(mock.GetExpected(num), actual);
         }
-
+        [TestCase(1)]
+        [TestCase(2)]
+        [TestCase(3)]
+        public void CreateArrayFromStringTest(int num)
+        {
+            CreateArrayFromStringMock mock = new CreateArrayFromStringMock();
+            FindBy4AndMoreTags tags = new FindBy4AndMoreTags();
+            string[] actual = tags.CreateArrayFromString(mock.GetActual(num));
+            CollectionAssert.AreEqual(mock.GetExpected(num), actual);
+        }
         [TestCase(1)]
         [TestCase(2)]
         [TestCase(3)]

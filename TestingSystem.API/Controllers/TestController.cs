@@ -49,24 +49,24 @@ namespace TestingSystem.API.Controllers
             FindBy4AndMoreTags searchBy4AndMoreTags = new FindBy4AndMoreTags();
             if (caseSwitch)
             {
-                if (sttim.Tag.Length < 4)
+                if (sttim.Tag.Length < 3)
                 {
-                    return Json(mapper.ConvertTestDTOToTestModelList(search.GetTestVSTagSearchAnd(sttim.Tag)));
+                    return Json(mapper.ConvertTestDTOToTestModelList(search.GetTestVSTagSearchAnd(searchBy4AndMoreTags.CreateArrayFromString(sttim.Tag))));
                 }
                 else
                 {
-                    return null;//Json(mapper.ConvertTestDTOToTestModelList(searchBy4AndMoreTags.FindAnd(sttim.Tag)));
+                    return Json(mapper.ConvertTestDTOToTestModelList(searchBy4AndMoreTags.FindAnd(sttim.Tag)));
                 }
             }
             else
             {
-                if (sttim.Tag.Length < 4)
+                if (sttim.Tag.Length < 3)
                 {
-                    return Json(mapper.ConvertTestDTOToTestModelList(search.GetTestVSTagSearchOr(sttim.Tag)));
+                    return Json(mapper.ConvertTestDTOToTestModelList(search.GetTestVSTagSearchOr(searchBy4AndMoreTags.CreateArrayFromString(sttim.Tag))));
                 }
                 else
                 {
-                    return null;// Json(mapper.ConvertTestDTOToTestModelList(searchBy4AndMoreTags.FindOr(sttim.Tag)));
+                    return  Json(mapper.ConvertTestDTOToTestModelList(searchBy4AndMoreTags.FindOr(sttim.Tag)));
                 }
             }
         }        

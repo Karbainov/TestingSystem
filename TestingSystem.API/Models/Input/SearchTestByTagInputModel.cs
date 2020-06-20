@@ -8,6 +8,6 @@ namespace TestingSystem.API.Models.Input
     public class SearchTestByTagInputModel
     {
         public bool SwitchValue { get; set; }
-        public string[] Tag { get; set; }
+        public string Tag { get; set; }
     }
 }
