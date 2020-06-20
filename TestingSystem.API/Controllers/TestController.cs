@@ -8,6 +8,7 @@ using TestingSystem.Data;
 using TestingSystem.Data.DTO;
 using TestingSystem.API.Models.Output;
 using TestingSystem.API.Models.Input;
+using TestingSystem.Business;
 
 namespace TestingSystem.API.Controllers
 {
@@ -22,7 +23,7 @@ namespace TestingSystem.API.Controllers
             _logger = logger;
         }
 
-
+        
         //Запросы на основной странице "Tests" (список тестов/список тэгов)
         
         [HttpGet("Author")]    //вывод списка всех тестов
@@ -39,13 +40,28 @@ namespace TestingSystem.API.Controllers
             bool caseSwitch =sttim.SwitchValue;
             Mapper mapper = new Mapper();
             AuthorDataAccess search = new AuthorDataAccess();
-
-            switch (caseSwitch)
+            FindBy4AndMoreTags searchBy4AndMoreTags = new FindBy4AndMoreTags();
+            if (caseSwitch)
             {
-                case true:
-                    return Json(mapper.ConvertTestDTOToTestModelList(search.GetTestVSTagSearchAnd(sttim.Tag)));
-                case false:                  
-                    return Json(mapper.ConvertTestDTOToTestModelList(search.GetTestVSTagSearchOr(sttim.Tag)));
+                if (sttim.Tag.Length < 3)
+                {
+                    return Json(mapper.ConvertTestDTOToTestModelList(search.GetTestVSTagSearchAnd(searchBy4AndMoreTags.CreateArrayFromString(sttim.Tag))));
+                }
+                else
+                {
+                    return Json(mapper.ConvertTestDTOToTestModelList(searchBy4AndMoreTags.FindAnd(sttim.Tag)));
+                }
+            }
+            else
+            {
+                if (sttim.Tag.Length < 3)
+                {
+                    return Json(mapper.ConvertTestDTOToTestModelList(search.GetTestVSTagSearchOr(searchBy4AndMoreTags.CreateArrayFromString(sttim.Tag))));
+                }
+                else
+                {
+                    return  Json(mapper.ConvertTestDTOToTestModelList(searchBy4AndMoreTags.FindOr(sttim.Tag)));
+                }
             }
         }        
 

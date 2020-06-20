@@ -33,7 +33,7 @@ namespace TestingSystem.API
             UserOutputModel userOut = new UserOutputModel(user.ID, user.FirstName, user.LastName, user.BirthDate, user.Login, user.Password, user.Email, user.Phone);
             return userOut;
         }
-
+        
         public RoleOutputModel ConvertRoleDTOToRoleOutputModel(RoleDTO role) // скорее всего, нужен foreach, т.к. получаем не одну строку
         {
             RoleOutputModel roleOut = new RoleOutputModel(role.ID, role.Name);
@@ -61,6 +61,16 @@ namespace TestingSystem.API
                 usersOut.Add(mapper.ConvertUserPositionDTOToUserWithRolesOutputModel(u));
             }
 
+            return usersOut;
+        }
+        public List<UserOutputModel> ConvertListUserDTOToListUserOutputModel(List<UserDTO> users)
+        {
+            UserMapper mapper = new UserMapper();
+            List<UserOutputModel> usersOut = new List<UserOutputModel>();
+            foreach (var u in users)
+            {
+                usersOut.Add(mapper.ConvertUserDTOToUserOutputModel(u));
+            }
             return usersOut;
         }
     }

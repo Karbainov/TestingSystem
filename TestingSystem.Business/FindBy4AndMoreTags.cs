@@ -8,7 +8,7 @@ namespace TestingSystem.Business
 {
     public class FindBy4AndMoreTags
     {
-        public List<TestDTO> Find(string tag)
+        public List<TestDTO> FindAnd(string tag)
         {
             List<string> tags = CreateListFromString(tag);
             TagCRUD tagCRUD = new TagCRUD();
@@ -17,29 +17,72 @@ namespace TestingSystem.Business
             List<TestTagDTO> testTagDTOs = testTagCRUD.GetAll();
             List<TestTagsModel> tests = TestTagDTOToTestTagsModel(testTagDTOs);
             List<int> tagId = FindTagsID(tagDTOs, tags);
-            tests = DeleteUselessTests(tests, tagId);
+            tests = DeleteUselessTestsAnd(tests, tagId);
+            return GetAllRightTests(tests);
+        }
+        public List<TestDTO> FindOr(string tag)
+        {
+            List<string> tags = CreateListFromString(tag);
+            TagCRUD tagCRUD = new TagCRUD();
+            List<TagDTO> tagDTOs = tagCRUD.GetAll();
+            TestTagCRUD testTagCRUD = new TestTagCRUD();
+            List<TestTagDTO> testTagDTOs = testTagCRUD.GetAll();
+            List<TestTagsModel> tests = TestTagDTOToTestTagsModel(testTagDTOs);
+            List<int> tagId = FindTagsID(tagDTOs, tags);
+            tests = DeleteUselessTestsOr(tests, tagId);
             return GetAllRightTests(tests);
         }
         public List<string> CreateListFromString(string tags)
         {
-            for (int i = 0; i < tags.Length ; i++)
+            if (tags!=null)
             {
-                if(tags[i] ==' ')
+                for (int i = 0; i < tags.Length; i++)
                 {
-                    
-                    tags =tags.Remove(i,1);
-                    i--;
+                    if (tags[i] == ' ')
+                    {
+
+                        tags = tags.Remove(i, 1);
+                        i--;
+                    }
                 }
+                for (int i = 0; i < tags.Length - 1; i++)
+                {
+                    if (tags[i] == ',' && tags[i + 1] == ',')
+                    {
+                        tags = tags.Remove(i);
+                    }
+                }
+                List<string> listOfTags = new List<string>(tags.Split(new char[] { ',' }).ToList<string>());
+                
+                return listOfTags;
             }
-            for(int i = 0; i<tags.Length-1;i++)
+            return null;
+        }
+        public string[] CreateArrayFromString(string tags)
+        {
+            if (tags != null)
             {
-                if(tags[i]==','&&tags[i+1]==',')
+                for (int i = 0; i < tags.Length; i++)
                 {
-                    tags =tags.Remove(i);
+                    if (tags[i] == ' ')
+                    {
+
+                        tags = tags.Remove(i, 1);
+                        i--;
+                    }
                 }
+                for (int i = 0; i < tags.Length - 1; i++)
+                {
+                    if (tags[i] == ',' && tags[i + 1] == ',')
+                    {
+                        tags = tags.Remove(i);
+                    }
+                }
+               
+                string[] lot = tags.Split(new char[] { ',' }).ToArray<string>();
+                return lot;
             }
-            List<string> listOfTags = new List<string>(tags.Split(new char[] {','}).ToList<string>());
-            return listOfTags;
+            return null;
         }
         public List<TestDTO> GetAllRightTests(List<TestTagsModel> models)
         {
@@ -51,39 +94,88 @@ namespace TestingSystem.Business
             }
             return tests;
         }
-        public List<TestTagsModel> DeleteUselessTests(List<TestTagsModel> tests, List<int> tagId)
+        public List<TestTagsModel> DeleteUselessTestsAnd(List<TestTagsModel> tests, List<int> tagId)
         {
-            foreach (TestTagsModel a in tests)
+            if (tagId != null)
             {
-                bool isFind = true;
-                for (int i = 0; i < tagId.Count-1; i++)
+                List<TestTagsModel> num = new List<TestTagsModel>();
+                foreach (TestTagsModel a in tests)
                 {
-                    if (!a.TagsID.Contains(tagId[i]))
+                    bool isFind = true;
+                    for (int i = 0; i < tagId.Count; i++)
                     {
-                        isFind = false;
+                        if (!a.TagsID.Contains(tagId[i]))
+                        {
+                            isFind = false;
+                        }
+                    }
+                    if (!isFind)
+                    {
+                        num.Add(a);
                     }
                 }
-                if (!isFind)
+                foreach (var a in num)
                 {
                     tests.Remove(a);
                 }
             }
             return tests;
         }
-        public List<int> FindTagsID(List<TagDTO> tagDTOs, List<String> tags)
+        public List<TestTagsModel> DeleteUselessTestsOr(List<TestTagsModel> tests, List<int> tagId)
         {
-            List<int> tagId = new List<int>();
-            for (int i = 0; i < tags.Count; i++)
+            if (tagId != null)
             {
-                foreach (TagDTO a in tagDTOs)
+                List<TestTagsModel> num = new List<TestTagsModel>();
+                foreach (TestTagsModel a in tests)
                 {
-                    if (a.Name == tags[i])
+                    bool isFind = false;
+                    for (int i = 0; i < tagId.Count; i++)
                     {
-                        tagId.Add(a.ID);
+                        if (a.TagsID.Contains(tagId[i]))
+                        {
+                            isFind = true;
+                        }
+                    }
+                    if (!isFind)
+                    {
+                        num.Add(a);
                     }
                 }
+                foreach (var a in num)
+                {
+                    tests.Remove(a);
+                }
             }
-            return tagId;
+            return tests;
+        }
+
+        public List<int> FindTagsID(List<TagDTO> tagDTOs, List<String> tags)
+        {
+            if (tags != null)
+            {
+                List<int> tagId = new List<int>();
+                foreach (var tmp in tagDTOs)
+                {
+                    tmp.Name = tmp.Name.ToLower();
+                }
+                for (int i = 0; i < tags.Count; i++)
+                {
+                    tags[i] = tags[i].ToLower();
+                }
+
+                for (int i = 0; i < tags.Count; i++)
+                {
+                    foreach (TagDTO a in tagDTOs)
+                    {
+                        if (a.Name == tags[i])
+                        {
+                            tagId.Add(a.ID);
+                        }
+                    }
+                }
+                return tagId;
+            }
+            return null;
         }
         public List<TestTagsModel> TestTagDTOToTestTagsModel(List<TestTagDTO> testTagDTOs)
         {
