@@ -17,143 +17,116 @@ namespace TestingSystem.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class GroupController : ControllerBase
+    public class GroupController : Controller
     {
-       
         private readonly ILogger<GroupController> _logger;
-
+        
         public GroupController(ILogger<GroupController> logger)
         {
             _logger = logger;
         }
 
-
-
-        [HttpGet("admin")]  // htpps://localhost/group
-        public List<GroupOutputModel> GetAllGroups()
+        [HttpGet("admin")]
+        public IActionResult GetAllGroups()
         {         
             AdminDataAccess adm = new AdminDataAccess();
-
             List<GroupOutputModel> groupOutputModels = new List<GroupOutputModel>();
-
             List<GroupDTO> groups = adm.GetAllGroups();
-            foreach (GroupDTO g in groups)
-            {
-
-                GroupOutputModel www = new GroupOutputModel();
-                AdminDataAccess gr = new AdminDataAccess();
-                www.Id = g.Id;
-                www.Name = g.Name;
-                www.StartDate = g.StartDate;
-                www.EndDate = g.EndDate;
-                List<UserDTO> students = gr.GetAllStudents(g.Id);
-                List<UserOutputModel> studentsout = new List<UserOutputModel>();
-                foreach (UserDTO st in students)
+            if (groups == null) { return new BadRequestObjectResult("Ошибка сервера"); }
+            else {
+                foreach (GroupDTO g in groups)
                 {
-                    UserMapper um = new UserMapper();
-                    studentsout.Add(um.ConvertUserDTOToUserOutputModel(st));
-
-                   
-                }
-                List<UserDTO> teachers = gr.GetTeacherByGroupId(g.Id);
-                List<UserOutputModel> teachersout = new List<UserOutputModel>();
-                foreach (UserDTO tc in teachers)
-                {
-                    UserMapper tm = new UserMapper();
-                    teachersout.Add(tm.ConvertUserDTOToUserOutputModel(tc));
-                }
-                www.Students = studentsout;
-                www.Teachers = teachersout;  
-                groupOutputModels.Add(www);
-
-
-
+                    GroupOutputModel www = new GroupOutputModel();
+                    AdminDataAccess gr = new AdminDataAccess();
+                    www.Id = g.Id;
+                    www.Name = g.Name;
+                    www.StartDate = g.StartDate;
+                    www.EndDate = g.EndDate;
+                    List<UserDTO> students = gr.GetAllStudents(g.Id);
+                    List<UserOutputModel> studentsOut = new List<UserOutputModel>();
+                    foreach (UserDTO st in students)
+                    {
+                        UserMapper um = new UserMapper();
+                        studentsOut.Add(um.ConvertUserDTOToUserOutputModel(st));
+                    }
+                    List<UserDTO> teachers = gr.GetTeacherByGroupId(g.Id);
+                    List<UserOutputModel> teachersOut = new List<UserOutputModel>();
+                    foreach (UserDTO tc in teachers)
+                    {
+                        UserMapper tm = new UserMapper();
+                        teachersOut.Add(tm.ConvertUserDTOToUserOutputModel(tc));
+                    }
+                    www.Students = studentsOut;
+                    www.Teachers = teachersOut;  
+                    groupOutputModels.Add(www);
+                } 
+                return Json(groupOutputModels);
             }
-            return groupOutputModels;
-            
         }
-
         
-
         [HttpPost]
         public void GroupPost([FromBody]GroupInputModel groupC)
         {
             Mapper mapper = new Mapper();
-
-            GroupDTO groupdto = mapper.ConvertGroupInputModelToGroupDTO(groupC);
-
+            GroupDTO groupDTO = mapper.ConvertGroupInputModelToGroupDTO(groupC);
             AdminDataAccess group = new AdminDataAccess();
-
-            group.GroupCreate(groupdto);
-
-
-
+            group.GroupCreate(groupDTO);
         }
 
         [HttpGet("{id}")]
-        public GroupOutputModel GetGroupById(int id)
+        public IActionResult GetGroupById(int id)
         {
             Mapper mapper = new Mapper();
-
             AdminDataAccess adm = new AdminDataAccess();
-            GroupOutputModel gom = mapper.ConvertGroupDTOToGroupOutputModel(adm.GetGroupById(id));
-
-            return gom;
+            GroupDTO group = adm.GetGroupById(id);
+            if (group == null) { return new BadRequestObjectResult("Группы с таким id не существует"); }
+            else {
+                return Json(mapper.ConvertGroupDTOToGroupOutputModel(group)); 
+            }
         }
         
-      
-        
-        [HttpPost("{groupID}/student/{userID}")] // POST http://localhost:5557/group/5/student/82	
-        public void PostStudentInGroup(int userID, int groupID)
+        [HttpPost("{groupID}/student/{userID}")]
+        public void PostStudentInGroup(int userId, int groupId)
         {
             AdminDataAccess adm = new AdminDataAccess();
-            adm.StudentAdd(userID, groupID);
+            adm.StudentAdd(userId, groupId);
         }
         
-        [HttpPost("{groupID}/teacher/{userID}")] // POST http://localhost:5557/group/id/teacher/id	
-        public void PostTeacherInGroup(int userID, int groupID)
+        [HttpPost("{groupID}/teacher/{userID}")]
+        public void PostTeacherInGroup(int userId, int groupId)
         {
             AdminDataAccess adm = new AdminDataAccess();
-            adm.TeacherAdd(userID, groupID);
+            adm.TeacherAdd(userId, groupId);
         }
-
-
 
         [HttpPut]
         public void GroupPut([FromBody]GroupInputModel groupU)
         {
-
             Mapper mapper = new Mapper();
-
             GroupDTO groupdto = mapper.ConvertGroupInputModelToGroupDTO(groupU);
-
             AdminDataAccess group = new AdminDataAccess();
-
             group.GroupUpdate(groupdto);
-
         }
 
         [HttpDelete] //url удаляем из group
-
         public void Delete([FromBody] int id)
         {
             AdminDataAccess adm = new AdminDataAccess();
             adm.GroupDelete(id);
-
         }
 
         [HttpDelete] // удаляем студента из группы
-        public void DeleteStudentFromGroup(int studentID, int groupID)
+        public void DeleteStudentFromGroup(int studentId, int groupId)
         {
             AdminDataAccess adm = new AdminDataAccess();
-            adm.DeleteStudentFromGroup(studentID, groupID);
+            adm.DeleteStudentFromGroup(studentId, groupId);
         }
 
         [HttpDelete] // удаляем учителя из группы
-        public void DeleteTeacherFromGroup(int studentID, int groupID)
+        public void DeleteTeacherFromGroup(int studentId, int groupId)
         {
             AdminDataAccess adm = new AdminDataAccess();
-            adm.DeleteTeacherFromGroup(studentID, groupID);
+            adm.DeleteTeacherFromGroup(studentId, groupId);
         }
     }
 }

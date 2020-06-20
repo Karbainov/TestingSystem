@@ -119,12 +119,10 @@ namespace TestingSystem.API.Controllers
         {
             UserMapper mapper = new UserMapper();
             AdminDataAccess adm = new AdminDataAccess();
-            UserOutputModel user = new UserOutputModel();
             UserDTO getUser = adm.GetUserbyID(id);
             if (getUser == null) { return new BadRequestObjectResult("Пользователя с таким id не существует"); }
             else {
-                user = mapper.ConvertUserDTOToUserOutputModel(getUser);
-                return Json(user); 
+                return Json(mapper.ConvertUserDTOToUserOutputModel(getUser)); 
             }
         }
 
