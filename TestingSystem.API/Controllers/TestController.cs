@@ -55,7 +55,7 @@ namespace TestingSystem.API.Controllers
                 }
                 else
                 {
-                    return Json(mapper.ConvertTestDTOToTestModelList(searchBy4AndMoreTags.FindAnd(sttim.Tag)));
+                    return null;//Json(mapper.ConvertTestDTOToTestModelList(searchBy4AndMoreTags.FindAnd(sttim.Tag)));
                 }
             }
             else
@@ -66,7 +66,7 @@ namespace TestingSystem.API.Controllers
                 }
                 else
                 {
-                    return Json(mapper.ConvertTestDTOToTestModelList(searchBy4AndMoreTags.FindOr(sttim.Tag)));
+                    return null;// Json(mapper.ConvertTestDTOToTestModelList(searchBy4AndMoreTags.FindOr(sttim.Tag)));
                 }
             }
         }        
