@@ -129,53 +129,56 @@ namespace TestingSystem.API.Controllers
         }
 
         [HttpPut]
-        public void Put([FromBody] UserInputModel user)
+        public IActionResult Put([FromBody] UserInputModel user)
         {
             UserMapper mapper = new UserMapper();
             AdminDataAccess adm = new AdminDataAccess();
             adm.UserUpdate(mapper.ConvertUserInputModelToGroupDTO(user));
+            return new OkObjectResult("Пользователь добавлен");
         }
         
         [HttpDelete("{userId}/role/{roleId}")]
-        public void DeleteUserRole(int userId, int roleId)
+        public IActionResult DeleteUserRole(int userId, int roleId)
         {
             AdminDataAccess adm = new AdminDataAccess();
             adm.UserRoleDelete(userId, roleId);
+            return new OkResult();
         }
 
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
             AdminDataAccess adm = new AdminDataAccess();
             adm.UserDelete(id);
+            return new OkResult();
         }
         
         [HttpGet("{UserID}/user")]
-        public StudentOutputModel GetStudentTests(int UserID)
+        public IActionResult GetStudentTests(int UserID)
         {
             StudentDataAccess student = new StudentDataAccess();
             Mapper mapper = new Mapper();
             List<TestAttemptDTO> tests = student.GetCompleteTest(UserID);
             tests.AddRange(student.GetIncompleteTest(UserID));
             StudentOutputModel model = mapper.ConvertUserDTOTestAttemptDTOToStudentModel(student.GetUser(UserID), mapper.ConvertTestAttemptDTOToTestAttemptModel(tests));
-            return model;
+            return Json(model);
         }
         [HttpGet("Tests/{UserID}/{TestID}")]
-        public List<AttemptResultOutputModel> GetAttemptsByUserIDTestID(int UserID, int TestID)
+        public IActionResult GetAttemptsByUserIDTestID(int UserID, int TestID)
         {
             StudentDataAccess student = new StudentDataAccess();
             Mapper mapper = new Mapper();
             UserIdTestIdDTO dTO = new UserIdTestIdDTO(UserID, TestID);
             List<AttemptResultOutputModel> model = mapper.ConvertAttemptDTOToAttemptModel(student.GetAttemptsByUserIdTestId(dTO));
-            return model;
+            return Json(model);
         }
         [HttpGet("Attempt/{AttemptID}")]
-        public List<QuestionAnswerOutputModel> GetQuestionAndAnswerByAttemptID(int attemptID)
+        public IActionResult GetQuestionAndAnswerByAttemptID(int attemptID)
         {
             TeacherDataAccess teacher = new TeacherDataAccess();
             Mapper mapper = new Mapper();
             List<QuestionAnswerOutputModel> model = mapper.ConvertQuestionAnswerDTOToQuestionAnswerModel(teacher.GetQuestionAndAnswerByAttempt(attemptID));
-            return model;
+            return Json(model);
         }
     }
 }
