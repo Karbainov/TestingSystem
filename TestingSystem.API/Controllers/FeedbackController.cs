@@ -79,8 +79,16 @@ namespace TestingSystem.API.Controllers
         [HttpPut("feedbacks/{id}/Author")]
         public IActionResult PutProcessedInFeedback([FromBody] int id)      //отметить, что фидбэк просмотрен (можно вернуть на непросмотренный)
         {
-            AuthorDataAccess feedback = new AuthorDataAccess();
-            return Json(feedback.UpdateProcessedInFeedback(id));
+            AuthorDataAccess author = new AuthorDataAccess();
+            int result = author.UpdateProcessedInFeedback(id);
+            if (result == id)
+            {
+                return new OkObjectResult("Feedback information is updated");
+            }
+            else
+            {
+                return new BadRequestObjectResult("DataBase error");
+            }
         }
     }
 }

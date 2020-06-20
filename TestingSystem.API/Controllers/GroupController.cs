@@ -100,12 +100,24 @@ namespace TestingSystem.API.Controllers
         }
 
         [HttpPut]
-        public void GroupPut([FromBody]GroupInputModel groupU)
+        public IActionResult GroupPut([FromBody]GroupInputModel groupU)
         {
             Mapper mapper = new Mapper();
-            GroupDTO groupdto = mapper.ConvertGroupInputModelToGroupDTO(groupU);
-            AdminDataAccess group = new AdminDataAccess();
-            group.GroupUpdate(groupdto);
+            GroupDTO groupDTO = mapper.ConvertGroupInputModelToGroupDTO(groupU);
+            AdminDataAccess adm = new AdminDataAccess();
+            int result = adm.GroupUpdate(groupDTO);
+            if (result == 0)
+            {
+                return new BadRequestObjectResult("Requested group does not exist");
+            }
+            if (result == 1)
+            {
+                return new OkObjectResult("Group information is updated");
+            }
+            else
+            {
+                return new BadRequestObjectResult("DataBase error");
+            }
         }
 
         [HttpDelete] //url удаляем из group

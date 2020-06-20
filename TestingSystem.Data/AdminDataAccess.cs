@@ -64,10 +64,11 @@ namespace TestingSystem.Data
             return group.GetById(id);  
         }
 
-        public void GroupUpdate(GroupDTO groupU)
+        public int GroupUpdate(GroupDTO groupU)
         {
             GroupCRUD group = new GroupCRUD();
-            group.Update(groupU);
+            int result = group.Update(groupU);
+            return result;
         }
         public void GroupDelete(int id)   // скорректировала название Горина
         {
