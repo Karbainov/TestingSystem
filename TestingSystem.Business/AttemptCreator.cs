@@ -24,7 +24,7 @@ namespace TestingSystem.Business
             var cuttedquestions = PickQuestionsForAttempt(sortedquestions, test);
             var attemptQuestions = ConvertDictionaryToList(cuttedquestions);
             var attemptId = AddQuestionsToAttemptInDatabase(userId, testId, attemptQuestions);
-            AttemptBusinessModel attempt = new AttemptBusinessModel(attemptId, attemptQuestions);
+            AttemptBusinessModel attempt = new AttemptBusinessModel(attemptId, test.Name, test.DurationTime, attemptQuestions);
             return attempt;
         }
 
