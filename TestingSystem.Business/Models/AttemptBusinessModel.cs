@@ -10,11 +10,11 @@ namespace TestingSystem.Business.Models
 {
     public class AttemptBusinessModel
     {
-        int AttemptId { get; set; }
+       public int AttemptId { get; set; }
         public string TestName { get; set; }
         public TimeSpan?  DurationTime { get; set; }
 
-        List<QuestionWithListAnswersDTO> Questions;
+       public List<QuestionWithListAnswersDTO> Questions;
 
 
         public AttemptBusinessModel()

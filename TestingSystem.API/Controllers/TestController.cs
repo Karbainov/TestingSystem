@@ -321,14 +321,14 @@ namespace TestingSystem.API.Controllers
             return new OkResult();
         }
 
-        //[HttpGet("{testid}/{userId}/Student")]
+        [HttpGet("{testid}/{userId}/Student")]
 
-        //public IActionResult GetTestAttempt (int testId, int userdId) 
-        //{
-        //    AttemptCreator studentattempt = new AttemptCreator();
-        //    var attempt = studentattempt.CreateAttempt(userdId, testId);
-            
-        //   return Json(new Mapper().AttemptBusinessModelToConcreateAttemptOutputModel(attempt()));
-        //}
+        public IActionResult GetTestAttempt(int testId, int userdId)
+        {
+            AttemptCreator studentattempt = new AttemptCreator();
+            var attempt = studentattempt.CreateAttempt(userdId, testId);
+
+            return Json(new Mapper().AttemptBusinessModelToConcreateAttemptOutputModel(attempt, testId, userdId));
+        }
     }
 }

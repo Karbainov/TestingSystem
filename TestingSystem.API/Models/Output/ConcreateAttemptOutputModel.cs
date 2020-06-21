@@ -7,12 +7,12 @@ namespace TestingSystem.API.Models.Output
 {
     public class ConcreateAttemptOutputModel
     {
-        int AttemptId { get; set; }
-        int UserId { get; set; }
-        int TestId { get; set; }
+        public int AttemptId { get; set; }
+        public int UserId { get; set; }
+        public int TestId { get; set; }
         public string TestName { get; set; }
         public TimeSpan? DurationTime { get; set; }
 
-        List<QuestionWithListAnswersOutputModel> Questions { get; set; }
+        public List<QuestionWithListAnswersOutputModel> Questions { get; set; }
     }
 }
