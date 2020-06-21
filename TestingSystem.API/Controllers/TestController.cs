@@ -8,7 +8,9 @@ using TestingSystem.Data;
 using TestingSystem.Data.DTO;
 using TestingSystem.API.Models.Output;
 using TestingSystem.API.Models.Input;
+using TestingSystem.Business.Models;
 using TestingSystem.Business;
+
 
 namespace TestingSystem.API.Controllers
 {
@@ -43,27 +45,27 @@ namespace TestingSystem.API.Controllers
             FindBy4AndMoreTags searchBy4AndMoreTags = new FindBy4AndMoreTags();
             StringConverter converter = new StringConverter();
 
-            if (caseSwitch)
-            {
-                if (converter.CreateArrayFromString(sttim.Tag).Length < 3)
-                {
-                    return Json(mapper.ConvertTestDTOToTestModelList(search.GetTestVSTagSearchAnd(converter.CreateArrayFromString(sttim.Tag))));
-                }
-                else
-                {
-                    return Json(mapper.ConvertTestDTOToTestModelList(searchBy4AndMoreTags.FindAnd(sttim.Tag)));
-                }
+            if (caseSwitch)
+            {
+                if (converter.CreateArrayFromString(sttim.Tag).Length < 3)
+                {
+                    return Json(mapper.ConvertTestDTOToTestModelList(search.GetTestVSTagSearchAnd(converter.CreateArrayFromString(sttim.Tag))));
+                }
+                else
+                {
+                    return Json(mapper.ConvertTestDTOToTestModelList(searchBy4AndMoreTags.FindAnd(sttim.Tag)));
+                }
             }
-            else
-            {
-                if (converter.CreateArrayFromString(sttim.Tag).Length < 3)
-                {
-                    return Json(mapper.ConvertTestDTOToTestModelList(search.GetTestVSTagSearchOr(converter.CreateArrayFromString(sttim.Tag))));
-                }
-                else
-                {
-                    return  Json(mapper.ConvertTestDTOToTestModelList(searchBy4AndMoreTags.FindOr(sttim.Tag)));
-                }
+            else
+            {
+                if (converter.CreateArrayFromString(sttim.Tag).Length < 3)
+                {
+                    return Json(mapper.ConvertTestDTOToTestModelList(search.GetTestVSTagSearchOr(converter.CreateArrayFromString(sttim.Tag))));
+                }
+                else
+                {
+                    return  Json(mapper.ConvertTestDTOToTestModelList(searchBy4AndMoreTags.FindOr(sttim.Tag)));
+                }
             }
         }        
 
@@ -334,6 +336,16 @@ namespace TestingSystem.API.Controllers
             AuthorDataAccess answer = new AuthorDataAccess();
             answer.DeleteAnswer(anid);
             return new OkResult();
-        }        
+        }
+
+        [HttpGet("{testid}/{userId}/Student")]
+
+        public IActionResult GetTestAttempt(int testId, int userdId)
+        {
+            AttemptCreator studentattempt = new AttemptCreator();
+            var attempt = studentattempt.CreateAttempt(userdId, testId);
+
+            return Json(new Mapper().AttemptBusinessModelToConcreateAttemptOutputModel(attempt, testId, userdId));
+        }
     }
 }

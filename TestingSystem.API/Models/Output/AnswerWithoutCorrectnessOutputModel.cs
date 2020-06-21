@@ -1,22 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Text;
-using TestingSystem.Data.DTO;
-using Dapper;
 using System.Linq;
-using System.Data;
+using System.Threading.Tasks;
 
-namespace TestingSystem.Data.DTO
+namespace TestingSystem.API.Models.Output
 {
-   public class AnswerWithoutCorrectnessDTO
+    public class AnswerWithoutCorrectnessOutputModel
     {
         public int ID { get; set; }
 
         public int QuestionId { get; set; }
 
         public string Value { get; set; }
-
-
     }
 }
