@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestingSystem.Data.Tests", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestingSystem.API", "TestingSystem.API\TestingSystem.API.csproj", "{02D32904-2ACA-4969-8EBC-EC0EDB5505B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingSystem.Business", "TestingSystem.Business\TestingSystem.Business.csproj", "{F400AC7B-7DB4-4DB9-B0B4-534F7310C914}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestingSystem.Business", "TestingSystem.Business\TestingSystem.Business.csproj", "{F400AC7B-7DB4-4DB9-B0B4-534F7310C914}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingSystem.Business.Tests", "TestingSystem.Business.Tests\TestingSystem.Business.Tests.csproj", "{17E63A17-2D64-460B-9462-A1F26105354D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{F400AC7B-7DB4-4DB9-B0B4-534F7310C914}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F400AC7B-7DB4-4DB9-B0B4-534F7310C914}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F400AC7B-7DB4-4DB9-B0B4-534F7310C914}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17E63A17-2D64-460B-9462-A1F26105354D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17E63A17-2D64-460B-9462-A1F26105354D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17E63A17-2D64-460B-9462-A1F26105354D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17E63A17-2D64-460B-9462-A1F26105354D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

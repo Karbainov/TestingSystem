@@ -166,5 +166,45 @@ namespace TestingSystem.Data
             return role.GetRoleByUserId(userId);
         }
         
+        public List<UserDTO> GetDeletedUsers()
+        {
+            ForDeletedManager manager = new ForDeletedManager();
+            return manager.GetDeletedUsers();
+        }
+        public int RestoreUser(int id)
+        {
+            ForDeletedManager manager = new ForDeletedManager();
+            return manager.RestoreUser(id);
+        }
+        public List<TestDTO> GetDeletedTests()
+        {
+            ForDeletedManager manager = new ForDeletedManager();
+            return manager.GetDeletedTests();
+        }
+        public int RestoreTest(int id)
+        {
+            ForDeletedManager manager = new ForDeletedManager();
+            return manager.RestoreTest(id);
+        }
+        public List<QuestionDTO> GetDeletedQuestions()
+        {
+            ForDeletedManager manager = new ForDeletedManager();
+            return manager.GetDeletedQuestions();
+        }
+        public int RestoreQuestion(int id)
+        {
+            ForDeletedManager manager = new ForDeletedManager();
+            return manager.RestoreQuestion(id);
+        }
+        public List<GroupDTO> GetDeletedGroups()
+        {
+            ForDeletedManager manager = new ForDeletedManager();
+            return manager.GetDeletedGroups();
+        }
+        public int RestoreGroup(int id)
+        {
+            ForDeletedManager manager = new ForDeletedManager();
+            return manager.RestoreGroup(id);
+        }
     }
 }
