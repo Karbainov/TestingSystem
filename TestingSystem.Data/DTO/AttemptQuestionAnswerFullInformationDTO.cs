@@ -14,7 +14,7 @@ namespace TestingSystem.Data.DTO
         public TimeSpan AttemptDurationTime { get; set; }
 
         // Question info
-        public int QuestionId { get; set; }
+        public int QuestionID { get; set; }
         public string QuestionValue { get; set; }
         public int TypeID { get; set; }
         public byte AnswersCount { get; set; }
