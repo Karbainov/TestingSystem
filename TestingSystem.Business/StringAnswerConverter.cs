@@ -8,30 +8,28 @@ namespace TestingSystem.Business
 {
     public class StringAnswerConverter
     {
-        public bool CheckCorrectAnswer(string answer, string correctAnswer)
+        public bool CheckCorrectAnswer(string answer, string correctAnswer, int QuestionType)
         {
-            if (answer.Length == correctAnswer.Length)
+            if(QuestionType == 3)
             {
-                char[] answerArr = answer.ToArray();
-                char[] corrAnsArr = correctAnswer.ToArray();
-
-                for (int i = 0; i < corrAnsArr.Length; i++)
-                {
-                    if (corrAnsArr[i] != answerArr[i])
-                        return false;
-                }
-
-                return true;
+                answer = ConvertThirdType(answer);
+                correctAnswer = ConvertThirdType(correctAnswer);
+            }
+            else if (QuestionType == 4)
+            {
+                answer = ConvertFourthType(answer);
+                correctAnswer = ConvertFourthType(correctAnswer);
             }
 
+            if (answer.Equals(correctAnswer))
+                return true;
             return false;
         }
 
         public string ConvertThirdType(string input)
         {
             input = RemoveWhitespace(input);
-            input = input.ToLower();
-
+            
             return input;
         }
 
