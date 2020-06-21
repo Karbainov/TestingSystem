@@ -47,7 +47,18 @@ namespace TestingSystem.API.Controllers
             try
             {
                 adm.UserCreate(mapper.ConvertUserInputModelToUserDTO(user));
-                return new OkObjectResult("Пользователь создан");
+                return new OkObjectResult("Пользователь создан успешно");
+            }
+            catch(System.Data.SqlClient.SqlException e)
+            {
+                if (e.ErrorCode == -2146232060)
+                {
+                    return new BadRequestObjectResult("Такой логин уже занят");
+                }
+                else
+                {
+                    return new BadRequestObjectResult("Неизвестная ошибка");
+                }
             }
             catch
             {
