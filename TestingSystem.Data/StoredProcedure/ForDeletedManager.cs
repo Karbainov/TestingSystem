@@ -80,8 +80,7 @@ namespace TestingSystem.Data.StoredProcedure
             {
                 List<TestQuestionTagDTO> dTOs;
                 var TestDictionary = new Dictionary<int, TestQuestionTagDTO>();
-                string sqlExpression = "GetdeletedTests";//"GetQuestionsFromDeletedTests GetTagsFromDeletedTests Test_GetDeleted";
-                //var tests = 
+                string sqlExpression = "GetdeletedTests";
                     connection.Query< TestQuestionTagDTO, QuestionDTO, TagWithTestIDDTO, TestQuestionTagDTO>(sqlExpression, ( test , question , tag )=>
                 {
                     TestQuestionTagDTO testEntry;
@@ -93,30 +92,12 @@ namespace TestingSystem.Data.StoredProcedure
                         testEntry.Tags = new List<TagWithTestIDDTO>();
                         TestDictionary.Add(testEntry.ID, testEntry);
                     }
-                    //test.Questions = new List<QuestionDTO>();
-                    //test.Questions.Add(question);
-                    //test.Tags = new List<TagWithTestIDDTO>();
-                    //test.Tags.Add(tag);
                     testEntry.Tags.Add(tag);
                     return testEntry;
                 }
                 ,splitOn:"TestID,IDtest" ).ToList();
                 dTOs = new List<TestQuestionTagDTO>(TestDictionary.Values);
                 return dTOs;
-
-
-
-
-
-
-
-                //var result = connection.QueryMultiple(sqlExpression);
-                //var tests = result.Read<TestQuestionTagDTO>().ToList();
-                //var questions = result.Read<QuestionDTO>().ToList();
-                //foreach (var t in tests)
-                //{
-                //    t.Questions.Add(questions.ToLookup(a =>a.ID,));
-                //}
             }
         }
     }
