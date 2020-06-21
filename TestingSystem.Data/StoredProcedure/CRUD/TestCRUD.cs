@@ -28,7 +28,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
 
         public TestDTO GetById(int id)
         {
-            var connection = Connection.GetConnection2();            
+            var connection = Connection.GetConnection();            
             string sqlExpression = "Test_GetById";            
             return connection.Query<TestDTO>(sqlExpression, new { id }, commandType: CommandType.StoredProcedure).FirstOrDefault();            
         }

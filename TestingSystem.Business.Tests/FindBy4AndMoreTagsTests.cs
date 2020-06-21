@@ -60,7 +60,7 @@ namespace TestingSystem.Business.Tests
             
         }
         [TestCase(1)]
-        //[TestCase(2)]
+        [TestCase(2)]
         public void FindOrTest(int num)
         {
             FindOrMock mock = new FindOrMock();

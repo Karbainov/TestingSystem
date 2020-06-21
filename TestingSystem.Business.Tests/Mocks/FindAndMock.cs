@@ -31,9 +31,6 @@ namespace TestingSystem.Business.Tests.Mocks
                 case 2:
                     return new List<TestDTO>()
                     {
-                        new TestDTO (1,"Математика массивов",new TimeSpan(36000000000),85,10),
-                        new TestDTO (5,"Тест на написание методов",new TimeSpan(36000000000),75,10),
-                        new TestDTO (6,"Математика массивов",new TimeSpan(36000000000),85,10)
                     };
             }
             return null;
