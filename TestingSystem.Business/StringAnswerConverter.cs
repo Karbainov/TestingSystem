@@ -17,9 +17,10 @@ namespace TestingSystem.Business
 
         public string ConvertFourthType(string input)
         {
+            input = RemoveNonLetterChars(input);
             input = RemoveWhitespace(input);
             input = input.ToLower();
-            input = 
+            
             return input;
         }
 
