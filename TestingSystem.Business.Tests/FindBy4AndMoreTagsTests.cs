@@ -12,26 +12,7 @@ namespace TestingSystem.Business.Tests
         {
         }
 
-        [TestCase(1)]
-        [TestCase(2)]
-        [TestCase(3)]
-        public void CreateListFromStringTest(int num)
-        {
-            CreateListFromStringMock mock = new CreateListFromStringMock();
-            FindBy4AndMoreTags tags = new FindBy4AndMoreTags();
-            List<string> actual =tags.CreateListFromString(mock.GetActual(num));
-            CollectionAssert.AreEqual(mock.GetExpected(num), actual);
-        }
-        [TestCase(1)]
-        [TestCase(2)]
-        [TestCase(3)]
-        public void CreateArrayFromStringTest(int num)
-        {
-            CreateArrayFromStringMock mock = new CreateArrayFromStringMock();
-            FindBy4AndMoreTags tags = new FindBy4AndMoreTags();
-            string[] actual = tags.CreateArrayFromString(mock.GetActual(num));
-            CollectionAssert.AreEqual(mock.GetExpected(num), actual);
-        }
+        
         [TestCase(1)]
         [TestCase(2)]
         [TestCase(3)]

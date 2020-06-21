@@ -41,22 +41,23 @@ namespace TestingSystem.API.Controllers
             Mapper mapper = new Mapper();
             AuthorDataAccess search = new AuthorDataAccess();
             FindBy4AndMoreTags searchBy4AndMoreTags = new FindBy4AndMoreTags();
+            StringConverter converter = new StringConverter();
             if (caseSwitch)
             {
-                if (sttim.Tag.Length < 3)
-                {
-                    return Json(mapper.ConvertTestDTOToTestModelList(search.GetTestVSTagSearchAnd(searchBy4AndMoreTags.CreateArrayFromString(sttim.Tag))));
-                }
-                else
-                {
+                //if (sttim.Tag.Length < 3)
+                //{
+                //    return Json(mapper.ConvertTestDTOToTestModelList(search.GetTestVSTagSearchAnd(converter.CreateArrayFromString(sttim.Tag))));
+                //}
+                //else
+                //{
                     return Json(mapper.ConvertTestDTOToTestModelList(searchBy4AndMoreTags.FindAnd(sttim.Tag)));
-                }
+               //}
             }
             else
             {
                 if (sttim.Tag.Length < 3)
                 {
-                    return Json(mapper.ConvertTestDTOToTestModelList(search.GetTestVSTagSearchOr(searchBy4AndMoreTags.CreateArrayFromString(sttim.Tag))));
+                    return Json(mapper.ConvertTestDTOToTestModelList(search.GetTestVSTagSearchOr(converter.CreateArrayFromString(sttim.Tag))));
                 }
                 else
                 {
