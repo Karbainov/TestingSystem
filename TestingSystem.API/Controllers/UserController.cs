@@ -11,7 +11,11 @@ using TestingSystem.Data.StoredProcedure.CRUD;
 using TestingSystem.Data;
 using TestingSystem.API.Models.Input;
 using TestingSystem.API.Models.Output;
-
+using Newtonsoft.Json.Serialization;
+using Microsoft.VisualBasic;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 
 namespace TestingSystem.API.Controllers
 {
@@ -44,39 +48,21 @@ namespace TestingSystem.API.Controllers
         {
             UserMapper mapper = new UserMapper();
             AdminDataAccess adm = new AdminDataAccess();
-            try
-            {
-                adm.UserCreate(mapper.ConvertUserInputModelToUserDTO(user));
-                return new OkObjectResult("Пользователь создан успешно");
-            }
-            catch(System.Data.SqlClient.SqlException e)
-            {
-                if (e.ErrorCode == -2146232060)
-                {
-                    return new BadRequestObjectResult("Такой логин уже занят");
-                }
-                else
-                {
-                    return new BadRequestObjectResult("Неизвестная ошибка");
-                }
-            }
-            catch
-            {
-                return new BadRequestObjectResult("Неверно введены данные");
-            }
+            adm.UserCreate(mapper.ConvertUserInputModelToUserDTO(user));
+            return new OkObjectResult("Пользователь создан успешно");
         }
         
         [HttpPost("role")]
-        public IActionResult PostUserRole([FromBody] UserRoleInputModel userRole)
+        public IActionResult PostUserRole([FromBody] UserRoleInputModel userRole) // добавить условие, если роли не существует, иначе если данная роль для этого пользователя уже создана
         {
             UserMapper mapper = new UserMapper();
             AdminDataAccess adm = new AdminDataAccess();
             adm.UserRoleCreate(mapper.ConvertUserRoleInputModelToUserRoleDTO(userRole));
-            return new OkResult();
+            return new OkObjectResult("Роль пользователя создана");
         }
         
         [HttpGet("role")]
-        public IActionResult GetRole()
+        public IActionResult GetRole()// добавить условие, если ролей нет
         {
             UserMapper mapper = new UserMapper();
             AdminDataAccess adm = new AdminDataAccess();
@@ -91,21 +77,21 @@ namespace TestingSystem.API.Controllers
         }
         
         [HttpGet("{userId}/role")]
-        public IActionResult GetRoleByUserId(int userId)
+        public IActionResult GetRoleByUserId(int userId) // спросить про условие, если пользователя не существует
         {
             UserMapper mapper = new UserMapper();
             AdminDataAccess adm = new AdminDataAccess();
             List<RoleDTO> roles = adm.GetRoleByUserId(userId);
             List<RoleOutputModel> rolesOut = new List<RoleOutputModel>();
             foreach (RoleDTO r in roles)
-            {
-                rolesOut.Add(mapper.ConvertRoleDTOToRoleOutputModel(r));
-            }
-            return Json(rolesOut);
+                {
+                    rolesOut.Add(mapper.ConvertRoleDTOToRoleOutputModel(r));
+                }
+                return Json(rolesOut);
         }
         
         [HttpGet]
-        public IActionResult GetAllUsersWithRoles()
+        public IActionResult GetAllUsersWithRoles() // нужно ли условие, если таблица пуста
         {
             AdminDataAccess adm = new AdminDataAccess();
             List<UserPositionDTO> users = adm.GetAllUsersWithRoles();
@@ -115,7 +101,7 @@ namespace TestingSystem.API.Controllers
         
         
         [HttpGet("role/{roleID}")]
-        public IActionResult GetUsersByRoleID(int roleID)
+        public IActionResult GetUsersByRoleID(int roleID) // спросить про условие, если такой роли не существует
         {
             AdminDataAccess adm = new AdminDataAccess();
             List<UserOutputModel> allUsers = new List<UserOutputModel>();
@@ -129,7 +115,7 @@ namespace TestingSystem.API.Controllers
         }
         
         [HttpGet("{id}")]
-        public IActionResult GetUserById(int id)
+        public IActionResult GetUserById(int id) // спросить про условие, если такого пользователя не существует
         {
             UserMapper mapper = new UserMapper();
             AdminDataAccess adm = new AdminDataAccess();
@@ -163,7 +149,7 @@ namespace TestingSystem.API.Controllers
         }
         
         [HttpDelete("{userId}/role/{roleId}")]
-        public IActionResult DeleteUserRole(int userId, int roleId)
+        public IActionResult DeleteUserRole(int userId, int roleId) // условие, если юзера нет, то юзер не найден, иначе если роли нет, то роль не найдена
         {
             AdminDataAccess adm = new AdminDataAccess();
             adm.UserRoleDelete(userId, roleId);
@@ -171,7 +157,7 @@ namespace TestingSystem.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int id) // условие, если пользователя нет, то пользователь не найден
         {
             AdminDataAccess adm = new AdminDataAccess();
             adm.UserDelete(id);
@@ -179,7 +165,7 @@ namespace TestingSystem.API.Controllers
         }
         
         [HttpGet("{UserID}/test")]
-        public IActionResult GetStudentTests(int UserID)
+        public IActionResult GetStudentTests(int UserID) // добавить условие, что если ни одного теста не пройдено, то вывести OkObjectResult("Нет назначенных или пройденных тестов")
         {
             StudentDataAccess student = new StudentDataAccess();
             Mapper mapper = new Mapper();
@@ -188,7 +174,7 @@ namespace TestingSystem.API.Controllers
             StudentOutputModel model = mapper.ConvertUserDTOTestAttemptDTOToStudentModel(student.GetUser(UserID), mapper.ConvertTestAttemptDTOToTestAttemptModel(tests));
             return Json(model);
         }
-        [HttpGet("{UserID}/test/{TestID}")]
+        [HttpGet("{UserID}/test/{TestID}")] // добавить условия, если id пользователя не существует, иначе если id теста не существует
         public IActionResult GetAttemptsByUserIDTestID(int UserID, int TestID)
         {
             StudentDataAccess student = new StudentDataAccess();
@@ -197,7 +183,7 @@ namespace TestingSystem.API.Controllers
             List<AttemptResultOutputModel> model = mapper.ConvertAttemptDTOToAttemptModel(student.GetAttemptsByUserIdTestId(dTO));
             return Json(model);
         }
-        [HttpGet("Attempt/{AttemptID}")]
+        [HttpGet("Attempt/{AttemptID}")] // не понятно что делает метод и зачем он
         public IActionResult GetQuestionAndAnswerByAttemptID(int attemptID)
         {
             TeacherDataAccess teacher = new TeacherDataAccess();
