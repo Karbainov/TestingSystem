@@ -22,6 +22,43 @@ namespace TestingSystem.API
                 QuestionNumber = testDTO.QuestionNumber,
             };
         }
+        public TestOutputModel ConvertTestQuestionTagDTOToTestOutputModel(TestQuestionTagDTO testDTO)
+        {
+            List<QuestionOutputModel> questions= ConvertQuestionDTOToQuestionModelList(testDTO.Questions);
+            List<TagOutputModel> tags = ConvertTagsWithTestIdToTagOutputModel(testDTO.Tags);
+            return new TestOutputModel()
+            {
+                ID = testDTO.ID,
+                Name = testDTO.Name,
+                SuccessScore = testDTO.SuccessScore,
+                DurationTime = testDTO.DurationTime,
+                QuestionNumber = testDTO.QuestionNumber,
+                Questions = questions,
+                Tags = tags
+            };
+        }
+        public List<TestOutputModel> ConvertTestQuestionTagDTOToTestOutputListModel(List<TestQuestionTagDTO> testDTO)
+        {
+            List<TestOutputModel> tests = new List<TestOutputModel>();
+            foreach(var t in testDTO)
+            {
+                tests.Add(ConvertTestQuestionTagDTOToTestOutputModel(t));
+            }
+            return tests;
+        }
+        public List<TagOutputModel> ConvertTagsWithTestIdToTagOutputModel(List<TagWithTestIDDTO> tag)
+        {
+            List<TagOutputModel> tagOutputs = new List<TagOutputModel>();
+            TagOutputModel model;
+            foreach(var t in tag)
+            {
+                model = new TagOutputModel();
+                model.ID = t.IDtest;
+                model.Name = t.Name;
+                tagOutputs.Add(model);
+            }
+            return tagOutputs;
+        }
         
         //список тестов
         public List<TestOutputModel> ConvertTestDTOToTestModelList(List<TestDTO> dtoList) //формирует список тестов
