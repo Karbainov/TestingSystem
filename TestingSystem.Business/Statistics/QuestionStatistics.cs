@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using TestingSystem.Data.DTO.DTOsForStatistics;
+using TestingSystem.Business.Statistics.Models;
 
 namespace TestingSystem.Business.Statistics
 {
     class QuestionStatistics
     {
-        InfoForStatisticsDTO info;    
+        InfoForStatisticsModel info;    
 
-        public QuestionStatistics(InfoForStatisticsDTO info)
+        public QuestionStatistics(InfoForStatisticsModel info)
         {
             this.info = info;
         }
