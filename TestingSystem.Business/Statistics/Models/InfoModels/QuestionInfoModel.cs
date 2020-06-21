@@ -6,9 +6,9 @@ namespace TestingSystem.Business.Statistics.Models
 {
     public class QuestionInfoModel
     {
-        public int TestID { get; set; }
+        public int TestId { get; set; }
         public string Value { get; set; }
-        public int TypeID { get; set; }
+        public int TypeId { get; set; }
         public byte AnswersCount { get; set; }
         public byte Weight { get; set; }
         public List<int> AnswersId { get; set; }
