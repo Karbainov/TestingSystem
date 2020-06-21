@@ -8,11 +8,13 @@ namespace TestingSystem.Business
     {
         public string ConvertThirdType(string input)
         {
-            
+            input = RemoveWhitespace(input);
+            input = input.ToLower();
+
             return input;
         }
 
-        public static string RemoveWhitespace(string str)
+        public string RemoveWhitespace(string str)
         {
             return string.Join("", str.Split(default(string[]), StringSplitOptions.RemoveEmptyEntries));
         }
