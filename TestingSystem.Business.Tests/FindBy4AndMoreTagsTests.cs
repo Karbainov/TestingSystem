@@ -55,13 +55,12 @@ namespace TestingSystem.Business.Tests
                 Assert.AreEqual(a.Name, actual[i].Name);
                 Assert.AreEqual(a.QuestionNumber, actual[i].QuestionNumber);
                 Assert.AreEqual(a.SuccessScore, actual[i].SuccessScore);
-                //Assert.AreEqual(a, actual[i]);
-                // CollectionAssert.AreEqual(a, actual[i]);
+                
             }
-            //CollectionAssert.AreEqual(mock.GetExpected(num), actual);
+            
         }
         [TestCase(1)]
-       // [TestCase(2)]
+        //[TestCase(2)]
         public void FindOrTest(int num)
         {
             FindOrMock mock = new FindOrMock();
