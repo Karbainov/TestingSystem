@@ -8,6 +8,8 @@ namespace TestingSystem.Business.Tests
 {
     public class StringAnswerTests
     {
+        StringAnswerConverter stringAnswerConverter = new StringAnswerConverter();
+
         [TestCase ("Hello", ExpectedResult = "Hello")]
         [TestCase ("Ghbdtn ghbdtn привет", ExpectedResult = "Ghbdtn ghbdtn привет")]
         [TestCase ("", ExpectedResult = "")]
@@ -16,9 +18,18 @@ namespace TestingSystem.Business.Tests
         [TestCase ("П;р'и%&*в#е@т", ExpectedResult = "Привет")]
         public string RemoveNonLetterCharsTest(string s)
         {
-            StringAnswerConverter stringAnswerConverter = new StringAnswerConverter();
-
             return stringAnswerConverter.RemoveNonLetterChars(s);
+        }
+
+        [TestCase (" Hello", ExpectedResult = "Hello")]
+        [TestCase (" H el lo", ExpectedResult = "Hello")]
+        [TestCase (" ", ExpectedResult = "")]
+        [TestCase ("", ExpectedResult = "")]
+        [TestCase ("Oh, hi Mark!", ExpectedResult = "Oh,hiMark!")]
+        [TestCase ("           MyM m", ExpectedResult = "MyMm")]
+        public string RemoveWhitespaceTest(string s)
+        {
+            return stringAnswerConverter.RemoveWhitespace(s);
         }
     }
 }
