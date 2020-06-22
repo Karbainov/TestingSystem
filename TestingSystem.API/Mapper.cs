@@ -402,17 +402,49 @@ namespace TestingSystem.API
 
         }
 
-        public ConcreateAttemptOutputModel AttemptBusinessModelToConcreateAttemptOutputModel (AttemptBusinessModel questions, int userId, int testId)
+        public ConcreteAttemptOutputModel AttemptBusinessModelToConcreteAttemptOutputModel (AttemptBusinessModel questions, int userId, int testId)
         {
-            ConcreateAttemptOutputModel concreatemodel = new ConcreateAttemptOutputModel();
+            ConcreteAttemptOutputModel concretemodel = new ConcreteAttemptOutputModel();
 
-            concreatemodel.UserId = userId;
-            concreatemodel.TestId = testId;
-            concreatemodel.AttemptId = questions.AttemptId;
-            concreatemodel.DurationTime = questions.DurationTime;
-            concreatemodel.TestName = questions.TestName;
-            concreatemodel.Questions = new Mapper().QuestionWithListAnswersDTOsToQuestionWithListAnswersOutputModels(questions.Questions);
-            return concreatemodel;
+            concretemodel.UserId = userId;
+            concretemodel.TestId = testId;
+            concretemodel.AttemptId = questions.AttemptId;
+            concretemodel.DurationTime = questions.DurationTime;
+            concretemodel.TestName = questions.TestName;
+            concretemodel.Questions = new Mapper().QuestionWithListAnswersDTOsToQuestionWithListAnswersOutputModels(questions.Questions);
+            return concretemodel;
+        }
+        
+        public AttemptAnswerBusinessModel ConvertAttemptAnswerInputModelToAttemptAnswerBusinessModel(AttemptAnswerInputModel answer)
+        {
+            return new AttemptAnswerBusinessModel(answer.Id, answer.Value);
+        }
+        
+        public QuestionWithAnswersBusinessModel ConvertQuestionWithAnswersInputModelToQuestionWithAnswersBusinessModel(QuestionWithAnswersInputModel question)
+        {
+            List<AttemptAnswerBusinessModel> answers = new List<AttemptAnswerBusinessModel>();
+            Mapper mapper = new Mapper();
+            foreach (var a in question.Answers)
+            {
+                answers.Add(mapper.ConvertAttemptAnswerInputModelToAttemptAnswerBusinessModel(a));
+            }
+            return new QuestionWithAnswersBusinessModel(question.Id, answers);
+        }
+        
+        public ConcreteAttemptBusinessModel ConvertConcreteAttemptInputModelToConcreteAttemptBusinessModel(ConcreteAttemptInputModel attempt)
+        {
+            List<QuestionWithAnswersBusinessModel> questions = new List<QuestionWithAnswersBusinessModel>();
+            Mapper mapper = new Mapper();
+            foreach (var q in attempt.Questions)
+            {
+                questions.Add(mapper.ConvertQuestionWithAnswersInputModelToQuestionWithAnswersBusinessModel(q));
+            }
+            return new ConcreteAttemptBusinessModel(attempt.AttemptId, attempt.DurationTime, questions);
+        }
+        
+        public QuestionTypeAnswersBusinessModel QuestionTypeAnswersDTOToQuestionTypeAnswersBusinessModel(QuestionTypeAnswersDTO qta)
+        {
+            return new QuestionTypeAnswersBusinessModel(qta.TypeId, qta.Id, qta.Value);
         }
      }
 }
