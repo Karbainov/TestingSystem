@@ -80,36 +80,24 @@ namespace TestingSystem.API.Controllers
         [HttpPost("tag/Author")]      //создание тега
         public IActionResult PostTag([FromBody]TagInputModel tagmodel)           //спросить у Макса
         {
-            if(tagmodel.Name != "")
-            {
-                Mapper mapper = new Mapper();
-                TagDTO tagdto = mapper.ConvertTagInputModelToTagDTO(tagmodel);
-                AuthorDataAccess tag = new AuthorDataAccess();
-                return Json(tag.AddTag(tagdto));
-            }
-            else
-            {
-                return new BadRequestObjectResult("Введите название тега");
-            }
-            
-        }
+            if(string.IsNullOrWhiteSpace(tagmodel.Name))
+                return BadRequest("Введите название тега");
+            Mapper mapper = new Mapper();
+            TagDTO tagdto = mapper.ConvertTagInputModelToTagDTO(tagmodel);
+            AuthorDataAccess tag = new AuthorDataAccess();            
+            return Ok(tag.AddTag(tagdto));
+        }          
 
         [HttpPut("tag/Author")]      //изменение конкретного тега
-        public IActionResult PutTag([FromBody]TagInputModel tagmodel)
+        public ActionResult<TagOutputModel> PutTag([FromBody]TagInputModel tagmodel)
         {
-            if (tagmodel.Name != "")
-            {
-                Mapper mapper = new Mapper();
-                TagDTO tagdto = mapper.ConvertTagInputModelToTagDTO(tagmodel);
-                AuthorDataAccess tag = new AuthorDataAccess();
-                tag.UpdateTag(tagdto);
-                return new OkResult();
-            }
-            else
-            {
-                return new BadRequestObjectResult("Введите название тега!");
-            }
-            
+            if (string.IsNullOrWhiteSpace(tagmodel.Name))
+                return BadRequest("Введите название тега");
+            Mapper mapper = new Mapper();
+            TagDTO tagdto = mapper.ConvertTagInputModelToTagDTO(tagmodel);
+            AuthorDataAccess tag = new AuthorDataAccess();
+            tag.UpdateTag(tagdto);
+            return Ok(tagmodel);
         }
 
         [HttpDelete("tag/{tagId}/Author")]    //удаление конкретного тега
