@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Text;
 using TestingSystem.Business.Statistics.Models;
 
-namespace TestingSystem.Business.Tests.ModelsForTests
+namespace TestingSystem.Business.Tests.MocsForStatistics
 {
-    public class PassedFailTest
+    class TestMock
     {
-        public PassedFailTest()
+        public TestMock()
         {
         }
-           
+
         public PassedFailedModel GetPassedFailed(int id)
         {
             PassedFailedModel pfm = new PassedFailedModel();
-            switch(id)
+            switch (id)
             {
                 case 1:
                     pfm.Passed = 4;
@@ -37,5 +37,7 @@ namespace TestingSystem.Business.Tests.ModelsForTests
             pfm.SuccessRate = -1;
             return pfm;
         }
+
+
     }
 }

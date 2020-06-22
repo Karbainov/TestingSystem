@@ -15,7 +15,7 @@ namespace TestingSystem.Business.Statistics
             this.info = info;
         }
 
-        public List<int> AllResults(int id)
+        public List<int> GetAllResults(int id)
         {
             Dictionary<int, int> results = new Dictionary<int, int>();
 
@@ -35,9 +35,9 @@ namespace TestingSystem.Business.Statistics
             return results.Values.ToList();
         }
 
-        public double AverageResult(int id)
+        public double GetAverageResult(int id)
         {
-            List<int> results = AllResults(id);
+            List<int> results = GetAllResults(id);
             if (results.Count == 0)
             {
                 return Double.NaN;
@@ -52,9 +52,9 @@ namespace TestingSystem.Business.Statistics
             return avg;
         }
 
-        public PassedFailedModel PassedFailedStats(int id)
+        public PassedFailedModel GetPassedFailedStats(int id)
         {
-            List<int> results = AllResults(id);
+            List<int> results = GetAllResults(id);
             PassedFailedModel pf = new PassedFailedModel();
             int successScore = info.TestSuccessScores[id];
             foreach(int result in results)
