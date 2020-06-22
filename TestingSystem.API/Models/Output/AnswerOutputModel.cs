@@ -10,6 +10,6 @@ namespace TestingSystem.API.Models.Output
         public int ID { get; set; }
         public int QuestionID { get; set; }
         public string Value { get; set; }
-        public Nullable<bool> Correct { get; set; }
+        public bool? Correct { get; set; }
     }
 }
