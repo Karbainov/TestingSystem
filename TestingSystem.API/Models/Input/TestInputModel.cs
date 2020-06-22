@@ -10,7 +10,7 @@ namespace TestingSystem.API.Models.Input
         public int ID { get; set; }
         public string Name { get; set; }
         public string DurationTime { get; set; }
-        public Nullable<byte> SuccessScore { get; set; }
-        public Nullable<int> QuestionNumber { get; set; }
+        public byte? SuccessScore { get; set; }
+        public int? QuestionNumber { get; set; }
     }
 }
