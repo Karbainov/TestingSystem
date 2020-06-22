@@ -16,6 +16,7 @@ using Microsoft.VisualBasic;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
+using TestingSystem.API.Shared;
 
 namespace TestingSystem.API.Controllers
 {
@@ -44,21 +45,30 @@ namespace TestingSystem.API.Controllers
         //}
 
         [HttpPost]
-        public IActionResult PostUser([FromBody] UserInputModel user) // нужно разобраться с ошибкой
+        public IActionResult PostUser([FromBody] UserInputModel user)
         {
+            if(string.IsNullOrWhiteSpace(user.FirstName)) return BadRequest("Вы не написали имя");
+            if (string.IsNullOrWhiteSpace(user.LastName)) return BadRequest("Вы не написали фамилию");
+            if (string.IsNullOrWhiteSpace(user.Login)) return BadRequest("Введите логин");
+            if (string.IsNullOrWhiteSpace(user.Password)) return BadRequest("Введите пароль");
+            if (string.IsNullOrWhiteSpace(user.Email)) return BadRequest("Введите почту");
+            if (string.IsNullOrWhiteSpace(user.Phone)) return BadRequest("Напишите номер телефона");
             UserMapper mapper = new UserMapper();
             AdminDataAccess adm = new AdminDataAccess();
             adm.UserCreate(mapper.ConvertUserInputModelToUserDTO(user));
-            return new OkObjectResult("Пользователь создан успешно");
+            return Ok("Пользователь создан успешно");
         }
         
         [HttpPost("role")]
-        public IActionResult PostUserRole([FromBody] UserRoleInputModel userRole) // добавить условие, если роли не существует, иначе если данная роль для этого пользователя уже создана
+        public IActionResult PostUserRole([FromBody] UserRoleInputModel userRole) // добавить условие, если роли не существует, если данная роль для этого пользователя уже создана
         {
             UserMapper mapper = new UserMapper();
             AdminDataAccess adm = new AdminDataAccess();
+            var user = adm.GetUserByID(userRole.UserID);
+            if (user == null) return BadRequest("Пользователя не существует");
+
             adm.UserRoleCreate(mapper.ConvertUserRoleInputModelToUserRoleDTO(userRole));
-            return new OkObjectResult("Роль пользователя создана");
+            return Ok("Роль пользователя создана");
         }
         
         [HttpGet("role")]
@@ -66,7 +76,7 @@ namespace TestingSystem.API.Controllers
         {
             UserMapper mapper = new UserMapper();
             AdminDataAccess adm = new AdminDataAccess();
-            List<RoleDTO> roles = adm.GetRole();
+            List<RoleDTO> roles = adm.GetRoles();
             List<RoleOutputModel> rolesOut = new List<RoleOutputModel>();
             foreach (RoleDTO r in roles)
             {
@@ -120,7 +130,7 @@ namespace TestingSystem.API.Controllers
             UserMapper mapper = new UserMapper();
             AdminDataAccess adm = new AdminDataAccess();
             UserOutputModel user = new UserOutputModel();
-            UserDTO getUser = adm.GetUserbyID(id);
+            UserDTO getUser = adm.GetUserByID(id);
             if (getUser == null) { return new BadRequestObjectResult("Пользователя с таким id не существует"); }
             else {
                 user = mapper.ConvertUserDTOToUserOutputModel(getUser);
@@ -136,15 +146,15 @@ namespace TestingSystem.API.Controllers
             int result = adm.UserUpdate(mapper.ConvertUserInputModelToUserDTO(user));
             if (result == 0)
             {
-                return new BadRequestObjectResult("Такого пользователя не существует");
+                return BadRequest("Такого пользователя не существует");
             }
             if (result == 1)
             {
-                return new OkObjectResult("Пользователь обновлён");
+                return Ok("Пользователь обновлён");
             }
             else
             {
-                return new BadRequestObjectResult("Ошибка базы данных");
+                return BadRequest("Ошибка базы данных");
             }
         }
         
@@ -153,7 +163,7 @@ namespace TestingSystem.API.Controllers
         {
             AdminDataAccess adm = new AdminDataAccess();
             adm.UserRoleDelete(userId, roleId);
-            return new OkObjectResult("Роль пользователя удалена");
+            return Ok("Роль пользователя удалена");
         }
 
         [HttpDelete("{id}")]
@@ -161,7 +171,7 @@ namespace TestingSystem.API.Controllers
         {
             AdminDataAccess adm = new AdminDataAccess();
             adm.UserDelete(id);
-            return new OkObjectResult("Пользователь удалён");
+            return Ok("Пользователь удалён");
         }
         
         [HttpGet("{UserID}/test")]
