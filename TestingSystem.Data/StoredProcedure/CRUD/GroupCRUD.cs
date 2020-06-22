@@ -40,12 +40,13 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             }
         }
 
-        public void Update(GroupDTO group)
+        public int Update(GroupDTO group)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Group_Update";
-                connection.Execute(sqlExpression, group, commandType: CommandType.StoredProcedure);
+                int result = connection.Execute(sqlExpression, group, commandType: CommandType.StoredProcedure);
+                return result;
             }
         }
 

@@ -133,8 +133,7 @@ namespace TestingSystem.API.Controllers
             UserDTO getUser = adm.GetUserByID(id);
             if (getUser == null) { return new BadRequestObjectResult("Пользователя с таким id не существует"); }
             else {
-                user = mapper.ConvertUserDTOToUserOutputModel(getUser);
-                return Json(user); 
+                return Json(mapper.ConvertUserDTOToUserOutputModel(getUser)); 
             }
         }
 
