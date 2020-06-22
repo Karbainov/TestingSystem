@@ -31,5 +31,15 @@ namespace TestingSystem.Business.Tests
         {
             return stringAnswerConverter.RemoveWhitespace(s);
         }
+
+        [TestCase ("", ExpectedResult = "")]
+        [TestCase (" ", ExpectedResult = "")]
+        [TestCase ("Hello;''", ExpectedResult = "hello")]
+        [TestCase ("Привет, мир!", ExpectedResult = "приветмир")]
+        [TestCase ("%%%  ex{PecTeD :::", ExpectedResult = "expected")]
+        public string ConvertFourthTypeTest(string s)
+        {
+            return stringAnswerConverter.ConvertFourthType(s);
+        }
     }
 }
