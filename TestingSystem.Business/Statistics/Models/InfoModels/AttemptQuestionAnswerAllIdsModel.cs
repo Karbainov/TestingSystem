@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TestingSystem.Data.DTO.DTOsForStatistics
+namespace TestingSystem.Business.Statistics.Models
 {
-    public class AttemptQuestionAnswerAllIdsDTO
+    public class AttemptQuestionAnswerAllIdsModel
     {
         public int AttemptId { get; set; }
         public int QuestionId { get; set; }
