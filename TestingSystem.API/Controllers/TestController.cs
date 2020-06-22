@@ -49,30 +49,30 @@ namespace TestingSystem.API.Controllers
             {
                 //if (converter.CreateArrayFromString(sttim.Tag).Length < 3)
                 //{
-                //    return Json(mapper.ConvertTestDTOToTestModelList(search.GetTestVSTagSearchAnd(converter.CreateArrayFromString(sttim.Tag))));
+                    return Json(mapper.ConvertTestDTOToTestModelList(search.GetTestVSTagSearchAnd(converter.CreateArrayFromString(sttim.Tag))));
                 //}
                 //else
                 //{
-                    return Json(mapper.ConvertTestQuestionTagDTOToTestOutputListModel(searchBy4AndMoreTags.FindAnd(sttim.Tag)));
+                //    return Json(mapper.ConvertTestQuestionTagDTOToTestOutputListModel(searchBy4AndMoreTags.FindAnd(sttim.Tag)));
                 //}
             }
             else
             {
-                if (converter.CreateArrayFromString(sttim.Tag).Length < 3)
+                //if (converter.CreateArrayFromString(sttim.Tag).Length < 3)
 
-                {
+                //{
 
                     return Json(mapper.ConvertTestDTOToTestModelList(search.GetTestVSTagSearchOr(converter.CreateArrayFromString(sttim.Tag))));
 
-                }
+               // }
 
-                else
+               // else
 
-                {
+               // {
 
-                return Json(mapper.ConvertTestQuestionTagDTOToTestOutputListModel(searchBy4AndMoreTags.FindOr(sttim.Tag)));
+               //     return Json(mapper.ConvertTestQuestionTagDTOToTestOutputListModel(searchBy4AndMoreTags.FindOr(sttim.Tag)));
 
-                }
+               //}
 
             }
         }        

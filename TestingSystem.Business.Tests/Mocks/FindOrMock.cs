@@ -19,21 +19,22 @@ namespace TestingSystem.Business.Tests.Mocks
             }
             return null;
         }
-        public List<TestDTO> GetExpected(int num)
+        public List<TestQuestionTagDTO> GetExpected(int num)
         {
             switch (num)
             {
                 case 1:
-                    return new List<TestDTO>()
+                    return new List<TestQuestionTagDTO>()
                     {
-                        new TestDTO (5,"Тест на написание методов",new TimeSpan(36000000000),75,10),
-                        new TestDTO (6,"Математика массивов",new TimeSpan(36000000000),85,10)
+                        new TestQuestionTagDTO (5,"Тест на написание методов",new TimeSpan(36000000000),75,10)
+                        {
+                            ID =5,
+                        }
+                        ,
+                        new TestQuestionTagDTO (6,"Математика массивов",new TimeSpan(36000000000),85,10)
                     };
                 case 2:
-                    return new List<TestDTO>()
-                    {
-                       
-                    };
+                    return new List<TestQuestionTagDTO>();
             }
             return null;
         }

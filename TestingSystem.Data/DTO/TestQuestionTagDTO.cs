@@ -13,7 +13,7 @@ namespace TestingSystem.Data.DTO
         public Nullable<int> QuestionNumber { get; set; }
 
 
-        public List<QuestionDTO> Questions { get; set; }
+        public List<QuestionForOneToManyDTO> Questions { get; set; }
         public List<TagWithTestIDDTO> Tags { get; set; }
     }
 }

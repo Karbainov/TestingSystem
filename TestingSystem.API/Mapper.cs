@@ -26,18 +26,35 @@ namespace TestingSystem.API
         }
         public TestOutputModel ConvertTestQuestionTagDTOToTestOutputModel(TestQuestionTagDTO testDTO)
         {
-            List<QuestionOutputModel> questions= ConvertQuestionDTOToQuestionModelList(testDTO.Questions);
-            List<TagOutputModel> tags = ConvertTagsWithTestIdToTagOutputModel(testDTO.Tags);
-            return new TestOutputModel()
+            if (testDTO != null)
             {
-                ID = testDTO.ID,
-                Name = testDTO.Name,
-                SuccessScore = testDTO.SuccessScore,
-                DurationTime = testDTO.DurationTime,
-                QuestionNumber = testDTO.QuestionNumber,
-                Questions = questions,
-                Tags = tags
-            };
+                List<QuestionOutputModel> questions = ConvertQuestionForOneToManyDTOToQuestionModelList(testDTO.Questions);
+                List<TagOutputModel> tags = ConvertTagsWithTestIdToTagOutputModel(testDTO.Tags);
+
+                return new TestOutputModel()
+                {
+                    ID = testDTO.ID,
+                    Name = testDTO.Name,
+                    SuccessScore = testDTO.SuccessScore,
+                    DurationTime = testDTO.DurationTime,
+                    QuestionNumber = testDTO.QuestionNumber,
+                    Questions = questions,
+                    Tags = tags
+                };
+            }
+            else
+            {
+                return new TestOutputModel();
+            }
+        }
+        public List<QuestionOutputModel> ConvertQuestionForOneToManyDTOToQuestionModelList(List<QuestionForOneToManyDTO> dtoList)
+        {
+            List<QuestionOutputModel> modelList = new List<QuestionOutputModel>();
+            foreach (var questionDTO in dtoList)
+            {
+                modelList.Add(ConvertQuestionForOneToManyDTOToQuestionOutputModel(questionDTO));
+            }
+            return modelList;
         }
         public List<TestOutputModel> ConvertTestQuestionTagDTOToTestOutputListModel(List<TestQuestionTagDTO> testDTO)
         {
@@ -48,6 +65,18 @@ namespace TestingSystem.API
             }
             return tests;
         }
+        public QuestionOutputModel ConvertQuestionForOneToManyDTOToQuestionOutputModel(QuestionForOneToManyDTO questionDTO)
+        {
+            return new QuestionOutputModel()
+            {
+                ID = questionDTO.QID,
+                TestID = questionDTO.TestID,
+                Value = questionDTO.Value,
+                Weight = questionDTO.Weight,
+                AnswerCount = questionDTO.AnswersCount,
+               
+            };
+        }
         public List<TagOutputModel> ConvertTagsWithTestIdToTagOutputModel(List<TagWithTestIDDTO> tag)
         {
             List<TagOutputModel> tagOutputs = new List<TagOutputModel>();
@@ -55,7 +84,7 @@ namespace TestingSystem.API
             foreach(var t in tag)
             {
                 model = new TagOutputModel();
-                model.ID = t.IDtest;
+                model.ID = t.TagID;
                 model.Name = t.Name;
                 tagOutputs.Add(model);
             }

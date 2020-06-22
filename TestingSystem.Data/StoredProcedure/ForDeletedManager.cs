@@ -81,14 +81,14 @@ namespace TestingSystem.Data.StoredProcedure
                 List<TestQuestionTagDTO> dTOs;
                 var TestDictionary = new Dictionary<int, TestQuestionTagDTO>();
                 string sqlExpression = "GetdeletedTests";
-                    connection.Query <TestQuestionTagDTO, QuestionDTO, TagWithTestIDDTO, TestQuestionTagDTO>(sqlExpression, ( test , question , tag )=>
+                    connection.Query <TestQuestionTagDTO, QuestionForOneToManyDTO, TagWithTestIDDTO, TestQuestionTagDTO>(sqlExpression, ( test , question , tag )=>
                     {
                     TestQuestionTagDTO testEntry;
                     if(!TestDictionary.TryGetValue(test.ID,out testEntry))
                     {
                         testEntry = test;
-                        testEntry.Questions = new List<QuestionDTO>();
-                        testEntry.Questions.Add( question);
+                        testEntry.Questions = new List<QuestionForOneToManyDTO>();
+                        testEntry.Questions.Add(question);
                         testEntry.Tags = new List<TagWithTestIDDTO>();
                         TestDictionary.Add(testEntry.ID, testEntry);
                     }
