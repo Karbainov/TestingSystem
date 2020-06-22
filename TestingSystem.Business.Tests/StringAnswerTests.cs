@@ -41,5 +41,16 @@ namespace TestingSystem.Business.Tests
         {
             return stringAnswerConverter.ConvertFourthType(s);
         }
+
+        [TestCase(" Hello", ExpectedResult = "Hello")]
+        [TestCase(" H el lo", ExpectedResult = "Hello")]
+        [TestCase(" ", ExpectedResult = "")]
+        [TestCase("", ExpectedResult = "")]
+        [TestCase("Oh, hi Mark!", ExpectedResult = "Oh,hiMark!")]
+        [TestCase("           MyM m", ExpectedResult = "MyMm")]
+        public string ConvertThirdTypeTest(string s)
+        {
+            return stringAnswerConverter.ConvertThirdType(s);
+        }
     }
 }
