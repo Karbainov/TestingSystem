@@ -12,7 +12,7 @@ namespace TestingSystem.Business.Tests
     {
         InfoForStatisticsModel info = new InfoForStatisticsModel();
     
-        [TestCase(1, ExpectedResult = 2.4)]
+        [TestCase(1, ExpectedResult = 27.4)]
         [TestCase(5, ExpectedResult = 0)]
         [TestCase(3, ExpectedResult = 0)]
 
@@ -36,9 +36,5 @@ namespace TestingSystem.Business.Tests
             PassedFailedModel expected = test.GetPassedFailed(id);
             Assert.AreEqual(expected, actual);
         }
-
-
-
-
     }
 }

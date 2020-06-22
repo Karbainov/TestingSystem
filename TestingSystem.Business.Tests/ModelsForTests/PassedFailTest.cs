@@ -9,32 +9,29 @@ namespace TestingSystem.Business.Tests.ModelsForTests
     {
         public PassedFailTest()
         {
-
         }
            
         public PassedFailedModel GetPassedFailed(int id)
         {
             PassedFailedModel pfm = new PassedFailedModel();
-        switch(id)
-        {
-            case 1:
+            switch(id)
+            {
+                case 1:
                     pfm.Passed = 4;
                     pfm.Failed = 5;
                     pfm.SuccessRate = 0.4;
                     return pfm;
-            case 5:
-
+                case 5:
                     pfm.Passed = 0;
                     pfm.Failed = 0;
                     pfm.SuccessRate = 0;
                     return pfm;
-            case 3:
-
+                case 3:
                     pfm.Passed = 0;
                     pfm.Failed = 0;
                     pfm.SuccessRate = 0;
                     return pfm;
-        }
+            }
             pfm.Passed = -1;
             pfm.Failed = -1;
             pfm.SuccessRate = -1;
