@@ -52,5 +52,19 @@ namespace TestingSystem.Business.Tests
         {
             return stringAnswerConverter.ConvertThirdType(s);
         }
+
+        [TestCase ("Hello", "hello", 4, ExpectedResult = true)]
+        [TestCase ("int i = 7;", "int i = 7;", 3, ExpectedResult = true)]
+        [TestCase ("[testCase]", "[TestCase]", 3, ExpectedResult = false)]
+        [TestCase ("ПолиМорФизм!", "полиморфизм", 4, ExpectedResult = true)]
+        [TestCase ("", "hello", 4, ExpectedResult = false)]
+        [TestCase (" ", " ", 3, ExpectedResult = true)]
+        [TestCase ("", "", 4, ExpectedResult = true)]
+        [TestCase ("/  ", "/", 4, ExpectedResult = true)]
+        [TestCase ("Абстрактный кактус", "Абстрактный класс", 3, ExpectedResult = false)]
+        public bool CheckCorrectAnswerTests(string ans, string correctAns, int QuestionType)
+        {
+            return stringAnswerConverter.CheckCorrectAnswer(ans, correctAns, QuestionType);
+        }
     }
 }
