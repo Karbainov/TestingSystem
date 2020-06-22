@@ -44,11 +44,43 @@ namespace TestingSystem.Business.Tests.Mocks
                                 {
                                     IDtest = 5,
                                     Name ="Рекурсия"
+                                },
+                                new TagWithTestIDDTO()
+                                {
+                                    IDtest = 5,
+                                    Name ="ООП"
                                 }
+
                             },
                             Questions = new List<QuestionForOneToManyDTO>()
                             {
                                 new QuestionForOneToManyDTO()
+                                {
+                                    QID =0,
+                                    TestID= 5,
+                                    Value="Сколько будет 1000г ?",
+                                    AnswersCount = 0,
+                                    
+                                    Weight = 10
+                                },
+                                new QuestionForOneToManyDTO()
+                                {
+                                    QID =0,
+                                    TestID= 5,
+                                    Value="Сколько будет 1000г ?",
+                                    AnswersCount = 0,
+
+                                    Weight = 10
+                                },
+                                new QuestionForOneToManyDTO()
+                                {
+                                    QID =0,
+                                    TestID= 5,
+                                    Value="Сколько будет 1000г ?",
+                                    AnswersCount = 0,
+
+                                    Weight = 10
+                                }
                             }
                         }
 
