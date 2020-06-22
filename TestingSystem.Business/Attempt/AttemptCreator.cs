@@ -1,7 +1,4 @@
-        //    {
-
-        //    }
- using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TestingSystem.Data.StoredProcedure.CRUD;
@@ -10,7 +7,7 @@ using TestingSystem.Data.DTO;
 using TestingSystem.Data;
 using TestingSystem.Business.Models;
 
-namespace TestingSystem.Business
+namespace TestingSystem.Business.Attempt
 {
     public class AttemptCreator
     {

@@ -1,9 +1,9 @@
 using TestingSystem.Business.Models;
-namespace TestingSystem.Business
+namespace TestingSystem.Business.Attempt
 {
     public class AttemptSaver
     {
-        public void AttemptHandler(ConcreteAttemptBusinessModel concreteAttempt)
+        public void CreateAttemptResult(ConcreteAttemptBusinessModel concreteAttempt)
         {
             foreach (var q in concreteAttempt.Questions)
             {
