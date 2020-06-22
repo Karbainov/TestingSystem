@@ -179,7 +179,7 @@ namespace TestingSystem.Data
         public List<TestQuestionTagDTO> GetDeletedTests()
         {
             ForDeletedManager manager = new ForDeletedManager();
-            return manager.GetDeletedWithTests();
+            return manager.GetDeletedOneToManyTests();
         }
         public int RestoreTest(int id)
         {

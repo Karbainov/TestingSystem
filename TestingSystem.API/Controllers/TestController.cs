@@ -47,25 +47,33 @@ namespace TestingSystem.API.Controllers
 
             if (caseSwitch)
             {
-                if (converter.CreateArrayFromString(sttim.Tag).Length < 3)
-                {
-                    return Json(mapper.ConvertTestDTOToTestModelList(search.GetTestVSTagSearchAnd(converter.CreateArrayFromString(sttim.Tag))));
-                }
-                else
-                {
-                    return Json(mapper.ConvertTestDTOToTestModelList(searchBy4AndMoreTags.FindAnd(sttim.Tag)));
-                }
+                //if (converter.CreateArrayFromString(sttim.Tag).Length < 3)
+                //{
+                //    return Json(mapper.ConvertTestDTOToTestModelList(search.GetTestVSTagSearchAnd(converter.CreateArrayFromString(sttim.Tag))));
+                //}
+                //else
+                //{
+                    return Json(mapper.ConvertTestQuestionTagDTOToTestOutputListModel(searchBy4AndMoreTags.FindAnd(sttim.Tag)));
+                //}
             }
-            else
-            {
-                if (converter.CreateArrayFromString(sttim.Tag).Length < 3)
-                {
-                    return Json(mapper.ConvertTestDTOToTestModelList(search.GetTestVSTagSearchOr(converter.CreateArrayFromString(sttim.Tag))));
-                }
-                else
-                {
-                    return  Json(mapper.ConvertTestDTOToTestModelList(searchBy4AndMoreTags.FindOr(sttim.Tag)));
-                }
+            else
+            {
+                if (converter.CreateArrayFromString(sttim.Tag).Length < 3)
+
+                {
+
+                    return Json(mapper.ConvertTestDTOToTestModelList(search.GetTestVSTagSearchOr(converter.CreateArrayFromString(sttim.Tag))));
+
+                }
+
+                else
+
+                {
+
+                return Json(mapper.ConvertTestQuestionTagDTOToTestOutputListModel(searchBy4AndMoreTags.FindOr(sttim.Tag)));
+
+                }
+
             }
         }        
 

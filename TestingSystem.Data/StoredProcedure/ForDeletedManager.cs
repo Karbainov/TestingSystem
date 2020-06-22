@@ -74,15 +74,15 @@ namespace TestingSystem.Data.StoredProcedure
                 return connection.Query<int>(sqlExpression, new { id }).FirstOrDefault();
             }
         }
-        public List<TestQuestionTagDTO> GetDeletedWithTests()
+        public List<TestQuestionTagDTO> GetDeletedOneToManyTests()
         {
             using(var connection = Connection.GetConnection())
             {
                 List<TestQuestionTagDTO> dTOs;
                 var TestDictionary = new Dictionary<int, TestQuestionTagDTO>();
                 string sqlExpression = "GetdeletedTests";
-                    connection.Query< TestQuestionTagDTO, QuestionDTO, TagWithTestIDDTO, TestQuestionTagDTO>(sqlExpression, ( test , question , tag )=>
-                {
+                    connection.Query <TestQuestionTagDTO, QuestionDTO, TagWithTestIDDTO, TestQuestionTagDTO>(sqlExpression, ( test , question , tag )=>
+                    {
                     TestQuestionTagDTO testEntry;
                     if(!TestDictionary.TryGetValue(test.ID,out testEntry))
                     {
@@ -94,7 +94,7 @@ namespace TestingSystem.Data.StoredProcedure
                     }
                     testEntry.Tags.Add(tag);
                     return testEntry;
-                }
+                    }
                 ,splitOn:"TestID,IDtest" ).ToList();
                 dTOs = new List<TestQuestionTagDTO>(TestDictionary.Values);
                 return dTOs;
