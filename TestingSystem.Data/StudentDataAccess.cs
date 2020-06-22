@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using TestingSystem.Data.DTO;
+using TestingSystem.Data.DTO.DTOsForStatistics;
 using TestingSystem.Data.StoredProcedure;
 using TestingSystem.Data.StoredProcedure.CRUD;
 
@@ -97,6 +98,24 @@ namespace TestingSystem.Data
             };
             AttemptManager student = new AttemptManager();
             return student.AddAttemptAutoNumber(attempt);
+        }
+        
+        public void DeleteAttemptQuestionAnswerByAttemptId(int attemptId)
+        {
+            AttemptQuestionAnswerCRUD student = new AttemptQuestionAnswerCRUD();
+            student.DeleteByAttemptId(attemptId);
+        }
+        
+        public void AddAttemptQuestionAnswer(int attemptId, int questionId, int answerId)
+        {
+            AttemptQuestionAnswerCRUD student = new AttemptQuestionAnswerCRUD();
+            student.Add(new AttemptQuestionAnswerDTO(0, attemptId, questionId, answerId));
+        }
+
+        public QuestionTypeAnswersDTO GetQuestionTypeIdCorrectAnswerByQuestionId(int questionId)
+        {
+            QuestionManager student = new QuestionManager();
+            return student.GetQuestionTypeIdCorrectAnswerByQuestionId(questionId);
         }
     }
 }

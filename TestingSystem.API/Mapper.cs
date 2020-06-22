@@ -441,6 +441,11 @@ namespace TestingSystem.API
             }
             return new ConcreteAttemptBusinessModel(attempt.AttemptId, attempt.DurationTime, questions);
         }
+        
+        public QuestionTypeAnswersBusinessModel QuestionTypeAnswersDTOToQuestionTypeAnswersBusinessModel(QuestionTypeAnswersDTO qta)
+        {
+            return new QuestionTypeAnswersBusinessModel(qta.TypeId, qta.Id, qta.Value);
+        }
      }
 }
 
