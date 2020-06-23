@@ -5,7 +5,6 @@ using System.Data.SqlClient;
 using System.Text;
 using TestingSystem.Data.DTO;
 using Dapper;
-using System.Linq;
 using System.Data;
 
 namespace TestingSystem.Data.DTO
