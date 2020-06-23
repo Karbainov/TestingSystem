@@ -38,18 +38,43 @@ namespace TestingSystem.Business.Tests
             Assert.AreEqual(expected, actual);
         }
 
-        //[TestCase(1)]
-        //[TestCase(5)]
-        //[TestCase(3)]
+        [TestCase(4)]
+        [TestCase(6)]
+        [TestCase(13)]
 
         public void CountNumberOfAnswersForAttemptByQuestionIdTest(int questionId)
         {
             info = creator.CreateByQuestionId(questionId);
             QuestionStatistics statistic = new QuestionStatistics(info);
             Dictionary<int, int> actual = statistic.CountNumberOfAnswersInAttemptByQuestionId(questionId);
-            //mock question
-            //Dictionary<int, int> expected = 
-            Assert.AreEqual(expected, actual);
+            QuestionMock mock = new QuestionMock();
+            Assert.AreEqual(mock.CountNumberOfAnswerMock(questionId), actual);
+        }
+
+        [TestCase(4)]
+        [TestCase(6)]
+        [TestCase(13)]
+
+        public void GetPercentOfAnswerToQuestionTest(int questionId)
+        {
+            info = creator.CreateByQuestionId(questionId);
+            QuestionStatistics statistic = new QuestionStatistics(info);
+            Dictionary<int, double> actual = statistic.GetPercentOfAnswerToQuestion(questionId);
+            QuestionMock mock = new QuestionMock();
+            Assert.AreEqual(mock.GetPercentOfAnswerMock(questionId), actual);
+        }
+
+        [TestCase(4)]
+        [TestCase(6)]
+        [TestCase(13)]
+
+        public void FindPercentCorrectAnswersByQuestionTest(int questionId)
+        {
+            info = creator.CreateByQuestionId(questionId);
+            QuestionStatistics statistic = new QuestionStatistics(info);
+            double actual = statistic.FindPercentCorrectAnswersByQuestion(questionId);
+            QuestionMock mock = new QuestionMock();
+            Assert.AreEqual(mock.FindPercentCorrectMock(questionId), actual);
         }
 
 
