@@ -347,17 +347,17 @@ namespace TestingSystem.API.Controllers
 
 
         [HttpGet("{testid}/{userId}/Student")]
-        public IActionResult GetTestAttempt(int testId, int userdId)
+        public IActionResult GetTestAttempt(int testId, int userId)
 
         {
 
             AttemptCreator studentattempt = new AttemptCreator();
 
-            var attempt = studentattempt.CreateAttempt(userdId, testId);
+            var attempt = studentattempt.CreateAttempt(userId, testId);
 
 
 
-            return Json(new Mapper().AttemptBusinessModelToConcreteAttemptOutputModel(attempt, testId, userdId));
+            return Json(new Mapper().AttemptBusinessModelToConcreteAttemptOutputModel(attempt, userId, testId));
 
         }
 

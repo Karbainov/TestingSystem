@@ -383,9 +383,9 @@ namespace TestingSystem.API
         {
             AnswerWithoutCorrectnessOutputModel newanswers = new AnswerWithoutCorrectnessOutputModel()
             {
-                ID = answers.ID,
+                Id = answers.ID,
                 QuestionId = answers.QuestionId,
-                Value = answers.Value,
+                Value = answers.Answer,
 
             };
 
@@ -397,9 +397,10 @@ namespace TestingSystem.API
             QuestionWithListAnswersOutputModel newquestion = new QuestionWithListAnswersOutputModel();
             {
                 newquestion.Id = question.Id;
-                newquestion.Value = question.Value;
+                newquestion.Value = question.Question;
                 newquestion.TypeID = question.TypeID;
                 newquestion.Weight = question.Weight;
+                newquestion.Answers = new List<AnswerWithoutCorrectnessOutputModel>();
 
                 foreach (var answer in question.Answers)
 
