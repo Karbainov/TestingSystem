@@ -383,7 +383,7 @@ namespace TestingSystem.API
         {
             AnswerWithoutCorrectnessOutputModel newanswers = new AnswerWithoutCorrectnessOutputModel()
             {
-                Id = answers.ID,
+                Id = answers.AnswerId,
                 QuestionId = answers.QuestionId,
                 Value = answers.Answer,
 
