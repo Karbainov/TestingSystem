@@ -116,5 +116,11 @@ namespace TestingSystem.Data
             QuestionManager student = new QuestionManager();
             return student.GetQuestionTypeIdCorrectAnswerByQuestionId(questionId);
         }
+
+        public int GetQtyOfAnswersInAttempt(int attemptId)
+        {
+            AttemptManager student = new AttemptManager();
+            return student.GetQtyOfAnswersInAttempt(attemptId);
+        }
     }
 }

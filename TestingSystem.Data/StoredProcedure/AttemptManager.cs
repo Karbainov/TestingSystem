@@ -77,7 +77,14 @@ namespace TestingSystem.Data.StoredProcedure
                 connection.Execute(sqlExpression, new { attemptID, questionId }, commandType: CommandType.StoredProcedure);
             }
         }
-
-              
+        
+        public int GetQtyOfAnswersInAttempt(int attemptId)
+        {
+            using (var connection = Connection.GetConnection())
+            {
+                string sqlExpression = "GetQtyOfAnswersInAttempt";
+                return connection.Execute(sqlExpression, new { attemptId }, commandType: CommandType.StoredProcedure);
+            }
+        }
     }
 }
