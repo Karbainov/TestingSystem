@@ -193,12 +193,13 @@ namespace TestingSystem.Data.StoredProcedure
             using (var connection = Connection.GetConnection())
             {
                 
-                var TestDictionary = new Dictionary<int, TestQuestionTagDTO>();
+                //var TestDictionary = new Dictionary<int, TestQuestionTagDTO>();
                 TestQuestionTagDTO result = null; //new TestQuestionTagDTO();
                 string sqlExpression = "GetTestsByIdOneToMany @id";
                 connection.Query<TestQuestionTagDTO, QuestionForOneToManyDTO, TagWithTestIDDTO, TestQuestionTagDTO>(sqlExpression, (test, question, tag) =>
                 {
-                    TestQuestionTagDTO testEntry;
+                    //TestQuestionTagDTO result = null;
+                    //TestQuestionTagDTO testEntry;
                     if (result == null)
                     {
                         result = test;
@@ -210,15 +211,15 @@ namespace TestingSystem.Data.StoredProcedure
                     }
                     else
                     {
-                        if (!result.Questions.Contains(question))
+                        if (!result.Questions.Any(x=>x.Value==question.Value))
                         { result.Questions.Add(question); }
-                        if (!result.Tags.Contains(tag))
+                        if (!result.Tags.Any(x=>x.Name==tag.Name))
                         {result.Tags.Add(tag);}
                     }
                     
                     return result;
                 }
-                ,new {id}
+                ,new { id }
             , splitOn: "TestID,IDtest");
                 
                 return result;

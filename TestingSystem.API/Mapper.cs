@@ -67,28 +67,39 @@ namespace TestingSystem.API
         }
         public QuestionOutputModel ConvertQuestionForOneToManyDTOToQuestionOutputModel(QuestionForOneToManyDTO questionDTO)
         {
-            return new QuestionOutputModel()
+            if (questionDTO != null)
             {
-                ID = questionDTO.QID,
-                TestID = questionDTO.TestID,
-                Value = questionDTO.Value,
-                Weight = questionDTO.Weight,
-                AnswerCount = questionDTO.AnswersCount,
-               
-            };
+                return new QuestionOutputModel()
+                {
+                    ID = questionDTO.QuestionID,
+                    TestID = questionDTO.TestID,
+                    Value = questionDTO.Value,
+                    Weight = questionDTO.Weight,
+                    AnswerCount = questionDTO.AnswersCount,
+
+                };
+            }
+            return null;
         }
         public List<TagOutputModel> ConvertTagsWithTestIdToTagOutputModel(List<TagWithTestIDDTO> tag)
         {
-            List<TagOutputModel> tagOutputs = new List<TagOutputModel>();
-            TagOutputModel model;
-            foreach(var t in tag)
+            if (tag != null)
             {
-                model = new TagOutputModel();
-                model.ID = t.TagID;
-                model.Name = t.Name;
-                tagOutputs.Add(model);
+                List<TagOutputModel> tagOutputs = new List<TagOutputModel>();
+                TagOutputModel model;
+                foreach (var t in tag)
+                {
+                    if (t != null)
+                    {
+                        model = new TagOutputModel();
+                        model.ID = t.TagID;
+                        model.Name = t.Name;
+                        tagOutputs.Add(model);
+                    }
+                }
+                return tagOutputs;
             }
-            return tagOutputs;
+            return null;
         }
         
         //список тестов

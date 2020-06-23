@@ -6,7 +6,7 @@ namespace TestingSystem.Data.DTO
 {
     public class QuestionForOneToManyDTO
     {
-        public int QID { get; set; }
+        public int QuestionID { get; set; }
         public int TestID { get; set; }
         public string Value { get; set; }
         public int Type { get; set; }
@@ -18,9 +18,9 @@ namespace TestingSystem.Data.DTO
 
         }
 
-        public QuestionForOneToManyDTO(int QID, int TestID, string Value, int TypeID, int AnswersCount, int Weight)
+        public QuestionForOneToManyDTO(int QuestionID, int TestID, string Value, int TypeID, int AnswersCount, int Weight)
         {
-            this.QID = QID;
+            this.QuestionID = QuestionID;
             this.TestID = TestID;
             this.Value = Value;
             this.Type = TypeID;
