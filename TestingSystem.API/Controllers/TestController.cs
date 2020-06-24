@@ -325,6 +325,7 @@ namespace TestingSystem.API.Controllers
 
             return Json(new Mapper().AttemptBusinessModelToConcreteAttemptOutputModel(attempt, testId, userdId));
         }
+        [HttpPut("attempt/answers")]
         public IActionResult PutTestAttemptAnswers([FromBody] ConcreteAttemptInputModel concreteAttempt)
         {
             Mapper mapper = new Mapper();
