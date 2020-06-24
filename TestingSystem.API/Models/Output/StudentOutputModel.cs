@@ -7,11 +7,11 @@ namespace TestingSystem.API.Models.Output
 {
     public class StudentOutputModel
     {
-        public int ID { get; set; }
+        public int? ID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public List<TestAttemptOutputModel> DTO { get; set; }
-        public StudentOutputModel(int id, string firstname, string lastname, List<TestAttemptOutputModel> dto)
+        public StudentOutputModel(int? id, string firstname, string lastname, List<TestAttemptOutputModel> dto)
         {
             ID = id;
             FirstName = firstname;
