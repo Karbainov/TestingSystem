@@ -118,7 +118,7 @@ namespace TestingSystem.Data
             UserManager adm = new UserManager();
             return adm.GetUserVSRole();
         }
-        public List<UserRoleDTO> GetUserRolesByUserId(int userId) //GetRoleById
+        public List<UserRoleDTO> GetRolesByUserId(int userId) //GetRoleById
         {
             UserRoleCRUD roleCRUD = new UserRoleCRUD();
             return roleCRUD.GetByUserID(userId);
@@ -161,12 +161,17 @@ namespace TestingSystem.Data
             GroupManager gm = new GroupManager();
             gm.DeleteTeacherFromGroup(userId, groupId);
         }
-        
-        public List<RoleDTO> GetRoleByUserId(int userId)//удалить
+
+        public List<RoleDTO> GetRoleByUserId(int userId) //удалить
         {
             UserManager role = new UserManager();
             return role.GetRoleByUserId(userId);
         }
-        
+
+        public List<UserRoleDTO> GetRoleByRoleID(int roleId)
+        {
+            UserRoleCRUD role = new UserRoleCRUD();
+            return role.GetByRoleID(roleId);
+        }
     }
 }

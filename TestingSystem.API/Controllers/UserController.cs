@@ -66,13 +66,15 @@ namespace TestingSystem.API.Controllers
             AdminDataAccess adm = new AdminDataAccess();
             var user = adm.GetUserByID(userRole.UserID);
             if (user == null) return BadRequest("Пользователя не существует");
-
+            //List<UserRoleDTO> role = adm.GetRolesByUserId(userRole.UserID);
+            //UserRoleDTO rl = ConvertUserRoleInputModelToUserRoleDTO(userRole);
+            //if (role.Contains(rl)) return Ok("Данная роль для пользователя уже создана");
             adm.UserRoleCreate(mapper.ConvertUserRoleInputModelToUserRoleDTO(userRole));
             return Ok("Роль пользователя создана");
         }
         
         [HttpGet("role")]
-        public IActionResult GetRole()// добавить условие, если ролей нет
+        public IActionResult GetRole()
         {
             UserMapper mapper = new UserMapper();
             AdminDataAccess adm = new AdminDataAccess();
@@ -133,7 +135,8 @@ namespace TestingSystem.API.Controllers
             UserDTO getUser = adm.GetUserByID(id);
             if (getUser == null) { return new BadRequestObjectResult("Пользователя с таким id не существует"); }
             else {
-                return Json(mapper.ConvertUserDTOToUserOutputModel(getUser)); 
+                user = mapper.ConvertUserDTOToUserOutputModel(getUser);
+                return Json(user); 
             }
         }
 
