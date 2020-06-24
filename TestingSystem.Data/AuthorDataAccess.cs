@@ -90,6 +90,13 @@ namespace TestingSystem.Data
             tag.Delete(id);
         }
 
+        public TestTagDTO GetTestByTag(int testId, int tagId)       //вывод связи тест-тег
+        {
+            TestTagCRUD tag = new TestTagCRUD();
+            return tag.GetByTestIdTagId(testId, tagId); ;
+        }
+
+
 
         //Запросы на странице конкретного теста "Id" (тест с информацией, вопросы, ответы теста)
 
@@ -135,16 +142,23 @@ namespace TestingSystem.Data
             return tags.GetTestTags(testId);
         }
 
+        public TagDTO GetTagById(int tagId)         //вывод тега по ID
+        {
+            TagCRUD tags = new TagCRUD();
+            return tags.GetById(tagId);
+        }
+
         public List<TagDTO> GetTagsWhichAreNotInTest(int testId)    //список тэгов, которых нет в этом тесте, чтобы выбрать для добавления
         {
             TestManager tags = new TestManager();
             return tags.GetTagsWhichAreNotInTest(testId);
         }
 
-        public void DeleteByTestIdTagId(int testId, int tagId)    //удалить тэг из конкретного теста
+        public int DeleteByTestIdTagId(int testId, int tagId)    //удалить тэг из конкретного теста
         {
             TestTagCRUD tag = new TestTagCRUD();
             tag.DeleteByTestIdTagId(testId, tagId);
+            return testId;
         }
 
         public int TestTagCreate(TestTagDTO testtag)        //добавить тэг из списка тэгов к конкретному тесту
