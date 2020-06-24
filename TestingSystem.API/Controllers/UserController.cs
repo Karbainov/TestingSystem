@@ -193,7 +193,7 @@ namespace TestingSystem.API.Controllers
             Mapper mapper = new Mapper();
             UserIdTestIdDTO dTO = new UserIdTestIdDTO(UserID, TestID);
             var std = student.GetAttemptsByUserIdTestId(dTO);
-            if (std == null) return BadRequest("Несуществующая попытка");
+            if (std == null) return Ok("Попыток не найдено");
             List <AttemptResultOutputModel> model = mapper.ConvertAttemptDTOToAttemptModel(student.GetAttemptsByUserIdTestId(dTO));
             return Json(model);
         }
