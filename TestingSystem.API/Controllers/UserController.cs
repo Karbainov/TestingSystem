@@ -12,11 +12,12 @@ using TestingSystem.Data;
 using TestingSystem.API.Models.Input;
 using TestingSystem.API.Models.Output;
 using TestingSystem.Business;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TestingSystem.API.Controllers
 {
-        [ApiController]
-        [Route("[controller]")]
+    [ApiController]
+    [Route("[controller]")]
     public class UserController : ControllerBase
     {
 
@@ -52,7 +53,7 @@ namespace TestingSystem.API.Controllers
             adm.UserCreate(mapper.ConvertUserInputModelToGroupDTO(user));
 
         }
-        
+
         [HttpPost("role")]
         public void PostUserRole([FromBody] UserRoleInputModel userRole)
         {
@@ -60,7 +61,7 @@ namespace TestingSystem.API.Controllers
             AdminDataAccess adm = new AdminDataAccess();
             adm.UserRoleCreate(mapper.ConvertUserRoleInputModelToUserRoleDTO(userRole));
         }
-        
+
         [HttpGet("role")]
         public List<RoleOutputModel> GetRole()
         {
@@ -75,7 +76,7 @@ namespace TestingSystem.API.Controllers
 
             return rolesOut;
         }
-        
+
         [HttpGet("{userId}/role")]
         public List<RoleOutputModel> GetRoleByUserId(int userId)
         {
@@ -89,7 +90,7 @@ namespace TestingSystem.API.Controllers
             }
             return rolesOut;
         }
-        
+
         [HttpGet]
         public List<UserWithRolesOutputModel> GetAllUsersWithRoles()
         {
@@ -99,22 +100,22 @@ namespace TestingSystem.API.Controllers
 
             return mapper.ConvertUserPositionDTOsToUserWithRolesOutputModels(users);
         }
-        
-        
+
+
         [HttpGet("role/{roleID}")]
         public List<UserOutputModel> GetUsersByRoleID(int roleID)
         {
             AdminDataAccess adm = new AdminDataAccess();
             List<UserOutputModel> allUsers = new List<UserOutputModel>();
             UserMapper mapper = new UserMapper();
-            
-            foreach(UserDTO user in adm.GetUsersByRoleID(roleID))
+
+            foreach (UserDTO user in adm.GetUsersByRoleID(roleID))
             {
                 allUsers.Add(mapper.ConvertUserDTOToUserOutputModel(user));
             }
             return allUsers;
         }
-        
+
         [HttpGet("{id}")]
         public UserOutputModel GetUserById(int id)
         {
@@ -130,7 +131,7 @@ namespace TestingSystem.API.Controllers
             AdminDataAccess adm = new AdminDataAccess();
             adm.UserUpdate(mapper.ConvertUserInputModelToGroupDTO(user));
         }
-        
+
         [HttpDelete("{userId}/role/{roleId}")]
         public void DeleteUserRole(int userId, int roleId)
         {
@@ -144,7 +145,7 @@ namespace TestingSystem.API.Controllers
             AdminDataAccess adm = new AdminDataAccess();
             adm.UserDelete(id);
         }
-        
+
         [HttpGet("{UserID}/user")]
         public StudentOutputModel GetStudentTests(int UserID)
         {

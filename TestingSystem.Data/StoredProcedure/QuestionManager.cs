@@ -101,5 +101,14 @@ namespace TestingSystem.Data.StoredProcedure
 
             return questions;
         }
+        
+        public QuestionTypeAnswersDTO GetQuestionTypeIdCorrectAnswerByQuestionId(int questionId)
+        {
+            using (IDbConnection connection = Connection.GetConnection()) 
+            { 
+                string sqlExpression = "GetQuestionTypeIdCorrectAnswerByQuestionId";
+                return connection.Query<QuestionTypeAnswersDTO>(sqlExpression, new { questionId }, commandType: CommandType.StoredProcedure).FirstOrDefault();
+            }
+        }
     }
 }

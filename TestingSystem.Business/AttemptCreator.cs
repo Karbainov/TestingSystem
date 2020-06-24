@@ -27,7 +27,7 @@ namespace TestingSystem.Business
 
         private List<QuestionWithListAnswersDTO> CreateListOfQuestions(int userId, int testId)
         {
-            List<QuestionWithListAnswersDTO> questions = new List<QuestionWithListAnswersDTO>();  // как будто вернули список вопросов с типом, а там внутри ответы
+            List<QuestionWithListAnswersDTO> questions = new List<QuestionWithListAnswersDTO>();  
             StudentDataAccess student = new StudentDataAccess();
             return questions = student.GetQuestionsAndAnswers(testId);
 
@@ -47,7 +47,7 @@ namespace TestingSystem.Business
                 }
                 else
                 {
-                    weightTypes[q.Weight].Add(q);  // спросить у Максима
+                    weightTypes[q.Weight].Add(q);  
                 }
             }
 
@@ -64,7 +64,7 @@ namespace TestingSystem.Business
 
             foreach (var question in questions)
             {
-                var randomIndexes = GetRandomIndexes(question.Value.Count(), (int)test.QuestionNumber * (int)Math.Ceiling((double)question.Value.Count() / totalQtyOfQuestions));
+                var randomIndexes = GetRandomIndexes(question.Value.Count(), (int)Math.Ceiling((int)test.QuestionNumber * (double)question.Value.Count() / totalQtyOfQuestions));
                 attemptquestions.Add(question.Key, CutListbyIndexes(question.Value, randomIndexes));
             }
 

@@ -10,6 +10,7 @@ using TestingSystem.API.Models.Output;
 using TestingSystem.API.Models.Input;
 using TestingSystem.Business.Models;
 using TestingSystem.Business;
+using TestingSystem.Business.Attempt;
 
 
 namespace TestingSystem.API.Controllers
@@ -324,5 +325,12 @@ namespace TestingSystem.API.Controllers
 
             return Json(new Mapper().AttemptBusinessModelToConcreateAttemptOutputModel(attempt, testId, userdId));
         }
+        public IActionResult PutTestAttemptAnswers([FromBody] ConcreteAttemptInputModel concreteAttempt)
+        {
+            Mapper mapper = new Mapper();
+            AttemptSaver saver = new AttemptSaver();
+            saver.CreateAttemptResult(mapper.ConvertConcreteAttemptInputModelToConcreteAttemptBusinessModel(concreteAttempt));
+            return new OkResult();
+        }
     }
 }

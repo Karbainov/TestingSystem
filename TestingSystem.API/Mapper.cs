@@ -7,6 +7,7 @@ using TestingSystem.API.Models.Output;
 using TestingSystem.Data.DTO;
 using TestingSystem.Business;
 using TestingSystem.Business.Models;
+using TestingSystem.Data.StoredProcedure;
 
 namespace TestingSystem.API
 {
@@ -62,6 +63,7 @@ namespace TestingSystem.API
             return tagOutputs;
         }
         
+
         //список тестов
         public List<TestOutputModel> ConvertTestDTOToTestModelList(List<TestDTO> dtoList) //формирует список тестов
         {
@@ -126,7 +128,7 @@ namespace TestingSystem.API
                 Name = tagDTO.Name,
             };
         }
-        
+
         //список тэгов
         public List<TagOutputModel> ConvertTagDTOToTagModelList(List<TagDTO> dtoList)
         {
@@ -233,13 +235,13 @@ namespace TestingSystem.API
                 ID = questionDTO.ID,
                 TestID = questionDTO.TestID,
                 Value = questionDTO.Value,
-                Weight = questionDTO.Weight,      
+                Weight = questionDTO.Weight,
                 AnswerCount = questionDTO.AnswersCount
             };
         }
 
         //список вопросов
-        public List<QuestionOutputModel> ConvertQuestionDTOToQuestionModelList(List<QuestionDTO> dtoList) 
+        public List<QuestionOutputModel> ConvertQuestionDTOToQuestionModelList(List<QuestionDTO> dtoList)
         {
             List<QuestionOutputModel> modelList = new List<QuestionOutputModel>();
             foreach (QuestionDTO questionDTO in dtoList)
@@ -276,9 +278,9 @@ namespace TestingSystem.API
         public TestTagDTO ConvertTestTagInputModelToTestTagDTO(TestTagInputModel testtagmodel)
         {
             return new TestTagDTO()
-            {                
+            {
                 TestID = testtagmodel.TestID,
-                TagID = testtagmodel.TagID,                
+                TagID = testtagmodel.TagID,
             };
         }
         //mapper для вывод группы 
@@ -290,7 +292,7 @@ namespace TestingSystem.API
                 Name = group.Name,
                 StartDate = group.StartDate,
                 EndDate = group.EndDate,
-             };
+            };
         }
 
         //список group
@@ -302,6 +304,28 @@ namespace TestingSystem.API
                 listOutputmodels.Add(ConvertGroupDTOToGroupOutputModel(group));
             }
             return listOutputmodels;
+        }
+        public List<UserByLoginOutputModel> ConvertUserByLoginDTOToListUserByLoginOutputModel(string login)
+        {
+            UserManager manager = new UserManager();
+            List<UserByLoginDTO> list = manager.GetUserAndItRole(login);
+            List<UserByLoginOutputModel> model = new List<UserByLoginOutputModel>();
+            foreach (UserByLoginDTO a in list)
+            {
+                UserByLoginOutputModel userInf = new UserByLoginOutputModel()
+                {
+                    FirstName = a.FirstName,
+                    LastName = a.LastName,
+                    BirthDate = a.BirthDate,
+                    Login = a.Login,
+                    Password = a.Password,
+                    Email = a.Email,
+                    Phone = a.Phone,
+                    Role = a.Role
+                };
+                model.Add(userInf);
+            }
+            return model;
         }
 
         public GroupDTO ConvertGroupInputModelToGroupDTO(GroupInputModel group)
@@ -336,7 +360,7 @@ namespace TestingSystem.API
                 ID=answermodel.ID,
                 QuestionID = answermodel.QuestionID,
                 Value = answermodel.Value,
-                Correct = answermodel.Correct,                
+                Correct = answermodel.Correct,
             };
         }
 
@@ -360,9 +384,9 @@ namespace TestingSystem.API
         {
             AnswerWithoutCorrectnessOutputModel newanswers = new AnswerWithoutCorrectnessOutputModel()
             {
-                ID = answers.ID,
+                Id = answers.AnswerId,
                 QuestionId = answers.QuestionId,
-                Value = answers.Value,
+                Value = answers.Answer,
 
             };
 
@@ -374,9 +398,10 @@ namespace TestingSystem.API
             QuestionWithListAnswersOutputModel newquestion = new QuestionWithListAnswersOutputModel();
             {
                 newquestion.Id = question.Id;
-                newquestion.Value = question.Value;
+                newquestion.Value = question.Question;
                 newquestion.TypeID = question.TypeID;
                 newquestion.Weight = question.Weight;
+                newquestion.Answers = new List<AnswerWithoutCorrectnessOutputModel>();
 
                 foreach (var answer in question.Answers)
 
@@ -403,17 +428,49 @@ namespace TestingSystem.API
 
         }
 
-        public ConcreateAttemptOutputModel AttemptBusinessModelToConcreateAttemptOutputModel (AttemptBusinessModel questions, int userId, int testId)
+        public ConcreteAttemptOutputModel AttemptBusinessModelToConcreteAttemptOutputModel (AttemptBusinessModel questions, int userId, int testId)
         {
-            ConcreateAttemptOutputModel concreatemodel = new ConcreateAttemptOutputModel();
+            ConcreteAttemptOutputModel concretemodel = new ConcreteAttemptOutputModel();
 
-            concreatemodel.UserId = userId;
-            concreatemodel.TestId = testId;
-            concreatemodel.AttemptId = questions.AttemptId;
-            concreatemodel.DurationTime = questions.DurationTime;
-            concreatemodel.TestName = questions.TestName;
-            concreatemodel.Questions = new Mapper().QuestionWithListAnswersDTOsToQuestionWithListAnswersOutputModels(questions.Questions);
-            return concreatemodel;
+            concretemodel.UserId = userId;
+            concretemodel.TestId = testId;
+            concretemodel.AttemptId = questions.AttemptId;
+            concretemodel.DurationTime = questions.DurationTime;
+            concretemodel.TestName = questions.TestName;
+            concretemodel.Questions = new Mapper().QuestionWithListAnswersDTOsToQuestionWithListAnswersOutputModels(questions.Questions);
+            return concretemodel;
+        }
+        
+        public AttemptAnswerBusinessModel ConvertAttemptAnswerInputModelToAttemptAnswerBusinessModel(AttemptAnswerInputModel answer)
+        {
+            return new AttemptAnswerBusinessModel(answer.Id, answer.Value);
+        }
+        
+        public QuestionWithAnswersBusinessModel ConvertQuestionWithAnswersInputModelToQuestionWithAnswersBusinessModel(QuestionWithAnswersInputModel question)
+        {
+            List<AttemptAnswerBusinessModel> answers = new List<AttemptAnswerBusinessModel>();
+            Mapper mapper = new Mapper();
+            foreach (var a in question.Answers)
+            {
+                answers.Add(mapper.ConvertAttemptAnswerInputModelToAttemptAnswerBusinessModel(a));
+            }
+            return new QuestionWithAnswersBusinessModel(question.Id, answers);
+        }
+        
+        public ConcreteAttemptBusinessModel ConvertConcreteAttemptInputModelToConcreteAttemptBusinessModel(ConcreteAttemptInputModel attempt)
+        {
+            List<QuestionWithAnswersBusinessModel> questions = new List<QuestionWithAnswersBusinessModel>();
+            Mapper mapper = new Mapper();
+            foreach (var q in attempt.Questions)
+            {
+                questions.Add(mapper.ConvertQuestionWithAnswersInputModelToQuestionWithAnswersBusinessModel(q));
+            }
+            return new ConcreteAttemptBusinessModel(attempt.AttemptId, attempt.DurationTime, questions);
+        }
+        
+        public QuestionTypeAnswersBusinessModel QuestionTypeAnswersDTOToQuestionTypeAnswersBusinessModel(QuestionTypeAnswersDTO qta)
+        {
+            return new QuestionTypeAnswersBusinessModel(qta.TypeId, qta.Id, qta.Value);
         }
      }
 }

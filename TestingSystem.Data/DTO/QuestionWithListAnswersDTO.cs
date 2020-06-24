@@ -5,7 +5,6 @@ using System.Data.SqlClient;
 using System.Text;
 using TestingSystem.Data.DTO;
 using Dapper;
-using System.Linq;
 using System.Data;
 
 namespace TestingSystem.Data.DTO
@@ -15,9 +14,9 @@ namespace TestingSystem.Data.DTO
 
         public int Id { get; set; }
        
-        public string Value { get; set; }
+        public string Question { get; set; }
         public int TypeID { get; set; }
-       // public byte AnswersCount { get; set; }
+       
         public byte Weight { get; set; }
 
         public List <AnswerWithoutCorrectnessDTO> Answers { get; set; }

@@ -11,11 +11,11 @@ namespace TestingSystem.Data.DTO
 {
    public class AnswerWithoutCorrectnessDTO
     {
-        public int ID { get; set; }
+        public int AnswerId { get; set; }
 
         public int QuestionId { get; set; }
 
-        public string Value { get; set; }
+        public string Answer { get; set; }
 
 
     }

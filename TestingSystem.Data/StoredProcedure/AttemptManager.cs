@@ -52,7 +52,7 @@ namespace TestingSystem.Data.StoredProcedure
             using (var connection = Connection.GetConnection())
             {
                 string sqlExpression = "AddAttemptAutoNumber @userID, @testID, @userResult, @dateTime, @durationTime";
-                return connection.Query<int>(sqlExpression, attempt, commandType: CommandType.StoredProcedure).FirstOrDefault();
+                return connection.Query<int>(sqlExpression, attempt).FirstOrDefault();
             }
         }
 
@@ -73,11 +73,18 @@ namespace TestingSystem.Data.StoredProcedure
         {
             using (var connection = Connection.GetConnection())
             {
-                string sqlExpression = "AddQuestionToAttempt @attemptID, @questionId";
+                string sqlExpression = "AddQuestionToAttempt";
                 connection.Execute(sqlExpression, new { attemptID, questionId }, commandType: CommandType.StoredProcedure);
             }
         }
-
-              
+        
+        public int GetQtyOfAnswersInAttempt(int attemptId)
+        {
+            using (var connection = Connection.GetConnection())
+            {
+                string sqlExpression = "GetQtyOfAnswersInAttempt";
+                return connection.Execute(sqlExpression, new { attemptId }, commandType: CommandType.StoredProcedure);
+            }
+        }
     }
 }
