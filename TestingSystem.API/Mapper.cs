@@ -333,6 +333,7 @@ namespace TestingSystem.API
         {
             return new AnswerDTO()
             {
+                ID=answermodel.ID,
                 QuestionID = answermodel.QuestionID,
                 Value = answermodel.Value,
                 Correct = answermodel.Correct,                

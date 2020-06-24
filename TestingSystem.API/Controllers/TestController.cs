@@ -217,19 +217,19 @@ namespace TestingSystem.API.Controllers
 
         //Запросы на странице конкретного вопроса у теста "Id/QuestionId" (вопрос с полной информацией, ответы на этот вопрос)
 
-        [HttpPost("question/Author")]       // создание вопроса конкретного теста
+        [HttpPost("add-question-by-test/Author")]       // создание вопроса конкретного теста   ??????? не работает!!!
         public ActionResult<int> PostQuestion(QuestionInputModel questionmodel)
         {
             Mapper mapper = new Mapper();
             QuestionDTO questiondto = mapper.ConvertQuestionInputModelToQuestionDTO(questionmodel);
-            AuthorDataAccess question = new AuthorDataAccess();
-            var test = question.GetByIdTest(questionmodel.TestID);
+            AuthorDataAccess questions = new AuthorDataAccess();
+            var test = questions.GetByIdTest(questionmodel.TestID);
             if (test == null) return BadRequest("Теста не существует");
             if (string.IsNullOrWhiteSpace(questionmodel.Value)) return BadRequest("Введите вопрос");
+            if (questionmodel.TypeID == null) return BadRequest("Введите тип вопроса");
             if (questionmodel.AnswersCount == null) return BadRequest("Введите количество ответов на вопрос");
             if (questionmodel.Weight == null) return BadRequest("Введите вес вопроса");
-            if (questionmodel.TypeID == null) return BadRequest("Введите тип вопроса");
-            return Ok(question.AddQuestion(questiondto));            
+            return Ok(questions.AddQuestion(questiondto));            
         }
 
         //[HttpGet("question/{quid}/Author")]       // вывод вопроса
@@ -240,42 +240,44 @@ namespace TestingSystem.API.Controllers
         //    return Json(mapper.ConvertQuestionDTOToQuestionOutputModel(question.GetQuestionById(quid)));
         //}
 
-        [HttpPut("question/{quid}/Author")]      // изменение конкретного вопроса из теста
-        public IActionResult PutQuestion(QuestionInputModel questionmodel)
+        [HttpPut("question-update/Author")]      // изменение конкретного вопроса из теста
+        public ActionResult<int> PutQuestion(QuestionInputModel questionmodel)
         {
-            if (string.IsNullOrWhiteSpace(questionmodel.Value))
-                return BadRequest("Введите вопрос");
-            if (questionmodel.TypeID.HasValue)
-                return BadRequest("Введите тип вопроса");
-            if (questionmodel.AnswersCount.HasValue)
-                return BadRequest("Введите количество ответов на вопрос");
-            if (questionmodel.Weight.HasValue)
-                return BadRequest("Введите вес вопроса");
             Mapper mapper = new Mapper();
             QuestionDTO questiondto = mapper.ConvertQuestionInputModelToQuestionDTO(questionmodel);
-            AuthorDataAccess question = new AuthorDataAccess();
-            question.UpdateQuestion(questiondto);
+            AuthorDataAccess questions = new AuthorDataAccess();
+            var question = questions.GetQuestionById(questionmodel.ID);
+            if (question == null) return BadRequest("Вопроса не существует");
+            var test = questions.GetByIdTest(questionmodel.TestID);
+            if (test == null) return BadRequest("Теста не существует");
+            if (string.IsNullOrWhiteSpace(questionmodel.Value)) return BadRequest("Введите вопрос");
+            if (questionmodel.TypeID ==null) return BadRequest("Введите тип вопроса");
+            if (questionmodel.AnswersCount == null) return BadRequest("Введите количество ответов на вопрос");
+            if (questionmodel.Weight == null) return BadRequest("Введите вес вопроса");          
+            questions.UpdateQuestion(questiondto);
             return Ok("Изменения сделаны успешно");            
         }
 
-        [HttpDelete("question/{quid}/Author")]     //удаление вопроса из теста
-        public IActionResult DeleteQuestionFromTest(int quid)
+        [HttpDelete("question-delete/{quid}/Author")]     //удаление вопроса из теста
+        public ActionResult<int> DeleteQuestionFromTest(int quid)
         {
-            AuthorDataAccess question = new AuthorDataAccess();
-            question.DeleteQuestionFromTest(quid);
+            AuthorDataAccess questions = new AuthorDataAccess();
+            var question = questions.GetQuestionById(quid);
+            if (question == null) return BadRequest("Вопроса не существует");
+            questions.DeleteQuestionFromTest(quid);
             return Ok(quid);
         }
 
-        [HttpPost("question/{quid}/answer/Author")]       //создать ответ для вопроса
-        public IActionResult PostAnswer(AnswerInputModel answermodel)
+        [HttpPost("answer/Author")]       //создать ответ для вопроса
+        public ActionResult<int> PostAnswer(AnswerInputModel answermodel)
         {
-            if(string.IsNullOrWhiteSpace(answermodel.Value))
-                return BadRequest("Введите ответ");
-            if (answermodel.Correct.HasValue)
-                return BadRequest("Введите корректный ответ или нет");
             Mapper mapper = new Mapper();
             AnswerDTO answerdto = mapper.ConvertAnswerInputModelToAnswerDTO(answermodel);
             AuthorDataAccess answer = new AuthorDataAccess();
+            var question = answer.GetQuestionById(answermodel.QuestionID);
+            if (question == null) return BadRequest("Вопроса не существует");
+            if (string.IsNullOrWhiteSpace(answermodel.Value)) return BadRequest("Введите ответ");
+            if (answermodel.Correct==null) return BadRequest("Введите корректный ответ или нет");          
             return Ok(answer.AddAnswer(answerdto));            
         }
 
@@ -287,25 +289,29 @@ namespace TestingSystem.API.Controllers
         //    return Json(mapper.ConvertAnswerDTOToAnswerModelList(answers.GetAnswerByQuestionId(quid)));
         //}
 
-        [HttpPut("answer/{anid}/Author")]     //редактировать ответ
-        public IActionResult PutAnswer(AnswerInputModel answermodel)
+        [HttpPut("answer-update/Author")]     //редактировать ответ
+        public ActionResult PutAnswer(AnswerInputModel answermodel)
         {
-            if (string.IsNullOrWhiteSpace(answermodel.Value))
-                return BadRequest("Введите ответ");
-            if (answermodel.Correct.HasValue)
-                return BadRequest("Введите корректный ответ или нет");
             Mapper mapper = new Mapper();
             AnswerDTO answerdto = mapper.ConvertAnswerInputModelToAnswerDTO(answermodel);
-            AuthorDataAccess answer = new AuthorDataAccess();
-            answer.UpdateAnswer(answerdto);
+            AuthorDataAccess answers = new AuthorDataAccess();
+            var answer = answers.GetAnswerById(answermodel.ID);
+            if (answer == null) return BadRequest("Ответа не существует");
+            var question = answers.GetQuestionById(answermodel.QuestionID);
+            if (question == null) return BadRequest("Вопроса не существует");
+            if (string.IsNullOrWhiteSpace(answermodel.Value)) return BadRequest("Введите ответ");
+            if (answermodel.Correct==null) return BadRequest("Введите корректный ответ или нет");
+            answers.UpdateAnswer(answerdto);
             return Ok("Успешно изменено!");            
         }
 
         [HttpDelete("answer/{anid}/Author")]   //удалить ответ
-        public IActionResult DeleteAnswer(int anid)
+        public ActionResult<int> DeleteAnswer(int anid)
         {
-            AuthorDataAccess answer = new AuthorDataAccess();
-            answer.DeleteAnswer(anid);
+            AuthorDataAccess answers = new AuthorDataAccess();
+            var answer = answers.GetAnswerById(anid);
+            if (answer == null) return BadRequest("Ответа не существует");
+            answers.DeleteAnswer(anid);
             return Ok(anid);
         }
 

@@ -195,6 +195,13 @@ namespace TestingSystem.Data
             return questionId;
         }
 
+        public AnswerDTO GetAnswerById(int answerId)     // вывод ответа по ID
+        {
+            AnswerCRUD answer = new AnswerCRUD();
+            return answer.GetById(answerId);
+        }
+
+
         public int AddAnswer(AnswerDTO ans)     //добавить ответ к вопросу
         {
             AnswerCRUD answer = new AnswerCRUD();
@@ -209,6 +216,7 @@ namespace TestingSystem.Data
 
         public void UpdateAnswer(AnswerDTO ans)    //редактировать ответ
         {
+            AnswerDTO a =new AnswerDTO();
             AnswerCRUD answer = new AnswerCRUD();
             answer.Update(ans);
         }
