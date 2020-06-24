@@ -11,14 +11,15 @@ namespace TestingSystem.Business.Tests
     public class AttemptCreatorMock
     {
 
-        public List<QuestionWithListAnswersDTO> GetExpected(int num)
+
+        public List<QuestionWithListAnswersDTO> GetExpected(int condition)
         {
-            switch (num)
-            { 
+            switch (condition)
+            {
                 case 1:
-                    return new List<QuestionWithListAnswersDTO>()
+                    return new List<QuestionWithListAnswersDTO>()  
                     {
-                        new QuestionWithListAnswersDTO ()
+                        new QuestionWithListAnswersDTO () // таких создать  10, веса 1...поле только weight
                         {
                             Id = 15,
                             Question = "Какой из вариантов поведенческий паттерн?",
@@ -59,7 +60,7 @@ namespace TestingSystem.Business.Tests
                                 new AnswerWithoutCorrectnessDTO()
                                 {
                                     AnswerId =  24,
-                                     QuestionId= 16,
+                                    QuestionId= 16,
                                     Answer = "Упорядоченно записанные данные"
                                      },
                                 new AnswerWithoutCorrectnessDTO()
@@ -70,7 +71,7 @@ namespace TestingSystem.Business.Tests
                                 },
                                 new AnswerWithoutCorrectnessDTO()
                                 {
-                                     AnswerId = 36,
+                                     AnswerId = 26,
                                      QuestionId= 16,
                                      Answer = "Мужчины",
                                 }
@@ -88,8 +89,8 @@ namespace TestingSystem.Business.Tests
                                 new AnswerWithoutCorrectnessDTO()
                                 {
                                     AnswerId =  27,
-                                     QuestionId= 17,
-                                    Answer = "Инкапсуляция,полиморфизм, наследование "
+                                    QuestionId= 17,
+                                    Answer = null
                                  },
 
                             }
@@ -183,13 +184,13 @@ namespace TestingSystem.Business.Tests
                             Id = 21,
                             Question = "Какая функция у команды SELECT в SQL?",
                             TypeID = 1,
-                            Weight = 3,
+                            Weight = 1,
                             Answers = new List<AnswerWithoutCorrectnessDTO>()
                             {
                                 new AnswerWithoutCorrectnessDTO()
                                 {
                                     AnswerId =  34,
-                                     QuestionId= 21,
+                                    QuestionId= 21,
                                     Answer = "Вывести данные"
                                      },
                                 new AnswerWithoutCorrectnessDTO()
@@ -213,12 +214,27 @@ namespace TestingSystem.Business.Tests
 
 
                 case 2:
-                    List < QuestionWithListAnswersDTO > questions = new List<QuestionWithListAnswersDTO>() { };
+                    List<QuestionWithListAnswersDTO> questions = new List<QuestionWithListAnswersDTO>() { };
                     return questions;
 
-                //case 3:
-                //    return null;
+
             }
             return null;
         }
-}   }
+
+        public Dictionary<int, List<QuestionWithListAnswersDTO>> CreateDictionaryMock(List<QuestionWithListAnswersDTO> questions)
+        {
+            Dictionary<int, List<QuestionWithListAnswersDTO>> dictionary = new Dictionary<int, List<QuestionWithListAnswersDTO>>();
+            List<QuestionWithListAnswersDTO> q = new List<QuestionWithListAnswersDTO>();
+            q.Add(new QuestionWithListAnswersDTO());
+            dictionary[2] = q;
+            dictionary[5] = q;
+            q.Add(new QuestionWithListAnswersDTO());
+            dictionary[4] = q;
+            q.Add(new QuestionWithListAnswersDTO());
+            dictionary[1] = new List<QuestionWithListAnswersDTO>(q);
+            return dictionary;
+        }
+
+    }
+}   
