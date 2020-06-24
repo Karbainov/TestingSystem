@@ -85,6 +85,7 @@ namespace TestingSystem.API.Controllers
             var user = adm.GetUserByID(userId);
             if (user == null) return BadRequest("Пользователя не существует");
             List<RoleDTO> roles = adm.GetRoleByUserId(userId);
+            if (roles == null) return BadRequest("У пользователя нет роли");
             List<RoleOutputModel> rolesOut = new List<RoleOutputModel>();
             foreach (RoleDTO r in roles)
                 {
