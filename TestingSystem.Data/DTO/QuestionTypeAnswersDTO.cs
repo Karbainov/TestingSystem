@@ -16,5 +16,10 @@ namespace TestingSystem.Data.DTO
             Id = answerId;
             Value = value;
         }
+
+        public QuestionTypeAnswersDTO()
+        {
+            
+        }
     }
 }
