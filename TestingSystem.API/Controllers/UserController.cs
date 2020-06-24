@@ -161,7 +161,7 @@ namespace TestingSystem.API.Controllers
             var user = adm.GetUserByID(userId);
             if (user == null) return BadRequest("Пользователя не существует");
             List<UserRoleDTO> roles = adm.GetRolesByUserId(userId);
-            if (!roles.Any(a=> a.RoleID ==roleId )) return BadRequest("Такой роли пользователя не существует");
+            if (!roles.Any(r=> r.RoleID ==roleId )) return BadRequest("Такой роли пользователя не существует");
             adm.UserRoleDelete(userId, roleId);
             return Ok("Роль пользователя удалена");
         }
@@ -200,6 +200,8 @@ namespace TestingSystem.API.Controllers
         [HttpGet("Attempt/{AttemptID}")]
         public IActionResult GetQuestionAndAnswerByAttemptID(int attemptID)
         {
+            AttemptCRUD attempt = new AttemptCRUD();
+            if(!attempt.GetAll().Any(a=>a.id==attemptID)) return BadRequest("Не существующий номер попытки");
             TeacherDataAccess teacher = new TeacherDataAccess();
             Mapper mapper = new Mapper();
             List<QuestionAnswerOutputModel> model = mapper.ConvertQuestionAnswerDTOToQuestionAnswerModel(teacher.GetQuestionAndAnswerByAttempt(attemptID));
