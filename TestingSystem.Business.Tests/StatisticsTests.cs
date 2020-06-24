@@ -8,7 +8,6 @@ namespace TestingSystem.Business.Tests
 {
     public class StatisticsTests
     {
-        InfoForStatisticsModel info = new InfoForStatisticsModel();
         InfoModelCreator creator = new InfoModelCreator();
 
         [TestCase(1, ExpectedResult = 27.4)]
@@ -16,9 +15,8 @@ namespace TestingSystem.Business.Tests
         [TestCase(3, ExpectedResult = 0)]
 
         public double GetAverageResultTest(int id)
-        {
-            info = creator.CreateByTestId(id);            
-            TestStatistics statistic = new TestStatistics(info);
+        {      
+            TestStatistics statistic = new TestStatistics(id);
             double actual = statistic.GetAverageResult(id);
             return actual;
         }
@@ -30,8 +28,7 @@ namespace TestingSystem.Business.Tests
         
         public void GetPassedFailedStatsTest(int id)
         {
-            info = creator.CreateByTestId(id);
-            TestStatistics statistic = new TestStatistics(info);
+            TestStatistics statistic = new TestStatistics(id);
             PassedFailedModel actual = statistic.GetPassedFailedStats(id);
             TestMock test = new TestMock();
             PassedFailedModel expected = test.GetPassedFailed(id);
@@ -44,8 +41,7 @@ namespace TestingSystem.Business.Tests
 
         public void CountNumberOfAnswersForAttemptByQuestionIdTest(int questionId)
         {
-            info = creator.CreateByQuestionId(questionId);
-            QuestionStatistics statistic = new QuestionStatistics(info);
+            QuestionStatistics statistic = new QuestionStatistics(questionId);
             Dictionary<int, int> actual = statistic.CountNumberOfAnswersInAttemptByQuestionId(questionId);
             QuestionMock mock = new QuestionMock();
             Assert.AreEqual(mock.CountNumberOfAnswerMock(questionId), actual);
@@ -57,8 +53,7 @@ namespace TestingSystem.Business.Tests
 
         public void GetPercentOfAnswerToQuestionTest(int questionId)
         {
-            info = creator.CreateByQuestionId(questionId);
-            QuestionStatistics statistic = new QuestionStatistics(info);
+            QuestionStatistics statistic = new QuestionStatistics(questionId);
             Dictionary<int, double> actual = statistic.GetPercentOfAnswerToQuestion(questionId);
             QuestionMock mock = new QuestionMock();
             Assert.AreEqual(mock.GetPercentOfAnswerMock(questionId), actual);
@@ -70,8 +65,7 @@ namespace TestingSystem.Business.Tests
 
         public void FindPercentCorrectAnswersByQuestionTest(int questionId)
         {
-            info = creator.CreateByQuestionId(questionId);
-            QuestionStatistics statistic = new QuestionStatistics(info);
+            QuestionStatistics statistic = new QuestionStatistics(questionId);
             double actual = statistic.FindPercentCorrectAnswersByQuestion(questionId);
             QuestionMock mock = new QuestionMock();
             Assert.AreEqual(mock.FindPercentCorrectMock(questionId), actual);

@@ -6,13 +6,12 @@ using TestingSystem.Business.Statistics.Models;
 
 namespace TestingSystem.Business.Statistics
 {
-    public class QuestionStatistics
+    public class QuestionStatistics:AStatistics
     {
-        InfoForStatisticsModel info;    
-
-        public QuestionStatistics(InfoForStatisticsModel info)
+        public QuestionStatistics(int id)
         {
-            this.info = info;
+            InfoModelCreator creator = new InfoModelCreator();
+            info = creator.CreateByQuestionId(id);
         }
 
         public Dictionary<int, int> CountNumberOfAnswersInAttemptByQuestionId(int quId) 

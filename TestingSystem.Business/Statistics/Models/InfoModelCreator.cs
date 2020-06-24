@@ -4,7 +4,7 @@ using System.Text;
 using TestingSystem.Data.StoredProcedure;
 using TestingSystem.Data.DTO;
 
-namespace TestingSystem.Business.Statistics.Models.InfoModels
+namespace TestingSystem.Business.Statistics.Models
 {
     public class InfoModelCreator
     {
@@ -48,6 +48,8 @@ namespace TestingSystem.Business.Statistics.Models.InfoModels
                     UserId = item.UserID,
                     GroupId = item.GroupID
                 };
+                info.IdInfo.Add(idModel);
+
                 if (!info.Attempts.ContainsKey(item.AttemptID))
                 {
                     AttemptInfoModel attemptInfo = new AttemptInfoModel()
@@ -61,6 +63,7 @@ namespace TestingSystem.Business.Statistics.Models.InfoModels
                     };
                     info.Attempts.Add(item.AttemptID, attemptInfo);
                 }
+
                 if (!info.Questions.ContainsKey(item.QuestionID))
                 {
                     QuestionInfoModel questionInfo = new QuestionInfoModel()
@@ -73,6 +76,7 @@ namespace TestingSystem.Business.Statistics.Models.InfoModels
                     };
                     info.Questions.Add(item.QuestionID, questionInfo);
                 }
+
                 if (!info.Answers.ContainsKey(item.AnswerID))
                 {
                     AnswerInfoModel answerInfo = new AnswerInfoModel()

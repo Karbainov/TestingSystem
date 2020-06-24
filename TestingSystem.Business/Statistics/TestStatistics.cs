@@ -6,13 +6,13 @@ using TestingSystem.Business.Statistics.Models;
 
 namespace TestingSystem.Business.Statistics
 {
-    public class TestStatistics
+    public class TestStatistics:AStatistics
     {
-        InfoForStatisticsModel info;
-        
-        public TestStatistics(InfoForStatisticsModel info)
+        public TestStatistics() { }
+        public TestStatistics (int id)
         {
-            this.info = info;
+            InfoModelCreator creator = new InfoModelCreator();
+            info = creator.CreateByTestId(id);
         }
 
         public List<int> GetAllResults(int id)
