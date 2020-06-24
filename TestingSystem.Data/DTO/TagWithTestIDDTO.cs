@@ -8,6 +8,7 @@ namespace TestingSystem.Data.DTO
     {
         
         public string Name { get; set; }
+        public int TagID { get; set; }
         public int IDtest { get; set; }
     }
 }

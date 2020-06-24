@@ -181,7 +181,7 @@ namespace TestingSystem.Data
         public List<TestQuestionTagDTO> GetDeletedTests()
         {
             ForDeletedManager manager = new ForDeletedManager();
-            return manager.GetDeletedWithTests();
+            return manager.GetDeletedOneToManyTests();
         }
         public int RestoreTest(int id)
         {
@@ -198,10 +198,11 @@ namespace TestingSystem.Data
             ForDeletedManager manager = new ForDeletedManager();
             return manager.RestoreQuestion(id);
         }
-        public List<GroupDTO> GetDeletedGroups()
+        public List<GroupWithStudentsAndTeachersDTO> GetDeletedGroups()
         {
             ForDeletedManager manager = new ForDeletedManager();
-            return manager.GetDeletedGroups();
+            //return manager.GetDeletedGroups();
+            return manager.GetDeletedGroupsOneToMany();
         }
         public int RestoreGroup(int id)
         {

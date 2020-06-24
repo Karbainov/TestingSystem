@@ -27,18 +27,103 @@ namespace TestingSystem.API
         }
         public TestOutputModel ConvertTestQuestionTagDTOToTestOutputModel(TestQuestionTagDTO testDTO)
         {
-            List<QuestionOutputModel> questions= ConvertQuestionDTOToQuestionModelList(testDTO.Questions);
-            List<TagOutputModel> tags = ConvertTagsWithTestIdToTagOutputModel(testDTO.Tags);
-            return new TestOutputModel()
+            if (testDTO != null)
             {
-                ID = testDTO.ID,
-                Name = testDTO.Name,
-                SuccessScore = testDTO.SuccessScore,
-                DurationTime = testDTO.DurationTime,
-                QuestionNumber = testDTO.QuestionNumber,
-                Questions = questions,
-                Tags = tags
-            };
+                List<QuestionOutputModel> questions = ConvertQuestionForOneToManyDTOToQuestionModelList(testDTO.Questions);
+                List<TagOutputModel> tags = ConvertTagsWithTestIdToTagOutputModel(testDTO.Tags);
+
+                return new TestOutputModel()
+                {
+                    ID = testDTO.ID,
+                    Name = testDTO.Name,
+                    SuccessScore = testDTO.SuccessScore,
+                    DurationTime = testDTO.DurationTime,
+                    QuestionNumber = testDTO.QuestionNumber,
+                    Questions = questions,
+                    Tags = tags
+                };
+            }
+            else
+            {
+                return new TestOutputModel();
+            }
+        }
+        public List<UserOutputModel> ConvertStudentDTOToUserOutputModel(List<StudentDTO> students)
+        {
+            List<UserOutputModel> users = new List<UserOutputModel>();
+            foreach (var student in students)
+            {
+                if (student != null)
+                {
+                    users.Add(
+                        new UserOutputModel()
+                        {
+                            ID = student.StudentID,
+                            Email = student.StudentEmail,
+                            BirthDate = student.StudentBirthDate,
+                            FirstName = student.StudentFirstName,
+                            LastName = student.StudentLastName,
+                            Login = student.StudentLogin,
+                            Password = student.StudentPassword,
+                            Phone = student.StudentPhone
+                        }
+                        );
+                }
+            }
+            return users;
+        }
+        public List<UserOutputModel> ConvertTeacherDTOToUserOutputModel(List<TeacherDTO> teachers)
+        {
+            List<UserOutputModel> users = new List<UserOutputModel>();
+            foreach (var teacher in teachers)
+            {
+                if (teacher != null)
+                {
+                    users.Add(
+                        new UserOutputModel()
+                        {
+                            ID = teacher.TeacherID,
+                            Email = teacher.TEmail,
+                            BirthDate = teacher.TBirthDate,
+                            FirstName = teacher.TFirstName,
+                            LastName = teacher.TLastName,
+                            Login = teacher.TLogin,
+                            Password = teacher.TPassword,
+                            Phone = teacher.TPhone
+                        }
+                        );
+                }
+            }
+            return users;
+        }
+        public List<GroupOutputModel> ConvertGroupWithStudentsAndTeachersDTOToGroupOutputModel(List<GroupWithStudentsAndTeachersDTO> groups)
+        {
+            List<GroupOutputModel> result = new List<GroupOutputModel>();
+            foreach(var g in groups)
+            {
+                if(g!=null)
+                {
+                    result.Add(new GroupOutputModel()
+                    {
+                        EndDate = g.EndDate,
+                        Id = g.Id,
+                        Name = g.Name,
+                        StartDate = g.StartDate,
+                        Students = ConvertStudentDTOToUserOutputModel(g.students),
+                        Teachers = ConvertTeacherDTOToUserOutputModel(g.teachers)
+                    });
+                }
+            }
+            return result;
+        }
+        public List<QuestionOutputModel> ConvertQuestionForOneToManyDTOToQuestionModelList(List<QuestionForOneToManyDTO> dtoList)
+        {
+            List<QuestionOutputModel> modelList = new List<QuestionOutputModel>();
+            foreach (var questionDTO in dtoList)
+            {
+                modelList.Add(ConvertQuestionForOneToManyDTOToQuestionOutputModel(questionDTO));
+            }
+            return modelList;
         }
         public List<TestOutputModel> ConvertTestQuestionTagDTOToTestOutputListModel(List<TestQuestionTagDTO> testDTO)
         {
@@ -49,18 +134,41 @@ namespace TestingSystem.API
             }
             return tests;
         }
+        public QuestionOutputModel ConvertQuestionForOneToManyDTOToQuestionOutputModel(QuestionForOneToManyDTO questionDTO)
+        {
+            if (questionDTO != null)
+            {
+                return new QuestionOutputModel()
+                {
+                    ID = questionDTO.QuestionID,
+                    TestID = questionDTO.TestID,
+                    Value = questionDTO.Value,
+                    Weight = questionDTO.Weight,
+                    AnswerCount = questionDTO.AnswersCount,
+
+                };
+            }
+            return null;
+        }
         public List<TagOutputModel> ConvertTagsWithTestIdToTagOutputModel(List<TagWithTestIDDTO> tag)
         {
-            List<TagOutputModel> tagOutputs = new List<TagOutputModel>();
-            TagOutputModel model;
-            foreach(var t in tag)
+            if (tag != null)
             {
-                model = new TagOutputModel();
-                model.ID = t.IDtest;
-                model.Name = t.Name;
-                tagOutputs.Add(model);
+                List<TagOutputModel> tagOutputs = new List<TagOutputModel>();
+                TagOutputModel model;
+                foreach (var t in tag)
+                {
+                    if (t != null)
+                    {
+                        model = new TagOutputModel();
+                        model.ID = t.TagID;
+                        model.Name = t.Name;
+                        tagOutputs.Add(model);
+                    }
+                }
+                return tagOutputs;
             }
-            return tagOutputs;
+            return null;
         }
         
 
