@@ -11,7 +11,7 @@ using TestingSystem.API.Models.Input;
 using TestingSystem.Business.Models;
 using TestingSystem.Business;
 using TestingSystem.Business.Attempt;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace TestingSystem.API.Controllers
 {
@@ -26,10 +26,11 @@ namespace TestingSystem.API.Controllers
             _logger = logger;
         }
 
-        
+
         //Запросы на основной странице "Tests" (список тестов/список тэгов)
-        
-        [HttpGet("Author")]    //вывод списка всех тестов
+
+        [Authorize(Roles = "Author,Teacher")]
+        [HttpGet]    //вывод списка всех тестов
         public ActionResult <List<TestOutputModel>> GetAllTest()
         {
             Mapper mapper = new Mapper();
@@ -37,7 +38,8 @@ namespace TestingSystem.API.Controllers
             return Ok(mapper.ConvertTestDTOToTestModelList(tests.GetAllTest()));
         }
 
-        [HttpGet("search-test-by-tags/Author")]    //поиск теста по тегу 
+        [Authorize(Roles = "Author,Teacher")]
+        [HttpGet("search-test-by-tags")]    //поиск теста по тегу 
         public ActionResult <List<TestOutputModel>> GetTestVSTagSearch([FromBody] SearchTestByTagInputModel sttim)
         {            
             bool caseSwitch =sttim.SwitchValue;
@@ -48,9 +50,10 @@ namespace TestingSystem.API.Controllers
 
             if (caseSwitch)            {                if (converter.CreateArrayFromString(sttim.Tag).Length < 3)                {                    return Ok(mapper.ConvertTestDTOToTestModelList(search.GetTestVSTagSearchAnd(converter.CreateArrayFromString(sttim.Tag))));                }                else                {                    return Ok(mapper.ConvertTestDTOToTestModelList(searchBy4AndMoreTags.FindAnd(sttim.Tag)));                }            }
             else            {                if (converter.CreateArrayFromString(sttim.Tag).Length < 3)                {                    return Ok(mapper.ConvertTestDTOToTestModelList(search.GetTestVSTagSearchOr(converter.CreateArrayFromString(sttim.Tag))));                }                else                {                    return  Ok(mapper.ConvertTestDTOToTestModelList(searchBy4AndMoreTags.FindOr(sttim.Tag)));                }            }
-        }        
+        }
 
-        [HttpGet("tags/Author")]      //cписок всех тегов
+        [Authorize(Roles = "Author,Teacher")]
+        [HttpGet("tags")]      //cписок всех тегов
         public ActionResult <List<TagOutputModel>> GetAllTags()
         {
             Mapper mapper = new Mapper();
@@ -58,7 +61,8 @@ namespace TestingSystem.API.Controllers
             return Ok(mapper.ConvertTagDTOToTagModelList(tags.GetAllTag()));
         }
 
-        [HttpPost("tag/Author")]      //создание тега
+        [Authorize(Roles = "Author")]
+        [HttpPost("tag")]      //создание тега
         public ActionResult <int> PostTag([FromBody]TagInputModel tagmodel)           //спросить у Макса
         {
             if(string.IsNullOrWhiteSpace(tagmodel.Name)) return BadRequest("Введите название тега");
@@ -66,9 +70,10 @@ namespace TestingSystem.API.Controllers
             TagDTO tagdto = mapper.ConvertTagInputModelToTagDTO(tagmodel);
             AuthorDataAccess tag = new AuthorDataAccess();            
             return Ok(tag.AddTag(tagdto));
-        }          
+        }
 
-        [HttpPut("tag/Author")]      //изменение конкретного тега
+        [Authorize(Roles = "Author")]
+        [HttpPut("tag")]      //изменение конкретного тега
         public ActionResult<int> PutTag([FromBody]TagInputModel tagmodel)
         {
             Mapper mapper = new Mapper();
@@ -81,7 +86,8 @@ namespace TestingSystem.API.Controllers
             return Ok(tagmodel.ID);
         }
 
-        [HttpDelete("tag/{tagId}/Author")]    //удаление конкретного тега
+        [Authorize(Roles = "Author")]
+        [HttpDelete("tag/{tagId}")]    //удаление конкретного тега
         public ActionResult<int> DeleteTag(int tagId)
         {
             AuthorDataAccess tags = new AuthorDataAccess();
@@ -95,7 +101,8 @@ namespace TestingSystem.API.Controllers
 
         //Запросы на странице конкретного теста "Id" (тест с информацией, вопросы, ответы теста)
 
-        [HttpPost("Author")]       //создание теста                       ??? выдает 
+        [Authorize(Roles = "Author")]
+        [HttpPost]       //создание теста                       ??? выдает 
         public ActionResult<int> PostTest(TestInputModel testmodel)
         {
             if (string.IsNullOrWhiteSpace(testmodel.Name)) return BadRequest("Введите название теста");
@@ -108,7 +115,8 @@ namespace TestingSystem.API.Controllers
             return Ok(test.AddTest(testdto));                    
         }
 
-        [HttpPut("Author")]        //изменение информации о конкретном тесте
+        [Authorize(Roles = "Author")]
+        [HttpPut]        //изменение информации о конкретном тесте
         public ActionResult<int> PutTestById([FromBody]TestInputModel testmodel)
         {
             Mapper mapper = new Mapper();
@@ -121,7 +129,8 @@ namespace TestingSystem.API.Controllers
             return Ok(tests.UpdateTest(testdto));
         }
 
-        [HttpDelete("{testId}/Author")]       //удаление конкретного тесте
+        [Authorize(Roles = "Author")]
+        [HttpDelete("{testId}")]       //удаление конкретного тесте
         public ActionResult<int> DeleteTestById(int testId)
         {
             AuthorDataAccess tests = new AuthorDataAccess();
@@ -130,7 +139,8 @@ namespace TestingSystem.API.Controllers
             return Ok(tests.DeleteTest(testId));
         }
 
-        [HttpGet("{testId}/Author")]     //полная информация о тесте
+        [Authorize(Roles = "Author,Teacher")]
+        [HttpGet("{testId}")]     //полная информация о тесте
         public IActionResult GetTestInfo(int testId) 
         {
             Mapper mapper = new Mapper();
@@ -179,7 +189,8 @@ namespace TestingSystem.API.Controllers
         //    return Json(mapper.ConvertTagDTOToTagModelList(tags.GetTagsInTest(testId)));
         //}
 
-        [HttpGet("{testid}/missing-tags/Author")]          //вывод тегов, которых нет в тесте, для добавления
+        [Authorize(Roles = "Author")]
+        [HttpGet("{testid}/missing-tags")]          //вывод тегов, которых нет в тесте, для добавления
         public ActionResult<List<TagOutputModel>> GetTagsWhichAreNotInTest(int testId)
         {
             Mapper mapper = new Mapper();
@@ -189,7 +200,8 @@ namespace TestingSystem.API.Controllers
             return Ok(mapper.ConvertTagDTOToTagModelList(tags.GetTagsWhichAreNotInTest(testId)));
         }
 
-        [HttpDelete("delete-tag-from-test/Author")]     //удаление тэга из конкретного теста
+        [Authorize(Roles = "Author")]
+        [HttpDelete("delete-tag-from-test")]     //удаление тэга из конкретного теста
         public ActionResult<int> DeleteTagFromTest(TestTagInputModel testtagmodel)
         {
             AuthorDataAccess tags = new AuthorDataAccess();
@@ -203,7 +215,8 @@ namespace TestingSystem.API.Controllers
             return Ok("Успешно удалено!");
         }
 
-        [HttpPost("post-tag-in-test/Author")]      //добавление существующего тэга к конкретному тесту (создаем новую связь тест-тэг)
+        [Authorize(Roles = "Author")]
+        [HttpPost("post-tag-in-test")]      //добавление существующего тэга к конкретному тесту (создаем новую связь тест-тэг)
         public ActionResult<int> PostTagInTest(TestTagInputModel testtagmodel)
         {
             Mapper mapper = new Mapper();
@@ -218,7 +231,8 @@ namespace TestingSystem.API.Controllers
 
         //Запросы на странице конкретного вопроса у теста "Id/QuestionId" (вопрос с полной информацией, ответы на этот вопрос)
 
-        [HttpPost("add-question-by-test/Author")]       // создание вопроса конкретного теста   ??????? не работает!!!
+        [Authorize(Roles = "Author")]
+        [HttpPost("add-question-by-test")]       // создание вопроса конкретного теста   ??????? не работает!!!
         public ActionResult<int> PostQuestion(QuestionInputModel questionmodel)
         {
             Mapper mapper = new Mapper();
@@ -241,7 +255,8 @@ namespace TestingSystem.API.Controllers
         //    return Json(mapper.ConvertQuestionDTOToQuestionOutputModel(question.GetQuestionById(quid)));
         //}
 
-        [HttpPut("question-update/Author")]      // изменение конкретного вопроса из теста
+        [Authorize(Roles = "Author")]
+        [HttpPut("question-update")]      // изменение конкретного вопроса из теста
         public ActionResult<int> PutQuestion(QuestionInputModel questionmodel)
         {
             Mapper mapper = new Mapper();
@@ -259,7 +274,8 @@ namespace TestingSystem.API.Controllers
             return Ok("Изменения сделаны успешно");            
         }
 
-        [HttpDelete("question-delete/{quid}/Author")]     //удаление вопроса из теста
+        [Authorize(Roles = "Author")]
+        [HttpDelete("question-delete/{quid}")]     //удаление вопроса из теста
         public ActionResult<int> DeleteQuestionFromTest(int quid)
         {
             AuthorDataAccess questions = new AuthorDataAccess();
@@ -269,7 +285,8 @@ namespace TestingSystem.API.Controllers
             return Ok(quid);
         }
 
-        [HttpPost("answer/Author")]       //создать ответ для вопроса
+        [Authorize(Roles = "Author")]
+        [HttpPost("answer")]       //создать ответ для вопроса
         public ActionResult<int> PostAnswer(AnswerInputModel answermodel)
         {
             Mapper mapper = new Mapper();
@@ -290,7 +307,8 @@ namespace TestingSystem.API.Controllers
         //    return Json(mapper.ConvertAnswerDTOToAnswerModelList(answers.GetAnswerByQuestionId(quid)));
         //}
 
-        [HttpPut("answer-update/Author")]     //редактировать ответ
+        [Authorize(Roles = "Author")]
+        [HttpPut("answer-update")]     //редактировать ответ
         public ActionResult PutAnswer(AnswerInputModel answermodel)
         {
             Mapper mapper = new Mapper();
@@ -306,7 +324,8 @@ namespace TestingSystem.API.Controllers
             return Ok("Успешно изменено!");            
         }
 
-        [HttpDelete("answer/{anid}/Author")]   //удалить ответ
+        [Authorize(Roles = "Author")]
+        [HttpDelete("answer/{anid}")]   //удалить ответ
         public ActionResult<int> DeleteAnswer(int anid)
         {
             AuthorDataAccess answers = new AuthorDataAccess();
@@ -315,8 +334,8 @@ namespace TestingSystem.API.Controllers
             answers.DeleteAnswer(anid);
             return Ok(anid);
         }
-
-        [HttpGet("{testid}/{userId}/Student")]
+        [Authorize(Roles = "Author,Teacher,Student")]
+        [HttpGet("{testid}/{userId}")]
 
         public IActionResult GetTestAttempt(int testId, int userdId)
         {

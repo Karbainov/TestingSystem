@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TestingSystem.API.Models.Input;
@@ -18,7 +19,8 @@ namespace TestingSystem.API.Controllers
     {
         //Запросы на основной странице "Feedbacks" (список фидбэков)
 
-        [HttpGet("processed-feedbacks/Author")]    //список обработанных фидбэков
+        [Authorize(Roles = "Author")]
+        [HttpGet("processed-feedbacks")]    //список обработанных фидбэков
         public ActionResult <List<FeedbackOutputModel>> GetProcessedFeedbacks()
         {
             Mapper mapper = new Mapper();
@@ -26,7 +28,8 @@ namespace TestingSystem.API.Controllers
             return Ok(mapper.ConvertFeedbackDTOToFeedbackModelList(feedbacks.GetProcessedFeedbacks()));
         }
 
-        [HttpGet("not-processed-feedbacks/Author")]    //список необработанных фидбэков
+        [Authorize(Roles = "Author")]
+        [HttpGet("not-processed-feedbacks")]    //список необработанных фидбэков
         public ActionResult<List<FeedbackOutputModel>> GetNotProcessedFeedbacks()
         {
             Mapper mapper = new Mapper();
@@ -34,7 +37,8 @@ namespace TestingSystem.API.Controllers
             return Ok(mapper.ConvertFeedbackDTOToFeedbackModelList(feedbacks.GetNotProcessedFeedbacks()));
         }
 
-        [HttpGet("Author")]    //список всех фидбэков
+        [Authorize(Roles = "Author")]
+        [HttpGet]    //список всех фидбэков
         public ActionResult<List<FeedbackOutputModel>> GetAllFeedbacks()
         {
             Mapper mapper = new Mapper();
@@ -42,7 +46,8 @@ namespace TestingSystem.API.Controllers
             return Ok(mapper.ConvertFeedbackDTOToFeedbackModelList(feedbacks.GetAllFeedbacks()));
         }
 
-        [HttpGet("{testId}/Author")]    //список фидбэков конкретных тестов  
+        [Authorize(Roles = "Author")]
+        [HttpGet("{testId}")]    //список фидбэков конкретных тестов  
         public ActionResult<List<FeedbackOutputModel>> GetFeedbackByTest(int testId)
         {
             Mapper mapper = new Mapper();
@@ -52,7 +57,8 @@ namespace TestingSystem.API.Controllers
             return Ok(mapper.ConvertFeedbackDTOToFeedbackModelList(feedbacks.GetFeedbackByTest(testId)));
         }
 
-        [HttpGet("feedbacks-by-date/Author")]    //список фидбэков конкретных дат
+        [Authorize(Roles = "Author")]
+        [HttpGet("feedbacks-by-date")]    //список фидбэков конкретных дат
         public ActionResult<List<FeedbackOutputModel>> GetFeedbackByDate(DateTimeInputModel date)
         {
             Mapper mapper = new Mapper();
@@ -64,7 +70,8 @@ namespace TestingSystem.API.Controllers
 
         //Запросы на странице конкретного фидбэка "FeedbackId" (вся информация по фидбэку)
 
-        [HttpGet("feedback-with-question/{feedbackId}/Author")]     //вывод фидбэка (с именем пользователя, названием теста и вопросом)
+        [Authorize(Roles = "Author")]
+        [HttpGet("feedback-with-question/{feedbackId}")]     //вывод фидбэка (с именем пользователя, названием теста и вопросом)
         public ActionResult <FeedbackQuestionOutputModel> GetFeedbackWithQuestion(int feedbackId)
         {
             Mapper mapper = new Mapper();
@@ -74,7 +81,8 @@ namespace TestingSystem.API.Controllers
             return Ok(mapper.ConvertFeedbackQuestionDTOToFeedbackQuestionOutputModel(feedbacks.GetFeedbackWithQuestion(feedbackId)));
         }
 
-        [HttpGet("answers-by-feedback/{feedbackId}/Author")]
+        [Authorize(Roles = "Author")]
+        [HttpGet("answers-by-feedback/{feedbackId}")]
         public ActionResult<List<AnswerOutputModel>> GetAllAnswersByFeedbackId(int feedbackId)    //список ответов на вопрос, к которому написан фидбэк
         {
             Mapper mapper = new Mapper();
@@ -84,7 +92,8 @@ namespace TestingSystem.API.Controllers
             return Ok(mapper.ConvertAnswerDTOToAnswerModelList(answers.GetAllAnswersByFeedbackId(feedbackId)));
         }
 
-        [HttpPut("update-processe/{feedbackId}/Author")]
+        [Authorize(Roles = "Author")]
+        [HttpPut("update-processe/{feedbackId}")]
         public ActionResult PutProcessedInFeedback(int feedbackId)      //отметить, что фидбэк просмотрен (можно вернуть на непросмотренный)
         {
             AuthorDataAccess feedbacks = new AuthorDataAccess();
