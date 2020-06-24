@@ -25,7 +25,7 @@ namespace TestingSystem.Business
             return attempt;
         }
 
-        private List<QuestionWithListAnswersDTO> CreateListOfQuestions(int userId, int testId)
+        public List<QuestionWithListAnswersDTO> CreateListOfQuestions(int userId, int testId)
         {
             List<QuestionWithListAnswersDTO> questions = new List<QuestionWithListAnswersDTO>();  
             StudentDataAccess student = new StudentDataAccess();
@@ -34,7 +34,7 @@ namespace TestingSystem.Business
         }
 
 
-        private Dictionary<int, List<QuestionWithListAnswersDTO>> CreateDictionary(List<QuestionWithListAnswersDTO> questions)
+        public Dictionary<int, List<QuestionWithListAnswersDTO>> CreateDictionary(List<QuestionWithListAnswersDTO> questions)
         {
 
             Dictionary<int, List<QuestionWithListAnswersDTO>> weightTypes = new Dictionary<int, List<QuestionWithListAnswersDTO>>();
@@ -55,7 +55,7 @@ namespace TestingSystem.Business
         }
 
 
-        private Dictionary<int, List<QuestionWithListAnswersDTO>> PickQuestionsForAttempt(Dictionary<int, List<QuestionWithListAnswersDTO>> questions, TestDTO test)
+        public Dictionary<int, List<QuestionWithListAnswersDTO>> PickQuestionsForAttempt(Dictionary<int, List<QuestionWithListAnswersDTO>> questions, TestDTO test)
         {
             Dictionary<int, List<QuestionWithListAnswersDTO>> attemptquestions = new Dictionary<int, List<QuestionWithListAnswersDTO>>();
 
@@ -110,7 +110,7 @@ namespace TestingSystem.Business
 
 
         }
-        private List<QuestionWithListAnswersDTO> ConvertDictionaryToList(Dictionary<int, List<QuestionWithListAnswersDTO>> dictionary)
+        public List<QuestionWithListAnswersDTO> ConvertDictionaryToList(Dictionary<int, List<QuestionWithListAnswersDTO>> dictionary)
         {
             List<QuestionWithListAnswersDTO> questions = new List<QuestionWithListAnswersDTO>();
             foreach(var question in dictionary)
@@ -120,7 +120,7 @@ namespace TestingSystem.Business
             return questions;
         }
 
-        private int AddQuestionsToAttemptInDatabase(int userId, int testId, List<QuestionWithListAnswersDTO> questions)
+        public int AddQuestionsToAttemptInDatabase(int userId, int testId, List<QuestionWithListAnswersDTO> questions)
         {
             StudentDataAccess student = new StudentDataAccess();
             int attemptId = student.AddAttemptForAttemptCreator(userId, testId);
@@ -133,7 +133,7 @@ namespace TestingSystem.Business
             return attemptId;
         }
 
-        private int CountAllQuestionsInDictionary (Dictionary<int, List<QuestionWithListAnswersDTO>> questions)
+        public int CountAllQuestionsInDictionary (Dictionary<int, List<QuestionWithListAnswersDTO>> questions)
         {
             int quantity = 0;
             foreach (var q in questions)
@@ -143,7 +143,7 @@ namespace TestingSystem.Business
             }
             return quantity;
         }
-        private List<int> GetRandomIndexes (int upRange, int quantity)
+        public List<int> GetRandomIndexes (int upRange, int quantity)
         {
             List<int> randomIndexes = new List<int>();
             Random random = new Random();
@@ -161,7 +161,7 @@ namespace TestingSystem.Business
 
         }
 
-        private List<QuestionWithListAnswersDTO> CutListbyIndexes(List<QuestionWithListAnswersDTO> questions, List<int> indexes)
+        public List<QuestionWithListAnswersDTO> CutListbyIndexes(List<QuestionWithListAnswersDTO> questions, List<int> indexes)
         {
             List<QuestionWithListAnswersDTO> questionsCuttedVersion = new List<QuestionWithListAnswersDTO>();
             foreach (int i in indexes)
