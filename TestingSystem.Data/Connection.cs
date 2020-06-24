@@ -10,15 +10,10 @@ namespace TestingSystem.Data
     {
         public static IDbConnection GetConnection()
         {
-            string connectionString = @"Data Source=80.78.240.16;Initial Catalog=DevEduTestSystem;User Id = tSystem;Password = qwe!23";
+            string connectionString = @"Data Source=80.78.240.16;Initial Catalog=DevEduTestSystem_Test;User Id = tSystem;Password = qwe!23";
             IDbConnection connection = new SqlConnection(connectionString);
             return connection;
         }
-        public static SqlConnection GetSqlConnection()
-        {
-            string connectionString = @"Data Source=80.78.240.16;Initial Catalog=DevEduTestSystem;User Id = tSystem;Password = qwe!23";
-            SqlConnection connection = new SqlConnection(connectionString);
-            return connection;
-        }
+        
     }
 }

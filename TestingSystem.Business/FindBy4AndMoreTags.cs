@@ -10,7 +10,8 @@ namespace TestingSystem.Business
     {
         public List<TestDTO> FindAnd(string tag)
         {
-            List<string> tags = CreateListFromString(tag);
+            StringConverter converter = new StringConverter();
+            List<string> tags =converter.CreateListFromString(tag);
             TagCRUD tagCRUD = new TagCRUD();
             List<TagDTO> tagDTOs = tagCRUD.GetAll();
             TestTagCRUD testTagCRUD = new TestTagCRUD();
@@ -22,7 +23,8 @@ namespace TestingSystem.Business
         }
         public List<TestDTO> FindOr(string tag)
         {
-            List<string> tags = CreateListFromString(tag);
+            StringConverter converter = new StringConverter();
+            List<string> tags = converter.CreateListFromString(tag);
             TagCRUD tagCRUD = new TagCRUD();
             List<TagDTO> tagDTOs = tagCRUD.GetAll();
             TestTagCRUD testTagCRUD = new TestTagCRUD();
@@ -32,58 +34,7 @@ namespace TestingSystem.Business
             tests = DeleteUselessTestsOr(tests, tagId);
             return GetAllRightTests(tests);
         }
-        public List<string> CreateListFromString(string tags)
-        {
-            if (tags!=null)
-            {
-                for (int i = 0; i < tags.Length; i++)
-                {
-                    if (tags[i] == ' ')
-                    {
-
-                        tags = tags.Remove(i, 1);
-                        i--;
-                    }
-                }
-                for (int i = 0; i < tags.Length - 1; i++)
-                {
-                    if (tags[i] == ',' && tags[i + 1] == ',')
-                    {
-                        tags = tags.Remove(i);
-                    }
-                }
-                List<string> listOfTags = new List<string>(tags.Split(new char[] { ',' }).ToList<string>());
-                
-                return listOfTags;
-            }
-            return null;
-        }
-        public string[] CreateArrayFromString(string tags)
-        {
-            if (tags != null)
-            {
-                for (int i = 0; i < tags.Length; i++)
-                {
-                    if (tags[i] == ' ')
-                    {
-
-                        tags = tags.Remove(i, 1);
-                        i--;
-                    }
-                }
-                for (int i = 0; i < tags.Length - 1; i++)
-                {
-                    if (tags[i] == ',' && tags[i + 1] == ',')
-                    {
-                        tags = tags.Remove(i);
-                    }
-                }
-               
-                string[] lot = tags.Split(new char[] { ',' }).ToArray<string>();
-                return lot;
-            }
-            return null;
-        }
+        
         public List<TestDTO> GetAllRightTests(List<TestTagsModel> models)
         {
             List<TestDTO> tests = new List<TestDTO>();

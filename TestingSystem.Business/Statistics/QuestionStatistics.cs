@@ -6,7 +6,7 @@ using TestingSystem.Business.Statistics.Models;
 
 namespace TestingSystem.Business.Statistics
 {
-    class QuestionStatistics
+    public class QuestionStatistics
     {
         InfoForStatisticsModel info;    
 
@@ -15,7 +15,7 @@ namespace TestingSystem.Business.Statistics
             this.info = info;
         }
 
-        public Dictionary<int, int> AllQuestionResult(int quId) 
+        public Dictionary<int, int> CountNumberOfAnswersInAttemptByQuestionId(int quId) 
         {
             Dictionary<int, int> question = new Dictionary<int, int>();
             
@@ -32,9 +32,9 @@ namespace TestingSystem.Business.Statistics
             return question;
         }
 
-        public Dictionary<int, double> QuResult(int quId) 
+        public Dictionary<int, double> GetPercentOfAnswerToQuestion(int quId) 
         {
-            Dictionary<int, int> answers = AllQuestionResult(quId);
+            Dictionary<int, int> answers = CountNumberOfAnswersInAttemptByQuestionId(quId);
             Dictionary<int, double> answersPercent = new Dictionary<int, double> ();
             int aCount = 0;
 

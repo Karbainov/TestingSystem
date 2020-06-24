@@ -7,8 +7,8 @@ namespace TestingSystem.Data.DTO
     public class FeedbackDTO
     {
         public int ID { get; set; }
-        public int userId { get; set; }
-        public int questionId { get; set; }
+        public int UserId { get; set; }
+        public int QuestionId { get; set; }
         public string Message { get; set; }
         public DateTime DateTime { get; set; }
         public Boolean Processed { get; set; }
@@ -20,8 +20,8 @@ namespace TestingSystem.Data.DTO
         public FeedbackDTO(int Id, int userId, int questionId, string message, DateTime date, Boolean processed)
         {
             this.ID = Id;
-            this.userId = userId;
-            this.questionId = questionId;
+            this.UserId = userId;
+            this.QuestionId = questionId;
             this.Message = message;
             this.DateTime = date;
             this.Processed = processed;

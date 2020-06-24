@@ -176,10 +176,10 @@ namespace TestingSystem.Data
             ForDeletedManager manager = new ForDeletedManager();
             return manager.RestoreUser(id);
         }
-        public List<TestDTO> GetDeletedTests()
+        public List<TestQuestionTagDTO> GetDeletedTests()
         {
             ForDeletedManager manager = new ForDeletedManager();
-            return manager.GetDeletedTests();
+            return manager.GetDeletedWithTests();
         }
         public int RestoreTest(int id)
         {

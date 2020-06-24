@@ -10,9 +10,9 @@ namespace TestingSystem.API.Models.Output
         public int ID { get; set; }
         public int TestID { get; set; }
         public string Value { get; set; }
-        public Nullable<int> AnswerCount { get; set; }
-        public Nullable<QuestionType> Type { get; set; }
-        public Nullable<int> Weight { get; set; }
+        public int? AnswerCount { get; set; }
+        public QuestionType? Type { get; set; }
+        public int? Weight { get; set; }
         public List<AnswerOutputModel> Answers { get; set; }
     }
 

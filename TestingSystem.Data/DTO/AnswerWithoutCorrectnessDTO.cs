@@ -13,7 +13,7 @@ namespace TestingSystem.Data.DTO
     {
         public int ID { get; set; }
 
-        public int QiestionId { get; set; }
+        public int QuestionId { get; set; }
 
         public string Value { get; set; }
 

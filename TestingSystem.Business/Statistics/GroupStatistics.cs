@@ -11,21 +11,17 @@ namespace TestingSystem.Business.Statistics
     {
         InfoForStatisticsModel info;
 
-        public Dictionary<int, double> AverageGroupResultForAllTests()
-        {
-            
+        public Dictionary<int, double> GetAverageGroupResultForAllTests(int groupId)   
+        {            
             GroupInfoModel group = new GroupInfoModel();
             TestStatistics ts = new TestStatistics(info);
             Dictionary<int, double> result = new Dictionary<int, double>();
             foreach (int t in group.TestsId) 
             {
-                double averageTest = ts.AverageResult(t);
+                double averageTest = ts.GetAverageResult(t);
                 result.Add(t, averageTest);
             }
             return result;
         }
-
-
-
     }
 }

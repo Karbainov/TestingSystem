@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestingSystem.API", "Testin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestingSystem.Business", "TestingSystem.Business\TestingSystem.Business.csproj", "{F400AC7B-7DB4-4DB9-B0B4-534F7310C914}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingSystem.Business.Tests", "TestingSystem.Business.Tests\TestingSystem.Business.Tests.csproj", "{17E63A17-2D64-460B-9462-A1F26105354D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestingSystem.Business.Tests", "TestingSystem.Business.Tests\TestingSystem.Business.Tests.csproj", "{17E63A17-2D64-460B-9462-A1F26105354D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

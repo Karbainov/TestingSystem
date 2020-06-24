@@ -5,11 +5,12 @@ using System.Threading.Tasks;
 
 namespace TestingSystem.API.Models.Output
 {
-    public class AnswerOutputModel
+    public class AnswerWithoutCorrectnessOutputModel
     {
         public int ID { get; set; }
-        public int QuestionID { get; set; }
+
+        public int QuestionId { get; set; }
+
         public string Value { get; set; }
-        public bool? Correct { get; set; }
     }
 }
