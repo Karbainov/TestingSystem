@@ -45,28 +45,8 @@ namespace TestingSystem.API.Controllers
             FindBy4AndMoreTags searchBy4AndMoreTags = new FindBy4AndMoreTags();
             StringConverter converter = new StringConverter();
 
-            if (caseSwitch)
-            {
-                if (converter.CreateArrayFromString(sttim.Tag).Length < 3)
-                {
-                    return Json(mapper.ConvertTestDTOToTestModelList(search.GetTestVSTagSearchAnd(converter.CreateArrayFromString(sttim.Tag))));
-                }
-                else
-                {
-                    return Json(mapper.ConvertTestDTOToTestModelList(searchBy4AndMoreTags.FindAnd(sttim.Tag)));
-                }
-            }
-            else
-            {
-                if (converter.CreateArrayFromString(sttim.Tag).Length < 3)
-                {
-                    return Json(mapper.ConvertTestDTOToTestModelList(search.GetTestVSTagSearchOr(converter.CreateArrayFromString(sttim.Tag))));
-                }
-                else
-                {
-                    return  Json(mapper.ConvertTestDTOToTestModelList(searchBy4AndMoreTags.FindOr(sttim.Tag)));
-                }
-            }
+            if (caseSwitch)            {                if (converter.CreateArrayFromString(sttim.Tag).Length < 3)                {                    return Json(mapper.ConvertTestDTOToTestModelList(search.GetTestVSTagSearchAnd(converter.CreateArrayFromString(sttim.Tag))));                }                else                {                    return Json(mapper.ConvertTestDTOToTestModelList(searchBy4AndMoreTags.FindAnd(sttim.Tag)));                }            }
+            else            {                if (converter.CreateArrayFromString(sttim.Tag).Length < 3)                {                    return Json(mapper.ConvertTestDTOToTestModelList(search.GetTestVSTagSearchOr(converter.CreateArrayFromString(sttim.Tag))));                }                else                {                    return  Json(mapper.ConvertTestDTOToTestModelList(searchBy4AndMoreTags.FindOr(sttim.Tag)));                }            }
         }        
 
         [HttpGet("tags/Author")]      //cписок всех тегов

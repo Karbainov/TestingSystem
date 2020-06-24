@@ -30,6 +30,12 @@ namespace TestingSystem.Data
             return tests.GetTestVSTagSearchAnd(tag);
         }
 
+        public FeedbackDTO GetFeedbackById(int feedbackId)       // вывод фитбека по его ID
+        {
+            FeedbackCRUD feedback = new FeedbackCRUD();
+            return feedback.GetById(feedbackId);
+        }
+
         public List<FeedbackDTO> GetProcessedFeedbacks()       //список обработанных фидбэков (сортировка по дате убыв.)
         {
             FeedbackManager feedbacks = new FeedbackManager();
