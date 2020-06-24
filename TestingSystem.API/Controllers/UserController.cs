@@ -31,19 +31,6 @@ namespace TestingSystem.API.Controllers
             _logger = logger;
         }
 
-        //[HttpGet]
-        //public List<UserOutputModel> Get()
-        //{
-        //    List<UserOutputModel> allUsers = new List<UserOutputModel>();
-        //    Map mapper = new Map();
-        //    AdminDataAccess adm = new AdminDataAccess();
-        //    foreach(UserDTO user in adm.GetAllUsers())
-        //    {
-        //        allUsers.Add(mapper.ConvertUserDTOToUserOutputModel(user));
-        //    }
-        //    return allUsers;
-        //}
-
         [HttpPost]
         public IActionResult PostUser([FromBody] UserInputModel user)
         {
@@ -132,13 +119,13 @@ namespace TestingSystem.API.Controllers
         }
         
         [HttpGet("{id}")]
-        public IActionResult GetUserById(int id) // спросить про условие, если такого пользователя не существует
+        public IActionResult GetUserById(int id)
         {
             UserMapper mapper = new UserMapper();
             AdminDataAccess adm = new AdminDataAccess();
             UserOutputModel user = new UserOutputModel();
             UserDTO getUser = adm.GetUserByID(id);
-            if (getUser == null) { return new BadRequestObjectResult("Пользователя с таким id не существует"); }
+            if (getUser == null) { return new BadRequestObjectResult("Такого пользователя не существует"); }
             else {
                 user = mapper.ConvertUserDTOToUserOutputModel(getUser);
                 return Json(user); 
@@ -166,23 +153,30 @@ namespace TestingSystem.API.Controllers
         }
         
         [HttpDelete("{userId}/role/{roleId}")]
-        public IActionResult DeleteUserRole(int userId, int roleId) // условие, если юзера нет, то юзер не найден, иначе если роли нет, то роль не найдена
+        public IActionResult DeleteUserRole(int userId, int roleId)
         {
+            UserMapper mapper = new UserMapper();
             AdminDataAccess adm = new AdminDataAccess();
+            var user = adm.GetUserByID(userId);
+            if (user == null) return BadRequest("Пользователя не существует");
+            List<UserRoleDTO> roles = adm.GetRolesByUserId(userId);
+            if (!roles.Any(a=> a.RoleID ==roleId )) return BadRequest("Такой роли пользователя не существует");
             adm.UserRoleDelete(userId, roleId);
             return Ok("Роль пользователя удалена");
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id) // условие, если пользователя нет, то пользователь не найден
+        public IActionResult Delete(int id)
         {
             AdminDataAccess adm = new AdminDataAccess();
+            var user = adm.GetUserByID(id);
+            if (user == null) return BadRequest("Пользователя не существует");
             adm.UserDelete(id);
             return Ok("Пользователь удалён");
         }
         
         [HttpGet("{UserID}/test")]
-        public IActionResult GetStudentTests(int UserID) // добавить условие, что если ни одного теста не пройдено, то вывести OkObjectResult("Нет назначенных или пройденных тестов")
+        public IActionResult GetStudentTests(int UserID)
         {
             StudentDataAccess student = new StudentDataAccess();
             Mapper mapper = new Mapper();
@@ -191,16 +185,18 @@ namespace TestingSystem.API.Controllers
             StudentOutputModel model = mapper.ConvertUserDTOTestAttemptDTOToStudentModel(student.GetUser(UserID), mapper.ConvertTestAttemptDTOToTestAttemptModel(tests));
             return Json(model);
         }
-        [HttpGet("{UserID}/test/{TestID}")] // добавить условия, если id пользователя не существует, иначе если id теста не существует
+        [HttpGet("{UserID}/test/{TestID}")]
         public IActionResult GetAttemptsByUserIDTestID(int UserID, int TestID)
         {
             StudentDataAccess student = new StudentDataAccess();
             Mapper mapper = new Mapper();
             UserIdTestIdDTO dTO = new UserIdTestIdDTO(UserID, TestID);
-            List<AttemptResultOutputModel> model = mapper.ConvertAttemptDTOToAttemptModel(student.GetAttemptsByUserIdTestId(dTO));
+            var std = student.GetAttemptsByUserIdTestId(dTO);
+            if (std == null) return BadRequest("Несуществующая попытка");
+            List <AttemptResultOutputModel> model = mapper.ConvertAttemptDTOToAttemptModel(student.GetAttemptsByUserIdTestId(dTO));
             return Json(model);
         }
-        [HttpGet("Attempt/{AttemptID}")] // не понятно что делает метод и зачем он
+        [HttpGet("Attempt/{AttemptID}")]
         public IActionResult GetQuestionAndAnswerByAttemptID(int attemptID)
         {
             TeacherDataAccess teacher = new TeacherDataAccess();
