@@ -55,7 +55,7 @@ namespace TestingSystem.Business.Tests.Mocks
                             {
                                 new QuestionForOneToManyDTO()
                                 {
-                                    QID =0,
+                                    QuestionID =0,
                                     TestID= 5,
                                     Value="Сколько будет 1000г ?",
                                     AnswersCount = 0,
@@ -64,7 +64,7 @@ namespace TestingSystem.Business.Tests.Mocks
                                 },
                                 new QuestionForOneToManyDTO()
                                 {
-                                    QID =0,
+                                    QuestionID =0,
                                     TestID= 5,
                                     Value="Сколько будет 1000г ?",
                                     AnswersCount = 0,
@@ -73,7 +73,7 @@ namespace TestingSystem.Business.Tests.Mocks
                                 },
                                 new QuestionForOneToManyDTO()
                                 {
-                                    QID =0,
+                                    QuestionID =0,
                                     TestID= 5,
                                     Value="Сколько будет 1000г ?",
                                     AnswersCount = 0,
@@ -102,7 +102,7 @@ namespace TestingSystem.Business.Tests.Mocks
                                 new QuestionForOneToManyDTO()
                                 {
 
-                                    QID =0,
+                                    QuestionID =0,
                                     TestID= 6,
                                     Value="hehehe",
                                     AnswersCount = 0,

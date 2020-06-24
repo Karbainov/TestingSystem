@@ -97,12 +97,12 @@ namespace TestingSystem.Data.StoredProcedure
         {
             using (var connection = Connection.GetConnection())
             {
-                 List<GroupWithStudentsAndTeachersDTO> result = null;
+                 List<GroupWithStudentsAndTeachersDTO> result = new List<GroupWithStudentsAndTeachersDTO>();
                 GroupWithStudentsAndTeachersDTO one = new GroupWithStudentsAndTeachersDTO() ;
                 string sqlExpression = "GetDeletedGroupsWithStudentsAndTeachers";
                 connection.Query<GroupWithStudentsAndTeachersDTO, StudentDTO, TeacherDTO, GroupWithStudentsAndTeachersDTO>(sqlExpression, (group, student, teacher) =>
                    {
-                       if (result == null || !result.Any(x => x.Id == group.Id))
+                       if ( !result.Any(x => x.Id == group.Id))
                        {
                            one = group;
                            one.students = new List<StudentDTO>();
@@ -114,11 +114,11 @@ namespace TestingSystem.Data.StoredProcedure
                        if (result.Any(x => x.Id == group.Id))
                        {
                            int id = result.FindIndex(x => x.Id == group.Id);
-                           if (!result.Any(x => x.students.Any(y => y.SID == student.SID)))
+                           if (!result.Any(x => x.students.Any(y => y.StudentID == student.StudentID)))
                            {
                                result[id].students.Add(student);
                            }
-                           if (!result.Any(x => x.teachers.Any(y => y.TID == teacher.TID)))
+                           if (!result.Any(x => x.teachers.Any(y => y.TeacherID == teacher.TeacherID)))
                            {
                                result[id].teachers.Add(teacher);
                            }

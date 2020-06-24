@@ -4,9 +4,10 @@ using System.Text;
 
 namespace TestingSystem.Data.DTO
 {
-    class TeacherDTO
+    public class TeacherDTO
     {
-        public int TID { get; set; }
+        public int GroupID { get; set; }
+        public int TeacherID { get; set; }
         public string TFirstName { get; set; }
         public string TLastName { get; set; }
         public DateTime TBirthDate { get; set; }

@@ -38,16 +38,19 @@ namespace TestingSystem.Business.Tests.Mocks
                                 new TagWithTestIDDTO()
                                 {
                                     IDtest = 5,
+                                    TagID =4,
                                     Name ="Массивы"
                                 },
                                 new TagWithTestIDDTO()
                                 {
                                     IDtest = 5,
+                                    TagID=5,
                                     Name ="Рекурсия"
                                 },
                                 new TagWithTestIDDTO()
                                 {
                                     IDtest = 5,
+                                    TagID=20,
                                     Name ="ООП"
                                 }
 
@@ -56,29 +59,11 @@ namespace TestingSystem.Business.Tests.Mocks
                             {
                                 new QuestionForOneToManyDTO()
                                 {
-                                    QID =0,
+                                    QuestionID =0,
                                     TestID= 5,
                                     Value="Сколько будет 1000г ?",
                                     AnswersCount = 0,
                                     
-                                    Weight = 10
-                                },
-                                new QuestionForOneToManyDTO()
-                                {
-                                    QID =0,
-                                    TestID= 5,
-                                    Value="Сколько будет 1000г ?",
-                                    AnswersCount = 0,
-
-                                    Weight = 10
-                                },
-                                new QuestionForOneToManyDTO()
-                                {
-                                    QID =0,
-                                    TestID= 5,
-                                    Value="Сколько будет 1000г ?",
-                                    AnswersCount = 0,
-
                                     Weight = 10
                                 }
                             }

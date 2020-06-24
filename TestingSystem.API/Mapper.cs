@@ -47,6 +47,74 @@ namespace TestingSystem.API
                 return new TestOutputModel();
             }
         }
+        public List<UserOutputModel> ConvertStudentDTOToUserOutputModel(List<StudentDTO> students)
+        {
+            List<UserOutputModel> users = new List<UserOutputModel>();
+            foreach (var student in students)
+            {
+                if (student != null)
+                {
+                    users.Add(
+                        new UserOutputModel()
+                        {
+                            ID = student.StudentID,
+                            Email = student.StudentEmail,
+                            BirthDate = student.StudentBirthDate,
+                            FirstName = student.StudentFirstName,
+                            LastName = student.StudentLastName,
+                            Login = student.StudentLogin,
+                            Password = student.StudentPassword,
+                            Phone = student.StudentPhone
+                        }
+                        );
+                }
+            }
+            return users;
+        }
+        public List<UserOutputModel> ConvertTeacherDTOToUserOutputModel(List<TeacherDTO> teachers)
+        {
+            List<UserOutputModel> users = new List<UserOutputModel>();
+            foreach (var teacher in teachers)
+            {
+                if (teacher != null)
+                {
+                    users.Add(
+                        new UserOutputModel()
+                        {
+                            ID = teacher.TeacherID,
+                            Email = teacher.TEmail,
+                            BirthDate = teacher.TBirthDate,
+                            FirstName = teacher.TFirstName,
+                            LastName = teacher.TLastName,
+                            Login = teacher.TLogin,
+                            Password = teacher.TPassword,
+                            Phone = teacher.TPhone
+                        }
+                        );
+                }
+            }
+            return users;
+        }
+        public List<GroupOutputModel> ConvertGroupWithStudentsAndTeachersDTOToGroupOutputModel(List<GroupWithStudentsAndTeachersDTO> groups)
+        {
+            List<GroupOutputModel> result = new List<GroupOutputModel>();
+            foreach(var g in groups)
+            {
+                if(g!=null)
+                {
+                    result.Add(new GroupOutputModel()
+                    {
+                        EndDate = g.EndDate,
+                        Id = g.Id,
+                        Name = g.Name,
+                        StartDate = g.StartDate,
+                        Students = ConvertStudentDTOToUserOutputModel(g.students),
+                        Teachers = ConvertTeacherDTOToUserOutputModel(g.teachers)
+                    });
+                }
+            }
+            return result;
+        }
         public List<QuestionOutputModel> ConvertQuestionForOneToManyDTOToQuestionModelList(List<QuestionForOneToManyDTO> dtoList)
         {
             List<QuestionOutputModel> modelList = new List<QuestionOutputModel>();

@@ -193,7 +193,7 @@ namespace TestingSystem.Data.StoredProcedure
             using (var connection = Connection.GetConnection())
             {
                 TestQuestionTagDTO result = null; 
-                string sqlExpression = "GetTestsByIdOneToMany @id";
+                string sqlExpression = "GetTestsByIdOneToMany";
                 connection.Query<TestQuestionTagDTO, QuestionForOneToManyDTO, TagWithTestIDDTO, TestQuestionTagDTO>(sqlExpression, (test, question, tag) =>
                 {
                     if (result == null)
@@ -216,7 +216,7 @@ namespace TestingSystem.Data.StoredProcedure
                     return result;
                 }
                 ,new { id }
-            , splitOn: "TestID,IDtest");
+            , splitOn: "TestID,IDtest",commandType:CommandType.StoredProcedure);
                 
                 return result;
             }
