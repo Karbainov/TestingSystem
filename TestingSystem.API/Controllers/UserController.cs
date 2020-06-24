@@ -66,9 +66,11 @@ namespace TestingSystem.API.Controllers
             AdminDataAccess adm = new AdminDataAccess();
             var user = adm.GetUserByID(userRole.UserID);
             if (user == null) return BadRequest("Пользователя не существует");
-            List<UserRoleDTO> role = adm.GetRolesByUserId(userRole.UserID);
+            var role = adm.GetRoleByRoleID(userRole.RoleID);
+            if (role == null) return BadRequest("Такой роли не существует");
+            List<UserRoleDTO> roles = adm.GetRolesByUserId(userRole.UserID);
             UserRoleDTO rl = mapper.ConvertUserRoleInputModelToUserRoleDTO(userRole);
-            if (role.Contains(rl)) return Ok("Данная роль для пользователя уже создана");
+            if (roles.Contains(rl)) return Ok("Данная роль для пользователя уже создана");
             adm.UserRoleCreate(mapper.ConvertUserRoleInputModelToUserRoleDTO(userRole));
             return Ok("Роль пользователя создана");
         }
@@ -89,7 +91,7 @@ namespace TestingSystem.API.Controllers
         }
         
         [HttpGet("{userId}/role")]
-        public IActionResult GetRoleByUserId(int userId) // спросить про условие, если пользователя не существует
+        public IActionResult GetRoleByUserId(int userId)
         {
             UserMapper mapper = new UserMapper();
             AdminDataAccess adm = new AdminDataAccess();
@@ -105,7 +107,7 @@ namespace TestingSystem.API.Controllers
         }
         
         [HttpGet]
-        public IActionResult GetAllUsersWithRoles() // нужно ли условие, если таблица пуста
+        public IActionResult GetAllUsersWithRoles()
         {
             AdminDataAccess adm = new AdminDataAccess();
             List<UserPositionDTO> users = adm.GetAllUsersWithRoles();
@@ -115,13 +117,14 @@ namespace TestingSystem.API.Controllers
         
         
         [HttpGet("role/{roleID}")]
-        public IActionResult GetUsersByRoleID(int roleID) // спросить про условие, если такой роли не существует
+        public IActionResult GetUsersByRoleID(int roleID)
         {
             AdminDataAccess adm = new AdminDataAccess();
             List<UserOutputModel> allUsers = new List<UserOutputModel>();
             UserMapper mapper = new UserMapper();
-            
-            foreach(UserDTO user in adm.GetUsersByRoleID(roleID))
+            var role = adm.GetRoleByRoleID(roleID);
+            if (role == null) return BadRequest("Такой роли не существует");
+            foreach (UserDTO user in adm.GetUsersByRoleID(roleID))
             {
                 allUsers.Add(mapper.ConvertUserDTOToUserOutputModel(user));
             }
