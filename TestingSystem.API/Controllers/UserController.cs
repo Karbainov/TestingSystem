@@ -11,12 +11,6 @@ using TestingSystem.Data.StoredProcedure.CRUD;
 using TestingSystem.Data;
 using TestingSystem.API.Models.Input;
 using TestingSystem.API.Models.Output;
-using Newtonsoft.Json.Serialization;
-using Microsoft.VisualBasic;
-using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Diagnostics;
-using TestingSystem.API.Shared;
 
 namespace TestingSystem.API.Controllers
 {
