@@ -192,14 +192,10 @@ namespace TestingSystem.Data.StoredProcedure
         {
             using (var connection = Connection.GetConnection())
             {
-                
-                //var TestDictionary = new Dictionary<int, TestQuestionTagDTO>();
-                TestQuestionTagDTO result = null; //new TestQuestionTagDTO();
+                TestQuestionTagDTO result = null; 
                 string sqlExpression = "GetTestsByIdOneToMany @id";
                 connection.Query<TestQuestionTagDTO, QuestionForOneToManyDTO, TagWithTestIDDTO, TestQuestionTagDTO>(sqlExpression, (test, question, tag) =>
                 {
-                    //TestQuestionTagDTO result = null;
-                    //TestQuestionTagDTO testEntry;
                     if (result == null)
                     {
                         result = test;

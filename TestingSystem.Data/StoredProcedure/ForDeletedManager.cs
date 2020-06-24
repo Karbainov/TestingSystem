@@ -26,14 +26,7 @@ namespace TestingSystem.Data.StoredProcedure
                 return connection.Query<int>(sqlExpression, new { id }).FirstOrDefault();
             }
         }
-        public List<TestDTO> GetDeletedTests()
-        {
-            using (var connection = Connection.GetConnection())
-            {
-                string sqlExpression = "Test_GetDeleted";
-                return connection.Query<TestDTO>(sqlExpression).ToList();
-            }
-        }
+        
         public int RestoreTest(int id)
         {
             using (var connection = Connection.GetConnection())
@@ -98,6 +91,42 @@ namespace TestingSystem.Data.StoredProcedure
                 ,splitOn:"TestID,IDtest" ).ToList();
                 dTOs = new List<TestQuestionTagDTO>(TestDictionary.Values);
                 return dTOs;
+            }
+        }
+        public List<GroupWithStudentsAndTeachersDTO> GetDeletedGroupsOneToMany()
+        {
+            using (var connection = Connection.GetConnection())
+            {
+                 List<GroupWithStudentsAndTeachersDTO> result = null;
+                GroupWithStudentsAndTeachersDTO one = new GroupWithStudentsAndTeachersDTO() ;
+                string sqlExpression = "GetDeletedGroupsWithStudentsAndTeachers";
+                connection.Query<GroupWithStudentsAndTeachersDTO, StudentDTO, TeacherDTO, GroupWithStudentsAndTeachersDTO>(sqlExpression, (group, student, teacher) =>
+                   {
+                       if (result == null || !result.Any(x => x.Id == group.Id))
+                       {
+                           one = group;
+                           one.students = new List<StudentDTO>();
+                           one.students.Add(student);
+                           one.teachers = new List<TeacherDTO>();
+                           one.teachers.Add(teacher);
+                           result.Add(one);
+                       }
+                       if (result.Any(x => x.Id == group.Id))
+                       {
+                           int id = result.FindIndex(x => x.Id == group.Id);
+                           if (!result.Any(x => x.students.Any(y => y.SID == student.SID)))
+                           {
+                               result[id].students.Add(student);
+                           }
+                           if (!result.Any(x => x.teachers.Any(y => y.TID == teacher.TID)))
+                           {
+                               result[id].teachers.Add(teacher);
+                           }
+                       }
+                       return one;
+                   }, splitOn: "IDGroup,GroupID"
+                );
+                return result;
             }
         }
     }
