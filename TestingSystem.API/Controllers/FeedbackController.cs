@@ -13,74 +13,84 @@ namespace TestingSystem.API.Controllers
     [ApiController]
     [Route("[controller]")]
     public class FeedbackController : Controller
+
+        // проверено! все работает;)
     {
         //Запросы на основной странице "Feedbacks" (список фидбэков)
 
         [HttpGet("processed-feedbacks/Author")]    //список обработанных фидбэков
-        public IActionResult GetProcessedFeedbacks()
+        public ActionResult <List<FeedbackOutputModel>> GetProcessedFeedbacks()
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess feedbacks = new AuthorDataAccess();
-            return Json(mapper.ConvertFeedbackDTOToFeedbackModelList(feedbacks.GetProcessedFeedbacks()));
+            return Ok(mapper.ConvertFeedbackDTOToFeedbackModelList(feedbacks.GetProcessedFeedbacks()));
         }
 
         [HttpGet("not-processed-feedbacks/Author")]    //список необработанных фидбэков
-        public IActionResult GetNotProcessedFeedbacks()
+        public ActionResult<List<FeedbackOutputModel>> GetNotProcessedFeedbacks()
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess feedbacks = new AuthorDataAccess();
-            return Json(mapper.ConvertFeedbackDTOToFeedbackModelList(feedbacks.GetNotProcessedFeedbacks()));
+            return Ok(mapper.ConvertFeedbackDTOToFeedbackModelList(feedbacks.GetNotProcessedFeedbacks()));
         }
 
-        [HttpGet("feedbacks/Author")]    //список всех фидбэков
-        public IActionResult GetAllFeedbacks()
+        [HttpGet("Author")]    //список всех фидбэков
+        public ActionResult<List<FeedbackOutputModel>> GetAllFeedbacks()
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess feedbacks = new AuthorDataAccess();
-            return Json(mapper.ConvertFeedbackDTOToFeedbackModelList(feedbacks.GetAllFeedbacks()));
+            return Ok(mapper.ConvertFeedbackDTOToFeedbackModelList(feedbacks.GetAllFeedbacks()));
         }
 
-        [HttpGet("feedbacks/{testId}/Author")]    //список фидбэков конкретных тестов
-        public IActionResult GetFeedbackByTest(int testId)
+        [HttpGet("{testId}/Author")]    //список фидбэков конкретных тестов  
+        public ActionResult<List<FeedbackOutputModel>> GetFeedbackByTest(int testId)
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess feedbacks = new AuthorDataAccess();
-            return Json(mapper.ConvertFeedbackDTOToFeedbackModelList(feedbacks.GetFeedbackByTest(testId)));
+            var test = feedbacks.GetByIdTest(testId);
+            if (test == null) return BadRequest("Тест не существует");
+            return Ok(mapper.ConvertFeedbackDTOToFeedbackModelList(feedbacks.GetFeedbackByTest(testId)));
         }
 
         [HttpGet("feedbacks-by-date/Author")]    //список фидбэков конкретных дат
-        public IActionResult GetFeedbackByDate(DateTimeInputModel date)
+        public ActionResult<List<FeedbackOutputModel>> GetFeedbackByDate(DateTimeInputModel date)
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess feedbacks = new AuthorDataAccess();
-            return Json(mapper.ConvertFeedbackDTOToFeedbackModelList(feedbacks.GetFeedbackByDate(date.StringConverToDateTime(date.DateTime1), date.StringConverToDateTime(date.DateTime2))));
+            return Ok(mapper.ConvertFeedbackDTOToFeedbackModelList(feedbacks.GetFeedbackByDate(date.StringConverToDateTime(date.DateTime1), date.StringConverToDateTime(date.DateTime2))));
         }
 
 
 
         //Запросы на странице конкретного фидбэка "FeedbackId" (вся информация по фидбэку)
 
-        [HttpGet("feedbacks/{id}/Author")]     //вывод фидбэка (с именем пользователя, названием теста и вопросом)
-        public IActionResult GetFeedbackWithQuestion(int id)
+        [HttpGet("feedback-with-question/{feedbackId}/Author")]     //вывод фидбэка (с именем пользователя, названием теста и вопросом)
+        public ActionResult <FeedbackQuestionOutputModel> GetFeedbackWithQuestion(int feedbackId)
         {
             Mapper mapper = new Mapper();
-            AuthorDataAccess feedback = new AuthorDataAccess();
-            return Json(mapper.ConvertFeedbackQuestionDTOToFeedbackQuestionOutputModel(feedback.GetFeedbackWithQuestion(id)));
+            AuthorDataAccess feedbacks = new AuthorDataAccess();
+            var feedback = feedbacks.GetFeedbackById(feedbackId);
+            if (feedback == null) return BadRequest("Фитбека не существует");
+            return Ok(mapper.ConvertFeedbackQuestionDTOToFeedbackQuestionOutputModel(feedbacks.GetFeedbackWithQuestion(feedbackId)));
         }
 
-        [HttpGet("feedbacks/{id}/Author")]
-        public IActionResult GetAllAnswersByFeedbackId([FromBody] int id)    //список ответов на вопрос, к которому написан фидбэк
+        [HttpGet("answers-by-feedback/{feedbackId}/Author")]
+        public ActionResult<List<AnswerOutputModel>> GetAllAnswersByFeedbackId(int feedbackId)    //список ответов на вопрос, к которому написан фидбэк
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess answers = new AuthorDataAccess();
-            return Json(mapper.ConvertAnswerDTOToAnswerModelList(answers.GetAllAnswersByFeedbackId(id)));
+            var feedback = answers.GetFeedbackById(feedbackId);
+            if (feedback == null) return BadRequest("Фитбека не существует");
+            return Ok(mapper.ConvertAnswerDTOToAnswerModelList(answers.GetAllAnswersByFeedbackId(feedbackId)));
         }
 
-        [HttpPut("feedbacks/{id}/Author")]
-        public IActionResult PutProcessedInFeedback([FromBody] int id)      //отметить, что фидбэк просмотрен (можно вернуть на непросмотренный)
+        [HttpPut("update-processe/{feedbackId}/Author")]
+        public ActionResult PutProcessedInFeedback(int feedbackId)      //отметить, что фидбэк просмотрен (можно вернуть на непросмотренный)
         {
-            AuthorDataAccess feedback = new AuthorDataAccess();
-            return Json(feedback.UpdateProcessedInFeedback(id));
+            AuthorDataAccess feedbacks = new AuthorDataAccess();
+            var feedback = feedbacks.GetFeedbackById(feedbackId);
+            if (feedback == null) return BadRequest("Фитбека не существует");
+            return Ok(feedbacks.UpdateProcessedInFeedback(feedbackId));
         }
     }
 }

@@ -24,7 +24,7 @@ namespace TestingSystem.Data.StoredProcedure
         {
             var connection = Connection.GetConnection();
             string sqlExpression = "GetTestFeedback";            
-            return connection.Query<FeedbackDTO>(sqlExpression, testId, commandType: CommandType.StoredProcedure).ToList();            
+            return connection.Query<FeedbackDTO>(sqlExpression, new { testId }, commandType: CommandType.StoredProcedure).ToList();            
         }
 
         public List<FeedbackDTO> GetProcessedFeedback()
