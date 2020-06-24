@@ -323,7 +323,7 @@ namespace TestingSystem.API.Controllers
             AttemptCreator studentattempt = new AttemptCreator();
             var attempt = studentattempt.CreateAttempt(userdId, testId);
 
-            return Json(new Mapper().AttemptBusinessModelToConcreateAttemptOutputModel(attempt, testId, userdId));
+            return Json(new Mapper().AttemptBusinessModelToConcreteAttemptOutputModel(attempt, testId, userdId));
         }
         public IActionResult PutTestAttemptAnswers([FromBody] ConcreteAttemptInputModel concreteAttempt)
         {
