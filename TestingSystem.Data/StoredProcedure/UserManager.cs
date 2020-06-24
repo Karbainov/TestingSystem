@@ -22,7 +22,7 @@ namespace TestingSystem.Data.StoredProcedure
             
         }
       
-        public void AddUserWithRole (UserWithRoleDTO user)
+        public void AddUserWithRole(UserWithRoleDTO user)
         {
             var connection = Connection.GetConnection();
             connection.Open();
@@ -30,12 +30,13 @@ namespace TestingSystem.Data.StoredProcedure
             connection.Execute(sqlExpression, user);
         }
         
-        public List<RoleDTO> GetRoleByUserId (int userId)
+        public List<RoleDTO> GetRoleByUserId(int userId)
         {
-            var connection = Connection.GetConnection();
-            connection.Open();
-            string sqlExpression = "GetRoleByUserId ";
-            return connection.Query<RoleDTO>(sqlExpression, new {userId}, commandType: CommandType.StoredProcedure).ToList();
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "GetRoleByUserId";
+                return connection.Query<RoleDTO>(sqlExpression, new {userId}, commandType: CommandType.StoredProcedure).ToList();
+            }
         }
 
         public List<UserPositionDTO> GetUserVSRole()

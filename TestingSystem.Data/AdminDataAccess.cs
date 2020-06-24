@@ -29,17 +29,18 @@ namespace TestingSystem.Data
             UserCRUD user = new UserCRUD();
             return user.GetAll();
         }
-        public UserDTO GetUserbyID (int id)
+        public UserDTO GetUserByID (int id)
         {
             UserCRUD user = new UserCRUD();
             return user.GetByID(id);
         }
 
-        public void UserUpdate(UserDTO userU)
+        public int UserUpdate(UserDTO userU)
         {
-            
             UserCRUD user = new UserCRUD();
-            user.Update( userU);
+            //user.Update(userU);
+            int result = user.Update(userU);
+            return result;
         }
         public void UserDelete(int id)
         {
@@ -64,10 +65,11 @@ namespace TestingSystem.Data
             return group.GetById(id);  
         }
 
-        public void GroupUpdate(GroupDTO groupU)
+        public int GroupUpdate(GroupDTO groupU)
         {
             GroupCRUD group = new GroupCRUD();
-            group.Update(groupU);
+            int result = group.Update(groupU);
+            return result;
         }
         public void GroupDelete(int id)   // скорректировала название Горина
         {
@@ -116,7 +118,7 @@ namespace TestingSystem.Data
             UserManager adm = new UserManager();
             return adm.GetUserVSRole();
         }
-        public List<UserRoleDTO> GetUserRolesByUserId(int userId)
+        public List<UserRoleDTO> GetRolesByUserId(int userId) //GetRoleById
         {
             UserRoleCRUD roleCRUD = new UserRoleCRUD();
             return roleCRUD.GetByUserID(userId);
@@ -133,7 +135,7 @@ namespace TestingSystem.Data
             userRoleCRUD.Delete(userRoleDTO);
         }
 
-        public List<RoleDTO> GetRole()
+        public List<RoleDTO> GetRoles()
         {
             RoleCRUD role = new RoleCRUD();
             return role.GetAll();
@@ -159,8 +161,8 @@ namespace TestingSystem.Data
             GroupManager gm = new GroupManager();
             gm.DeleteTeacherFromGroup(userId, groupId);
         }
-        
-        public List<RoleDTO> GetRoleByUserId(int userId)
+
+        public List<RoleDTO> GetRoleByUserId(int userId) //удалить
         {
             UserManager role = new UserManager();
             return role.GetRoleByUserId(userId);
@@ -205,6 +207,12 @@ namespace TestingSystem.Data
         {
             ForDeletedManager manager = new ForDeletedManager();
             return manager.RestoreGroup(id);
+        }
+
+        public List<UserRoleDTO> GetRoleByRoleID(int roleId)
+        {
+            UserRoleCRUD role = new UserRoleCRUD();
+            return role.GetByRoleID(roleId);
         }
     }
 }
