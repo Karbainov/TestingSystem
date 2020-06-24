@@ -60,15 +60,15 @@ namespace TestingSystem.API.Controllers
         }
         
         [HttpPost("role")]
-        public IActionResult PostUserRole([FromBody] UserRoleInputModel userRole) // добавить условие, если роли не существует, если данная роль для этого пользователя уже создана
+        public IActionResult PostUserRole([FromBody] UserRoleInputModel userRole)
         {
             UserMapper mapper = new UserMapper();
             AdminDataAccess adm = new AdminDataAccess();
             var user = adm.GetUserByID(userRole.UserID);
             if (user == null) return BadRequest("Пользователя не существует");
-            //List<UserRoleDTO> role = adm.GetRolesByUserId(userRole.UserID);
-            //UserRoleDTO rl = ConvertUserRoleInputModelToUserRoleDTO(userRole);
-            //if (role.Contains(rl)) return Ok("Данная роль для пользователя уже создана");
+            List<UserRoleDTO> role = adm.GetRolesByUserId(userRole.UserID);
+            UserRoleDTO rl = mapper.ConvertUserRoleInputModelToUserRoleDTO(userRole);
+            if (role.Contains(rl)) return Ok("Данная роль для пользователя уже создана");
             adm.UserRoleCreate(mapper.ConvertUserRoleInputModelToUserRoleDTO(userRole));
             return Ok("Роль пользователя создана");
         }
@@ -93,6 +93,8 @@ namespace TestingSystem.API.Controllers
         {
             UserMapper mapper = new UserMapper();
             AdminDataAccess adm = new AdminDataAccess();
+            var user = adm.GetUserByID(userId);
+            if (user == null) return BadRequest("Пользователя не существует");
             List<RoleDTO> roles = adm.GetRoleByUserId(userId);
             List<RoleOutputModel> rolesOut = new List<RoleOutputModel>();
             foreach (RoleDTO r in roles)
