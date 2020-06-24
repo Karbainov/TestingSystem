@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TestingSystem.Data.DTO;
 
 namespace TestingSystem.API.Models.Output
 {
@@ -14,6 +15,8 @@ namespace TestingSystem.API.Models.Output
         public string Password { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
-        public string Role { get; set; }
+
+        public List<string> Role;
+
     }
 }

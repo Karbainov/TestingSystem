@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using TestingSystem.Data.DTO;
+using TestingSystem.Data.StoredProcedure;
 using TestingSystem.Data.StoredProcedure.CRUD;
 
 namespace TestingSystem.Business
 {
     public class FindBy4AndMoreTags
     {
-        public List<TestDTO> FindAnd(string tag)
+        public List<TestQuestionTagDTO> FindAnd(string tag)
         {
             StringConverter converter = new StringConverter();
             List<string> tags =converter.CreateListFromString(tag);
@@ -21,7 +22,7 @@ namespace TestingSystem.Business
             tests = DeleteUselessTestsAnd(tests, tagId);
             return GetAllRightTests(tests);
         }
-        public List<TestDTO> FindOr(string tag)
+        public List<TestQuestionTagDTO> FindOr(string tag)
         {
             StringConverter converter = new StringConverter();
             List<string> tags = converter.CreateListFromString(tag);
@@ -35,13 +36,14 @@ namespace TestingSystem.Business
             return GetAllRightTests(tests);
         }
         
-        public List<TestDTO> GetAllRightTests(List<TestTagsModel> models)
+        public List<TestQuestionTagDTO> GetAllRightTests(List<TestTagsModel> models)
         {
-            List<TestDTO> tests = new List<TestDTO>();
-            TestCRUD testCRUD = new TestCRUD();
+            List<TestQuestionTagDTO> tests = new List<TestQuestionTagDTO>();
+            //TestCRUD testCRUD = new TestCRUD();
+            TestManager manager = new TestManager();
             foreach(TestTagsModel model in models)
             {
-                tests.Add(testCRUD.GetById(model.TestID));
+                tests.Add(manager.GetTestWithQuestionsAndTagsByID(model.TestID));
             }
             return tests;
         }

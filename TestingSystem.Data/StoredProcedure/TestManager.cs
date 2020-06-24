@@ -188,6 +188,39 @@ namespace TestingSystem.Data.StoredProcedure
             }
             return questions;
         }
+        public TestQuestionTagDTO GetTestWithQuestionsAndTagsByID(int id)
+        {
+            using (var connection = Connection.GetConnection())
+            {
+                TestQuestionTagDTO result = null; 
+                string sqlExpression = "GetTestsByIdOneToMany";
+                connection.Query<TestQuestionTagDTO, QuestionForOneToManyDTO, TagWithTestIDDTO, TestQuestionTagDTO>(sqlExpression, (test, question, tag) =>
+                {
+                    if (result == null)
+                    {
+                        result = test;
+                        result.Questions = new List<QuestionForOneToManyDTO>();
+                        result.Questions.Add(question);
+                        result.Tags = new List<TagWithTestIDDTO>();
+                        result.Tags.Add(tag);
+                        
+                    }
+                    else
+                    {
+                        if (!result.Questions.Any(x=>x.Value==question.Value))
+                        { result.Questions.Add(question); }
+                        if (!result.Tags.Any(x=>x.Name==tag.Name))
+                        {result.Tags.Add(tag);}
+                    }
+                    
+                    return result;
+                }
+                ,new { id }
+            , splitOn: "TestID,IDtest",commandType:CommandType.StoredProcedure);
+                
+                return result;
+            }
+        }
         //public List<TagDTO> GetTestTags (TestDTO tests )
         //{
         //    using (IDbConnection connection = Connection.GetConnection())

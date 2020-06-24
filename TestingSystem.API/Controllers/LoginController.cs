@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Text;
 
 using TestingSystem;
 using Microsoft.IdentityModel.Tokens;
@@ -20,19 +21,20 @@ namespace TestingSystem.API.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class AuthController : Controller
+    public class LoginController : Controller
     {
         [HttpGet]
-        public AuthInputModel get()
+        public UserWithLoginOutputModel get([FromBody] LoginInputModel log)
         {
-            return new AuthInputModel() { Login = "", Password = "" };
+            Mapper mapper = new Mapper();
+            return mapper.ConvertUserByLoginDTOToListUserWithLoginOutputModel(log.Login);
         }
 
         [HttpPost]
-        public IActionResult Auth([FromBody]AuthInputModel auth)
+        public IActionResult Auth([FromBody] AuthorizeInputModel auth)
         {
-            ClaimsIdentity identity = GetIdentity(auth.Login, auth.Password);
-            if(identity!=null)
+            ClaimsIdentity identity = GetIdentity(auth.Login, auth.Password,auth.Role);
+            if (identity != null)
             {
                 DateTime now = DateTime.UtcNow;
                 JwtSecurityToken jwt = new JwtSecurityToken(
@@ -41,8 +43,9 @@ namespace TestingSystem.API.Controllers
                     notBefore: now,
                     claims: identity.Claims,
                     expires: now.Add(TimeSpan.FromMinutes(Models.TokenOptions.LIFETIME)),
-                    signingCredentials: new SigningCredentials(Models.TokenOptions.GetSymmetricSecurityKey(),SecurityAlgorithms.HmacSha256)
-                    ) ;
+                    signingCredentials: new SigningCredentials(Models.TokenOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256)
+                    );
+               
                 var response = new
                 {
                     access_token = new JwtSecurityTokenHandler().WriteToken(jwt),
@@ -56,26 +59,32 @@ namespace TestingSystem.API.Controllers
             }
         }
 
-        private ClaimsIdentity GetIdentity(string login,string password)
+        private ClaimsIdentity GetIdentity(string login, string password,string role)
         {
             Mapper mapper = new Mapper();
-            List<UserByLoginOutputModel> aa = mapper.ConvertUserByLoginDTOToListUserByLoginOutputModel(login);
-            UserByLoginOutputModel user = aa.FirstOrDefault(x => x.Login == login && x.Password == password);
-            if (user == null)
-            {
-                return null;
-            }
-            else
-            {
-                List<Claim> claims = new List<Claim>()
-                {
-                    new Claim(ClaimsIdentity.DefaultNameClaimType,user.Login),//
-                    new Claim(ClaimsIdentity.DefaultRoleClaimType,user.Role)//
-                };
-                ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
-                return claimsIdentity;
+            UserByLoginOutputModel user = mapper.ConvertUserByLoginDTOToListUserByLoginOutputModel(login);
 
+            if (user != null)
+            {
+                if (user.Role.Contains(role)==true && user.Password==password)
+                {
+                    List<Claim> claims = new List<Claim>()
+                    {
+                    new Claim(ClaimsIdentity.DefaultNameClaimType,user.Login),
+                    new Claim(ClaimsIdentity.DefaultRoleClaimType,role)
+                    };
+
+                    ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
+                    return claimsIdentity;
+                }
+                else
+                {
+                    return null;
+
+                }
             }
+            return null;
         }
+
     }
 }

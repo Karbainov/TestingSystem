@@ -45,7 +45,7 @@ namespace TestingSystem.Business.Tests
         {
             FindAndMock mock = new FindAndMock();
             FindBy4AndMoreTags tags = new FindBy4AndMoreTags();
-            List<TestDTO> actual = tags.FindAnd(mock.GetActual(num));
+            List<TestQuestionTagDTO> actual = tags.FindAnd(mock.GetActual(num));
             int i = -1;
             foreach(var a in mock.GetExpected(num))
             {
@@ -65,7 +65,7 @@ namespace TestingSystem.Business.Tests
         {
             FindOrMock mock = new FindOrMock();
             FindBy4AndMoreTags tags = new FindBy4AndMoreTags();
-            List<TestDTO> actual = tags.FindOr(mock.GetActual(num));
+            List<TestQuestionTagDTO> actual = tags.FindOr(mock.GetActual(num));
             int i = -1;
             foreach (var a in mock.GetExpected(num))
             {
