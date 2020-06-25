@@ -9,5 +9,6 @@ namespace TestingSystem.Business.Statistics.Models
         public int QuestionID { get; set; }
         public string Value { get; set; }
         public bool Correct { get; set; }
+        public List<int> Attempts { get; set; }
     }
 }

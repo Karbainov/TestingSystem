@@ -87,9 +87,67 @@ namespace TestingSystem.Business.Statistics.Models
                     };
                     info.Answers.Add(item.AnswerID, answerInfo);
                 }
+
+                if (!info.TestSuccessScores.ContainsKey(item.TestID))
+                {
+                    info.TestSuccessScores.Add(item.TestID, item.SuccessScore);
+                }
             }
 
+            CreateAnswerAttemptsLists(info);
+            CreateAttemptAnswersLists(info);
+            CreateQuestionAnswersLists(info);
             return info;
+        }
+
+        private void CreateAnswerAttemptsLists(InfoForStatisticsModel info)
+        {
+            foreach(var answer in info.Answers)
+            {
+                answer.Value.Attempts = new List<int>();
+                foreach (var record in info.IdInfo)
+                {
+                    if (answer.Key == record.AnswerId)
+                    {
+                        answer.Value.Attempts.Add(record.AttemptId);
+                    }
+                }
+            }
+        }
+
+        private void CreateAttemptAnswersLists(InfoForStatisticsModel info)
+        {
+            foreach (var attempt in info.Attempts)
+            {
+                attempt.Value.Answers = new List<int>();
+                foreach (var record in info.IdInfo)
+                {
+                    if (attempt.Key == record.AnswerId)
+                    {
+                        attempt.Value.Answers.Add(record.AttemptId);
+                    }
+                }
+            }
+        }
+
+        private void CreateQuestionAnswersLists(InfoForStatisticsModel info)
+        {
+            foreach (int testId in info.TestSuccessScores.Keys)
+            {
+                QuestionManager qm = new QuestionManager();
+                List<QuestionWithListAnswersDTO> testQuestions = qm.GetQuestionsAndAnswers(testId);
+                foreach(var question in testQuestions)
+                {
+                    if (info.Questions.ContainsKey(question.Id))
+                    {
+                        info.Questions[question.Id].AnswersId = new List<int>();
+                        foreach(var answer in question.Answers)
+                        {
+                            info.Questions[question.Id].AnswersId.Add(answer.AnswerId);
+                        }
+                    }
+                }
+            }
         }
     }
 }

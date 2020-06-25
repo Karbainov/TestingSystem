@@ -23,7 +23,7 @@ namespace TestingSystem.Business.Statistics
                 if (record.QuestionId == quId) 
                 {
                     int answerId = record.AnswerId;
-                    List<int> attemptId = new List<int>(info.AnswerAttemptsInfo[answerId].AttemptId);
+                    List<int> attemptId = new List<int>(info.Answers[answerId].Attempts);
                     int count = attemptId.Count;
                     question.Add(answerId, count);
                 }
@@ -66,15 +66,15 @@ namespace TestingSystem.Business.Statistics
                     attemptId.Add(i.AttemptId);
                     foreach (var a in attemptId)
                     {    
-                        foreach(var b in info.AttemptAnswers.Keys)
+                        foreach(var b in info.Attempts.Keys)
                         {
                             if (a == b)
                             {
-                                if (info.Questions[questionId].CorrectId.Count == info.AttemptAnswers[b].StudentAnswersId.Count)
+                                if (info.Questions[questionId].CorrectId.Count == info.Attempts[b].Answers.Count)
                                 {
                                     foreach (var j in info.Questions[questionId].CorrectId)
                                     {
-                                        foreach (var g in info.AttemptAnswers[b].StudentAnswersId)
+                                        foreach (var g in info.Attempts[b].Answers)
                                         {
                                             if (j == g)
                                             {

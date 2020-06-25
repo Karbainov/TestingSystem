@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 using System.Collections.Generic;
 using TestingSystem.Business.Statistics;
 using TestingSystem.Business.Statistics.Models;
@@ -10,9 +11,9 @@ namespace TestingSystem.Business.Tests
     {
         InfoModelCreator creator = new InfoModelCreator();
 
-        [TestCase(1, ExpectedResult = 27.4)]
-        [TestCase(5, ExpectedResult = 0)]
-        [TestCase(3, ExpectedResult = 0)]
+        [TestCase(1, ExpectedResult = 8.25)]
+        [TestCase(5, ExpectedResult = Double.NaN)]
+        [TestCase(3, ExpectedResult = Double.NaN)]
 
         public double GetAverageResultTest(int id)
         {      

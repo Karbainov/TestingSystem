@@ -28,6 +28,7 @@ namespace TestingSystem.Data.DTO
 
         // Extra id info
         public int TestID { get; set; }
+        public int SuccessScore { get; set; }
         public int GroupID { get; set; }
         public int UserID { get; set; }
     }
