@@ -105,7 +105,7 @@ namespace TestingSystem.API.Controllers
             AdminDataAccess adm = new AdminDataAccess();
             UserOutputModel user = new UserOutputModel();
             UserDTO getUser = adm.GetUserByID(id);
-            if (getUser == null) { return new BadRequestObjectResult("Такого пользователя не существует"); }
+            if (getUser == null) { return BadRequest("Такого пользователя не существует"); }
             else {
                 user = mapper.ConvertUserDTOToUserOutputModel(getUser);
                 return Json(user); 
@@ -171,8 +171,6 @@ namespace TestingSystem.API.Controllers
             StudentDataAccess student = new StudentDataAccess();
             Mapper mapper = new Mapper();
             UserIdTestIdDTO dTO = new UserIdTestIdDTO(UserID, TestID);
-            var std = student.GetAttemptsByUserIdTestId(dTO);
-            if (std == null) return Ok("Попыток не найдено");
             List <AttemptResultOutputModel> model = mapper.ConvertAttemptDTOToAttemptModel(student.GetAttemptsByUserIdTestId(dTO));
             return Json(model);
         }
@@ -187,6 +185,5 @@ namespace TestingSystem.API.Controllers
             return Json(model);
         }
         
-       
     }
 }
