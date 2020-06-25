@@ -14,12 +14,12 @@ namespace TestingSystem.Data
             FeedbackCRUD feedback = new FeedbackCRUD();
             feedback.Add(feedbackDTO);
         }
-        public List<TestAttemptDTO> GetCompleteTest(int userId)
+        public List<TestAttemptDTO> GetCompleteTests(int userId)
         {
             TestManager manager = new TestManager();
             return manager.GetCompletedTestsByUserID(userId);
         }
-        public List<TestAttemptDTO> GetIncompleteTest(int userId)
+        public List<TestAttemptDTO> GetIncompleteTests(int userId)
         {
             UserManager user = new UserManager();
             return user.GetIncompleteTests(userId);

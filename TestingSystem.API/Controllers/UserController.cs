@@ -177,8 +177,8 @@ namespace TestingSystem.API.Controllers
         {
             StudentDataAccess student = new StudentDataAccess();
             Mapper mapper = new Mapper();
-            List<TestAttemptDTO> tests = student.GetCompleteTest(UserID);
-            tests.AddRange(student.GetIncompleteTest(UserID));
+            List<TestAttemptDTO> tests = student.GetCompleteTests(UserID);
+            tests.AddRange(student.GetIncompleteTests(UserID));
             StudentOutputModel model = mapper.ConvertUserDTOTestAttemptDTOToStudentModel(student.GetUser(UserID), mapper.ConvertTestAttemptDTOToTestAttemptModel(tests));
             return Json(model);
         }
