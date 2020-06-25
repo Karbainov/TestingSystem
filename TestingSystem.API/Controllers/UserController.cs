@@ -178,6 +178,7 @@ namespace TestingSystem.API.Controllers
             StudentDataAccess student = new StudentDataAccess();
             Mapper mapper = new Mapper();
             List<TestAttemptDTO> tests = student.GetCompleteTest(UserID);
+            if (tests == null) return BadRequest("Тесты не найдены");
             tests.AddRange(student.GetIncompleteTest(UserID));
             StudentOutputModel model = mapper.ConvertUserDTOTestAttemptDTOToStudentModel(student.GetUser(UserID), mapper.ConvertTestAttemptDTOToTestAttemptModel(tests));
             return Json(model);
