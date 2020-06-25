@@ -42,7 +42,7 @@ namespace TestingSystem.API.Controllers
                     www.Name = g.Name;
                     www.StartDate = g.StartDate;
                     www.EndDate = g.EndDate;
-                    List<UserDTO> students = gr.GetAllStudents(g.Id);
+                    List<UserDTO> students = gr.GetStudents(g.Id);
                     List<UserOutputModel> studentsOut = new List<UserOutputModel>();
                     foreach (UserDTO st in students)
                     {

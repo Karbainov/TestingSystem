@@ -77,7 +77,7 @@ namespace TestingSystem.API.Controllers
         public IActionResult GetAllUsersWithRoles()
         {
             AdminDataAccess adm = new AdminDataAccess();
-            List<UserPositionDTO> users = adm.GetAllUsersWithRoles();
+            List<UserPositionDTO> users = adm.GetUsersWithRoles();
             UserMapper mapper = new UserMapper();
             return Json(mapper.ConvertUserPositionDTOsToUserWithRolesOutputModels(users));
         }
