@@ -81,7 +81,7 @@ namespace TestingSystem.Data
             StudentGroup student = new StudentGroup();
             student.Add(studentA);
         }
-        public void StudentDelete(StudentGroupDTO studentD)
+        public void StudentDeleteFromGroup(StudentGroupDTO studentD)
         {
             StudentGroup student = new StudentGroup();
             student.Delete(studentD.ID);
