@@ -172,6 +172,7 @@ namespace TestingSystem.API.Controllers
             return Ok("Пользователь удалён");
         }
         
+        [Authorize (Roles ="Teacher, Author, Student")]
         [HttpGet("{UserID}/test")]
         public IActionResult GetStudentTests(int UserID)
         {
@@ -183,6 +184,8 @@ namespace TestingSystem.API.Controllers
             StudentOutputModel model = mapper.ConvertUserDTOTestAttemptDTOToStudentModel(student.GetUser(UserID), mapper.ConvertTestAttemptDTOToTestAttemptModel(tests));
             return Json(model);
         }
+
+        [Authorize(Roles = "Teacher, Author")]
         [HttpGet("{UserID}/test/{TestID}")]
         public IActionResult GetAttemptsByUserIDTestID(int UserID, int TestID)
         {
@@ -194,6 +197,8 @@ namespace TestingSystem.API.Controllers
             List <AttemptResultOutputModel> model = mapper.ConvertAttemptDTOToAttemptModel(student.GetAttemptsByUserIdTestId(dTO));
             return Json(model);
         }
+
+        [Authorize(Roles = "Author")]
         [HttpGet("Attempt/{AttemptID}")]
         public IActionResult GetQuestionAndAnswerByAttemptID(int attemptID)
         {
