@@ -8,10 +8,9 @@ using TestingSystem.Business.Tests.MocsForStatistics;
 namespace TestingSystem.Business.Tests
 {
     public class StatisticsTests
-    {
-        InfoModelCreator creator = new InfoModelCreator();
+    {       
 
-        [TestCase(1, ExpectedResult = 8.25)]
+        [TestCase(1, ExpectedResult = 20)]
         [TestCase(5, ExpectedResult = Double.NaN)]
         [TestCase(3, ExpectedResult = Double.NaN)]
 
@@ -24,7 +23,7 @@ namespace TestingSystem.Business.Tests
     
 
         [TestCase(1)]
-        [TestCase(5)]
+        [TestCase(7)]
         [TestCase(3)]
         
         public void GetPassedFailedStatsTest(int id)

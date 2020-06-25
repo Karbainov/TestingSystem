@@ -46,8 +46,28 @@ namespace TestingSystem.API.Controllers
             FindBy4AndMoreTags searchBy4AndMoreTags = new FindBy4AndMoreTags();
             StringConverter converter = new StringConverter();
 
-            if (caseSwitch)            {                if (converter.CreateArrayFromString(sttim.Tag).Length < 3)                {                    return Ok(mapper.ConvertTestDTOToTestModelList(search.GetTestVSTagSearchAnd(converter.CreateArrayFromString(sttim.Tag))));                }                else                {                    return Ok(mapper.ConvertTestDTOToTestModelList(searchBy4AndMoreTags.FindAnd(sttim.Tag)));                }            }
-            else            {                if (converter.CreateArrayFromString(sttim.Tag).Length < 3)                {                    return Ok(mapper.ConvertTestDTOToTestModelList(search.GetTestVSTagSearchOr(converter.CreateArrayFromString(sttim.Tag))));                }                else                {                    return  Ok(mapper.ConvertTestDTOToTestModelList(searchBy4AndMoreTags.FindOr(sttim.Tag)));                }            }
+            if (caseSwitch)
+            {
+                if (converter.CreateArrayFromString(sttim.Tag).Length < 3)
+                {
+                    return Ok(mapper.ConvertTestDTOToTestModelList(search.GetTestVSTagSearchAnd(converter.CreateArrayFromString(sttim.Tag))));
+                }
+                else
+                {
+                    return Ok(mapper.ConvertTestDTOToTestModelList(searchBy4AndMoreTags.FindAnd(sttim.Tag)));
+                }
+            }
+            else
+            {
+                if (converter.CreateArrayFromString(sttim.Tag).Length < 3)
+                {
+                    return Ok(mapper.ConvertTestDTOToTestModelList(search.GetTestVSTagSearchOr(converter.CreateArrayFromString(sttim.Tag))));
+                }
+                else
+                {
+                    return  Ok(mapper.ConvertTestDTOToTestModelList(searchBy4AndMoreTags.FindOr(sttim.Tag)));
+                }
+            }
         }        
 
         [HttpGet("tags/Author")]      //cписок всех тегов
@@ -314,17 +334,28 @@ namespace TestingSystem.API.Controllers
             if (answer == null) return BadRequest("Ответа не существует");
             answers.DeleteAnswer(anid);
             return Ok(anid);
-        }
-
-        [HttpGet("{testid}/{userId}/Student")]
-
-        public IActionResult GetTestAttempt(int testId, int userdId)
-        {
-            AttemptCreator studentattempt = new AttemptCreator();
-            var attempt = studentattempt.CreateAttempt(userdId, testId);
-
-            return Json(new Mapper().AttemptBusinessModelToConcreteAttemptOutputModel(attempt, testId, userdId));
-        }
+        }
+
+
+
+        [HttpGet("{testid}/{userId}/Student")]
+
+
+
+        public IActionResult GetTestAttempt(int testId, int userdId)
+
+        {
+
+            AttemptCreator studentattempt = new AttemptCreator();
+
+            var attempt = studentattempt.CreateAttempt(userdId, testId);
+
+
+
+            return Json(new Mapper().AttemptBusinessModelToConcreteAttemptOutputModel(attempt, testId, userdId));
+
+        }
+
         [HttpPut("attempt/answers")]
         public IActionResult PutTestAttemptAnswers([FromBody] ConcreteAttemptInputModel concreteAttempt)
         {

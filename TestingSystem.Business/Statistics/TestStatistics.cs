@@ -64,7 +64,7 @@ namespace TestingSystem.Business.Statistics
                 else
                     pf.Failed++;
             }
-            pf.SuccessRate = (double)pf.Passed / (pf.Passed + pf.Failed);
+            pf.SuccessRate = (double)pf.Passed / (pf.Passed + pf.Failed) * 100;
             return pf;
         }
     }

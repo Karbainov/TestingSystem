@@ -5,7 +5,7 @@ using TestingSystem.Business.Statistics.Models;
 
 namespace TestingSystem.Business.Tests.MocsForStatistics
 {
-    class TestMock
+    public class TestMock
     {
         public TestMock()
         {
@@ -17,19 +17,19 @@ namespace TestingSystem.Business.Tests.MocsForStatistics
             switch (id)
             {
                 case 1:
-                    pfm.Passed = 4;
-                    pfm.Failed = 5;
-                    pfm.SuccessRate = 0.4;
+                    pfm.Passed = 3;
+                    pfm.Failed = 3;
+                    pfm.SuccessRate = 50;
                     return pfm;
-                case 5:
+                case 6:
                     pfm.Passed = 0;
                     pfm.Failed = 0;
                     pfm.SuccessRate = 0;
                     return pfm;
-                case 3:
-                    pfm.Passed = 0;
+                case 7:
+                    pfm.Passed = 2;
                     pfm.Failed = 0;
-                    pfm.SuccessRate = 0;
+                    pfm.SuccessRate = 100;
                     return pfm;
             }
             pfm.Passed = -1;

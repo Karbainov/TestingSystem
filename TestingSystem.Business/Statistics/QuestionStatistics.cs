@@ -20,9 +20,9 @@ namespace TestingSystem.Business.Statistics
             
             foreach (var record in info.IdInfo) 
             {
-                if (record.QuestionId == quId) 
+                if (record.QuestionId == quId && !question.ContainsKey(record.AnswerId)) 
                 {
-                    int answerId = record.AnswerId;
+                    int answerId = record.AnswerId;                     
                     List<int> attemptId = new List<int>(info.Answers[answerId].Attempts);
                     int count = attemptId.Count;
                     question.Add(answerId, count);
@@ -36,19 +36,29 @@ namespace TestingSystem.Business.Statistics
             Dictionary<int, int> answers = CountNumberOfAnswersInAttemptByQuestionId(quId);
             Dictionary<int, double> answersPercent = new Dictionary<int, double> ();
             int aCount = 0;
+            List<int> attemptId = new List<int>();
 
             foreach (var record in info.IdInfo)
             {
-                if (record.QuestionId == quId)
+                if (record.QuestionId == quId && !attemptId.Contains(record.AttemptId))
                 {
-                    aCount++;
+                    attemptId.Add(record.AttemptId);
                 }
+                //if (record.QuestionId == quId)
+                //{
+                    
+                //    aCount = attemptId.Count;
+                //    //if (record.QuestionId == quId)
+                //    //{
+                //    //    aCount++;
+                //    //}
+                //}
             }
             foreach (var i in answers) 
             {
                 int a = i.Key;
                 int sum = i.Value;
-                double result = sum / aCount * 100;
+                double result = sum / attemptId.Count * 100;
                 answersPercent.Add(a, result);
             }
             return answersPercent;
