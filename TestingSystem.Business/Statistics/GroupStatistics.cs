@@ -7,18 +7,21 @@ using TestingSystem.Business.Statistics.Models;
 
 namespace TestingSystem.Business.Statistics
 {
-    public class GroupStatistics
+    public class GroupStatistics:TestStatistics
     {
-        InfoForStatisticsModel info;
+        public GroupStatistics(int id)
+        {
+            InfoModelCreator creator = new InfoModelCreator();
+            info = creator.CreateByGroupId(id);
+        }
 
         public Dictionary<int, double> GetAverageGroupResultForAllTests(int groupId)   
         {            
             GroupInfoModel group = new GroupInfoModel();
-            TestStatistics ts = new TestStatistics(info);
             Dictionary<int, double> result = new Dictionary<int, double>();
             foreach (int t in group.TestsId) 
             {
-                double averageTest = ts.GetAverageResult(t);
+                double averageTest = GetAverageResult(t);
                 result.Add(t, averageTest);
             }
             return result;

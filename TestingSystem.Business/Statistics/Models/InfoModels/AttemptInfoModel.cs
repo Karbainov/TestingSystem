@@ -12,5 +12,6 @@ namespace TestingSystem.Business.Statistics.Models
         public int UserResult { get; set; }
         public DateTime Date { get; set; }
         public TimeSpan Duration{ get; set; }
+        public List<int> Answers { get; set; }
     }
 }
