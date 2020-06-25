@@ -30,7 +30,7 @@ namespace TestingSystem.Data.StoredProcedure
             connection.Execute(sqlExpression, user);
         }
         
-        public List<RoleDTO> GetRoleByUserId(int userId)
+        public List<RoleDTO> GetRolesByUserId(int userId)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
