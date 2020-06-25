@@ -44,7 +44,7 @@ namespace TestingSystem.API.Controllers
             Mapper mapper = new Mapper();
             return Ok(mapper.ConvertQuestionDTOToQuestionModelList(admin.GetDeletedQuestions()));
         }
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpGet("Groups")]
         public IActionResult GetDeletedGroups()
         {
@@ -57,6 +57,10 @@ namespace TestingSystem.API.Controllers
         [HttpPut("User/{id}")]
         public IActionResult RestoreUser(int id)
         {
+            AdminDataAccess access = new AdminDataAccess();
+            var users = access.GetDeletedUsers();
+            if (!users.Any(x => x.ID == id)) return BadRequest("Восстановление юзера по данному id невозможно ");
+
             AdminDataAccess admin = new AdminDataAccess();
             return Ok(admin.RestoreUser(id));
         }
@@ -64,6 +68,9 @@ namespace TestingSystem.API.Controllers
         [HttpPut("Test/{id}")]
         public IActionResult RestoreTest(int id)
         {
+            AdminDataAccess access = new AdminDataAccess();
+            var tests = access.GetDeletedTests();
+            if (!tests.Any(x => x.ID == id)) return BadRequest("Восстановление теста по данному id невозможно");
             AdminDataAccess admin = new AdminDataAccess();
             return Ok(admin.RestoreTest(id));
         }
@@ -71,6 +78,9 @@ namespace TestingSystem.API.Controllers
         [HttpPut("Question/{id}")]
         public IActionResult RestoreQuestion(int id)
         {
+            AdminDataAccess access = new AdminDataAccess();
+            var questions = access.GetDeletedQuestions();
+            if (!questions.Any(x => x.ID == id)) return BadRequest("Восстановление вопроса по данному id невозможно");
             AdminDataAccess admin = new AdminDataAccess();
             return Ok(admin.RestoreQuestion(id));
         }
@@ -78,6 +88,9 @@ namespace TestingSystem.API.Controllers
         [HttpPut("Group/{id}")]
         public IActionResult RestoreGroup(int id)
         {
+            AdminDataAccess access = new AdminDataAccess();
+            var groups = access.GetDeletedGroups();
+            if (!groups.Any(x => x.Id == id)) return BadRequest("Восстановление группы по данному id невозможно ");
             AdminDataAccess admin = new AdminDataAccess();
             return Ok(admin.RestoreGroup(id));
         }
