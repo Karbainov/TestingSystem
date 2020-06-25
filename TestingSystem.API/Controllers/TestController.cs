@@ -356,15 +356,15 @@ namespace TestingSystem.API.Controllers
             answers.DeleteAnswer(anid);
             return Ok(anid);
         }
-        [Authorize(Roles = "Author,Teacher,Student")]
-        [HttpGet("{testid}/{userId}")]
-
-        public IActionResult GetTestAttempt(int testId, int userdId)
+       // [Authorize(Roles = "Author,Teacher,Student")]
+        [HttpGet("{testid}/{userId}/Answers")]
+        
+        public IActionResult GetTestAttempt(int testId, int userId)
         {
             AttemptCreator studentattempt = new AttemptCreator();
-            var attempt = studentattempt.CreateAttempt(userdId, testId);
+            var attempt = studentattempt.CreateAttempt(userId, testId);
 
-            return Json(new Mapper().AttemptBusinessModelToConcreteAttemptOutputModel(attempt, testId, userdId));
+            return Json(new Mapper().AttemptBusinessModelToConcreteAttemptOutputModel(attempt, testId, userId));
         }
         [HttpPut("attempt/answers")]
         public IActionResult PutTestAttemptAnswers([FromBody] ConcreteAttemptInputModel concreteAttempt)
