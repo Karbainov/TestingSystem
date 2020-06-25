@@ -73,23 +73,6 @@ namespace TestingSystem.API.Controllers
             return Json(rolesOut);
         }
         
-        [HttpGet("{userId}/role")]
-        public IActionResult GetRoleByUserId(int userId)
-        {
-            UserMapper mapper = new UserMapper();
-            AdminDataAccess adm = new AdminDataAccess();
-            var user = adm.GetUserByID(userId);
-            if (user == null) return BadRequest("Пользователя не существует");
-            List<RoleDTO> roles = adm.GetRoleByUserId(userId);
-            if (roles == null) return Ok("У пользователя нет роли");
-            List<RoleOutputModel> rolesOut = new List<RoleOutputModel>();
-            foreach (RoleDTO r in roles)
-                {
-                    rolesOut.Add(mapper.ConvertRoleDTOToRoleOutputModel(r));
-                }
-                return Json(rolesOut);
-        }
-        
         [HttpGet]
         public IActionResult GetAllUsersWithRoles()
         {
