@@ -48,7 +48,8 @@ namespace TestingSystem.API.Controllers
             FindBy4AndMoreTags searchBy4AndMoreTags = new FindBy4AndMoreTags();
             StringConverter converter = new StringConverter();
 
-            if (caseSwitch)
+            if (caseSwitch)
+
             {
 
                 if (converter.CreateArrayFromString(sttim.Tag).Length < 3)
@@ -355,17 +356,27 @@ namespace TestingSystem.API.Controllers
             if (answer == null) return BadRequest("Ответа не существует");
             answers.DeleteAnswer(anid);
             return Ok(anid);
-        }
-       // [Authorize(Roles = "Author,Teacher,Student")]
-        [HttpGet("{testid}/{userId}/Answers")]
+        }
+
+
+       // [Authorize(Roles = "Author,Teacher,Student")]
+        [HttpGet("{testid}/{userId}/Answers")]
+
         
-        public IActionResult GetTestAttempt(int testId, int userId)
-        {
-            AttemptCreator studentattempt = new AttemptCreator();
-            var attempt = studentattempt.CreateAttempt(userId, testId);
-
-            return Json(new Mapper().AttemptBusinessModelToConcreteAttemptOutputModel(attempt, testId, userId));
-        }
+        public IActionResult GetTestAttempt(int testId, int userId)
+
+        {
+
+            AttemptCreator studentattempt = new AttemptCreator();
+
+            var attempt = studentattempt.CreateAttempt(userId, testId);
+
+
+
+            return Json(new Mapper().AttemptBusinessModelToConcreteAttemptOutputModel(attempt, testId, userId));
+
+        }
+
         [HttpPut("attempt/answers")]
         public IActionResult PutTestAttemptAnswers([FromBody] ConcreteAttemptInputModel concreteAttempt)
         {

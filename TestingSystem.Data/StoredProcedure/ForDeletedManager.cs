@@ -114,11 +114,11 @@ namespace TestingSystem.Data.StoredProcedure
                        if (result.Any(x => x.Id == group.Id))
                        {
                            int id = result.FindIndex(x => x.Id == group.Id);
-                           if (!result.Any(x => x.students.Any(y => y.StudentID == student.StudentID)))
+                           if (!result.Any(x => x.students.Any(y =>y!=null&& y.StudentID == student.StudentID)))
                            {
                                result[id].students.Add(student);
                            }
-                           if (!result.Any(x => x.teachers.Any(y => y.TeacherID == teacher.TeacherID)))
+                           if (!result.Any(x => x.teachers.Any(y => y != null && y.TeacherID == teacher.TeacherID)))
                            {
                                result[id].teachers.Add(teacher);
                            }
