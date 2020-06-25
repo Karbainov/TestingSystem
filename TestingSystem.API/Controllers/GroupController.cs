@@ -140,5 +140,8 @@ namespace TestingSystem.API.Controllers
             AdminDataAccess adm = new AdminDataAccess();
             adm.DeleteTeacherFromGroup(studentId, groupId);
         }
+
+        [HttpGet]
+
     }
 }
