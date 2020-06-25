@@ -38,7 +38,6 @@ namespace TestingSystem.Data
         public int UserUpdate(UserDTO userU)
         {
             UserCRUD user = new UserCRUD();
-            //user.Update(userU);
             int result = user.Update(userU);
             return result;
         }
@@ -76,7 +75,7 @@ namespace TestingSystem.Data
             GroupCRUD group = new GroupCRUD();
             group.Delete(id);
         }
-        public void StudentAdd (int userId, int groupId) 
+        public void StudentAddInGroup (int userId, int groupId) 
         {
             StudentGroupDTO studentA = new StudentGroupDTO(1, userId, groupId);
             StudentGroup student = new StudentGroup();

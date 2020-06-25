@@ -89,7 +89,7 @@ namespace TestingSystem.API.Controllers
         public void PostStudentInGroup(int userId, int groupId)
         {
             AdminDataAccess adm = new AdminDataAccess();
-            adm.StudentAdd(userId, groupId);
+            adm.StudentAddInGroup(userId, groupId);
         }
         
         [HttpPost("{groupID}/teacher/{userID}")]
