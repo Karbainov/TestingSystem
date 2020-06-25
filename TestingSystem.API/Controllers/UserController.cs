@@ -73,28 +73,11 @@ namespace TestingSystem.API.Controllers
             return Json(rolesOut);
         }
         
-        [HttpGet("{userId}/role")]
-        public IActionResult GetRoleByUserId(int userId)
-        {
-            UserMapper mapper = new UserMapper();
-            AdminDataAccess adm = new AdminDataAccess();
-            var user = adm.GetUserByID(userId);
-            if (user == null) return BadRequest("Пользователя не существует");
-            List<RoleDTO> roles = adm.GetRoleByUserId(userId);
-            if (roles == null) return Ok("У пользователя нет роли");
-            List<RoleOutputModel> rolesOut = new List<RoleOutputModel>();
-            foreach (RoleDTO r in roles)
-                {
-                    rolesOut.Add(mapper.ConvertRoleDTOToRoleOutputModel(r));
-                }
-                return Json(rolesOut);
-        }
-        
         [HttpGet]
         public IActionResult GetAllUsersWithRoles()
         {
             AdminDataAccess adm = new AdminDataAccess();
-            List<UserPositionDTO> users = adm.GetAllUsersWithRoles();
+            List<UserPositionDTO> users = adm.GetUsersWithRoles();
             UserMapper mapper = new UserMapper();
             return Json(mapper.ConvertUserPositionDTOsToUserWithRolesOutputModels(users));
         }
@@ -122,7 +105,7 @@ namespace TestingSystem.API.Controllers
             AdminDataAccess adm = new AdminDataAccess();
             UserOutputModel user = new UserOutputModel();
             UserDTO getUser = adm.GetUserByID(id);
-            if (getUser == null) { return new BadRequestObjectResult("Такого пользователя не существует"); }
+            if (getUser == null) { return BadRequest("Такого пользователя не существует"); }
             else {
                 user = mapper.ConvertUserDTOToUserOutputModel(getUser);
                 return Json(user); 
@@ -177,8 +160,8 @@ namespace TestingSystem.API.Controllers
         {
             StudentDataAccess student = new StudentDataAccess();
             Mapper mapper = new Mapper();
-            List<TestAttemptDTO> tests = student.GetCompleteTest(UserID);
-            tests.AddRange(student.GetIncompleteTest(UserID));
+            List<TestAttemptDTO> tests = student.GetCompleteTests(UserID);
+            tests.AddRange(student.GetIncompleteTests(UserID));
             StudentOutputModel model = mapper.ConvertUserDTOTestAttemptDTOToStudentModel(student.GetUser(UserID), mapper.ConvertTestAttemptDTOToTestAttemptModel(tests));
             return Json(model);
         }
@@ -188,8 +171,6 @@ namespace TestingSystem.API.Controllers
             StudentDataAccess student = new StudentDataAccess();
             Mapper mapper = new Mapper();
             UserIdTestIdDTO dTO = new UserIdTestIdDTO(UserID, TestID);
-            var std = student.GetAttemptsByUserIdTestId(dTO);
-            if (std == null) return Ok("Попыток не найдено");
             List <AttemptResultOutputModel> model = mapper.ConvertAttemptDTOToAttemptModel(student.GetAttemptsByUserIdTestId(dTO));
             return Json(model);
         }
@@ -204,6 +185,5 @@ namespace TestingSystem.API.Controllers
             return Json(model);
         }
         
-       
     }
 }
