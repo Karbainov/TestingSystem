@@ -207,5 +207,11 @@ namespace TestingSystem.Data
             UserRoleCRUD role = new UserRoleCRUD();
             return role.GetByRoleID(roleId);
         }
+
+        public UserPositionDTO GetUserWithRolesByUserId(int id)
+        {
+            UserManager adm = new UserManager();
+            return adm.GetUserWithRolesByUserId(id);
+        }
     }
 }

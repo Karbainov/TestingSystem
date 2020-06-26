@@ -14,14 +14,14 @@ namespace TestingSystem.Data.StoredProcedure
 
         public int AddStudentAndPutThemIntoGroup(UserGroupDTO userGroup)//добавление студента сразу в группу
         {
-            using(IDbConnection connection = Connection.GetConnection())
+            using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "User_Create @GroupID,@FirstName,@LastName,@BirthDate,@Login,@Password,@Email,@Phone";
                 return connection.Query<int>(sqlExpression, userGroup).FirstOrDefault();
             }
-            
+
         }
-      
+
         public void AddUserWithRole(UserWithRoleDTO user)
         {
             var connection = Connection.GetConnection();
@@ -29,13 +29,13 @@ namespace TestingSystem.Data.StoredProcedure
             string sqlExpression = "AddUserWithRole @FirstName, @LastName, @BirthDate, @Login, @Password, @Email, @Phone, @RoleID";
             connection.Execute(sqlExpression, user);
         }
-        
+
         public List<RoleDTO> GetRolesByUserId(int userId)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "GetRoleByUserId";
-                return connection.Query<RoleDTO>(sqlExpression, new {userId}, commandType: CommandType.StoredProcedure).ToList();
+                return connection.Query<RoleDTO>(sqlExpression, new { userId }, commandType: CommandType.StoredProcedure).ToList();
             }
         }
 
@@ -69,7 +69,7 @@ namespace TestingSystem.Data.StoredProcedure
                 .ToList();
                 userPositions = new List<UserPositionDTO>(userDictionary.Values);
             }
-            
+
             return userPositions;
         }
 
@@ -90,7 +90,7 @@ namespace TestingSystem.Data.StoredProcedure
                 return connection.Query<TestAttemptDTO>(sqlExpression, new { id }, commandType: CommandType.StoredProcedure).ToList();
             }
         }
-        
+
         public List<UserDTO> GetUsersByRoleID(int roleId)
         {
             using (IDbConnection connection = Connection.GetConnection())
@@ -100,7 +100,7 @@ namespace TestingSystem.Data.StoredProcedure
             }
         }
 
-        public List<GroupDTO> GetGroupsAndStudentsByTeacherID(int teacherId) 
+        public List<GroupDTO> GetGroupsAndStudentsByTeacherID(int teacherId)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -115,6 +115,47 @@ namespace TestingSystem.Data.StoredProcedure
                 string sqlExpression = "GetUserAndItRole";
                 return connection.Query<UserByLoginDTO>(sqlExpression, new { login }, commandType: CommandType.StoredProcedure).ToList();
             }
+        }
+
+        public UserPositionDTO GetUserWithRolesByUserId(int userId)
+        {
+
+            IDbConnection usPos = Connection.GetConnection();
+            UserPositionDTO userP;
+            using (usPos)
+            {
+                var userDictionary = new Dictionary<int, UserPositionDTO>();
+
+
+                usPos.Query<UserPositionDTO, RoleIdDTO, UserPositionDTO>(
+                    "GetUserWithRoleByUserId",
+                    (user, roles) =>
+                    {
+                        UserPositionDTO userEntry;
+
+                        if (!userDictionary.TryGetValue(user.Id, out userEntry))
+                        {
+                            userEntry = user;
+                            userEntry.Roles = new List<RoleIdDTO>();
+                            userDictionary.Add(userEntry.Id, userEntry);
+                        }
+
+                        userEntry.Roles.Add(roles);
+                        return userEntry;
+                    },
+                    new { userId },
+                    splitOn: "RoleID",
+                    commandType:CommandType.StoredProcedure)
+                .FirstOrDefault();
+                if (userDictionary.ContainsKey(userId))
+                {
+                    userP = userDictionary[userId];
+                    return userP;
+                }
+
+            }
+
+            return null;
         }
     }
 }

@@ -195,6 +195,20 @@ namespace TestingSystem.API.Controllers
             }
             return Json(allUsers);
         }
+        
+        [HttpGet("{id}")]
+        public IActionResult GetUserById(int id)
+        {
+            UserMapper mapper = new UserMapper();
+            AdminDataAccess adm = new AdminDataAccess();
+            UserWithRolesOutputModel user = new UserWithRolesOutputModel();
+            UserPositionDTO getUser = adm.GetUserWithRolesByUserId(id);
+            if (getUser == null) { return BadRequest("Такого пользователя не существует"); }
+            else {
+                user = mapper.ConvertUserPositionDTOToUserWithRolesOutputModel(getUser);
+                return Json(user); 
+            }
+        }
 
         [Authorize(Roles = "Admin")]
         [HttpDelete("{userId}/role/{roleId}")]
