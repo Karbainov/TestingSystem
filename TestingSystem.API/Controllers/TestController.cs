@@ -12,6 +12,7 @@ using TestingSystem.Business.Models;
 using TestingSystem.Business;
 using TestingSystem.Business.Attempt;
 using Microsoft.AspNetCore.Authorization;
+using TestingSystem.Data.StoredProcedure.CRUD;
 
 namespace TestingSystem.API.Controllers
 {
@@ -190,7 +191,7 @@ namespace TestingSystem.API.Controllers
         //{
         //    Mapper mapper = new Mapper();
         //    AuthorDataAccess questions = new AuthorDataAccess();
-        //    return Json(mapper.ConvertQuestionDTOToQuestionModelList(questions.GetQuestionsByTestID(testId)));
+        //    return Ok(mapper.ConvertQuestionDTOToQuestionModelList(questions.GetQuestionsByTestID(testId)));
         //}
 
         //[HttpGet("{testId}/answers/Author")]          //вывод всех ответов из конкретного теста
@@ -206,7 +207,7 @@ namespace TestingSystem.API.Controllers
         //{
         //    Mapper mapper = new Mapper();
         //    AuthorDataAccess tags = new AuthorDataAccess();
-        //    return Json(mapper.ConvertTagDTOToTagModelList(tags.GetTagsInTest(testId)));
+        //    return Ok(mapper.ConvertTagDTOToTagModelList(tags.GetTagsInTest(testId)));
         //}
 
         [Authorize(Roles = "Author")]
@@ -355,8 +356,20 @@ namespace TestingSystem.API.Controllers
             return Ok(anid);
         }
 
+        [Authorize(Roles = "Author")]
+        [HttpDelete("question-type")]           //список типов вопросов
+        public ActionResult<List<TypeQuestionOutputModel>> GetQuestionTypes()     
+        {
+            Mapper mapper = new Mapper();
+            AuthorDataAccess types = new AuthorDataAccess();            
+            return Ok(mapper.ConvertTypeDTOToTypeQuestionOutputListModel(types.GetQuestionTypes()));
+        }
 
-       // [Authorize(Roles = "Teacher,Student")]
+
+
+
+
+        // [Authorize(Roles = "Teacher,Student")]
         [HttpGet("{testid}/{userId}/Answers")]
         
         public IActionResult GetTestAttempt(int testId, int userId)

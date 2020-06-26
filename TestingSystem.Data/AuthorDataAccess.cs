@@ -221,6 +221,12 @@ namespace TestingSystem.Data
             answer.Delete(id);
         }
 
+        public List<TypeDTO> GetQuestionTypes()     //список типов вопросов
+        {
+            TypeCRUD types = new TypeCRUD();
+            return types.GetAll();
+        }
+
 
         //Запросы на странице конкретного фидбэка "FeedbackId" (вся информация по фидбэку)
 
