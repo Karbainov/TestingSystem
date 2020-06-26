@@ -185,7 +185,7 @@ namespace TestingSystem.API.Controllers
             return Json(model);
         }
 
-        [HttpGet("{groupID}/test")]
+        [HttpGet("{groupID}/groupTests")]
         public IActionResult GetTestByGroupId(int groupID)
         {
             TeacherDataAccess teacher = new TeacherDataAccess();

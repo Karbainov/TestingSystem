@@ -141,7 +141,7 @@ namespace TestingSystem.API.Controllers
             adm.DeleteTeacherFromGroup(studentId, groupId);
         }
 
-        [HttpGet]
+       // [HttpGet]
 
     }
 }
