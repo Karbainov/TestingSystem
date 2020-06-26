@@ -63,13 +63,13 @@ namespace TestingSystem.API
                     switch(a.Type)
                     {
                         case 0:
-                            tmp.Type = QuestionType.SingleAnswer;
+                            tmp.Type = Shared.QuestionType.SingleAnswer;
                             break;
                         case 1:
-                            tmp.Type = QuestionType.MultipleAnswer;
+                            tmp.Type = Shared.QuestionType.MultipleAnswers;
                             break;
                         case 2:
-                            tmp.Type = QuestionType.TextAnswer;
+                            tmp.Type = Shared.QuestionType.TextAnswer;
                             break;
                     }
 
