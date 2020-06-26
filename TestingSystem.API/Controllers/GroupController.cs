@@ -38,12 +38,12 @@ namespace TestingSystem.API.Controllers
             else {
                 foreach (GroupDTO g in groups)
                 {
-                    GroupOutputModel www = new GroupOutputModel();
+                    GroupOutputModel groupoutmodel = new GroupOutputModel();
                     AdminDataAccess gr = new AdminDataAccess();
-                    www.Id = g.Id;
-                    www.Name = g.Name;
-                    www.StartDate = g.StartDate;
-                    www.EndDate = g.EndDate;
+                    groupoutmodel.Id = g.Id;
+                    groupoutmodel.Name = g.Name;
+                    groupoutmodel.StartDate = g.StartDate;
+                    groupoutmodel.EndDate = g.EndDate;
                     List<UserDTO> students = gr.GetStudents(g.Id);
                     List<UserOutputModel> studentsOut = new List<UserOutputModel>();
                     foreach (UserDTO st in students)
@@ -58,9 +58,9 @@ namespace TestingSystem.API.Controllers
                         UserMapper tm = new UserMapper();
                         teachersOut.Add(tm.ConvertUserDTOToUserOutputModel(tc));
                     }
-                    www.Students = studentsOut;
-                    www.Teachers = teachersOut;  
-                    groupOutputModels.Add(www);
+                    groupoutmodel.Students = studentsOut;
+                    groupoutmodel.Teachers = teachersOut;  
+                    groupOutputModels.Add(groupoutmodel);
                 } 
                 return Json(groupOutputModels);
             }
