@@ -184,6 +184,19 @@ namespace TestingSystem.API.Controllers
             List<QuestionAnswerOutputModel> model = mapper.ConvertQuestionAnswerDTOToQuestionAnswerModel(teacher.GetQuestionAndAnswerByAttempt(attemptID));
             return Json(model);
         }
-        
+
+        [HttpGet("{groupID}/test")]
+        public IActionResult GetTestByGroupId(int groupID)
+        {
+            TeacherDataAccess teacher = new TeacherDataAccess();
+            Mapper mapper = new Mapper();
+            List<TestDTO> tests = teacher.GetTestByGroupId(groupID);
+            if (tests == null) return BadRequest("Группы не существет");
+            return Ok(mapper.ConvertTestDTOToTestModelList(teacher.GetTestByGroupId(groupID)));
+
+            //TestOutputModel model = mapper.ConvertTestDTOToTestOutputModel(teacher.GetTestByGroupId(tests));
+            //return Json(model);
+        }
+
     }
 }
