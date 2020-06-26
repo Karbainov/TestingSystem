@@ -12,6 +12,7 @@ using TestingSystem.Data;
 using TestingSystem.Data.StoredProcedure;
 using TestingSystem.API.Models.Output;
 using TestingSystem.API.Models.Input;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TestingSystem.API.Controllers
 {
@@ -26,7 +27,8 @@ namespace TestingSystem.API.Controllers
             _logger = logger;
         }
 
-        [HttpGet("admin")]
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
         public IActionResult GetAllGroups()
         {         
             AdminDataAccess adm = new AdminDataAccess();
@@ -63,9 +65,10 @@ namespace TestingSystem.API.Controllers
                 return Json(groupOutputModels);
             }
         }
-        
+
+        [Authorize(Roles = "Admin")]
         [HttpPost]
-        public void GroupPost([FromBody]GroupInputModel groupC)
+        public void PostGroup([FromBody]GroupInputModel groupC)
         {
             Mapper mapper = new Mapper();
             GroupDTO groupDTO = mapper.ConvertGroupInputModelToGroupDTO(groupC);
@@ -73,34 +76,9 @@ namespace TestingSystem.API.Controllers
             group.GroupCreate(groupDTO);
         }
 
-        [HttpGet("{id}")]
-        public IActionResult GetGroupById(int id)
-        {
-            Mapper mapper = new Mapper();
-            AdminDataAccess adm = new AdminDataAccess();
-            GroupDTO group = adm.GetGroupById(id);
-            if (group == null) { return new BadRequestObjectResult("Группы с таким id не существует"); }
-            else {
-                return Json(mapper.ConvertGroupDTOToGroupOutputModel(group)); 
-            }
-        }
-        
-        [HttpPost("{groupID}/student/{userID}")]
-        public void PostStudentInGroup(int userId, int groupId)
-        {
-            AdminDataAccess adm = new AdminDataAccess();
-            adm.StudentAddInGroup(userId, groupId);
-        }
-        
-        [HttpPost("{groupID}/teacher/{userID}")]
-        public void PostTeacherInGroup(int userId, int groupId)
-        {
-            AdminDataAccess adm = new AdminDataAccess();
-            adm.TeacherAdd(userId, groupId);
-        }
-
+        [Authorize(Roles = "Admin")]
         [HttpPut]
-        public IActionResult GroupPut([FromBody]GroupInputModel groupU)
+        public IActionResult PutGroup([FromBody]GroupInputModel groupU)
         {
             Mapper mapper = new Mapper();
             GroupDTO groupDTO = mapper.ConvertGroupInputModelToGroupDTO(groupU);
@@ -120,25 +98,58 @@ namespace TestingSystem.API.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete] //url удаляем из group
-        public void Delete([FromBody] int id)
+        public void DeleteGroup([FromBody] int id)
         {
             AdminDataAccess adm = new AdminDataAccess();
             adm.GroupDelete(id);
         }
 
-        [HttpDelete] // удаляем студента из группы
-        public void DeleteStudentFromGroup(int studentId, int groupId)
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet("{groupId}")]
+        public IActionResult GetGroupById(int groupId)
         {
+            Mapper mapper = new Mapper();
             AdminDataAccess adm = new AdminDataAccess();
-            adm.DeleteStudentFromGroup(studentId, groupId);
+            GroupDTO group = adm.GetGroupById(groupId);
+            if (group == null) { return new BadRequestObjectResult("Группы с таким id не существует"); }
+            else {
+                return Json(mapper.ConvertGroupDTOToGroupOutputModel(group)); 
+            }
         }
 
-        [HttpDelete] // удаляем учителя из группы
-        public void DeleteTeacherFromGroup(int studentId, int groupId)
+        [Authorize(Roles = "Admin")]
+        [HttpPost("{groupId}/student/{userId}")]
+        public void PostStudentInGroup(int userId, int groupId)
         {
             AdminDataAccess adm = new AdminDataAccess();
-            adm.DeleteTeacherFromGroup(studentId, groupId);
+            adm.StudentAddInGroup(userId, groupId);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost("{groupId}/teacher/{userId}")]
+        public void PostTeacherInGroup(int userId, int groupId)
+        {
+            AdminDataAccess adm = new AdminDataAccess();
+            adm.TeacherAdd(userId, groupId);
+        }
+          
+                
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("{groupId}/student/{userId}")] // удаляем студента из группы
+        public void DeleteStudentFromGroup(int groupId, int userId)
+        {
+            AdminDataAccess adm = new AdminDataAccess();
+            adm.DeleteStudentFromGroup(userId, groupId);
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("{groupId}/teacher/{userId}")] // удаляем учителя из группы
+        public void DeleteTeacherFromGroup(int userId, int groupId)
+        {
+            AdminDataAccess adm = new AdminDataAccess();
+            adm.DeleteTeacherFromGroup(userId, groupId);
         }
     }
 }
