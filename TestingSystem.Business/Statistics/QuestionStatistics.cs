@@ -34,8 +34,7 @@ namespace TestingSystem.Business.Statistics
         public Dictionary<int, double> GetPercentOfAnswerToQuestion(int quId) 
         {
             Dictionary<int, int> answers = CountNumberOfAnswersInAttemptByQuestionId(quId);
-            Dictionary<int, double> answersPercent = new Dictionary<int, double> ();
-            int aCount = 0;
+            Dictionary<int, double> answersPercent = new Dictionary<int, double> ();            
             List<int> attemptId = new List<int>();
 
             foreach (var record in info.IdInfo)
@@ -43,23 +42,12 @@ namespace TestingSystem.Business.Statistics
                 if (record.QuestionId == quId && !attemptId.Contains(record.AttemptId))
                 {
                     attemptId.Add(record.AttemptId);
-                }
-                //if (record.QuestionId == quId)
-                //{
-                    
-                //    aCount = attemptId.Count;
-                //    //if (record.QuestionId == quId)
-                //    //{
-                //    //    aCount++;
-                //    //}
-                //}
+                }                
             }
             foreach (var i in answers) 
-            {
-                int a = i.Key;
-                int sum = i.Value;
-                double result = sum / attemptId.Count * 100;
-                answersPercent.Add(a, result);
+            {             
+                double result = ((double)i.Value / attemptId.Count * 100);
+                answersPercent.Add(i.Key, result);
             }
             return answersPercent;
         }

@@ -52,20 +52,44 @@ namespace TestingSystem.Business.Statistics
             return avg;
         }
 
-        public PassedFailedModel GetPassedFailedStats(int id)
+        public List<double> GetPassedFailedStats(int id)
         {
             List<int> results = GetAllResults(id);
-            PassedFailedModel pf = new PassedFailedModel();
+            List<double> pfs = new List<double>();
+            double p = 0;
+            double f = 0;
+            double s;
             int successScore = info.TestSuccessScores[id];
             foreach(int result in results)
             {
                 if (result >= successScore)
-                    pf.Passed++;
+                {
+                    p++;
+                }
                 else
-                    pf.Failed++;
+                {
+                    f++;
+                }
+                
             }
-            pf.SuccessRate = (double)pf.Passed / (pf.Passed + pf.Failed) * 100;
-            return pf;
+            s = (double)p / (p + f) * 100;
+            pfs.Add(p);
+            pfs.Add(f);
+            pfs.Add(s);
+            return pfs;
+
+
+            //PassedFailedModel pf = new PassedFailedModel();
+            //int successScore = info.TestSuccessScores[id];
+            //foreach (int result in results)
+            //{
+            //    if (result >= successScore)
+            //        pf.Passed++;
+            //    else
+            //        pf.Failed++;
+            //}
+            //pf.SuccessRate = pf.Passed / (pf.Passed + pf.Failed) * 100;
+            //return pf;
         }
     }
 }

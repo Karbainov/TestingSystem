@@ -24,14 +24,14 @@ namespace TestingSystem.Business.Tests
 
         [TestCase(1)]
         [TestCase(7)]
-        [TestCase(3)]
+        [TestCase(6)]
         
         public void GetPassedFailedStatsTest(int id)
         {
             TestStatistics statistic = new TestStatistics(id);
-            PassedFailedModel actual = statistic.GetPassedFailedStats(id);
+            List<double> actual = statistic.GetPassedFailedStats(id);
             TestMock test = new TestMock();
-            PassedFailedModel expected = test.GetPassedFailed(id);
+            List<double> expected = test.GetPassedFailed(id);
             Assert.AreEqual(expected, actual);
         }
 
