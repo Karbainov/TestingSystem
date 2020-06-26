@@ -15,5 +15,7 @@ namespace TestingSystem.API.Models.Output
         public string TestName { get; set; }
         public string Question { get; set; }
         public Boolean Processed { get; set; }
+
+        public List<AnswerOutputModel> Answers { get; set; }
     }
 }

@@ -78,19 +78,21 @@ namespace TestingSystem.API.Controllers
             AuthorDataAccess feedbacks = new AuthorDataAccess();
             var feedback = feedbacks.GetFeedbackById(feedbackId);
             if (feedback == null) return BadRequest("Фитбека не существует");
-            return Ok(mapper.ConvertFeedbackQuestionDTOToFeedbackQuestionOutputModel(feedbacks.GetFeedbackWithQuestion(feedbackId)));
+            FeedbackQuestionOutputModel model = mapper.ConvertFeedbackQuestionDTOToFeedbackQuestionOutputModel(feedbacks.GetFeedbackWithQuestion(feedbackId));
+            model.Answers = mapper.ConvertAnswerDTOToAnswerModelList(feedbacks.GetAllAnswersByFeedbackId(feedbackId));
+            return Ok(model);
         }
 
-        [Authorize(Roles = "Author")]
-        [HttpGet("answers-by-feedback/{feedbackId}")]
-        public ActionResult<List<AnswerOutputModel>> GetAllAnswersByFeedbackId(int feedbackId)    //список ответов на вопрос, к которому написан фидбэк
-        {
-            Mapper mapper = new Mapper();
-            AuthorDataAccess answers = new AuthorDataAccess();
-            var feedback = answers.GetFeedbackById(feedbackId);
-            if (feedback == null) return BadRequest("Фитбека не существует");
-            return Ok(mapper.ConvertAnswerDTOToAnswerModelList(answers.GetAllAnswersByFeedbackId(feedbackId)));
-        }
+        //[Authorize(Roles = "Author")]
+        //[HttpGet("answers-by-feedback/{feedbackId}")]
+        //public ActionResult<List<AnswerOutputModel>> GetAllAnswersByFeedbackId(int feedbackId)    //список ответов на вопрос, к которому написан фидбэк
+        //{
+        //    Mapper mapper = new Mapper();
+        //    AuthorDataAccess answers = new AuthorDataAccess();
+        //    var feedback = answers.GetFeedbackById(feedbackId);
+        //    if (feedback == null) return BadRequest("Фитбека не существует");
+        //    return Ok(mapper.ConvertAnswerDTOToAnswerModelList(answers.GetAllAnswersByFeedbackId(feedbackId)));
+        //}
 
         [Authorize(Roles = "Author")]
         [HttpPut("update-processe/{feedbackId}")]
