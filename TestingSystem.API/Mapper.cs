@@ -116,6 +116,31 @@ namespace TestingSystem.API
             }
             return result;
         }
+
+        public List<GroupWithStudentsOutputModel> ConvertTeacherGroupsWithStudentsDTOToGroupWithStudentsOutputModel(List<TeacherGroupsWithStudentsDTO> groups)
+        {
+            List<GroupWithStudentsOutputModel> result = new List<GroupWithStudentsOutputModel>();
+            foreach(var g in groups)
+            {
+                if (g != null)
+                {
+                    result.Add(new GroupWithStudentsOutputModel()
+                    {
+                        GroupId = g.GroupID,
+                        GroupName = g.GroupName,
+                        StartDate = g.StartDate,
+                        EndDate = g.EndDate/*,
+                        Students = g.(new UserOutputModel()
+                        {
+                            ID = g.StudentID,
+                            Email = g.StudentEmail,
+                            Phone = g.StudentPhone
+                        })*/
+                    });
+                }
+                return result;
+            }
+        }
         public List<QuestionOutputModel> ConvertQuestionForOneToManyDTOToQuestionModelList(List<QuestionForOneToManyDTO> dtoList)
         {
             List<QuestionOutputModel> modelList = new List<QuestionOutputModel>();
