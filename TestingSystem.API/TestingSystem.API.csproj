@@ -7,7 +7,7 @@
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'TestingSystem.Controllers' ">
     <StartAction>Project</StartAction>
     <ExternalConsole>true</ExternalConsole>
-    <LaunchUrl>weatherforecast</LaunchUrl>
+    <LaunchUrl>testingsystem</LaunchUrl>
     <ApplicationURL>https://localhost:5001;http://localhost:5000</ApplicationURL>
   </PropertyGroup>
   <ItemGroup>

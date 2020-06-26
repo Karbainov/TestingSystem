@@ -45,7 +45,10 @@ namespace TestingSystem.API
             List<string> userRoles = new List<string>();
             foreach(RoleIdDTO n in user.Roles)
             {
-                userRoles.Add(n.Name);
+                if (n != null)
+                {
+                    userRoles.Add(n.Name);
+                }
             }
             UserWithRolesOutputModel userOut = new UserWithRolesOutputModel(user.Id, user.FirstName, user.LastName, user.BirthDate, user.Login, user.Password, user.Email, user.Phone, userRoles);
             return userOut;

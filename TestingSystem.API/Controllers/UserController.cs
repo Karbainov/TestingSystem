@@ -103,11 +103,11 @@ namespace TestingSystem.API.Controllers
         {
             UserMapper mapper = new UserMapper();
             AdminDataAccess adm = new AdminDataAccess();
-            UserOutputModel user = new UserOutputModel();
-            UserDTO getUser = adm.GetUserByID(id);
+            UserWithRolesOutputModel user = new UserWithRolesOutputModel();
+            UserPositionDTO getUser = adm.GetUserWithRolesByUserId(id);
             if (getUser == null) { return BadRequest("Такого пользователя не существует"); }
             else {
-                user = mapper.ConvertUserDTOToUserOutputModel(getUser);
+                user = mapper.ConvertUserPositionDTOToUserWithRolesOutputModel(getUser);
                 return Json(user); 
             }
         }
