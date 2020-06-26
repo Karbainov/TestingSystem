@@ -159,5 +159,15 @@ namespace TestingSystem.API.Controllers
             Mapper mapper = new Mapper();
             return Ok(mapper.ConvertTeacherGroupsWithStudentsDTOToGroupWithStudentsOutputModel(teacher.GetGroupsWithStudentsByTeacherID(id)));
         }
+
+        [Authorize(Roles = "Teacher")]
+        [HttpPost("test")]
+        public IActionResult PostTestForGroup([FromBody]TestGroupInputModel test)
+        {
+            Mapper mapper = new Mapper();
+            TeacherDataAccess teacher = new TeacherDataAccess();
+            int id = teacher.SetTestForGroup(mapper.ConvertTestGroupInputModelToTestGroupDTO(test));
+            return Ok(id);
+        }
     }
 }

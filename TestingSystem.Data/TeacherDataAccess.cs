@@ -126,10 +126,10 @@ namespace TestingSystem.Data
         }
 
        
-        public void SetTestForGroup(TestGroupDTO testgroup)   // метод - назначить тест - записать из круда
+        public int SetTestForGroup(TestGroupDTO testgroup)   // метод - назначить тест - записать из круда
         {
             TestGroupCRUD teacher = new TestGroupCRUD();
-            teacher.Add(testgroup);
+            return teacher.Add(testgroup);
         }
         public List<QuestionAnswerDTO> GetAllAnswerByAttemptId(int attemptId)
         {
