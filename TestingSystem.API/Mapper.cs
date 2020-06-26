@@ -25,6 +25,60 @@ namespace TestingSystem.API
                 QuestionNumber = testDTO.QuestionNumber,
             };
         }
+        public BestAttemptModel ConverUserTestWithQuestionsAndAnswersDTOToBestAttemptModel(UserTestWithQuestionsAndAnswersDTO dTO)
+        {
+            return new BestAttemptModel()
+            {
+                FirstName = dTO.FirstName,
+                LastName = dTO.LastName,
+                NumberOfAttempt = dTO.NumAttempt,
+                Result = dTO.Result,
+                TestID = dTO.TestID,
+                SuccessScore = dTO.SuccessScore,
+                TestName = dTO.TestName,
+                UserID = dTO.UserID,
+                Questions = ConvertQuestionWithAnswersDTOToQuestionOutputModel(dTO.Questions)
+            };
+
+        }
+
+        public List<QuestionOutputModel> ConvertQuestionWithAnswersDTOToQuestionOutputModel(List<QuestionWithAnswersDTO> questions)
+        {
+            List<QuestionOutputModel> result = new List<QuestionOutputModel>();
+            foreach(var a in questions)
+            {
+                if (a != null) 
+                {
+
+                    QuestionOutputModel tmp = new QuestionOutputModel()
+                    {
+                        AnswerCount = a.AnswersCount,
+                        ID = a.IDQuestion,
+                        Value = a.Value,
+                        Weight = a.Weight,
+                        Answers = ConvertAnswerDTOToAnswerModelList(a.Answers),
+                        
+
+                    };
+                    switch(a.Type)
+                    {
+                        case 0:
+                            tmp.Type = QuestionType.SingleAnswer;
+                            break;
+                        case 1:
+                            tmp.Type = QuestionType.MultipleAnswer;
+                            break;
+                        case 2:
+                            tmp.Type = QuestionType.TextAnswer;
+                            break;
+                    }
+
+                    result.Add(tmp);
+                }
+               
+            }
+            return result;
+        }
         public TestOutputModel ConvertTestQuestionTagDTOToTestOutputModel(TestQuestionTagDTO testDTO)
         {
             if (testDTO != null)

@@ -377,5 +377,20 @@ namespace TestingSystem.API.Controllers
             saver.CreateAttemptResult(mapper.ConvertConcreteAttemptInputModelToConcreteAttemptBusinessModel(concreteAttempt));
             return new OkResult();
         }
+        [Authorize(Roles ="Teacher")]
+        [HttpGet("{testid}/{userid}/Res")]
+        public ActionResult GetUserResultByTestIdUserId(int testid,int userid)
+        {
+            if(new TestCRUD().GetById(testid)==null)
+            {
+                return BadRequest("Теста с таким id не существует");
+            }
+            if(new UserCRUD().GetByID(userid)==null)
+            {
+                return BadRequest("Пользователя с таким id не существует");
+            }
+            TeacherDataAccess access = new TeacherDataAccess();
+            return Ok(new Mapper().ConverUserTestWithQuestionsAndAnswersDTOToBestAttemptModel(access.GetAttemptsByUserIdTestId(userid, testid)));
+        }
     }
 }
