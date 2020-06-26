@@ -11,7 +11,7 @@ namespace TestingSystem.API.Models.Input
         public int ID { get; set; }
         public int TestID { get; set; }
         public string Value { get; set; }
-        public QuestionType? TypeID { get; set; }
+        public int? TypeID { get; set; }
         public byte? AnswersCount { get; set; }
         public byte? Weight { get; set; }
     }
