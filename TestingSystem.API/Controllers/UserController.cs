@@ -34,7 +34,7 @@ namespace TestingSystem.API.Controllers
             AdminDataAccess adm = new AdminDataAccess();
             List<UserPositionDTO> users = adm.GetUsersWithRoles();
             UserMapper mapper = new UserMapper();
-            return Json(mapper.ConvertUserPositionDTOsToUserWithRolesOutputModels(users));
+            return Ok(mapper.ConvertUserPositionDTOsToUserWithRolesOutputModels(users));
         }
 
         [Authorize(Roles = "Admin")]
@@ -51,6 +51,31 @@ namespace TestingSystem.API.Controllers
             if (result == 1)
             {
                 return Ok("Пользователь обновлён");
+            }
+            else
+            {
+                return BadRequest("Ошибка базы данных");
+            }
+        }
+        
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("{userId}")]
+        public IActionResult DeleteUserById(int userId)
+        {
+            UserMapper mapper = new UserMapper();
+            AdminDataAccess adm = new AdminDataAccess();
+            int result = adm.UserDelete(userId);
+            if (result == 0)
+            {
+                return BadRequest("Такого пользователя не существует");
+            }
+            if (result == 1)
+            {
+                return Ok("Пользователь удален");
+            }
+            if (result == 2)
+            {
+                return Ok("Пользователь был удален ранее");
             }
             else
             {
@@ -109,7 +134,7 @@ namespace TestingSystem.API.Controllers
             else
             {
                 user = mapper.ConvertUserPositionDTOToUserWithRolesOutputModel(getUser);
-                return Json(user);
+                return Ok(user);
             }
         }
 
@@ -122,7 +147,7 @@ namespace TestingSystem.API.Controllers
             List<TestAttemptDTO> tests = student.GetCompleteTests(userId);
             tests.AddRange(student.GetIncompleteTests(userId));
             StudentOutputModel model = mapper.ConvertUserDTOTestAttemptDTOToStudentModel(student.GetUser(userId), mapper.ConvertTestAttemptDTOToTestAttemptModel(tests));
-            return Json(model);
+            return Ok(model);
         }
 
         [Authorize(Roles = "Admin")]
@@ -133,7 +158,7 @@ namespace TestingSystem.API.Controllers
             Mapper mapper = new Mapper();
             UserIdTestIdDTO dTO = new UserIdTestIdDTO(userId, testId);
             List<AttemptResultOutputModel> model = mapper.ConvertAttemptDTOToAttemptModel(student.GetAttemptsByUserIdTestId(dTO));
-            return Json(model);
+            return Ok(model);
         }
 
         [Authorize(Roles = "Admin")]
@@ -145,7 +170,7 @@ namespace TestingSystem.API.Controllers
             TeacherDataAccess teacher = new TeacherDataAccess();
             Mapper mapper = new Mapper();
             List<QuestionAnswerOutputModel> model = mapper.ConvertQuestionAnswerDTOToQuestionAnswerModel(teacher.GetQuestionAndAnswerByAttempt(attemptID));
-            return Json(model);
+            return Ok(model);
         }
 
         [Authorize(Roles = "Admin")]
@@ -179,7 +204,7 @@ namespace TestingSystem.API.Controllers
                 rolesOut.Add(mapper.ConvertRoleDTOToRoleOutputModel(r));
             }
 
-            return Json(rolesOut);
+            return Ok(rolesOut);
         }
 
         [Authorize(Roles = "Admin")]
@@ -195,7 +220,7 @@ namespace TestingSystem.API.Controllers
             {
                 allUsers.Add(mapper.ConvertUserDTOToUserOutputModel(user));
             }
-            return Json(allUsers);
+            return Ok(allUsers);
         }
         
         
@@ -214,14 +239,15 @@ namespace TestingSystem.API.Controllers
             return Ok("Роль пользователя удалена");
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("{groupID}/groupTests")]
-        public IActionResult GetTestByGroupId(int groupID)
+        public IActionResult GetTestByGroupId(int groupId)
         {
             TeacherDataAccess teacher = new TeacherDataAccess();
             Mapper mapper = new Mapper();
-            List<TestDTO> tests = teacher.GetTestByGroupId(groupID);
+            List<TestDTO> tests = teacher.GetTestByGroupId(groupId);
             if (tests == null) return BadRequest("Группы не существет");
-            return Ok(mapper.ConvertTestDTOToTestModelList(teacher.GetTestByGroupId(groupID)));
+            return Ok(mapper.ConvertTestDTOToTestModelList(teacher.GetTestByGroupId(groupId)));
 
             //TestOutputModel model = mapper.ConvertTestDTOToTestOutputModel(teacher.GetTestByGroupId(tests));
             //return Json(model);

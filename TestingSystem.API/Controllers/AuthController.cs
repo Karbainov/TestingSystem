@@ -52,7 +52,7 @@ namespace TestingSystem.API.Controllers
             }
             else
             {
-                return null;
+                return BadRequest("Введена неверная пара логин-пароль");
             }
         }
 

@@ -41,10 +41,11 @@ namespace TestingSystem.Data
             int result = user.Update(userU);
             return result;
         }
-        public void UserDelete(int id)
+        public int UserDelete(int id)
         {
             UserCRUD user = new UserCRUD();
-            user.Delete(id);
+            int result = user.Delete(id);
+            return result;
         }
         public void GroupCreate(GroupDTO groupC)
         {
