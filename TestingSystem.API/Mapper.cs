@@ -129,7 +129,7 @@ namespace TestingSystem.API
                         GroupName = g.GroupName,
                         StartDate = g.StartDate,
                         EndDate = g.EndDate,
-                        Students = new UserMapper().ConvertListUserDTOToListUserOutputModel(g.Students)
+                        Students = new UserMapper().ConvertListUserDTOToListStudentsGroupOutputModel(g.Students)
                     });
                 }
             }
