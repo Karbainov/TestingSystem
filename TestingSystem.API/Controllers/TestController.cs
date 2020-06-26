@@ -389,7 +389,7 @@ namespace TestingSystem.API.Controllers
         public ActionResult GetUserResultByTestIdUserId(int testid,int userid)
         {
             TeacherDataAccess access = new TeacherDataAccess();
-            return Ok( access.GetAttemptsByUserIdTestId(userid, testid));
+            return Ok(new Mapper().ConverUserTestWithQuestionsAndAnswersDTOToBestAttemptModel(access.GetAttemptsByUserIdTestId(userid, testid)));
         }
     }
 }
