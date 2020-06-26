@@ -374,5 +374,17 @@ namespace TestingSystem.API.Controllers
             saver.CreateAttemptResult(mapper.ConvertConcreteAttemptInputModelToConcreteAttemptBusinessModel(concreteAttempt));
             return new OkResult();
         }
+
+        [HttpGet("{testID}/correctAnswers3")]
+        public IActionResult GetCorrectAnswersByTestId(int testId)
+        {
+            TeacherDataAccess teacher = new TeacherDataAccess();
+            Mapper mapper = new Mapper();
+
+            List<QuestionAnswerDTO> tests = teacher.GetCorrectAnswerByTestId(testId);
+            if (tests == null) return BadRequest("Теста не существует");
+            return Ok(mapper.ConvertQuestionAnswerDTOToQuestionAnswerModel(teacher.GetCorrectAnswerByTestId(testId)));
+
+        }
     }
 }
