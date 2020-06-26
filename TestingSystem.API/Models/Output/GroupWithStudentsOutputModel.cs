@@ -11,6 +11,6 @@ namespace TestingSystem.API.Models.Output
         public string GroupName { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public List<StudentOutputModel> Students { get; set; }
+        public List<UserOutputModel> Students { get; set; }
     }
 }
