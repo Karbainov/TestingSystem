@@ -20,13 +20,12 @@ namespace TestingSystem.Data.StoredProcedure
             }
            
         }
-
         public List<TeacherGroupsWithStudentsDTO> GetGroupsWithStudentsByTeacherID(int teacherID)
         {
             using(IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "GetTeacherGroupsWithStudentsById @TeacherID";
-                return connection.Query<TeacherGroupsWithStudentsDTO>(sqlExpression, new { teacherID }).ToList();
+                return connection.Query<TeacherGroupsWithStudentsDTO>(sqlExpression, new { teacherID }, commandType: CommandType.StoredProcedure).ToList();
             }
         }
         public List<UserDTO> GetAllStudents(int id)

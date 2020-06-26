@@ -13,7 +13,11 @@ namespace TestingSystem.Data
 {
     public class TeacherDataAccess
     {
-                
+        public List<TeacherGroupsWithStudentsDTO> GetGroupsWithStudentsByTeacherId(int teacherId)
+        {
+            GroupManager teacher = new GroupManager();
+            return teacher.GetGroupsWithStudentsByTeacherID(teacherId);
+        }
         public List<GroupDTO> GetGroupsAndStudentsByTeacherId(int teacherId) // уничтожили GetGroupByTeacherID. в группе создать свойство листюзеров 
         {
            UserManager teacher = new UserManager();
