@@ -145,46 +145,6 @@ namespace TestingSystem.API.Controllers
             return Ok("Роль пользователя удалена");
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
-        {
-            AdminDataAccess adm = new AdminDataAccess();
-            var user = adm.GetUserByID(id);
-            if (user == null) return BadRequest("Пользователя не существует");
-            adm.UserDelete(id);
-            return Ok("Пользователь удалён");
-        }
-        
-        [HttpGet("{UserID}/test")]
-        public IActionResult GetStudentTests(int UserID)
-        {
-            StudentDataAccess student = new StudentDataAccess();
-            Mapper mapper = new Mapper();
-            List<TestAttemptDTO> tests = student.GetCompleteTests(UserID);
-            tests.AddRange(student.GetIncompleteTests(UserID));
-            StudentOutputModel model = mapper.ConvertUserDTOTestAttemptDTOToStudentModel(student.GetUser(UserID), mapper.ConvertTestAttemptDTOToTestAttemptModel(tests));
-            return Json(model);
-        }
-        [HttpGet("{UserID}/test/{TestID}")]
-        public IActionResult GetAttemptsByUserIDTestID(int UserID, int TestID)
-        {
-            StudentDataAccess student = new StudentDataAccess();
-            Mapper mapper = new Mapper();
-            UserIdTestIdDTO dTO = new UserIdTestIdDTO(UserID, TestID);
-            List <AttemptResultOutputModel> model = mapper.ConvertAttemptDTOToAttemptModel(student.GetAttemptsByUserIdTestId(dTO));
-            return Json(model);
-        }
-        [HttpGet("Attempt/{AttemptID}")]
-        public IActionResult GetQuestionAndAnswerByAttemptID(int attemptID)
-        {
-            AttemptCRUD attempt = new AttemptCRUD();
-            if(!attempt.GetAll().Any(a=>a.id==attemptID)) return BadRequest("Не существующий номер попытки");
-            TeacherDataAccess teacher = new TeacherDataAccess();
-            Mapper mapper = new Mapper();
-            List<QuestionAnswerOutputModel> model = mapper.ConvertQuestionAnswerDTOToQuestionAnswerModel(teacher.GetQuestionAndAnswerByAttempt(attemptID));
-            return Json(model);
-        }
-
         [HttpGet("{groupID}/groupTests")]
         public IActionResult GetTestByGroupId(int groupID)
         {
