@@ -16,63 +16,18 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace TestingSystem.API.Controllers
 {
-        [ApiController]
-        [Route("[controller]")]
+    [ApiController]
+    [Route("[controller]")]
     public class UserController : Controller
     {
-        private readonly ILogger<GroupController> _logger;
+        private readonly ILogger<UserController> _logger;
 
-        public UserController(ILogger<GroupController> logger)
+        public UserController(ILogger<UserController> logger)
         {
             _logger = logger;
         }
 
-        [HttpPost]
-        public IActionResult PostUser([FromBody] UserInputModel user)
-        {
-            if(string.IsNullOrWhiteSpace(user.FirstName)) return BadRequest("Вы не написали имя");
-            if (string.IsNullOrWhiteSpace(user.LastName)) return BadRequest("Вы не написали фамилию");
-            if (string.IsNullOrWhiteSpace(user.Login)) return BadRequest("Введите логин");
-            if (string.IsNullOrWhiteSpace(user.Password)) return BadRequest("Введите пароль");
-            if (string.IsNullOrWhiteSpace(user.Email)) return BadRequest("Введите почту");
-            if (string.IsNullOrWhiteSpace(user.Phone)) return BadRequest("Напишите номер телефона");
-            UserMapper mapper = new UserMapper();
-            AdminDataAccess adm = new AdminDataAccess();
-            adm.UserCreate(mapper.ConvertUserInputModelToUserDTO(user));
-            return Ok("Пользователь создан успешно");
-        }
-        
-        [HttpPost("role")]
-        public IActionResult PostUserRole([FromBody] UserRoleInputModel userRole)
-        {
-            UserMapper mapper = new UserMapper();
-            AdminDataAccess adm = new AdminDataAccess();
-            var user = adm.GetUserByID(userRole.UserID);
-            if (user == null) return BadRequest("Пользователя не существует");
-            var role = adm.GetRoleByRoleID(userRole.RoleID);
-            if (role == null) return BadRequest("Такой роли не существует");
-            List<UserRoleDTO> roles = adm.GetRolesByUserId(userRole.UserID);
-            UserRoleDTO rl = mapper.ConvertUserRoleInputModelToUserRoleDTO(userRole);
-            if (roles.Contains(rl)) return Ok("Данная роль для пользователя уже создана");
-            adm.UserRoleCreate(mapper.ConvertUserRoleInputModelToUserRoleDTO(userRole));
-            return Ok("Роль пользователя создана");
-        }
-        
-        [HttpGet("role")]
-        public IActionResult GetRole()
-        {
-            UserMapper mapper = new UserMapper();
-            AdminDataAccess adm = new AdminDataAccess();
-            List<RoleDTO> roles = adm.GetRoles();
-            List<RoleOutputModel> rolesOut = new List<RoleOutputModel>();
-            foreach (RoleDTO r in roles)
-            {
-                rolesOut.Add(mapper.ConvertRoleDTOToRoleOutputModel(r));
-            }
-
-            return Json(rolesOut);
-        }
-        
+        //[Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult GetAllUsersWithRoles()
         {
@@ -81,39 +36,10 @@ namespace TestingSystem.API.Controllers
             UserMapper mapper = new UserMapper();
             return Json(mapper.ConvertUserPositionDTOsToUserWithRolesOutputModels(users));
         }
-        
-        
-        [HttpGet("role/{roleID}")]
-        public IActionResult GetUsersByRoleID(int roleID)
-        {
-            AdminDataAccess adm = new AdminDataAccess();
-            List<UserOutputModel> allUsers = new List<UserOutputModel>();
-            UserMapper mapper = new UserMapper();
-            var role = adm.GetRoleByRoleID(roleID);
-            if (role == null) return BadRequest("Такой роли не существует");
-            foreach (UserDTO user in adm.GetUsersByRoleID(roleID))
-            {
-                allUsers.Add(mapper.ConvertUserDTOToUserOutputModel(user));
-            }
-            return Json(allUsers);
-        }
-        
-        [HttpGet("{id}")]
-        public IActionResult GetUserById(int id)
-        {
-            UserMapper mapper = new UserMapper();
-            AdminDataAccess adm = new AdminDataAccess();
-            UserOutputModel user = new UserOutputModel();
-            UserDTO getUser = adm.GetUserByID(id);
-            if (getUser == null) { return BadRequest("Такого пользователя не существует"); }
-            else {
-                user = mapper.ConvertUserDTOToUserOutputModel(getUser);
-                return Json(user); 
-            }
-        }
 
+        //[Authorize(Roles = "Admin")]
         [HttpPut]
-        public IActionResult Put([FromBody] UserInputModel user)
+        public IActionResult PutUserById([FromBody] UserInputModel user)
         {
             UserMapper mapper = new UserMapper();
             AdminDataAccess adm = new AdminDataAccess();
@@ -131,65 +57,159 @@ namespace TestingSystem.API.Controllers
                 return BadRequest("Ошибка базы данных");
             }
         }
-        
+
+        //[Authorize(Roles = "Admin")]
+        [HttpPost]
+        public IActionResult PostUser([FromBody] UserInputModel user)
+        {
+            if (string.IsNullOrWhiteSpace(user.FirstName)) return BadRequest("Вы не написали имя");
+            if (string.IsNullOrWhiteSpace(user.LastName)) return BadRequest("Вы не написали фамилию");
+            if (string.IsNullOrWhiteSpace(user.Login)) return BadRequest("Введите логин");
+            if (string.IsNullOrWhiteSpace(user.Password)) return BadRequest("Введите пароль");
+            if (string.IsNullOrWhiteSpace(user.Email)) return BadRequest("Введите почту");
+            if (string.IsNullOrWhiteSpace(user.Phone)) return BadRequest("Напишите номер телефона");
+            UserMapper mapper = new UserMapper();
+            AdminDataAccess adm = new AdminDataAccess();
+            adm.UserCreate(mapper.ConvertUserInputModelToUserDTO(user));
+            return Ok("Пользователь создан успешно");
+        }
+
+        //[Authorize(Roles = "Admin")]
+        [HttpDelete("userId")]
+        public IActionResult Delete(int userId)
+        {
+            AdminDataAccess adm = new AdminDataAccess();
+            var user = adm.GetUserByID(userId);
+            if (user == null) return BadRequest("Пользователя не существует");
+            adm.UserDelete(userId);
+            return Ok("Пользователь удалён");
+        }
+
+        //[Authorize(Roles = "Admin")]
+        //[HttpDelete]
+        //public IActionResult Delete([FromBody] int id)
+        //{
+        //    AdminDataAccess adm = new AdminDataAccess();
+        //    var user = adm.GetUserByID(id);
+        //    if (user == null) return BadRequest("Пользователя не существует");
+        //    adm.UserDelete(id);
+        //    return Ok("Пользователь удалён");
+        //}
+        //[Authorize(Roles = "Admin")]
+        [HttpGet("{userId}")]
+        public IActionResult GetUserById(int userId)
+        {
+            UserMapper mapper = new UserMapper();
+            AdminDataAccess adm = new AdminDataAccess();
+            UserOutputModel user = new UserOutputModel();
+            UserDTO getUser = adm.GetUserByID(userId);
+            if (getUser == null) { return BadRequest("Такого пользователя не существует"); }
+            else
+            {
+                user = mapper.ConvertUserDTOToUserOutputModel(getUser);
+                return Json(user);
+            }
+        }
+
+        //[Authorize(Roles = "Admin")]
+        [HttpGet("{userId}/test")]
+        public IActionResult GetStudentTestsByUserId(int userId)
+        {
+            StudentDataAccess student = new StudentDataAccess();
+            Mapper mapper = new Mapper();
+            List<TestAttemptDTO> tests = student.GetCompleteTests(userId);
+            tests.AddRange(student.GetIncompleteTests(userId));
+            StudentOutputModel model = mapper.ConvertUserDTOTestAttemptDTOToStudentModel(student.GetUser(userId), mapper.ConvertTestAttemptDTOToTestAttemptModel(tests));
+            return Json(model);
+        }
+
+        //[Authorize(Roles = "Admin")]
+        [HttpGet("{userId}/test/{testId}")]
+        public IActionResult GetAttemptsByUserIdTestId(int userId, int testId)
+        {
+            StudentDataAccess student = new StudentDataAccess();
+            Mapper mapper = new Mapper();
+            UserIdTestIdDTO dTO = new UserIdTestIdDTO(userId, testId);
+            List<AttemptResultOutputModel> model = mapper.ConvertAttemptDTOToAttemptModel(student.GetAttemptsByUserIdTestId(dTO));
+            return Json(model);
+        }
+
+        //[Authorize(Roles = "Admin")]
+        [HttpGet("{userId}/test/attempt/{attemptId}")]
+        public IActionResult GetQuestionAndAnswerByAttemptID(int attemptID)
+        {
+            AttemptCRUD attempt = new AttemptCRUD();
+            if (!attempt.GetAll().Any(a => a.id == attemptID)) return BadRequest("Не существующий номер попытки");
+            TeacherDataAccess teacher = new TeacherDataAccess();
+            Mapper mapper = new Mapper();
+            List<QuestionAnswerOutputModel> model = mapper.ConvertQuestionAnswerDTOToQuestionAnswerModel(teacher.GetQuestionAndAnswerByAttempt(attemptID));
+            return Json(model);
+        }
+
+        //[Authorize(Roles = "Admin")]
+        [HttpPost("role")]
+        public IActionResult PostRoleIdToUserId([FromBody] UserRoleInputModel userRole)
+        {
+            UserMapper mapper = new UserMapper();
+            AdminDataAccess adm = new AdminDataAccess();
+            var user = adm.GetUserByID(userRole.UserID);
+            if (user == null) return BadRequest("Пользователя не существует");
+            var role = adm.GetRoleByRoleID(userRole.RoleID);
+            if (role == null) return BadRequest("Такой роли не существует");
+            List<UserRoleDTO> roles = adm.GetRolesByUserId(userRole.UserID);
+            UserRoleDTO rl = mapper.ConvertUserRoleInputModelToUserRoleDTO(userRole);
+            if (roles.Contains(rl)) return Ok("Данная роль для пользователя уже создана");
+            adm.UserRoleCreate(mapper.ConvertUserRoleInputModelToUserRoleDTO(userRole));
+            return Ok("Роль пользователя создана");
+        }
+
+
+        //[Authorize(Roles = "Admin")]
+        [HttpGet("role")]
+        public IActionResult GetRole()
+        {
+            UserMapper mapper = new UserMapper();
+            AdminDataAccess adm = new AdminDataAccess();
+            List<RoleDTO> roles = adm.GetRoles();
+            List<RoleOutputModel> rolesOut = new List<RoleOutputModel>();
+            foreach (RoleDTO r in roles)
+            {
+                rolesOut.Add(mapper.ConvertRoleDTOToRoleOutputModel(r));
+            }
+
+            return Json(rolesOut);
+        }
+
+        //[Authorize(Roles = "Admin")]
+        [HttpGet("role/{roleID}")]
+        public IActionResult GetUsersByRoleID(int roleID)
+        {
+            AdminDataAccess adm = new AdminDataAccess();
+            List<UserOutputModel> allUsers = new List<UserOutputModel>();
+            UserMapper mapper = new UserMapper();
+            var role = adm.GetRoleByRoleID(roleID);
+            if (role == null) return BadRequest("Такой роли не существует");
+            foreach (UserDTO user in adm.GetUsersByRoleID(roleID))
+            {
+                allUsers.Add(mapper.ConvertUserDTOToUserOutputModel(user));
+            }
+            return Json(allUsers);
+        }
+
+        //[Authorize(Roles = "Admin")]
         [HttpDelete("{userId}/role/{roleId}")]
-        public IActionResult DeleteUserRole(int userId, int roleId)
+        public IActionResult DeleteRoleIdFromUserId(int userId, int roleId)
         {
             UserMapper mapper = new UserMapper();
             AdminDataAccess adm = new AdminDataAccess();
             var user = adm.GetUserByID(userId);
             if (user == null) return BadRequest("Пользователя не существует");
             List<UserRoleDTO> roles = adm.GetRolesByUserId(userId);
-            if (!roles.Any(r=> r.RoleID ==roleId )) return BadRequest("Такой роли пользователя не существует");
+            if (!roles.Any(r => r.RoleID == roleId)) return BadRequest("Такой роли пользователя не существует");
             adm.UserRoleDelete(userId, roleId);
             return Ok("Роль пользователя удалена");
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
-        {
-            AdminDataAccess adm = new AdminDataAccess();
-            var user = adm.GetUserByID(id);
-            if (user == null) return BadRequest("Пользователя не существует");
-            adm.UserDelete(id);
-            return Ok("Пользователь удалён");
-        }
-        
-        [Authorize (Roles ="Teacher, Author, Student")]
-        [HttpGet("{UserID}/test")]
-        public IActionResult GetStudentTests(int UserID)
-        {
-            StudentDataAccess student = new StudentDataAccess();
-            Mapper mapper = new Mapper();
-            List<TestAttemptDTO> tests = student.GetCompleteTests(UserID);
-            tests.AddRange(student.GetIncompleteTests(UserID));
-            if (tests == null) return BadRequest("Тесты не найдены");
-            StudentOutputModel model = mapper.ConvertUserDTOTestAttemptDTOToStudentModel(student.GetUser(UserID), mapper.ConvertTestAttemptDTOToTestAttemptModel(tests));
-            return Json(model);
-        }
 
-        [Authorize(Roles = "Teacher, Author")]
-        [HttpGet("{UserID}/test/{TestID}")]
-        public IActionResult GetAttemptsByUserIDTestID(int UserID, int TestID)
-        {
-            StudentDataAccess student = new StudentDataAccess();
-            Mapper mapper = new Mapper();
-            UserIdTestIdDTO dTO = new UserIdTestIdDTO(UserID, TestID);
-            List <AttemptResultOutputModel> model = mapper.ConvertAttemptDTOToAttemptModel(student.GetAttemptsByUserIdTestId(dTO));
-            return Json(model);
-        }
-
-        [Authorize(Roles = "Author")]
-        [HttpGet("Attempt/{AttemptID}")]
-        public IActionResult GetQuestionAndAnswerByAttemptID(int attemptID)
-        {
-            AttemptCRUD attempt = new AttemptCRUD();
-            if(!attempt.GetAll().Any(a=>a.id==attemptID)) return BadRequest("Не существующий номер попытки");
-            TeacherDataAccess teacher = new TeacherDataAccess();
-            Mapper mapper = new Mapper();
-            List<QuestionAnswerOutputModel> model = mapper.ConvertQuestionAnswerDTOToQuestionAnswerModel(teacher.GetQuestionAndAnswerByAttempt(attemptID));
-            return Json(model);
-        }
-        
     }
 }
