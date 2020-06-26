@@ -52,18 +52,18 @@ namespace TestingSystem.API.Controllers
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess feedbacks = new AuthorDataAccess();
-            var test = feedbacks.GetByIdTest(testId);
+            var test = feedbacks.GetTestById(testId);
             if (test == null) return BadRequest("Тест не существует");
-            return Ok(mapper.ConvertFeedbackDTOToFeedbackModelList(feedbacks.GetFeedbackByTest(testId)));
+            return Ok(mapper.ConvertFeedbackDTOToFeedbackModelList(feedbacks.GetFeedbackByTestId(testId)));
         }
 
         [Authorize(Roles = "Author")]
         [HttpGet("feedbacks-by-date")]    //список фидбэков конкретных дат
-        public ActionResult<List<FeedbackOutputModel>> GetFeedbackByDate(DateTimeInputModel date)
+        public ActionResult<List<FeedbackOutputModel>> GetFeedbacksByPeriod(DateTimeInputModel period)
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess feedbacks = new AuthorDataAccess();
-            return Ok(mapper.ConvertFeedbackDTOToFeedbackModelList(feedbacks.GetFeedbackByDate(date.StringConverToDateTime(date.DateTime1), date.StringConverToDateTime(date.DateTime2))));
+            return Ok(mapper.ConvertFeedbackDTOToFeedbackModelList(feedbacks.GetFeedbackByPeriod(period.StringConverToDateTime(period.PeriodStart), period.StringConverToDateTime(period.PeriodEnd))));
         }
 
 
@@ -72,7 +72,7 @@ namespace TestingSystem.API.Controllers
 
         [Authorize(Roles = "Author")]
         [HttpGet("feedback-with-question/{feedbackId}")]     //вывод фидбэка (с именем пользователя, названием теста и вопросом)
-        public ActionResult <FeedbackQuestionOutputModel> GetFeedbackWithQuestion(int feedbackId)
+        public ActionResult <FeedbackQuestionOutputModel> GetFeedbackWithQuestionByFeedbackId(int feedbackId)
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess feedbacks = new AuthorDataAccess();

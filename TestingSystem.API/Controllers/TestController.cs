@@ -35,7 +35,7 @@ namespace TestingSystem.API.Controllers
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess tests = new AuthorDataAccess();
-            return Ok(mapper.ConvertTestDTOToTestModelList(tests.GetAllTest()));
+            return Ok(mapper.ConvertTestDTOToTestModelList(tests.GetAllTests()));
         }
 
         [Authorize(Roles = "Author,Teacher")]
@@ -52,7 +52,7 @@ namespace TestingSystem.API.Controllers
             {
                 if (converter.CreateArrayFromString(sttim.Tag).Length < 3)
                 {
-                    return Json(mapper.ConvertTestDTOToTestModelList(search.GetTestVSTagSearchAnd(converter.CreateArrayFromString(sttim.Tag))));
+                    return Json(mapper.ConvertTestDTOToTestModelList(search.GetTestsVSTagSearchAnd(converter.CreateArrayFromString(sttim.Tag))));
                 }
                 else
                 {
@@ -63,7 +63,7 @@ namespace TestingSystem.API.Controllers
             {
                 if (converter.CreateArrayFromString(sttim.Tag).Length < 3)
                 {
-                    return Json(mapper.ConvertTestDTOToTestModelList(search.GetTestVSTagSearchOr(converter.CreateArrayFromString(sttim.Tag))));
+                    return Json(mapper.ConvertTestDTOToTestModelList(search.GetTestsVSTagSearchOr(converter.CreateArrayFromString(sttim.Tag))));
                 }
                 else
                 {
@@ -78,7 +78,7 @@ namespace TestingSystem.API.Controllers
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess tags = new AuthorDataAccess();
-            return Ok(mapper.ConvertTagDTOToTagModelList(tags.GetAllTag()));
+            return Ok(mapper.ConvertTagDTOToTagModelList(tags.GetAllTags()));
         }
 
         [Authorize(Roles = "Author")]
@@ -146,7 +146,7 @@ namespace TestingSystem.API.Controllers
             if (testmodel.QuestionNumber == null) return BadRequest("Введите количество вопросов в тесте");
             if (testmodel.SuccessScore == null) return BadRequest("Введите минимальный балл для прохождения теста");
             TestDTO testdto = mapper.ConvertTestInputModelToTestDTO(testmodel);
-            return Ok(tests.UpdateTest(testdto));
+            return Ok(tests.UpdateTestById(testdto));
         }
 
         [Authorize(Roles = "Author")]
@@ -154,9 +154,9 @@ namespace TestingSystem.API.Controllers
         public ActionResult<int> DeleteTestById(int testId)
         {
             AuthorDataAccess tests = new AuthorDataAccess();
-            var test = tests.GetByIdTest(testId);
+            var test = tests.GetTestById(testId);
             if (test == null) return BadRequest("Теста не существует");
-            return Ok(tests.DeleteTest(testId));
+            return Ok(tests.DeleteTestById(testId));
         }
 
         [Authorize(Roles = "Author,Teacher")]
@@ -165,9 +165,9 @@ namespace TestingSystem.API.Controllers
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess ada = new AuthorDataAccess();
-            var test = ada.GetByIdTest(testId);
+            var test = ada.GetTestById(testId);
             if (test == null) return BadRequest("Теста не существует");
-            TestOutputModel model = mapper.ConvertTestDTOToTestOutputModel(ada.GetByIdTest(testId));
+            TestOutputModel model = mapper.ConvertTestDTOToTestOutputModel(ada.GetTestById(testId));
             model.Questions = mapper.ConvertQuestionDTOToQuestionModelList(ada.GetQuestionsByTestID(testId));
             model.Tags = mapper.ConvertTagDTOToTagModelList(ada.GetTagsInTest(testId));
             foreach(QuestionOutputModel qom in model.Questions)
@@ -215,7 +215,7 @@ namespace TestingSystem.API.Controllers
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess tags = new AuthorDataAccess();
-            var test = tags.GetByIdTest(testId);
+            var test = tags.GetTestById(testId);
             if (test == null) return BadRequest("Теста не существует");
             return Ok(mapper.ConvertTagDTOToTagModelList(tags.GetTagsWhichAreNotInTest(testId)));
         }
@@ -225,7 +225,7 @@ namespace TestingSystem.API.Controllers
         public ActionResult<int> DeleteTagFromTest(TestTagInputModel testtagmodel)
         {
             AuthorDataAccess tags = new AuthorDataAccess();
-            var test = tags.GetByIdTest(testtagmodel.TestID);
+            var test = tags.GetTestById(testtagmodel.TestID);
             if (test == null) return BadRequest("Теста не существует");
             var tag = tags.GetTagById(testtagmodel.TagID);
             if (tag == null) return BadRequest("Тега не существует");
@@ -242,7 +242,7 @@ namespace TestingSystem.API.Controllers
             Mapper mapper = new Mapper();
             TestTagDTO testtagdto = mapper.ConvertTestTagInputModelToTestTagDTO(testtagmodel);
             AuthorDataAccess tags = new AuthorDataAccess();
-            var test = tags.GetByIdTest(testtagmodel.TestID);
+            var test = tags.GetTestById(testtagmodel.TestID);
             if (test == null) return BadRequest("Теста не существует");
             var tag = tags.GetTagById(testtagmodel.TagID);
             if (tag == null) return BadRequest("Тега не существует");
@@ -258,7 +258,7 @@ namespace TestingSystem.API.Controllers
             Mapper mapper = new Mapper();
             QuestionDTO questiondto = mapper.ConvertQuestionInputModelToQuestionDTO(questionmodel);
             AuthorDataAccess questions = new AuthorDataAccess();
-            var test = questions.GetByIdTest(questionmodel.TestID);
+            var test = questions.GetTestById(questionmodel.TestID);
             if (test == null) return BadRequest("Теста не существует");
             if (string.IsNullOrWhiteSpace(questionmodel.Value)) return BadRequest("Введите вопрос");
             if (questionmodel.TypeID == null) return BadRequest("Введите тип вопроса");
@@ -284,13 +284,13 @@ namespace TestingSystem.API.Controllers
             AuthorDataAccess questions = new AuthorDataAccess();
             var question = questions.GetQuestionById(questionmodel.ID);
             if (question == null) return BadRequest("Вопроса не существует");
-            var test = questions.GetByIdTest(questionmodel.TestID);
+            var test = questions.GetTestById(questionmodel.TestID);
             if (test == null) return BadRequest("Теста не существует");
             if (string.IsNullOrWhiteSpace(questionmodel.Value)) return BadRequest("Введите вопрос");
             if (questionmodel.TypeID ==null) return BadRequest("Введите тип вопроса");
             if (questionmodel.AnswersCount == null) return BadRequest("Введите количество ответов на вопрос");
             if (questionmodel.Weight == null) return BadRequest("Введите вес вопроса");          
-            questions.UpdateQuestion(questiondto);
+            questions.UpdateQuestionById(questiondto);
             return Ok("Изменения сделаны успешно");            
         }
 
@@ -301,7 +301,7 @@ namespace TestingSystem.API.Controllers
             AuthorDataAccess questions = new AuthorDataAccess();
             var question = questions.GetQuestionById(quid);
             if (question == null) return BadRequest("Вопроса не существует");
-            questions.DeleteQuestionFromTest(quid);
+            questions.DeleteQuestionById(quid);
             return Ok(quid);
         }
 
@@ -340,7 +340,7 @@ namespace TestingSystem.API.Controllers
             if (question == null) return BadRequest("Вопроса не существует");
             if (string.IsNullOrWhiteSpace(answermodel.Value)) return BadRequest("Введите ответ");
             if (answermodel.Correct==null) return BadRequest("Введите корректный ответ или нет");
-            answers.UpdateAnswer(answerdto);
+            answers.UpdateAnswerById(answerdto);
             return Ok("Успешно изменено!");            
         }
 
@@ -351,7 +351,7 @@ namespace TestingSystem.API.Controllers
             AuthorDataAccess answers = new AuthorDataAccess();
             var answer = answers.GetAnswerById(anid);
             if (answer == null) return BadRequest("Ответа не существует");
-            answers.DeleteAnswer(anid);
+            answers.DeleteAnswerById(anid);
             return Ok(anid);
         }
 
