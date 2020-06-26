@@ -4,14 +4,11 @@ using System.Text;
 
 namespace TestingSystem.Business.Statistics.Models
 {
-    public class PassedFailedModel
+    public struct PassedFailedModel
     {
         public int Passed { get; set; }
         public int Failed { get; set; }
-        public int SuccessRate { get; set; }
+        public double SuccessRate { get; set; }
 
-        public PassedFailedModel()
-        {            
-        }
     }
 }

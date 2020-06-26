@@ -29,9 +29,9 @@ namespace TestingSystem.Business.Tests
         public void GetPassedFailedStatsTest(int id)
         {
             TestStatistics statistic = new TestStatistics(id);
-            List<double> actual = statistic.GetPassedFailedStats(id);
+            PassedFailedModel actual = statistic.GetPassedFailedStats(id);
             TestMock test = new TestMock();
-            List<double> expected = test.GetPassedFailed(id);
+            PassedFailedModel expected = test.GetPassedFailed(id);
             Assert.AreEqual(expected, actual);
         }
 
@@ -71,6 +71,17 @@ namespace TestingSystem.Business.Tests
             Assert.AreEqual(mock.FindPercentCorrectMock(questionId), actual);
         }
 
+        [TestCase(1)]
+        //[TestCase(6)]
+        //[TestCase(13)]
+
+        public void GetAverageGroupResultForAllTestsTest(int groupId)
+        {
+            GroupStatistics statistic = new GroupStatistics(groupId);
+            Dictionary<int, double> actual = statistic.GetAverageGroupResultForAllTests(groupId);
+            GroupMock mock = new GroupMock();
+            Assert.AreEqual(mock.GetAverageGroupResultForAllTests(groupId), actual);
+        }
 
 
 

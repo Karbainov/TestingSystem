@@ -16,13 +16,19 @@ namespace TestingSystem.Business.Statistics
         }
 
         public Dictionary<int, double> GetAverageGroupResultForAllTests(int groupId)   
-        {            
-            GroupInfoModel group = new GroupInfoModel();
+        {
             Dictionary<int, double> result = new Dictionary<int, double>();
-            foreach (int t in group.TestsId) 
+            foreach (var record in info.IdInfo)
             {
-                double averageTest = GetAverageResult(t);
-                result.Add(t, averageTest);
+                if (record.GroupId == groupId)
+                {
+                    if (!result.ContainsKey(record.TestId))
+                    {
+                        int testId = record.TestId;
+                        double averageTest = GetAverageResult(testId);
+                        result.Add(testId, averageTest);
+                    }
+                }
             }
             return result;
         }

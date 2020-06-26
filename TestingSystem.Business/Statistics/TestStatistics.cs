@@ -6,10 +6,10 @@ using TestingSystem.Business.Statistics.Models;
 
 namespace TestingSystem.Business.Statistics
 {
-    public class TestStatistics:AStatistics
+    public class TestStatistics : AStatistics
     {
         public TestStatistics() { }
-        public TestStatistics (int id)
+        public TestStatistics(int id)
         {
             InfoModelCreator creator = new InfoModelCreator();
             info = creator.CreateByTestId(id);
@@ -21,16 +21,18 @@ namespace TestingSystem.Business.Statistics
 
             foreach (var record in info.IdInfo)
             {
-                if(record.TestId == id)
+                if (record.TestId == id)
                 {
-                    if(!results.ContainsKey(record.AttemptId))
+                    if (!results.ContainsKey(record.AttemptId))
                     {
                         int attemptId = record.AttemptId;
                         int result = info.Attempts[attemptId].UserResult;
                         results.Add(attemptId, result);
                     }
                 }
+
             }
+            //if (results.Count == 0) { results.Add(0,) }:
 
             return results.Values.ToList();
         }
@@ -44,7 +46,7 @@ namespace TestingSystem.Business.Statistics
             }
 
             double sum = 0;
-            foreach(int i in results)
+            foreach (int i in results)
             {
                 sum += i;
             }
@@ -52,44 +54,24 @@ namespace TestingSystem.Business.Statistics
             return avg;
         }
 
-        public List<double> GetPassedFailedStats(int id)
+        public PassedFailedModel GetPassedFailedStats(int id)
         {
             List<int> results = GetAllResults(id);
-            List<double> pfs = new List<double>();
-            double p = 0;
-            double f = 0;
-            double s;
+            PassedFailedModel pf = new PassedFailedModel();
+            
+            if (!info.TestSuccessScores.ContainsKey(id))
+                return pf;
+
             int successScore = info.TestSuccessScores[id];
-            foreach(int result in results)
+            foreach (int result in results)
             {
                 if (result >= successScore)
-                {
-                    p++;
-                }
+                    pf.Passed++;
                 else
-                {
-                    f++;
-                }
-                
+                    pf.Failed++;
             }
-            s = (double)p / (p + f) * 100;
-            pfs.Add(p);
-            pfs.Add(f);
-            pfs.Add(s);
-            return pfs;
-
-
-            //PassedFailedModel pf = new PassedFailedModel();
-            //int successScore = info.TestSuccessScores[id];
-            //foreach (int result in results)
-            //{
-            //    if (result >= successScore)
-            //        pf.Passed++;
-            //    else
-            //        pf.Failed++;
-            //}
-            //pf.SuccessRate = pf.Passed / (pf.Passed + pf.Failed) * 100;
-            //return pf;
+            pf.SuccessRate =(double) (pf.Passed) / (pf.Passed + pf.Failed) * 100;
+            return pf;
         }
     }
 }
