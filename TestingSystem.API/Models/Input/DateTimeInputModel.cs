@@ -7,8 +7,8 @@ namespace TestingSystem.API.Models.Input
 {
     public class DateTimeInputModel
     {
-        public string DateTime1 { get; set; }
-        public string DateTime2 { get; set; }
+        public string PeriodStart { get; set; }
+        public string PeriodEnd { get; set; }
 
         public DateTime StringConverToDateTime(string date)
         {

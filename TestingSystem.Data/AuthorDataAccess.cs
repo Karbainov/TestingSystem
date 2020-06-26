@@ -12,29 +12,23 @@ namespace TestingSystem.Data
     {
         //Запросы на основной странице "Test" (список тестов/список фидбэков/список тэгов)
 
-        public List<TestDTO> GetAllTest()       //вывод списка всех тестов
+        public List<TestDTO> GetAllTests()       //вывод списка всех тестов
         {
             TestCRUD tests = new TestCRUD();
             return tests.GetAll();
         }
 
-        public List<TestDTO> GetTestVSTagSearchOr(params string[] tag)    //ищем тесты по тэгу(или)
+        public List<TestDTO> GetTestsVSTagSearchOr(params string[] tag)    //ищем тесты по тэгу(или)
         {
             TestManager tests = new TestManager();
             return tests.GetTestVSTagSearchOr(tag);
         }
 
-        public List<TestDTO> GetTestVSTagSearchAnd(params string[] tag)     //ищем тесты по тэгу(и)
+        public List<TestDTO> GetTestsVSTagSearchAnd(params string[] tag)     //ищем тесты по тэгу(и)
         {
             TestManager tests = new TestManager();
             return tests.GetTestVSTagSearchAnd(tag);
-        }
-
-        public FeedbackDTO GetFeedbackById(int feedbackId)       // вывод фитбека по его ID
-        {
-            FeedbackCRUD feedback = new FeedbackCRUD();
-            return feedback.GetById(feedbackId);
-        }
+        }        
 
         public List<FeedbackDTO> GetProcessedFeedbacks()       //список обработанных фидбэков (сортировка по дате убыв.)
         {
@@ -54,19 +48,19 @@ namespace TestingSystem.Data
             return feedbacks.GetAll();
         }
 
-        public List<FeedbackDTO> GetFeedbackByTest(int testId)    //список фидбэков конкретного теста (сортировка по дате убыв.)
+        public List<FeedbackDTO> GetFeedbackByTestId(int testId)    //список фидбэков конкретного теста (сортировка по дате убыв.)
         {
             FeedbackManager feedbacks = new FeedbackManager();
             return feedbacks.GetFeedbackByTest(testId);
         }
 
-        public List<FeedbackDTO> GetFeedbackByDate(DateTime dateTime1, DateTime dateTime2)  //список фидбэков конкретных дат (сортировка по дате)
+        public List<FeedbackDTO> GetFeedbackByPeriod(DateTime periodStart, DateTime periodEnd)  //список фидбэков конкретных дат (сортировка по дате)
         {
             FeedbackManager feedbacks = new FeedbackManager();
-            return feedbacks.GetFeedbackByDate(dateTime1, dateTime2);
+            return feedbacks.GetFeedbackByDate(periodStart, periodEnd);
         }
 
-        public List<TagDTO> GetAllTag()     //список всех тэгов
+        public List<TagDTO> GetAllTags()     //список всех тэгов
         {
             TagCRUD tags = new TagCRUD();
             return tags.GetAll();
@@ -90,10 +84,10 @@ namespace TestingSystem.Data
             tag.Delete(id);
         }
 
-        public TestTagDTO GetTestByTag(int testId, int tagId)       //вывод связи тест-тег
+        public TestTagDTO GetTestByTag(int testId, int tagId)       //вывод связи тест-тег   ???????
         {
             TestTagCRUD tag = new TestTagCRUD();
-            return tag.GetByTestIdTagId(testId, tagId); ;
+            return tag.GetByTestIdTagId(testId, tagId); 
         }
 
 
@@ -106,19 +100,19 @@ namespace TestingSystem.Data
             return test.Add(t);
         }
 
-        public int UpdateTest(TestDTO t)   //изменить информацию о тесте
+        public int UpdateTestById(TestDTO t)   //изменить информацию о тесте
         {
             TestCRUD test = new TestCRUD();
             return test.Update(t);
         }
 
-        public int DeleteTest(int id)       //удалить тест
+        public int DeleteTestById(int id)       //удалить тест
         {
             TestCRUD test = new TestCRUD();
             return test.Delete(id);
         }        
 
-        public TestDTO GetByIdTest(int id)    //вывод конкретного теста с полной информацией
+        public TestDTO GetTestById(int id)    //вывод конкретного теста с полной информацией
         {
             TestCRUD ts = new TestCRUD();
             return ts.GetById(id);
@@ -142,7 +136,7 @@ namespace TestingSystem.Data
             return tags.GetTestTags(testId);
         }
 
-        public TagDTO GetTagById(int tagId)         //вывод тега по ID
+        public TagDTO GetTagById(int tagId)         //вывод тега по ID  ????????
         {
             TagCRUD tags = new TagCRUD();
             return tags.GetById(tagId);
@@ -182,20 +176,20 @@ namespace TestingSystem.Data
             return question.GetById(id);
         }
 
-        public void UpdateQuestion(QuestionDTO question)   //редактировать вопрос теста с пересчетом результатов
+        public void UpdateQuestionById(QuestionDTO question)   //редактировать вопрос теста с пересчетом результатов
         {
             QuestionCRUD q = new QuestionCRUD();
             q.Update(question);
         }
 
-        public int DeleteQuestionFromTest(int questionId)  //удалить вопрос из теста с пересчетом результатов
+        public int DeleteQuestionById(int questionId)  //удалить вопрос из теста с пересчетом результатов
         {
             QuestionCRUD question = new QuestionCRUD();
             question.Delete(questionId);
             return questionId;
         }
 
-        public AnswerDTO GetAnswerById(int answerId)     // вывод ответа по ID
+        public AnswerDTO GetAnswerById(int answerId)     // вывод ответа по ID   ????????
         {
             AnswerCRUD answer = new AnswerCRUD();
             return answer.GetById(answerId);
@@ -214,14 +208,14 @@ namespace TestingSystem.Data
             return answers.GetByQuestionId(questonId);
         }
 
-        public void UpdateAnswer(AnswerDTO ans)    //редактировать ответ
+        public void UpdateAnswerById(AnswerDTO ans)    //редактировать ответ
         {
             AnswerDTO a =new AnswerDTO();
             AnswerCRUD answer = new AnswerCRUD();
             answer.Update(ans);
         }
 
-        public void DeleteAnswer(int id)    //удалить ответ
+        public void DeleteAnswerById(int id)    //удалить ответ
         {
             AnswerCRUD answer = new AnswerCRUD();
             answer.Delete(id);
@@ -229,6 +223,12 @@ namespace TestingSystem.Data
 
 
         //Запросы на странице конкретного фидбэка "FeedbackId" (вся информация по фидбэку)
+
+        public FeedbackDTO GetFeedbackById(int feedbackId)       // вывод фитбека по его ID
+        {
+            FeedbackCRUD feedback = new FeedbackCRUD();
+            return feedback.GetById(feedbackId);
+        }
 
         public FeedbackQuestionDTO GetFeedbackWithQuestion(int id)     //вывод фидбэка (с именем пользователя, названием теста и вопросом)
         {
