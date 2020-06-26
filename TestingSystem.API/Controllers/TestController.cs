@@ -356,16 +356,6 @@ namespace TestingSystem.API.Controllers
             return Ok(anid);
         }
 
-        [Authorize(Roles = "Author")]
-        [HttpDelete("question-type")]           //список типов вопросов
-        public ActionResult<List<TypeQuestionOutputModel>> GetQuestionTypes()     
-        {
-            Mapper mapper = new Mapper();
-            AuthorDataAccess types = new AuthorDataAccess();            
-            return Ok(mapper.ConvertTypeDTOToTypeQuestionOutputListModel(types.GetQuestionTypes()));
-        }
-
-
 
 
 
