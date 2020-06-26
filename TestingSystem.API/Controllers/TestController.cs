@@ -385,5 +385,11 @@ namespace TestingSystem.API.Controllers
             saver.CreateAttemptResult(mapper.ConvertConcreteAttemptInputModelToConcreteAttemptBusinessModel(concreteAttempt));
             return new OkResult();
         }
+        [HttpGet("{testid}/{userid}/Res")]
+        public ActionResult GetUserResultByTestIdUserId(int testid,int userid)
+        {
+            TeacherDataAccess access = new TeacherDataAccess();
+            return Ok( access.GetAttemptsByUserIdTestId(userid, testid));
+        }
     }
 }

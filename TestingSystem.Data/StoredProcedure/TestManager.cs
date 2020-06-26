@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using TestingSystem.Data.DTO;
 using TestingSystem.Data;
+using Microsoft.AspNetCore.Mvc;
 
 namespace TestingSystem.Data.StoredProcedure
 {
@@ -220,6 +221,42 @@ namespace TestingSystem.Data.StoredProcedure
                 
                 return result;
             }
+        }
+
+        public UserTestWithQuestionsAndAnswersDTO GetUserResultByUserIDAndTestID(int userID,int testID)
+        {
+                UserTestWithQuestionsAndAnswersDTO result = null;
+            using (var connection = Connection.GetConnection())
+            {
+                string sqlExpression = "GetUserResultByUserIDTestID";
+                connection.Query<UserTestWithQuestionsAndAnswersDTO, AnswerDTO, QuestionWithAnswersDTO, UserTestWithQuestionsAndAnswersDTO>(sqlExpression, (res,answer, question) =>
+                {
+                    if(result == null)
+                    {
+                        result = res;
+                        result.Questions = new List<QuestionWithAnswersDTO>();
+                        question.answers = new List<AnswerDTO>();
+                        question.answers.Add(answer);
+                        result.Questions.Add(question);
+                    }
+                    if(!result.Questions.Any(x=>x.IDQuestion == question.IDQuestion))
+                    {
+                        question.answers = new List<AnswerDTO>();
+                        question.answers.Add(answer);
+                        result.Questions.Add(question);
+                    }
+                    if(!result.Questions.Any(x=>x.answers.Any(y=>y.ID==answer.ID)))
+                    {
+                        int id = result.Questions.FindIndex(x => x.IDQuestion == answer.QuestionID);
+                        if(id>-1)
+                        result.Questions[id].answers.Add(answer);
+                    }
+                    return result;
+                }
+                , new { userID, testID }, splitOn: "Id,IDQuestion", commandType: CommandType.StoredProcedure);
+            }
+            return result;
+
         }
         //public List<TagDTO> GetTestTags (TestDTO tests )
         //{

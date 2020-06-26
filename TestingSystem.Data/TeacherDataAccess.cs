@@ -80,6 +80,12 @@ namespace TestingSystem.Data
             return teacher.GetAttemptByUserIdTestId(attempt);
 
         }
+        public UserTestWithQuestionsAndAnswersDTO GetAttemptsByUserIdTestId(int userId, int testId)
+        {
+            TestManager manager = new TestManager();
+            return manager.GetUserResultByUserIDAndTestID(userId,testId);
+
+        }
 
         public List<TestDTO> GetTestVSTagSearchOr(params string[] tag)
         {
