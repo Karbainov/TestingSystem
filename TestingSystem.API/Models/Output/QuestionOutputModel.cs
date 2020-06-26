@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TestingSystem.API.Shared;
 
 namespace TestingSystem.API.Models.Output
 {
@@ -14,7 +15,5 @@ namespace TestingSystem.API.Models.Output
         public QuestionType? Type { get; set; }
         public int? Weight { get; set; }
         public List<AnswerOutputModel> Answers { get; set; }
-    }
-
-    public enum QuestionType { SingleAnswer, MultipleAnswer, TextAnswer }
+    }   
 }

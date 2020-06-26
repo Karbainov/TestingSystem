@@ -13,5 +13,13 @@ namespace TestingSystem.API.Shared
         Teacher,
         Test
     }
+
+    public enum QuestionType
+    {
+        SingleAnswer,
+        MultipleAnswers,
+        TextAnswer,
+        CodeString
+    }
 }
 

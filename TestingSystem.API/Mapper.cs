@@ -580,25 +580,7 @@ namespace TestingSystem.API
         {
             return new QuestionTypeAnswersBusinessModel(qta.TypeId, qta.Id, qta.Value);
         }
-
-        public TypeQuestionOutputModel ConvertTypeDTOToTypeQuestionOutputModel(TypeDTO typeDTO)
-        {
-            return new TypeQuestionOutputModel()
-            {
-                ID = typeDTO.ID,
-                Name = typeDTO.Name,                
-            };
-        }
-
-        public List<TypeQuestionOutputModel> ConvertTypeDTOToTypeQuestionOutputListModel(List<TypeDTO> typeDTO)
-        {
-            List<TypeQuestionOutputModel> types = new List<TypeQuestionOutputModel>();
-            foreach (var t in typeDTO)
-            {
-                types.Add(ConvertTypeDTOToTypeQuestionOutputModel(t));
-            }
-            return types;
-        }
+              
     }
 }
 
