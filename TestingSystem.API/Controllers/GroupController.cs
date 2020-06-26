@@ -141,5 +141,12 @@ namespace TestingSystem.API.Controllers
             adm.DeleteTeacherFromGroup(studentId, groupId);
         }
 
+        [HttpGet("teacher/{id}")]
+        public ActionResult GetGroupsWithStudentsByTeacherID(int id)
+        {
+            GroupManager teacher = new GroupManager();
+            Mapper mapper = new Mapper();
+            return Ok(mapper.ConvertTeacherGroupsWithStudentsDTOToGroupWithStudentsOutputModel(teacher.GetGroupsWithStudentsByTeacherID(id)));
+        }
     }
 }

@@ -22,11 +22,37 @@ namespace TestingSystem.Data.StoredProcedure
         }
         public List<TeacherGroupsWithStudentsDTO> GetGroupsWithStudentsByTeacherID(int teacherID)
         {
+            List<TeacherGroupsWithStudentsDTO> result = null;
             using(IDbConnection connection = Connection.GetConnection())
             {
-                string sqlExpression = "GetTeacherGroupsWithStudentsById @TeacherID";
-                return connection.Query<TeacherGroupsWithStudentsDTO>(sqlExpression, new { teacherID }, commandType: CommandType.StoredProcedure).ToList();
+                string sqlExpression = "GetTeacherGroupsWithStudentsById";
+                connection.Query<TeacherGroupsWithStudentsDTO, UserDTO, TeacherGroupsWithStudentsDTO>(sqlExpression, (group, user)=>
+                {
+                    if (result == null)
+                    {
+                        result = new List<TeacherGroupsWithStudentsDTO>();
+                        group.Students = new List<UserDTO>();
+                        group.Students.Add(user);
+                        result.Add(group);
+                    }
+                    if (!result.Any(r => r.GroupID == group.GroupID))
+                    {
+                        group.Students = new List<UserDTO>();
+                        group.Students.Add(user);
+                        result.Add(group);
+                    }
+                    else
+                    {
+                        int id = result.FindIndex(r=>r.GroupID==group.GroupID);
+                        if (!result[id].Students.Any(r => r.ID == user.ID))
+                        {
+                            result[id].Students.Add(user);
+                        }
+                    }
+                    return group;
+                }, new { teacherID },splitOn:"id", commandType: CommandType.StoredProcedure).ToList();
             }
+            return result;
         }
         public List<UserDTO> GetAllStudents(int id)
         {

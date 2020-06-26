@@ -116,7 +116,6 @@ namespace TestingSystem.API
             }
             return result;
         }
-
         public List<GroupWithStudentsOutputModel> ConvertTeacherGroupsWithStudentsDTOToGroupWithStudentsOutputModel(List<TeacherGroupsWithStudentsDTO> groups)
         {
             List<GroupWithStudentsOutputModel> result = new List<GroupWithStudentsOutputModel>();
@@ -129,17 +128,12 @@ namespace TestingSystem.API
                         GroupId = g.GroupID,
                         GroupName = g.GroupName,
                         StartDate = g.StartDate,
-                        EndDate = g.EndDate/*,
-                        Students = g.(new UserOutputModel()
-                        {
-                            ID = g.StudentID,
-                            Email = g.StudentEmail,
-                            Phone = g.StudentPhone
-                        })*/
+                        EndDate = g.EndDate,
+                        Students = new UserMapper().ConvertListUserDTOToListUserOutputModel(g.Students)
                     });
                 }
-                return result;
             }
+            return result;
         }
         public List<QuestionOutputModel> ConvertQuestionForOneToManyDTOToQuestionModelList(List<QuestionForOneToManyDTO> dtoList)
         {
