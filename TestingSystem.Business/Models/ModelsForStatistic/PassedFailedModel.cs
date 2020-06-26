@@ -11,8 +11,7 @@ namespace TestingSystem.Business.Statistics.Models
         public int SuccessRate { get; set; }
 
         public PassedFailedModel()
-        {
-            
+        {            
         }
     }
 }

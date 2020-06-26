@@ -30,7 +30,7 @@ namespace TestingSystem.API.Controllers
         //Запросы на основной странице "Tests" (список тестов/список тэгов)
         
         [HttpGet("Author")]    //вывод списка всех тестов
-        public ActionResult <List<TestOutputModel>> GetAllTest()
+        public ActionResult <List<TestOutputModel>> GetAllTests()
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess tests = new AuthorDataAccess();
@@ -89,7 +89,7 @@ namespace TestingSystem.API.Controllers
         }          
 
         [HttpPut("tag/Author")]      //изменение конкретного тега
-        public ActionResult<int> PutTag([FromBody]TagInputModel tagmodel)
+        public ActionResult<int> PutTagById([FromBody]TagInputModel tagmodel)
         {
             Mapper mapper = new Mapper();
             TagDTO tagdto = mapper.ConvertTagInputModelToTagDTO(tagmodel);
@@ -102,7 +102,7 @@ namespace TestingSystem.API.Controllers
         }
 
         [HttpDelete("tag/{tagId}/Author")]    //удаление конкретного тега
-        public ActionResult<int> DeleteTag(int tagId)
+        public ActionResult<int> DeleteTagById(int tagId)
         {
             AuthorDataAccess tags = new AuthorDataAccess();
             var tag = tags.GetTagById(tagId);
@@ -151,7 +151,7 @@ namespace TestingSystem.API.Controllers
         }
 
         [HttpGet("{testId}/Author")]     //полная информация о тесте
-        public IActionResult GetTestInfo(int testId) 
+        public IActionResult GetTestInfoById(int testId) 
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess ada = new AuthorDataAccess();
@@ -168,7 +168,7 @@ namespace TestingSystem.API.Controllers
         }
 
         //[HttpGet("{testId}/test-info/Author")]          //вывод информации о конкретном тесте
-        //public IActionResult GetByIdTest(int testId)
+        //public IActionResult GetTestById(int testId)
         //{
         //    Mapper mapper = new Mapper();
         //    AuthorDataAccess test = new AuthorDataAccess();
@@ -192,7 +192,7 @@ namespace TestingSystem.API.Controllers
         //}
 
         //[HttpGet("{testId}/tags/Author")]         //вывод всех тегов конкретного теста
-        //public IActionResult GetTagsInTest(int testId)
+        //public IActionResult GetTagsTestId(int testId)
         //{
         //    Mapper mapper = new Mapper();
         //    AuthorDataAccess tags = new AuthorDataAccess();
@@ -262,7 +262,7 @@ namespace TestingSystem.API.Controllers
         //}
 
         [HttpPut("question-update/Author")]      // изменение конкретного вопроса из теста
-        public ActionResult<int> PutQuestion(QuestionInputModel questionmodel)
+        public ActionResult<int> PutQuestionById(QuestionInputModel questionmodel)
         {
             Mapper mapper = new Mapper();
             QuestionDTO questiondto = mapper.ConvertQuestionInputModelToQuestionDTO(questionmodel);
@@ -280,7 +280,7 @@ namespace TestingSystem.API.Controllers
         }
 
         [HttpDelete("question-delete/{quid}/Author")]     //удаление вопроса из теста
-        public ActionResult<int> DeleteQuestionFromTest(int quid)
+        public ActionResult<int> DeleteQuestionById(int quid)
         {
             AuthorDataAccess questions = new AuthorDataAccess();
             var question = questions.GetQuestionById(quid);
@@ -311,7 +311,7 @@ namespace TestingSystem.API.Controllers
         //}
 
         [HttpPut("answer-update/Author")]     //редактировать ответ
-        public ActionResult PutAnswer(AnswerInputModel answermodel)
+        public ActionResult PutAnswerById(AnswerInputModel answermodel)
         {
             Mapper mapper = new Mapper();
             AnswerDTO answerdto = mapper.ConvertAnswerInputModelToAnswerDTO(answermodel);
@@ -327,7 +327,7 @@ namespace TestingSystem.API.Controllers
         }
 
         [HttpDelete("answer/{anid}/Author")]   //удалить ответ
-        public ActionResult<int> DeleteAnswer(int anid)
+        public ActionResult<int> DeleteAnswerById(int anid)
         {
             AuthorDataAccess answers = new AuthorDataAccess();
             var answer = answers.GetAnswerById(anid);
