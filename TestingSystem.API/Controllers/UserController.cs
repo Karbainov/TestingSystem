@@ -27,7 +27,7 @@ namespace TestingSystem.API.Controllers
             _logger = logger;
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult GetAllUsersWithRoles()
         {
@@ -37,7 +37,7 @@ namespace TestingSystem.API.Controllers
             return Json(mapper.ConvertUserPositionDTOsToUserWithRolesOutputModels(users));
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         public IActionResult PutUserById([FromBody] UserInputModel user)
         {
@@ -58,7 +58,7 @@ namespace TestingSystem.API.Controllers
             }
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult PostUser([FromBody] UserInputModel user)
         {
@@ -74,7 +74,7 @@ namespace TestingSystem.API.Controllers
             return Ok("Пользователь создан успешно");
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpDelete("userId")]
         public IActionResult Delete(int userId)
         {
@@ -111,7 +111,7 @@ namespace TestingSystem.API.Controllers
             }
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet("{userId}/test")]
         public IActionResult GetStudentTestsByUserId(int userId)
         {
@@ -123,7 +123,7 @@ namespace TestingSystem.API.Controllers
             return Json(model);
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet("{userId}/test/{testId}")]
         public IActionResult GetAttemptsByUserIdTestId(int userId, int testId)
         {
@@ -134,7 +134,7 @@ namespace TestingSystem.API.Controllers
             return Json(model);
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet("{userId}/test/attempt/{attemptId}")]
         public IActionResult GetQuestionAndAnswerByAttemptID(int attemptID)
         {
@@ -146,7 +146,7 @@ namespace TestingSystem.API.Controllers
             return Json(model);
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost("role")]
         public IActionResult PostRoleIdToUserId([FromBody] UserRoleInputModel userRole)
         {
@@ -164,7 +164,7 @@ namespace TestingSystem.API.Controllers
         }
 
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet("role")]
         public IActionResult GetRole()
         {
@@ -180,7 +180,7 @@ namespace TestingSystem.API.Controllers
             return Json(rolesOut);
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet("role/{roleID}")]
         public IActionResult GetUsersByRoleID(int roleID)
         {
@@ -196,7 +196,7 @@ namespace TestingSystem.API.Controllers
             return Json(allUsers);
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{userId}/role/{roleId}")]
         public IActionResult DeleteRoleIdFromUserId(int userId, int roleId)
         {
