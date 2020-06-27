@@ -160,6 +160,7 @@ namespace TestingSystem.API.Controllers
             return Ok();
         }
 
+        [Authorize(Roles = "Teacher")]
         [HttpGet("teacher/{id}")]
         public IActionResult GetGroupsWithStudentsByTeacherID(int id)
         {

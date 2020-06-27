@@ -57,31 +57,6 @@ namespace TestingSystem.API.Controllers
                 return BadRequest("Ошибка базы данных");
             }
         }
-        
-        [Authorize(Roles = "Admin")]
-        [HttpDelete("{userId}")]
-        public IActionResult DeleteUserById(int userId)
-        {
-            UserMapper mapper = new UserMapper();
-            AdminDataAccess adm = new AdminDataAccess();
-            int result = adm.UserDelete(userId);
-            if (result == 0)
-            {
-                return BadRequest("Такого пользователя не существует");
-            }
-            if (result == 1)
-            {
-                return Ok("Пользователь удален");
-            }
-            if (result == 2)
-            {
-                return Ok("Пользователь был удален ранее");
-            }
-            else
-            {
-                return BadRequest("Ошибка базы данных");
-            }
-        }
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
@@ -96,12 +71,13 @@ namespace TestingSystem.API.Controllers
             UserMapper mapper = new UserMapper();
             AdminDataAccess adm = new AdminDataAccess();
             adm.UserCreate(mapper.ConvertUserInputModelToUserDTO(user));
+
             return Ok("Пользователь создан успешно");
         }
 
         [Authorize(Roles = "Admin")]
         [HttpDelete("userId")]
-        public IActionResult Delete(int userId)
+        public IActionResult DeleteUserById(int userId)
         {
             AdminDataAccess adm = new AdminDataAccess();
             var user = adm.GetUserByID(userId);
@@ -109,18 +85,6 @@ namespace TestingSystem.API.Controllers
             adm.UserDelete(userId);
             return Ok("Пользователь удалён");
         }
-
-        //[Authorize(Roles = "Admin")]
-        //[HttpDelete]
-        //public IActionResult Delete([FromBody] int id)
-        //{
-        //    AdminDataAccess adm = new AdminDataAccess();
-        //    var user = adm.GetUserByID(id);
-        //    if (user == null) return BadRequest("Пользователя не существует");
-        //    adm.UserDelete(id);
-        //    return Ok("Пользователь удалён");
-        //}
-        //[Authorize(Roles = "Admin")]
 
         [Authorize(Roles = "Admin")]
         [HttpGet("{id}")]
