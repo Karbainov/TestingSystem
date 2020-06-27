@@ -393,10 +393,13 @@ namespace TestingSystem.API.Controllers
             return Ok(new Mapper().ConverUserTestWithQuestionsAndAnswersDTOToBestAttemptModel(access.GetAttemptsByUserIdTestId(userid, testid)));
         }
 
-        [Authorize(Roles ="")]
+        [Authorize(Roles = "Student,Teacher")]
         [HttpPost("feedback")]
-        public IActionResult PostFeedbackForTest(FeedbackInputModel feedback)
+        public IActionResult PostFeedbackForTest([FromBody] FeedbackInputModel feedback)
         {
+            if (string.IsNullOrWhiteSpace(feedback.Message)) 
+                return BadRequest("Введите сообщение");
+
             Mapper mapper = new Mapper();
             StudentDataAccess student = new StudentDataAccess();
             int id = student.CreateFeedback(mapper.ConvertFeedbackInputModelToFeedbackDTO(feedback));
