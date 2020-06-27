@@ -7,15 +7,15 @@ namespace TestingSystem.API.Models.Input
 
         public int? groupId { get; set; }
         public int? testId { get; set; }
-        public DateTime startDate { get; set; }
-        public DateTime endDate { get; set; }
+        public string startDate { get; set; }
+        public string endDate { get; set; }
     
         public TestGroupInputModel()
         {
 
         }
 
-        public TestGroupInputModel(int groupId, int testId, DateTime startDate, DateTime endDate)
+        public TestGroupInputModel(int groupId, int testId, string startDate, string endDate)
         {
 
             this.groupId = groupId;

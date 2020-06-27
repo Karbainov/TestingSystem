@@ -164,8 +164,16 @@ namespace TestingSystem.API.Controllers
         [HttpPost("test")]
         public IActionResult PostTestForGroup([FromBody]TestGroupInputModel test)
         {
+            AdminDataAccess adm = new AdminDataAccess();
+            var group = adm.GetGroupById(test.groupId.Value);
+            if (group == null) return BadRequest("Группа не существует");
+            AuthorDataAccess author = new AuthorDataAccess();
+            var t = author.GetTestById(test.testId.Value);
+            if (t == null) return BadRequest("Тест не существует");
             if (test.testId == null) return BadRequest("Не выбран тест");
-            if (test.groupId == null) return BadRequest("не выбрана группа");
+            if (test.groupId == null) return BadRequest("Не выбрана группа");
+            if (string.IsNullOrWhiteSpace(test.startDate)) return BadRequest("Отсутствует дата начала теста"); 
+            if (string.IsNullOrWhiteSpace(test.endDate)) return BadRequest("Отсутствует дата окончания теста");
             Mapper mapper = new Mapper();
             TeacherDataAccess teacher = new TeacherDataAccess();
             int id = teacher.SetTestForGroup(mapper.ConvertTestGroupInputModelToTestGroupDTO(test));

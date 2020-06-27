@@ -656,7 +656,7 @@ namespace TestingSystem.API
 
         public TestGroupDTO ConvertTestGroupInputModelToTestGroupDTO (TestGroupInputModel test)
         {
-            return new TestGroupDTO(0, test.groupId.Value, test.testId.Value, test.startDate, test.endDate);
+            return new TestGroupDTO(0, test.groupId.Value, test.testId.Value,  DateTime.Parse(test.startDate), DateTime.Parse(test.endDate));
         }
               
     }
