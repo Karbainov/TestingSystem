@@ -654,6 +654,10 @@ namespace TestingSystem.API
             return new QuestionTypeAnswersBusinessModel(qta.TypeId, qta.Id, qta.Value);
         }
               
+        public FeedbackDTO ConvertFeedbackInputModelToFeedbackDTO(FeedbackInputModel feedback)
+        {
+            return new FeedbackDTO(0, feedback.UserId, feedback.QuestionId, feedback.Message, feedback.DateTime, false);
+        }
     }
 }
 
