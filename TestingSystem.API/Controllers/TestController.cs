@@ -33,8 +33,14 @@ namespace TestingSystem.API.Controllers
         public ActionResult <List<TestOutputModel>> GetAllTests()
         {
             Mapper mapper = new Mapper();
-            AuthorDataAccess tests = new AuthorDataAccess();
-            return Ok(mapper.ConvertTestDTOToTestModelList(tests.GetAllTest()));
+            AuthorDataAccess tests = new AuthorDataAccess();           
+            List <TestOutputModel> lt= mapper.ConvertTestDTOToTestModelList(tests.GetAllTest());
+            foreach (var i in lt) 
+            {
+                TestStatistics ts = new TestStatistics(i.ID);
+                i.AverageResult = ts.GetAverageResult(i.ID);
+            }
+            return Ok();
         }
 
         [HttpGet("search-test-by-tags/Author")]    //поиск теста по тегу 
