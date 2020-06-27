@@ -155,9 +155,9 @@ namespace TestingSystem.API
         public List<GroupOutputModel> ConvertGroupWithStudentsAndTeachersDTOToGroupOutputModel(List<GroupWithStudentsAndTeachersDTO> groups)
         {
             List<GroupOutputModel> result = new List<GroupOutputModel>();
-            foreach(var g in groups)
+            foreach (var g in groups)
             {
-                if(g!=null)
+                if (g != null)
                 {
                     result.Add(new GroupOutputModel()
                     {
@@ -203,7 +203,7 @@ namespace TestingSystem.API
         public List<TestOutputModel> ConvertTestQuestionTagDTOToTestOutputListModel(List<TestQuestionTagDTO> testDTO)
         {
             List<TestOutputModel> tests = new List<TestOutputModel>();
-            foreach(var t in testDTO)
+            foreach (var t in testDTO)
             {
                 tests.Add(ConvertTestQuestionTagDTOToTestOutputModel(t));
             }
@@ -245,7 +245,7 @@ namespace TestingSystem.API
             }
             return null;
         }
-        
+
 
         //список тестов
         public List<TestOutputModel> ConvertTestDTOToTestModelList(List<TestDTO> dtoList) //формирует список тестов
@@ -405,7 +405,7 @@ namespace TestingSystem.API
                 ID = testmodel.ID,
                 Name = testmodel.Name,
                 DurationTime = TimeSpan.Parse(testmodel.DurationTime),
-                SuccessScore =  testmodel.SuccessScore,
+                SuccessScore = testmodel.SuccessScore,
                 QuestionNumber = testmodel.QuestionNumber,
             };
         }
@@ -488,27 +488,57 @@ namespace TestingSystem.API
             }
             return listOutputmodels;
         }
-        public List<UserByLoginOutputModel> ConvertUserByLoginDTOToListUserByLoginOutputModel(string login)
+        public UserByLoginOutputModel ConvertUserByLoginDTOToListUserByLoginOutputModel(string login)
         {
             UserManager manager = new UserManager();
             List<UserByLoginDTO> list = manager.GetUserAndItRole(login);
-            List<UserByLoginOutputModel> model = new List<UserByLoginOutputModel>();
+            UserByLoginOutputModel userInf = null;
             foreach (UserByLoginDTO a in list)
             {
-                UserByLoginOutputModel userInf = new UserByLoginOutputModel()
+                if (userInf == null)
                 {
-                    FirstName = a.FirstName,
-                    LastName = a.LastName,
-                    BirthDate = a.BirthDate,
-                    Login = a.Login,
-                    Password = a.Password,
-                    Email = a.Email,
-                    Phone = a.Phone,
-                    Role = a.Role
-                };
-                model.Add(userInf);
+                    userInf = new UserByLoginOutputModel()
+                    {
+                        FirstName = a.FirstName,
+                        LastName = a.LastName,
+                        BirthDate = a.BirthDate,
+                        Login = a.Login,
+                        Password = a.Password,
+                        Email = a.Email,
+                        Phone = a.Phone,
+                        Role=new List<string>()
+                    };
+                    userInf.Role.Add(a.Role);
+                }
+                else
+                {
+                    userInf.Role.Add(a.Role);
+                }
             }
-            return model;
+            return userInf;
+        }
+        public UserWithLoginOutputModel ConvertUserByLoginDTOToListUserWithLoginOutputModel(string login)
+        {
+            UserManager manager = new UserManager();
+            List<UserByLoginDTO> list = manager.GetUserAndItRole(login);
+            UserWithLoginOutputModel userInf = null;
+            foreach (UserByLoginDTO a in list)
+            {
+                if (userInf == null)
+                {
+                    userInf = new UserWithLoginOutputModel()
+                    {
+                        Login = a.Login,
+                        Role = new List<string>()
+                    };
+                    userInf.Role.Add(a.Role);
+                }
+                else
+                {
+                    userInf.Role.Add(a.Role);
+                }
+            }
+            return userInf;
         }
 
         public GroupDTO ConvertGroupInputModelToGroupDTO(GroupInputModel group)
@@ -540,7 +570,7 @@ namespace TestingSystem.API
         {
             return new AnswerDTO()
             {
-                ID=answermodel.ID,
+                ID = answermodel.ID,
                 QuestionID = answermodel.QuestionID,
                 Value = answermodel.Value,
                 Correct = answermodel.Correct,
@@ -590,14 +620,14 @@ namespace TestingSystem.API
 
                 {
                     newquestion.Answers.Add(new Mapper().AnswerWithoutCorrectnessDTOToAnswerWithoutCorrectnessOutputModel(answer));
-            
+
                 }
-                         
+
                 return newquestion;
             }
         }
 
-        public List<QuestionWithListAnswersOutputModel> QuestionWithListAnswersDTOsToQuestionWithListAnswersOutputModels(List <QuestionWithListAnswersDTO> questions)
+        public List<QuestionWithListAnswersOutputModel> QuestionWithListAnswersDTOsToQuestionWithListAnswersOutputModels(List<QuestionWithListAnswersDTO> questions)
         {
             List<QuestionWithListAnswersOutputModel> newquestions = new List<QuestionWithListAnswersOutputModel>();
 
@@ -611,7 +641,7 @@ namespace TestingSystem.API
 
         }
 
-        public ConcreteAttemptOutputModel AttemptBusinessModelToConcreteAttemptOutputModel (AttemptBusinessModel questions, int userId, int testId)
+        public ConcreteAttemptOutputModel AttemptBusinessModelToConcreteAttemptOutputModel(AttemptBusinessModel questions, int userId, int testId)
         {
             ConcreteAttemptOutputModel concretemodel = new ConcreteAttemptOutputModel();
 
@@ -623,12 +653,12 @@ namespace TestingSystem.API
             concretemodel.Questions = new Mapper().QuestionWithListAnswersDTOsToQuestionWithListAnswersOutputModels(questions.Questions);
             return concretemodel;
         }
-        
+
         public AttemptAnswerBusinessModel ConvertAttemptAnswerInputModelToAttemptAnswerBusinessModel(AttemptAnswerInputModel answer)
         {
             return new AttemptAnswerBusinessModel(answer.Id, answer.Value);
         }
-        
+
         public QuestionWithAnswersBusinessModel ConvertQuestionWithAnswersInputModelToQuestionWithAnswersBusinessModel(QuestionWithAnswersInputModel question)
         {
             List<AttemptAnswerBusinessModel> answers = new List<AttemptAnswerBusinessModel>();
@@ -639,7 +669,7 @@ namespace TestingSystem.API
             }
             return new QuestionWithAnswersBusinessModel(question.Id, answers);
         }
-        
+
         public ConcreteAttemptBusinessModel ConvertConcreteAttemptInputModelToConcreteAttemptBusinessModel(ConcreteAttemptInputModel attempt)
         {
             List<QuestionWithAnswersBusinessModel> questions = new List<QuestionWithAnswersBusinessModel>();
@@ -650,12 +680,11 @@ namespace TestingSystem.API
             }
             return new ConcreteAttemptBusinessModel(attempt.AttemptId, attempt.DurationTime, questions);
         }
-        
+
         public QuestionTypeAnswersBusinessModel QuestionTypeAnswersDTOToQuestionTypeAnswersBusinessModel(QuestionTypeAnswersDTO qta)
         {
             return new QuestionTypeAnswersBusinessModel(qta.TypeId, qta.Id, qta.Value);
         }
-              
     }
 }
 
