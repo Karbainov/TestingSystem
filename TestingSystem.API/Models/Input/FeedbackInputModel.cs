@@ -7,8 +7,8 @@ namespace TestingSystem.API.Models.Input
 {
     public class FeedbackInputModel
     {
-        public int? UserId { get; set; }
-        public int? QuestionId { get; set; }
+        public int UserId { get; set; }
+        public int QuestionId { get; set; }
         public string Message { get; set; }
         public DateTime DateTime { get; set; }
         

@@ -397,14 +397,20 @@ namespace TestingSystem.API.Controllers
         [HttpPost("feedback")]
         public IActionResult PostFeedbackForTest([FromBody] FeedbackInputModel feedback)
         {
-            if (feedback.QuestionId == null)
-                return BadRequest("Не введен id вопроса");
-
-            if (feedback.UserId == null)
-                return BadRequest("Нет user id");
+            AuthorDataAccess au = new AuthorDataAccess();
+            AdminDataAccess ad = new AdminDataAccess();
+   
+            var q = au.GetQuestionById(feedback.QuestionId);
+            var u = ad.GetUserByID(feedback.UserId);
 
             if (string.IsNullOrWhiteSpace(feedback.Message)) 
                 return BadRequest("Введите сообщение");
+            
+            if (q == null)
+                return BadRequest("Вопроса не существует");
+
+            if (u == null)
+                return BadRequest("Юзера не существует");
 
             Mapper mapper = new Mapper();
             StudentDataAccess student = new StudentDataAccess();
