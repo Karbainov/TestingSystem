@@ -5,8 +5,8 @@ namespace TestingSystem.API.Models.Input
     {
         
 
-        public int groupId { get; set; }
-        public int testId { get; set; }
+        public int? groupId { get; set; }
+        public int? testId { get; set; }
         public DateTime startDate { get; set; }
         public DateTime endDate { get; set; }
     

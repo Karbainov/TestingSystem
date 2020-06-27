@@ -164,6 +164,8 @@ namespace TestingSystem.API.Controllers
         [HttpPost("test")]
         public IActionResult PostTestForGroup([FromBody]TestGroupInputModel test)
         {
+            if (test.testId == null) return BadRequest("Не выбран тест");
+            if (test.groupId == null) return BadRequest("не выбрана группа");
             Mapper mapper = new Mapper();
             TeacherDataAccess teacher = new TeacherDataAccess();
             int id = teacher.SetTestForGroup(mapper.ConvertTestGroupInputModelToTestGroupDTO(test));
