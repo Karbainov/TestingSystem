@@ -35,8 +35,12 @@ namespace TestingSystem.API.Controllers
         public ActionResult <List<TestOutputModel>> GetAllTests()
         {
             Mapper mapper = new Mapper();
-            AuthorDataAccess tests = new AuthorDataAccess();
-            return Ok(mapper.ConvertTestDTOToTestModelList(tests.GetAllTests()));
+            List <TestOutputModel> lt= mapper.ConvertTestDTOToTestModelList(tests.GetAllTest());
+            foreach (var i in lt) 
+            {
+                TestStatistics ts = new TestStatistics(i.ID);
+                i.AverageResult = ts.GetAverageResult(i.ID);
+            return Ok();
         }
 
         [Authorize(Roles = "Author,Teacher")]
@@ -167,10 +171,13 @@ namespace TestingSystem.API.Controllers
             Mapper mapper = new Mapper();
             AuthorDataAccess ada = new AuthorDataAccess();
             var test = ada.GetTestById(testId);
+            TestStatistics sTests = new TestStatistics();
             if (test == null) return BadRequest("Теста не существует");
             TestOutputModel model = mapper.ConvertTestDTOToTestOutputModel(ada.GetTestById(testId));
+            var sTest = sTests.GetAverageResult(testId);
             model.Questions = mapper.ConvertQuestionDTOToQuestionModelList(ada.GetQuestionsByTestID(testId));
             model.Tags = mapper.ConvertTagDTOToTagModelList(ada.GetTagsInTest(testId));
+            model.AverageResult = sTest;
             foreach(QuestionOutputModel qom in model.Questions)
             {
                 qom.Answers = mapper.ConvertAnswerDTOToAnswerModelList(ada.GetAnswerByQuestionId(qom.ID));

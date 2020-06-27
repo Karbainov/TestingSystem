@@ -13,6 +13,8 @@ namespace TestingSystem.API
 {
     public class Mapper
     {
+        public object TestStistics { get; private set; }
+
         //тест
         public TestOutputModel ConvertTestDTOToTestOutputModel(TestDTO testDTO)
         {

@@ -6,10 +6,10 @@ using TestingSystem.Business.Statistics.Models;
 
 namespace TestingSystem.Business.Statistics
 {
-    public class TestStatistics:AStatistics
+    public class TestStatistics : AStatistics
     {
         public TestStatistics() { }
-        public TestStatistics (int id)
+        public TestStatistics(int id)
         {
             InfoModelCreator creator = new InfoModelCreator();
             info = creator.CreateByTestId(id);
@@ -21,16 +21,18 @@ namespace TestingSystem.Business.Statistics
 
             foreach (var record in info.IdInfo)
             {
-                if(record.TestId == id)
+                if (record.TestId == id)
                 {
-                    if(!results.ContainsKey(record.AttemptId))
+                    if (!results.ContainsKey(record.AttemptId))
                     {
                         int attemptId = record.AttemptId;
                         int result = info.Attempts[attemptId].UserResult;
                         results.Add(attemptId, result);
                     }
                 }
+
             }
+            //if (results.Count == 0) { results.Add(0,) }:
 
             return results.Values.ToList();
         }
@@ -44,7 +46,7 @@ namespace TestingSystem.Business.Statistics
             }
 
             double sum = 0;
-            foreach(int i in results)
+            foreach (int i in results)
             {
                 sum += i;
             }
@@ -56,15 +58,19 @@ namespace TestingSystem.Business.Statistics
         {
             List<int> results = GetAllResults(id);
             PassedFailedModel pf = new PassedFailedModel();
+            
+            if (!info.TestSuccessScores.ContainsKey(id))
+                return pf;
+
             int successScore = info.TestSuccessScores[id];
-            foreach(int result in results)
+            foreach (int result in results)
             {
                 if (result >= successScore)
                     pf.Passed++;
                 else
                     pf.Failed++;
             }
-            pf.SuccessRate = (double)pf.Passed / (pf.Passed + pf.Failed);
+            pf.SuccessRate =(double) (pf.Passed) / (pf.Passed + pf.Failed) * 100;
             return pf;
         }
     }

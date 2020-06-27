@@ -8,10 +8,9 @@ using TestingSystem.Business.Tests.MocsForStatistics;
 namespace TestingSystem.Business.Tests
 {
     public class StatisticsTests
-    {
-        InfoModelCreator creator = new InfoModelCreator();
+    {       
 
-        [TestCase(1, ExpectedResult = 8.25)]
+        [TestCase(1, ExpectedResult = 20)]
         [TestCase(5, ExpectedResult = Double.NaN)]
         [TestCase(3, ExpectedResult = Double.NaN)]
 
@@ -24,8 +23,8 @@ namespace TestingSystem.Business.Tests
     
 
         [TestCase(1)]
-        [TestCase(5)]
-        [TestCase(3)]
+        [TestCase(7)]
+        [TestCase(6)]
         
         public void GetPassedFailedStatsTest(int id)
         {
@@ -72,6 +71,17 @@ namespace TestingSystem.Business.Tests
             Assert.AreEqual(mock.FindPercentCorrectMock(questionId), actual);
         }
 
+        [TestCase(1)]
+        [TestCase(6)]
+        [TestCase(5)]
+
+        public void GetAverageGroupResultForAllTestsTest(int groupId)
+        {
+            GroupStatistics statistic = new GroupStatistics(groupId);
+            Dictionary<int, double> actual = statistic.GetAverageGroupResultForAllTests(groupId);
+            GroupMock mock = new GroupMock();
+            Assert.AreEqual(mock.GetAverageGroupResultForAllTests(groupId), actual);
+        }
 
 
 
