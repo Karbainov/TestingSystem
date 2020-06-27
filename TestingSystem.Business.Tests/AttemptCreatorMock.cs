@@ -19,7 +19,7 @@ namespace TestingSystem.Business.Tests
                 case 1:
                     return new List<QuestionWithListAnswersDTO>()  
                     {
-                        new QuestionWithListAnswersDTO () // таких создать  10, веса 1...поле только weight
+                        new QuestionWithListAnswersDTO () 
                         {
                             Id = 15,
                             Question = "Какой из вариантов поведенческий паттерн?",
@@ -209,14 +209,280 @@ namespace TestingSystem.Business.Tests
                         }
                     }
                         ;
-
-
-
-
+                                                         
                 case 2:
                     List<QuestionWithListAnswersDTO> questions = new List<QuestionWithListAnswersDTO>() { };
                     return questions;
 
+                case 3:
+                
+                    return new List<QuestionWithListAnswersDTO>()
+                    {
+                        new QuestionWithListAnswersDTO ()
+                        {
+                            Id = 30,
+                            Question = "Какой из вариантов поведенческий паттерн?",
+                            TypeID = 1,
+                            Weight = 5,
+
+                            Answers = new List<AnswerWithoutCorrectnessDTO>()
+                            {
+                                new AnswerWithoutCorrectnessDTO()
+                                {
+                                    AnswerId = 57,
+                                    QuestionId=30,
+                                    Answer = "Стратегия",
+                                },
+                                new AnswerWithoutCorrectnessDTO()
+                                {
+                                     AnswerId = 58,
+                                    QuestionId= 30,
+                                    Answer = "Адаптер",
+                                },
+                                new AnswerWithoutCorrectnessDTO()
+                                {
+                                     AnswerId = 59,
+                                     QuestionId= 30,
+                                     Answer = "Абстракция",
+                                }
+
+                            }
+                        },
+                         new QuestionWithListAnswersDTO ()
+                        {
+                            Id = 31,
+                            Question = "Массивы - это",
+                            TypeID = 1,
+                            Weight = 2,
+                            Answers = new List<AnswerWithoutCorrectnessDTO>()
+                            {
+                                new AnswerWithoutCorrectnessDTO()
+                                {
+                                    AnswerId =  60,
+                                    QuestionId= 31,
+                                    Answer = "Упорядоченно записанные данные"
+                                     },
+                                new AnswerWithoutCorrectnessDTO()
+                                {
+                                     AnswerId = 61,
+                                    QuestionId= 31,
+                                    Answer = "Событие",
+                                },
+                                new AnswerWithoutCorrectnessDTO()
+                                {
+                                     AnswerId = 62,
+                                     QuestionId= 31,
+                                     Answer = "Атланты",
+                                }
+                            }
+                        },
+
+
+                        new QuestionWithListAnswersDTO ()
+                        {
+                            Id = 32,
+                            Question = "Адаптер - это",
+                            TypeID = 1,
+                            Weight = 5,
+                            Answers = new List<AnswerWithoutCorrectnessDTO>()
+                            {
+                                new AnswerWithoutCorrectnessDTO()
+                                {
+                                    AnswerId =  63,
+                                     QuestionId= 32,
+                                    Answer = "Структурный паттерн"
+                                     },
+                                new AnswerWithoutCorrectnessDTO()
+                                {
+                                     AnswerId = 64,
+                                    QuestionId= 32,
+                                    Answer = "Переходник",
+                                },
+                                new AnswerWithoutCorrectnessDTO()
+                                {
+                                     AnswerId = 65,
+                                     QuestionId= 32,
+                                     Answer = "Мешок",
+                                }
+                            }
+                        },
+                        new QuestionWithListAnswersDTO ()
+                        {
+                            Id = 33,
+                            Question = "Порождающие паттерны - это",
+                            TypeID = 2,
+                            Weight = 4,
+                            Answers = new List<AnswerWithoutCorrectnessDTO>()
+                            {
+                                new AnswerWithoutCorrectnessDTO()
+                                {
+                                    AnswerId =  66,
+                                     QuestionId= 33,
+                                    Answer = "SingleTon"
+                                     },
+                                new AnswerWithoutCorrectnessDTO()
+                                {
+                                     AnswerId = 67,
+                                    QuestionId= 33,
+                                    Answer = "Abstract Factory",
+                                },
+                                new AnswerWithoutCorrectnessDTO()
+                                {
+                                     AnswerId = 68,
+                                     QuestionId=33,
+                                     Answer = "Iterator",
+                                }
+                            }
+                        },
+                         new QuestionWithListAnswersDTO ()
+                        {
+                            Id = 37,
+                            Question = "Структурные паттерны - это",
+                            TypeID = 2,
+                            Weight = 4,
+                            Answers = new List<AnswerWithoutCorrectnessDTO>()
+                            {
+                                new AnswerWithoutCorrectnessDTO()
+                                {
+                                    AnswerId =  76,
+                                    QuestionId= 37,
+                                    Answer = "Адаптер (Adapter)"
+                                     },
+                                new AnswerWithoutCorrectnessDTO()
+                                {
+                                     AnswerId = 77,
+                                    QuestionId= 37,
+                                    Answer = "Фасад (Facade)",
+                                },
+                                new AnswerWithoutCorrectnessDTO()
+                                {
+                                     AnswerId = 78,
+                                     QuestionId= 37,
+                                     Answer = "Singleton",
+                                }
+                            }
+                        },
+
+
+                        new QuestionWithListAnswersDTO ()
+                        {
+                            Id = 38,
+                            Question = "Структурные паттерны - это",
+                            TypeID = 1,
+                            Weight = 6,
+                            Answers = new List<AnswerWithoutCorrectnessDTO>()
+                            {
+                                new AnswerWithoutCorrectnessDTO()
+                                {
+                                    AnswerId =  79,
+                                    QuestionId= 38,
+                                    Answer = "У класса должна быть только одна причина для изменения"
+                                     },
+                                new AnswerWithoutCorrectnessDTO()
+                                {
+                                     AnswerId = 80,
+                                    QuestionId= 38,
+                                    Answer = "Сущности программы должны быть открыты для расширения, но закрыты для изменения",
+                                },
+                                new AnswerWithoutCorrectnessDTO()
+                                {
+                                     AnswerId = 81,
+                                     QuestionId= 38,
+                                     Answer = "Клиенты не должны вынужденно зависеть от методов, которыми не пользуются",
+                                }
+                            }
+                        },
+
+                        new QuestionWithListAnswersDTO ()
+                        {
+                            Id = 40,
+                            Question = "Какая функция у команды SELECT в SQL?",
+                            TypeID = 1,
+                            Weight = 3,
+                            Answers = new List<AnswerWithoutCorrectnessDTO>()
+                            {
+                                new AnswerWithoutCorrectnessDTO()
+                                {
+                                    AnswerId =  85,
+                                    QuestionId= 40,
+                                    Answer = "Вывести данные"
+                                     },
+                                new AnswerWithoutCorrectnessDTO()
+                                {
+                                     AnswerId = 86,
+                                    QuestionId= 40,
+                                    Answer = "Добавить данные",
+                                },
+                                new AnswerWithoutCorrectnessDTO()
+                                {
+                                     AnswerId = 87,
+                                     QuestionId= 40,
+                                     Answer = "Удалить данные",
+                                } 
+                            }
+                        },
+
+                         new QuestionWithListAnswersDTO ()
+                         {
+                            Id = 41,
+                            Question = "Что такое string",
+                            TypeID = 1,
+                            Weight = 2,
+                            Answers = new List<AnswerWithoutCorrectnessDTO>()
+                            {
+                                new AnswerWithoutCorrectnessDTO()
+                                {
+                                    AnswerId =  88,
+                                     QuestionId= 41,
+                                    Answer = "SingleTon"
+                                     },
+                                new AnswerWithoutCorrectnessDTO()
+                                {
+                                     AnswerId = 89,
+                                    QuestionId= 41,
+                                    Answer = "Abstract Factory",
+                                },
+                                new AnswerWithoutCorrectnessDTO()
+                                {
+                                     AnswerId = 90,
+                                     QuestionId= 41,
+                                     Answer = "Iterator",
+                                }
+                            }
+                        },
+
+                       
+
+                        new QuestionWithListAnswersDTO ()
+                        {
+                            Id = 42,
+                            Question = "Какие параметры существуют у Node при двусвязном списке",
+                            TypeID = 1,
+                            Weight = 4,
+                            Answers = new List<AnswerWithoutCorrectnessDTO>()
+                            {
+                                new AnswerWithoutCorrectnessDTO()
+                                {
+                                    AnswerId =  91,
+                                    QuestionId= 42,
+                                    Answer = "Root"
+                                     },
+                                new AnswerWithoutCorrectnessDTO()
+                                {
+                                     AnswerId = 92,
+                                    QuestionId= 42,
+                                    Answer = "Root, Previous,Next",
+                                },
+                                new AnswerWithoutCorrectnessDTO()
+                                {
+                                     AnswerId = 93,
+                                     QuestionId= 42,
+                                     Answer = "Клиенты не должны вынужденно зависеть от методов, которыми не пользуются",
+                                }
+                            }
+                        }
+
+                    };
 
             }
             return null;
