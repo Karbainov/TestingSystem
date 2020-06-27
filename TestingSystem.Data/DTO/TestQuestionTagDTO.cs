@@ -8,10 +8,9 @@ namespace TestingSystem.Data.DTO
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        public Nullable<TimeSpan> DurationTime { get; set; }
-        public Nullable<byte> SuccessScore { get; set; }
-        public Nullable<int> QuestionNumber { get; set; }
-
+        public TimeSpan? DurationTime { get; set; }
+        public byte? SuccessScore { get; set; }
+        public int? QuestionNumber { get; set; }
 
         public List<QuestionDTO> Questions { get; set; }
         public List<TagWithTestIDDTO> Tags { get; set; }

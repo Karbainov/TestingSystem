@@ -11,7 +11,7 @@ using TestingSystem.API.Models.Input;
 using TestingSystem.Business.Models;
 using TestingSystem.Business;
 using TestingSystem.Business.Attempt;
-
+using TestingSystem.Business.Statistics;
 
 namespace TestingSystem.API.Controllers
 {
@@ -115,7 +115,7 @@ namespace TestingSystem.API.Controllers
 
         //Запросы на странице конкретного теста "Id" (тест с информацией, вопросы, ответы теста)
 
-        [HttpPost("Author")]       //создание теста                       ??? выдает 
+        [HttpPost("Author")]       //создание теста  
         public ActionResult<int> PostTest(TestInputModel testmodel)
         {
             if (string.IsNullOrWhiteSpace(testmodel.Name)) return BadRequest("Введите название теста");
@@ -155,11 +155,14 @@ namespace TestingSystem.API.Controllers
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess ada = new AuthorDataAccess();
+            TestStatistics sTests = new TestStatistics();
             var test = ada.GetByIdTest(testId);
             if (test == null) return BadRequest("Теста не существует");
+            var sTest = sTests.GetAverageResult(testId);
             TestOutputModel model = mapper.ConvertTestDTOToTestOutputModel(ada.GetByIdTest(testId));
             model.Questions = mapper.ConvertQuestionDTOToQuestionModelList(ada.GetQuestionsByTestID(testId));
             model.Tags = mapper.ConvertTagDTOToTagModelList(ada.GetTagsInTest(testId));
+            model.AverageResult = sTest;
             foreach(QuestionOutputModel qom in model.Questions)
             {
                 qom.Answers = mapper.ConvertAnswerDTOToAnswerModelList(ada.GetAnswerByQuestionId(qom.ID));

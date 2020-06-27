@@ -13,6 +13,7 @@ namespace TestingSystem.API.Models.Output
         public TimeSpan? DurationTime { get; set; }
         public byte? SuccessScore { get; set; }
         public int? QuestionNumber { get; set; }
+        public double AverageResult { get; set; }
 
 
         public List<QuestionOutputModel> Questions { get; set; }
