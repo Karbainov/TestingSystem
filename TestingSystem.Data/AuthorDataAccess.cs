@@ -42,6 +42,11 @@ namespace TestingSystem.Data
             return feedbacks.GetNotProcessedFeedback();
         }
 
+        public List<TestDTO> GetAllTest()
+        {
+            throw new NotImplementedException();
+        }
+
         public List<FeedbackDTO> GetAllFeedbacks()       //список всех фидбэков (сортировка по дате убыв.)
         {
             FeedbackCRUD feedbacks = new FeedbackCRUD();
