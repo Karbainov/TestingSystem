@@ -375,7 +375,7 @@ namespace TestingSystem.API.Controllers
             return new OkResult();
         }
 
-        [HttpGet("{testID}/correctAnswers3")]
+        [HttpGet("{testID}/correctAnswers")]
         public IActionResult GetCorrectAnswersByTestId(int testId)
         {
             TeacherDataAccess teacher = new TeacherDataAccess();

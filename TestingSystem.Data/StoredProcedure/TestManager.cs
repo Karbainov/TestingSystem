@@ -25,7 +25,7 @@ namespace TestingSystem.Data.StoredProcedure
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
-                string sqlExpression = "Answer_GetCorrectByTestID @TestID";
+                string sqlExpression = "Answers_GetCorrectByTestId @testId";
                 return connection.Query<QuestionAnswerDTO>(sqlExpression,new { testId }).ToList();
             }
 
