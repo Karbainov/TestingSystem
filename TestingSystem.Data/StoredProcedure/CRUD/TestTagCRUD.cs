@@ -60,7 +60,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
-                string sqlExpression = "Test_Tag_GetByTestId_TagId";
+                string sqlExpression = "Test_Tag_GetByTestIdTagId";
                 return connection.Query<TestTagDTO>(sqlExpression, new { testId, tagId }, commandType: CommandType.StoredProcedure).FirstOrDefault();
             }
         }
@@ -103,7 +103,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
-                string sqlExpression = "Test_Tag_DeleteByTestId_TagId";
+                string sqlExpression = "Test_Tag_DeleteByTestIdTagId";
                 connection.Execute(sqlExpression, new { testId, tagId }, commandType: CommandType.StoredProcedure);
             }
         }

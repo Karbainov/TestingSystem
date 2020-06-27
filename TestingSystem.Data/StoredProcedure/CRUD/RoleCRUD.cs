@@ -15,7 +15,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
-                string sqlExpression = "Role_Create @Name";
+                string sqlExpression = "Role_Add @Name";
                 return  connection.Query<int>(sqlExpression, new{name}).FirstOrDefault();
             }
         }
@@ -42,7 +42,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
         {  
             using (IDbConnection connection = Connection.GetConnection())
             {
-                string sqlExpression = "Role_Read ";
+                string sqlExpression = "Role_Get ";
                 return  connection.Query<RoleDTO>(sqlExpression).ToList();
             }
         }
@@ -51,7 +51,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             using (IDbConnection connection = Connection.GetConnection())
             {
                 IDbTransaction transaction = connection.BeginTransaction();
-                string sqlExpression = "Role_ReadDyId @ID ";
+                string sqlExpression = "Role_GetById @ID ";
                 List<RoleDTO> roles = new List<RoleDTO>();
                 try
                 {

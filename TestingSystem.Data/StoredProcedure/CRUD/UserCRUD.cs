@@ -15,7 +15,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
-                string sqlExpression = "User_Create @FirstName, @LastName, @BirthDate, @Login, @Password, @Email, @Phone";
+                string sqlExpression = "User_Add @FirstName, @LastName, @BirthDate, @Login, @Password, @Email, @Phone";
                 return connection.Query<int>(sqlExpression, user).FirstOrDefault();
             }
             
@@ -41,7 +41,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
-                string sqlExpression = "User_ReadAll";
+                string sqlExpression = "User_GetAll";
                 return connection.Query<UserDTO>(sqlExpression).ToList();
             }
         }

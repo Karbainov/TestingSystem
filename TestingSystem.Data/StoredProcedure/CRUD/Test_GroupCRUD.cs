@@ -43,7 +43,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
-                string sqlExpression = "Test_Group_GetByGroupId_TestId";
+                string sqlExpression = "Test_Group_GetByGroupIdTestId";
                 return connection.Query<TestGroupDTO>(sqlExpression, testgroup, commandType: CommandType.StoredProcedure).ToList();
             }
         }
@@ -79,7 +79,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
-                string sqlExpression = "Test_Group_DeleteByGroupId_TestId";
+                string sqlExpression = "Test_Group_DeleteByGroupIdTestId";
                 connection.Execute(sqlExpression, testgroup, commandType: CommandType.StoredProcedure);
             }
         }

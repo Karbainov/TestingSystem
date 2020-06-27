@@ -15,7 +15,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
-                string sqlExpression = "Feedback_Create";
+                string sqlExpression = "Feedback_Add";
                 return connection.Query<int>(sqlExpression, feedback).FirstOrDefault();
             }
         }
@@ -24,7 +24,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
-                string sqlExpression = "Feedback_getAll";
+                string sqlExpression = "Feedback_GetAll";
 
                 return connection.Query<FeedbackDTO>(sqlExpression).ToList();
             }
@@ -33,7 +33,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
         public FeedbackDTO GetById(int id)
         {
             var connection = Connection.GetConnection();
-            string sqlExpression = "Feedback_getId";            
+            string sqlExpression = "Feedback_GetById";            
             return connection.Query<FeedbackDTO>(sqlExpression, new { id }, commandType: CommandType.StoredProcedure).FirstOrDefault();            
         }
 
@@ -41,7 +41,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
-                string sqlExpression = "Feedback_updateAll";
+                string sqlExpression = "Feedback_Update";
 
                connection.Query<int>(sqlExpression, feedback);
             }
@@ -51,7 +51,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
-                string sqlExpression = "Feedback_delete @ID";
+                string sqlExpression = "Feedback_Delete @ID";
 
                 connection.Query<int>(sqlExpression, feedback.ID);
             }
