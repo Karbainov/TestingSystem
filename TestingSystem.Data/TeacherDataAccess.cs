@@ -136,5 +136,10 @@ namespace TestingSystem.Data
             AttemptManager b = new AttemptManager();
             return b.GetAllAnswersByAttemptId(attemptId);
         }
+        public TestWithStudentsDTO GetLateStudentsByTestID(int id)
+        {
+            TestManager manager = new TestManager();
+            return manager.GetLateStudentsByTestID(id);
+        }
     }
 }
