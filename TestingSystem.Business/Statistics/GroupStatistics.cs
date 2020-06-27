@@ -15,22 +15,22 @@ namespace TestingSystem.Business.Statistics
             info = creator.CreateByGroupId(id);
         }
 
-        public Dictionary<int, double> GetAverageGroupResultForAllTests(int groupId)   
+        public Dictionary<int, double> GetAverageResultsOfAllTestsByGroupId(int groupId)   
         {
-            Dictionary<int, double> result = new Dictionary<int, double>();
-            foreach (var record in info.IdInfo)
+            Dictionary<int, double> results = new Dictionary<int, double>();
+            foreach (var i in info.IdInfo)
             {
-                if (record.GroupId == groupId)
+                if (i.GroupId == groupId)
                 {
-                    if (!result.ContainsKey(record.TestId))
+                    if (!results.ContainsKey(i.TestId))
                     {
-                        int testId = record.TestId;
-                        double averageTest = GetAverageResult(testId);
-                        result.Add(testId, averageTest);
+                        int testId = i.TestId;
+                        double averageResultOfTest = GetAverageResults(testId);
+                        results.Add(testId, averageResultOfTest);
                     }
                 }
             }
-            return result;
+            return results;
         }
     }
 }

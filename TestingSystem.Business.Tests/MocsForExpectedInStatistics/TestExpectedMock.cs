@@ -5,9 +5,9 @@ using TestingSystem.Business.Statistics.Models;
 
 namespace TestingSystem.Business.Tests.MocsForStatistics
 {
-    public class TestMock
+    public class TestExpectedMock
     {
-        public TestMock()
+        public TestExpectedMock()
         {
         }
 
@@ -33,14 +33,12 @@ namespace TestingSystem.Business.Tests.MocsForStatistics
                     pfm.Failed = 0;
                     pfm.SuccessRate = 100;
                     return pfm;
-
             }
 
             pfm.Passed = -1;
             pfm.Failed = -1;
             pfm.SuccessRate = -1;
             return pfm;
-
         }
     }
 }

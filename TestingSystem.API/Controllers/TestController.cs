@@ -26,31 +26,28 @@ namespace TestingSystem.API.Controllers
         public TestController(ILogger<TestController> logger)
         {
             _logger = logger;
-        }
-
-
-        //Запросы на основной странице "Tests" (список тестов/список тэгов)
+        }        
 
         [Authorize(Roles = "Author,Teacher")]
-        [HttpGet]    //вывод списка всех тестов
+        [HttpGet]    
         public ActionResult <List<TestOutputModel>> GetAllTests()
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess tests = new AuthorDataAccess();
-            List <TestOutputModel> lt= mapper.ConvertTestDTOToTestModelList(tests.GetAllTest());
-            foreach (var i in lt)
+            List <TestOutputModel> listOfModels= mapper.ConvertTestDTOToTestModelList(tests.GetAllTest());
+            foreach (var i in listOfModels)
             {
-                TestStatistics ts = new TestStatistics(i.ID);
-                i.AverageResult = ts.GetAverageResult(i.ID);
+                TestStatistics statistics = new TestStatistics(i.ID);
+                i.AverageResult = statistics.GetAverageResults(i.ID);
             }
-            return Ok();
+            return Ok(listOfModels);
         }
 
         [Authorize(Roles = "Author,Teacher")]
-        [HttpGet("search-test-by-tags")]    //поиск теста по тегу 
-        public ActionResult <List<TestOutputModel>> GetTestVSTagSearch([FromBody] SearchTestByTagInputModel sttim)
+        [HttpGet("search-test-by-tags")]    
+        public ActionResult <List<TestOutputModel>> GetTestsFoundByTag([FromBody] SearchTestByTagInputModel model)
         {            
-            bool caseSwitch =sttim.SwitchValue;
+            bool caseSwitch =model.SwitchValue;
             Mapper mapper = new Mapper();
             AuthorDataAccess search = new AuthorDataAccess();
             FindBy4AndMoreTags searchBy4AndMoreTags = new FindBy4AndMoreTags();
@@ -58,30 +55,30 @@ namespace TestingSystem.API.Controllers
 
             if (caseSwitch)
             {
-                if (converter.CreateArrayFromString(sttim.Tag).Length < 3)
+                if (converter.CreateArrayFromString(model.Tag).Length < 3)
                 {
-                    return Json(mapper.ConvertTestDTOToTestModelList(search.GetTestsVSTagSearchAnd(converter.CreateArrayFromString(sttim.Tag))));
+                    return Json(mapper.ConvertTestDTOToTestModelList(search.GetTestsVSTagSearchAnd(converter.CreateArrayFromString(model.Tag))));
                 }
                 else
                 {
-                    return Json(mapper.ConvertTestQuestionTagDTOToTestOutputListModel(searchBy4AndMoreTags.FindAnd(sttim.Tag)));
+                    return Json(mapper.ConvertTestQuestionTagDTOToTestOutputListModel(searchBy4AndMoreTags.FindAnd(model.Tag)));
                 }
             }
             else
             {
-                if (converter.CreateArrayFromString(sttim.Tag).Length < 3)
+                if (converter.CreateArrayFromString(model.Tag).Length < 3)
                 {
-                    return Json(mapper.ConvertTestDTOToTestModelList(search.GetTestsVSTagSearchOr(converter.CreateArrayFromString(sttim.Tag))));
+                    return Json(mapper.ConvertTestDTOToTestModelList(search.GetTestsVSTagSearchOr(converter.CreateArrayFromString(model.Tag))));
                 }
                 else
                 {
-                    return Json(mapper.ConvertTestQuestionTagDTOToTestOutputListModel(searchBy4AndMoreTags.FindOr(sttim.Tag)));
+                    return Json(mapper.ConvertTestQuestionTagDTOToTestOutputListModel(searchBy4AndMoreTags.FindOr(model.Tag)));
                 }
             }
         }        
 
         [Authorize(Roles = "Author,Teacher")]
-        [HttpGet("tags")]      //cписок всех тегов
+        [HttpGet("tags")]      
         public ActionResult <List<TagOutputModel>> GetAllTags()
         {
             Mapper mapper = new Mapper();
@@ -90,32 +87,32 @@ namespace TestingSystem.API.Controllers
         }
 
         [Authorize(Roles = "Author")]
-        [HttpPost("tag")]      //создание тега
-        public ActionResult <int> PostTag([FromBody]TagInputModel tagmodel)           //спросить у Макса
+        [HttpPost("tag")]     
+        public ActionResult <int> PostTag([FromBody]TagInputModel tagModel)           //спросить у Макса
         {
-            if(string.IsNullOrWhiteSpace(tagmodel.Name)) return BadRequest("Введите название тега");
+            if(string.IsNullOrWhiteSpace(tagModel.Name)) return BadRequest("Введите название тега");
             Mapper mapper = new Mapper();
-            TagDTO tagdto = mapper.ConvertTagInputModelToTagDTO(tagmodel);
+            TagDTO tagDto = mapper.ConvertTagInputModelToTagDTO(tagModel);
             AuthorDataAccess tag = new AuthorDataAccess();            
-            return Ok(tag.AddTag(tagdto));
+            return Ok(tag.AddTag(tagDto));
         }
 
         [Authorize(Roles = "Author")]
-        [HttpPut("tag")]      //изменение конкретного тега
-        public ActionResult<int> PutTagById([FromBody]TagInputModel tagmodel)
+        [HttpPut("tag")]      
+        public ActionResult<int> PutTagById([FromBody]TagInputModel tagModel)
         {
             Mapper mapper = new Mapper();
-            TagDTO tagdto = mapper.ConvertTagInputModelToTagDTO(tagmodel);
+            TagDTO tagDto = mapper.ConvertTagInputModelToTagDTO(tagModel);
             AuthorDataAccess tags = new AuthorDataAccess();
-            var tag = tags.GetTagById(tagmodel.ID);
+            var tag = tags.GetTagById(tagModel.ID);
             if (tag == null) return BadRequest("Тега не существует");
-            if (string.IsNullOrWhiteSpace(tagmodel.Name)) return BadRequest("Введите название тега");
-            tags.UpdateTag(tagdto);            
-            return Ok(tagmodel.ID);
+            if (string.IsNullOrWhiteSpace(tagModel.Name)) return BadRequest("Введите название тега");
+            tags.UpdateTag(tagDto);            
+            return Ok(tagModel.ID);
         }
 
         [Authorize(Roles = "Author")]
-        [HttpDelete("tag/{tagId}")]    //удаление конкретного тега
+        [HttpDelete("tag/{tagId}")]    
         public ActionResult<int> DeleteTagById(int tagId)
         {
             AuthorDataAccess tags = new AuthorDataAccess();
@@ -123,42 +120,38 @@ namespace TestingSystem.API.Controllers
             if (tag == null) return BadRequest("Тега не существует");
             tags.DeleteTag(tagId);
             return Ok(tagId);
-        }
-
-
-
-        //Запросы на странице конкретного теста "Id" (тест с информацией, вопросы, ответы теста)
+        }        
 
         [Authorize(Roles = "Author")]
-        [HttpPost]       //создание теста                       ??? выдает 
-        public ActionResult<int> PostTest(TestInputModel testmodel)
+        [HttpPost]                             //??? выдает 
+        public ActionResult<int> PostTest(TestInputModel testModel)
         {
-            if (string.IsNullOrWhiteSpace(testmodel.Name)) return BadRequest("Введите название теста");
-            if (string.IsNullOrWhiteSpace(testmodel.DurationTime)) return BadRequest("Введите время прохождения теста");
-            if (testmodel.QuestionNumber ==null) return BadRequest("Введите количество вопросов в тесте");
-            if (testmodel.SuccessScore == null) return BadRequest("Введите минимальный балл для прохождения теста");
+            if (string.IsNullOrWhiteSpace(testModel.Name)) return BadRequest("Введите название теста");
+            if (string.IsNullOrWhiteSpace(testModel.DurationTime)) return BadRequest("Введите время прохождения теста");
+            if (testModel.QuestionNumber ==null) return BadRequest("Введите количество вопросов в тесте");
+            if (testModel.SuccessScore == null) return BadRequest("Введите минимальный балл для прохождения теста");
             Mapper mapper = new Mapper();
-            TestDTO testdto = mapper.ConvertTestInputModelToTestDTO(testmodel);
+            TestDTO testDto = mapper.ConvertTestInputModelToTestDTO(testModel);
             AuthorDataAccess test = new AuthorDataAccess();
-            return Ok(test.AddTest(testdto));                    
+            return Ok(test.AddTest(testDto));                    
         }
 
         [Authorize(Roles = "Author")]
-        [HttpPut]        //изменение информации о конкретном тесте
-        public ActionResult<int> PutTestById([FromBody]TestInputModel testmodel)
+        [HttpPut]        
+        public ActionResult<int> PutTestById([FromBody]TestInputModel testModel)
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess tests = new AuthorDataAccess();
-            if (string.IsNullOrWhiteSpace(testmodel.Name)) return BadRequest("Введите название теста");
-            if (string.IsNullOrWhiteSpace(testmodel.DurationTime)) return BadRequest("Введите время прохождения теста");
-            if (testmodel.QuestionNumber == null) return BadRequest("Введите количество вопросов в тесте");
-            if (testmodel.SuccessScore == null) return BadRequest("Введите минимальный балл для прохождения теста");
-            TestDTO testdto = mapper.ConvertTestInputModelToTestDTO(testmodel);
-            return Ok(tests.UpdateTestById(testdto));
+            if (string.IsNullOrWhiteSpace(testModel.Name)) return BadRequest("Введите название теста");
+            if (string.IsNullOrWhiteSpace(testModel.DurationTime)) return BadRequest("Введите время прохождения теста");
+            if (testModel.QuestionNumber == null) return BadRequest("Введите количество вопросов в тесте");
+            if (testModel.SuccessScore == null) return BadRequest("Введите минимальный балл для прохождения теста");
+            TestDTO testDto = mapper.ConvertTestInputModelToTestDTO(testModel);
+            return Ok(tests.UpdateTestById(testDto));
         }
 
         [Authorize(Roles = "Author")]
-        [HttpDelete("{testId}")]       //удаление конкретного тесте
+        [HttpDelete("{testId}")]       
         public ActionResult<int> DeleteTestById(int testId)
         {
             AuthorDataAccess tests = new AuthorDataAccess();
@@ -168,49 +161,54 @@ namespace TestingSystem.API.Controllers
         }
 
         [Authorize(Roles = "Author,Teacher")]
-        [HttpGet("{testId}")]     //полная информация о тесте
-        public ActionResult<TestOutputModel> GetTestInfoById(int testId) 
+        [HttpGet("{testId}")]     
+        public ActionResult<TestOutputModel> GetTestAllInfoById(int testId) 
         {
             Mapper mapper = new Mapper();
-            AuthorDataAccess ada = new AuthorDataAccess();
-            var test = ada.GetTestById(testId);
-            TestStatistics sTests = new TestStatistics();
+            AuthorDataAccess tests = new AuthorDataAccess();
+            var test = tests.GetTestById(testId);
+            TestStatistics testStatistics = new TestStatistics();
             if (test == null) return BadRequest("Теста не существует");
-            TestOutputModel model = mapper.ConvertTestDTOToTestOutputModel(ada.GetTestById(testId));
-            var sTest = sTests.GetAverageResult(testId);
-            model.Questions = mapper.ConvertQuestionDTOToQuestionModelList(ada.GetQuestionsByTestID(testId));
-            model.Tags = mapper.ConvertTagDTOToTagModelList(ada.GetTagsInTest(testId));
-            model.AverageResult = sTest;
-            foreach(QuestionOutputModel qom in model.Questions)
+            TestOutputModel model = mapper.ConvertTestDTOToTestOutputModel(tests.GetTestById(testId));            
+            model.Questions = mapper.ConvertQuestionDTOToQuestionModelList(tests.GetQuestionsByTestID(testId));
+            model.Tags = mapper.ConvertTagDTOToTagModelList(tests.GetTagsInTest(testId));
+            model.AverageResult = testStatistics.GetAverageResults(testId);
+            foreach (QuestionOutputModel qModel in model.Questions)
             {
-                qom.Answers = mapper.ConvertAnswerDTOToAnswerModelList(ada.GetAnswerByQuestionId(qom.ID));
-                QuestionStatistics statistics = new QuestionStatistics(qom.ID);
-                qom.PercentageOfCorrectlyAnswered = statistics.FindPercentCorrectAnswersByQuestion(qom.ID);
-                foreach (var answer in qom.Answers)
+                qModel.Answers = mapper.ConvertAnswerDTOToAnswerModelList(tests.GetAnswerByQuestionId(qModel.ID));
+                QuestionStatistics statistics = new QuestionStatistics(qModel.ID);
+                qModel.PercentageOfCorrectlyAnswered = statistics.GetPercentageOfCorrectlyAnswered(qModel.ID);
+                foreach (var answer in qModel.Answers)
                 {
-                    answer.PercentageOfPeopleChoosingAnswer = statistics.GetPercentOfAnswerToQuestion(qom.ID)[answer.ID];
+                    answer.PercentageOfPeopleChoosingAnswer = statistics.GetPercentageOfPeopleChoosingAnswer(qModel.ID)[answer.ID];
                 }
             }
             return Ok(model);
         }
 
-        //[HttpGet("{testId}/test-info/Author")]          //вывод информации о конкретном тесте
+        //[HttpGet("{testId}/test-info/Author")]          
         //public ActionResult<TestOutputModel> GetTestById(int testId)
         //{
         //    Mapper mapper = new Mapper();
         //    AuthorDataAccess test = new AuthorDataAccess();
-        //    return Ok(mapper.ConvertTestDTOToTestOutputModel(test.GetByIdTest(testId)));
+        //    return Ok(mapper.ConvertTestDTOToTestOutputModel(test.GetTestById(testId)));
         //}
 
-        //[HttpGet("{testId}/questions/Author")]          //вывод всех вопросов из конкретного теста
+        //[HttpGet("{testId}/questions/Author")]         
         //public ActionResult<List<QuestionOutputModel>> GetQuestionsByTestID(int testId)
         //{
         //    Mapper mapper = new Mapper();
         //    AuthorDataAccess questions = new AuthorDataAccess();
-        //    return Ok(mapper.ConvertQuestionDTOToQuestionModelList(questions.GetQuestionsByTestID(testId)));
+        //    List<QuestionOutputModel> listOfModels = mapper.ConvertQuestionDTOToQuestionModelList(questions.GetQuestionsByTestID(testId));
+        //    foreach(var model in listOfModels)
+        //    {
+        //        QuestionStatistics statistics = new QuestionStatistics(model.ID);
+        //        model.PercentageOfCorrectlyAnswered = statistics.FindPercentCorrectAnswersByQuestion(model.ID);
+        //    }
+        //    return Ok(listOfModels);
         //}
 
-        //[HttpGet("{testId}/answers/Author")]          //вывод всех ответов из конкретного теста
+        //[HttpGet("{testId}/answers/Author")]          
         //public ActionResult<List<AnswerOutputModel>> GetAnswersByTestID(int testId)
         //{
         //    Mapper mapper = new Mapper();
@@ -218,7 +216,7 @@ namespace TestingSystem.API.Controllers
         //    return Ok(mapper.ConvertAnswerDTOToAnswerModelList(answers.GetAllAnswersInTest(testId)));
         //}
 
-        //[HttpGet("{testId}/tags/Author")]         //вывод всех тегов конкретного теста
+        //[HttpGet("{testId}/tags/Author")]         
         //public ActionResult<List<TagOutputModel>> GetTagsInTest(int testId)
         //{
         //    Mapper mapper = new Mapper();
@@ -227,7 +225,7 @@ namespace TestingSystem.API.Controllers
         //}
 
         [Authorize(Roles = "Author")]
-        [HttpGet("{testid}/missing-tags")]          //вывод тегов, которых нет в тесте, для добавления
+        [HttpGet("{testid}/missing-tags")]          
         public ActionResult<List<TagOutputModel>> GetTagsWhichAreNotInTest(int testId)
         {
             Mapper mapper = new Mapper();
@@ -238,147 +236,147 @@ namespace TestingSystem.API.Controllers
         }
 
         [Authorize(Roles = "Author")]
-        [HttpDelete("delete-tag-from-test")]     //удаление тэга из конкретного теста
-        public ActionResult<int> DeleteTagFromTest(TestTagInputModel testtagmodel)
+        [HttpDelete("delete-tag-from-test")]     
+        public ActionResult<int> DeleteTagFromTest(TestTagInputModel testTagModel)
         {
             AuthorDataAccess tags = new AuthorDataAccess();
-            var test = tags.GetTestById(testtagmodel.TestID);
+            var test = tags.GetTestById(testTagModel.TestID);
             if (test == null) return BadRequest("Теста не существует");
-            var tag = tags.GetTagById(testtagmodel.TagID);
+            var tag = tags.GetTagById(testTagModel.TagID);
             if (tag == null) return BadRequest("Тега не существует");
-            var testTag = tags.GetTestByTag(testtagmodel.TestID, testtagmodel.TagID);
+            var testTag = tags.GetTestByTag(testTagModel.TestID, testTagModel.TagID);
             if (testTag == null) return BadRequest("У данного теста нет такого тега");
-            tags.DeleteByTestIdTagId(testtagmodel.TestID, testtagmodel.TagID);
+            tags.DeleteByTestIdTagId(testTagModel.TestID, testTagModel.TagID);
             return Ok("Успешно удалено!");
         }
 
         [Authorize(Roles = "Author")]
-        [HttpPost("post-tag-in-test")]      //добавление существующего тэга к конкретному тесту (создаем новую связь тест-тэг)
-        public ActionResult<int> PostTagInTest(TestTagInputModel testtagmodel)
+        [HttpPost("post-tag-in-test")]      
+        public ActionResult<int> PostTagInTest(TestTagInputModel testTagModel)
         {
             Mapper mapper = new Mapper();
-            TestTagDTO testtagdto = mapper.ConvertTestTagInputModelToTestTagDTO(testtagmodel);
+            TestTagDTO testTagDto = mapper.ConvertTestTagInputModelToTestTagDTO(testTagModel);
             AuthorDataAccess tags = new AuthorDataAccess();
-            var test = tags.GetTestById(testtagmodel.TestID);
+            var test = tags.GetTestById(testTagModel.TestID);
             if (test == null) return BadRequest("Теста не существует");
-            var tag = tags.GetTagById(testtagmodel.TagID);
+            var tag = tags.GetTagById(testTagModel.TagID);
             if (tag == null) return BadRequest("Тега не существует");
-            return Ok(tags.TestTagCreate(testtagdto));
+            return Ok(tags.TestTagCreate(testTagDto));
         }
-
-        //Запросы на странице конкретного вопроса у теста "Id/QuestionId" (вопрос с полной информацией, ответы на этот вопрос)
+        
+        [Authorize(Roles = "Author")]
+        [HttpPost("add-question-by-test")]                        //??????? не работает!!!
+        public ActionResult<int> PostQuestion(QuestionInputModel questionModel)
+        {
+            Mapper mapper = new Mapper();
+            QuestionDTO questionDto = mapper.ConvertQuestionInputModelToQuestionDTO(questionModel);
+            AuthorDataAccess questions = new AuthorDataAccess();
+            var test = questions.GetTestById(questionModel.TestID);
+            if (test == null) return BadRequest("Теста не существует");
+            if (string.IsNullOrWhiteSpace(questionModel.Value)) return BadRequest("Введите вопрос");
+            if (questionModel.TypeID == null) return BadRequest("Введите тип вопроса");
+            if (questionModel.AnswersCount == null) return BadRequest("Введите количество ответов на вопрос");
+            if (questionModel.Weight == null) return BadRequest("Введите вес вопроса");
+            return Ok(questions.AddQuestion(questionDto));            
+        }
 
         [Authorize(Roles = "Author")]
-        [HttpPost("add-question-by-test")]       // создание вопроса конкретного теста   ??????? не работает!!!
-        public ActionResult<int> PostQuestion(QuestionInputModel questionmodel)
-        {
-            Mapper mapper = new Mapper();
-            QuestionDTO questiondto = mapper.ConvertQuestionInputModelToQuestionDTO(questionmodel);
-            AuthorDataAccess questions = new AuthorDataAccess();
-            var test = questions.GetTestById(questionmodel.TestID);
-            if (test == null) return BadRequest("Теста не существует");
-            if (string.IsNullOrWhiteSpace(questionmodel.Value)) return BadRequest("Введите вопрос");
-            if (questionmodel.TypeID == null) return BadRequest("Введите тип вопроса");
-            if (questionmodel.AnswersCount == null) return BadRequest("Введите количество ответов на вопрос");
-            if (questionmodel.Weight == null) return BadRequest("Введите вес вопроса");
-            return Ok(questions.AddQuestion(questiondto));            
-        }
-
-        [HttpGet("question/{quid}/Author")]       // вывод вопроса
-        public ActionResult<QuestionOutputModel> GetQuestionById([FromBody] int quid)
+        [HttpGet("question/{quid}/Author")]       
+        public ActionResult<QuestionOutputModel> GetQuestionById([FromBody] int questionId)
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess question = new AuthorDataAccess();
-            QuestionOutputModel model = mapper.ConvertQuestionDTOToQuestionOutputModel(question.GetQuestionById(quid));
-            QuestionStatistics statistics = new QuestionStatistics(quid);
-            model.PercentageOfCorrectlyAnswered = statistics.FindPercentCorrectAnswersByQuestion(quid);
+            QuestionOutputModel model = mapper.ConvertQuestionDTOToQuestionOutputModel(question.GetQuestionById(questionId));
+            QuestionStatistics statistics = new QuestionStatistics(questionId);
+            model.PercentageOfCorrectlyAnswered = statistics.GetPercentageOfCorrectlyAnswered(questionId);
             return Ok(model);
         }
 
         [Authorize(Roles = "Author")]
-        [HttpPut("question-update")]      // изменение конкретного вопроса из теста
-        public ActionResult<int> PutQuestionById(QuestionInputModel questionmodel)
+        [HttpPut("question-update")]     
+        public ActionResult<int> PutQuestionById(QuestionInputModel questionModel)
         {
             Mapper mapper = new Mapper();
-            QuestionDTO questiondto = mapper.ConvertQuestionInputModelToQuestionDTO(questionmodel);
+            QuestionDTO questionDto = mapper.ConvertQuestionInputModelToQuestionDTO(questionModel);
             AuthorDataAccess questions = new AuthorDataAccess();
-            var question = questions.GetQuestionById(questionmodel.ID);
+            var question = questions.GetQuestionById(questionModel.ID);
             if (question == null) return BadRequest("Вопроса не существует");
-            var test = questions.GetTestById(questionmodel.TestID);
+            var test = questions.GetTestById(questionModel.TestID);
             if (test == null) return BadRequest("Теста не существует");
-            if (string.IsNullOrWhiteSpace(questionmodel.Value)) return BadRequest("Введите вопрос");
-            if (questionmodel.TypeID ==null) return BadRequest("Введите тип вопроса");
-            if (questionmodel.AnswersCount == null) return BadRequest("Введите количество ответов на вопрос");
-            if (questionmodel.Weight == null) return BadRequest("Введите вес вопроса");          
-            questions.UpdateQuestionById(questiondto);
+            if (string.IsNullOrWhiteSpace(questionModel.Value)) return BadRequest("Введите вопрос");
+            if (questionModel.TypeID ==null) return BadRequest("Введите тип вопроса");
+            if (questionModel.AnswersCount == null) return BadRequest("Введите количество ответов на вопрос");
+            if (questionModel.Weight == null) return BadRequest("Введите вес вопроса");          
+            questions.UpdateQuestionById(questionDto);
             return Ok("Изменения сделаны успешно");            
         }
 
         [Authorize(Roles = "Author")]
-        [HttpDelete("question-delete/{quid}")]     //удаление вопроса из теста
-        public ActionResult<int> DeleteQuestionById(int quid)
+        [HttpDelete("question-delete/{quid}")]     
+        public ActionResult<int> DeleteQuestionById(int questionId)
         {
             AuthorDataAccess questions = new AuthorDataAccess();
-            var question = questions.GetQuestionById(quid);
+            var question = questions.GetQuestionById(questionId);
             if (question == null) return BadRequest("Вопроса не существует");
-            questions.DeleteQuestionById(quid);
-            return Ok(quid);
+            questions.DeleteQuestionById(questionId);
+            return Ok(questionId);
         }
 
         [Authorize(Roles = "Author")]
-        [HttpPost("answer")]       //создать ответ для вопроса
-        public ActionResult<int> PostAnswer(AnswerInputModel answermodel)
+        [HttpPost("answer")]       
+        public ActionResult<int> PostAnswer(AnswerInputModel answerModel)
         {
             Mapper mapper = new Mapper();
-            AnswerDTO answerdto = mapper.ConvertAnswerInputModelToAnswerDTO(answermodel);
+            AnswerDTO answerDto = mapper.ConvertAnswerInputModelToAnswerDTO(answerModel);
             AuthorDataAccess answer = new AuthorDataAccess();
-            var question = answer.GetQuestionById(answermodel.QuestionID);
+            var question = answer.GetQuestionById(answerModel.QuestionID);
             if (question == null) return BadRequest("Вопроса не существует");
-            if (string.IsNullOrWhiteSpace(answermodel.Value)) return BadRequest("Введите ответ");
-            if (answermodel.Correct==null) return BadRequest("Введите корректный ответ или нет");          
-            return Ok(answer.AddAnswer(answerdto));            
+            if (string.IsNullOrWhiteSpace(answerModel.Value)) return BadRequest("Введите ответ");
+            if (answerModel.Correct==null) return BadRequest("Введите корректный ответ или нет");          
+            return Ok(answer.AddAnswer(answerDto));            
         }
 
-        [HttpGet("{testid}/question/{quid}/answers/Author")]       //список ответов на конкретный вопрос
-        public ActionResult<List<AnswerOutputModel>> GetAnswersByQuestionId(int quid)
+        [Authorize(Roles = "Author")]
+        [HttpGet("{testid}/question/{quid}/answers/Author")]      
+        public ActionResult<List<AnswerOutputModel>> GetAnswersByQuestionId(int questionId)
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess answers = new AuthorDataAccess();
-            List<AnswerOutputModel> listOfModels = mapper.ConvertAnswerDTOToAnswerModelList(answers.GetAnswerByQuestionId(quid));
-            QuestionStatistics statistics = new QuestionStatistics(quid);
+            List<AnswerOutputModel> listOfModels = mapper.ConvertAnswerDTOToAnswerModelList(answers.GetAnswerByQuestionId(questionId));
+            QuestionStatistics statistics = new QuestionStatistics(questionId);
             foreach(var model in listOfModels)
             {
-                model.PercentageOfPeopleChoosingAnswer = statistics.GetPercentOfAnswerToQuestion(quid)[model.ID];
+                model.PercentageOfPeopleChoosingAnswer = statistics.GetPercentageOfPeopleChoosingAnswer(questionId)[model.ID];
             }
             return Ok(listOfModels);
         }
 
         [Authorize(Roles = "Author")]
-        [HttpPut("answer-update")]     //редактировать ответ
-        public ActionResult PutAnswerById(AnswerInputModel answermodel)
+        [HttpPut("answer-update")]     
+        public ActionResult PutAnswerById(AnswerInputModel answerModel)
         {
             Mapper mapper = new Mapper();
-            AnswerDTO answerdto = mapper.ConvertAnswerInputModelToAnswerDTO(answermodel);
+            AnswerDTO answerdto = mapper.ConvertAnswerInputModelToAnswerDTO(answerModel);
             AuthorDataAccess answers = new AuthorDataAccess();
-            var answer = answers.GetAnswerById(answermodel.ID);
+            var answer = answers.GetAnswerById(answerModel.ID);
             if (answer == null) return BadRequest("Ответа не существует");
-            var question = answers.GetQuestionById(answermodel.QuestionID);
+            var question = answers.GetQuestionById(answerModel.QuestionID);
             if (question == null) return BadRequest("Вопроса не существует");
-            if (string.IsNullOrWhiteSpace(answermodel.Value)) return BadRequest("Введите ответ");
-            if (answermodel.Correct==null) return BadRequest("Введите корректный ответ или нет");
+            if (string.IsNullOrWhiteSpace(answerModel.Value)) return BadRequest("Введите ответ");
+            if (answerModel.Correct==null) return BadRequest("Введите корректный ответ или нет");
             answers.UpdateAnswerById(answerdto);
             return Ok("Успешно изменено!");            
         }
 
         [Authorize(Roles = "Author")]
-        [HttpDelete("answer/{anid}")]   //удалить ответ
-        public ActionResult<int> DeleteAnswerById(int anid)
+        [HttpDelete("answer/{anid}")]   
+        public ActionResult<int> DeleteAnswerById(int answerId)
         {
             AuthorDataAccess answers = new AuthorDataAccess();
-            var answer = answers.GetAnswerById(anid);
+            var answer = answers.GetAnswerById(answerId);
             if (answer == null) return BadRequest("Ответа не существует");
-            answers.DeleteAnswerById(anid);
-            return Ok(anid);
+            answers.DeleteAnswerById(answerId);
+            return Ok(answerId);
         }
 
 

@@ -5,7 +5,7 @@ using TestingSystem.Business.Statistics.Models;
 
 namespace TestingSystem.Business.Statistics
 {
-    public abstract class AStatistics
+    public abstract class AbstractStatistics
     {
         protected InfoForStatisticsModel info;
     }
