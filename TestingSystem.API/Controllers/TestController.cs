@@ -397,6 +397,12 @@ namespace TestingSystem.API.Controllers
         [HttpPost("feedback")]
         public IActionResult PostFeedbackForTest([FromBody] FeedbackInputModel feedback)
         {
+            if (feedback.QuestionId == null)
+                return BadRequest("Не введен id вопроса");
+
+            if (feedback.UserId == null)
+                return BadRequest("Нет user id");
+
             if (string.IsNullOrWhiteSpace(feedback.Message)) 
                 return BadRequest("Введите сообщение");
 
