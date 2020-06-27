@@ -51,12 +51,12 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
         }
 
 
-        public void Delete(int id)
+        public int Delete(int id)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Group_Delete";
-                connection.Execute(sqlExpression, new { id }, commandType: CommandType.StoredProcedure);
+                return connection.Execute(sqlExpression, new { id }, commandType: CommandType.StoredProcedure);
             }
         }
     }

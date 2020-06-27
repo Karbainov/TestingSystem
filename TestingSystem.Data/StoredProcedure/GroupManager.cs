@@ -71,20 +71,20 @@ namespace TestingSystem.Data.StoredProcedure
             return teachers;
         }
 
-        public void DeleteStudentFromGroup(int userId, int groupId)
+        public int DeleteStudentFromGroup(int userId, int groupId)
         {
             var connection = Connection.GetConnection();
             connection.Open();
             string sqlExpression = "DeleteStudentFromGroup";
-            connection.Execute(sqlExpression, new { userId, groupId}, commandType: CommandType.StoredProcedure);
+            return connection.Execute(sqlExpression, new { userId, groupId}, commandType: CommandType.StoredProcedure);
         }
 
-        public void DeleteTeacherFromGroup(int userId, int groupId)
+        public int DeleteTeacherFromGroup(int userId, int groupId)
         {
             var connection = Connection.GetConnection();
             connection.Open();
             string sqlExpression = "DeleteTeacherFromGroup";
-            connection.Execute(sqlExpression, new { userId, groupId }, commandType: CommandType.StoredProcedure);
+            return connection.Execute(sqlExpression, new { userId, groupId }, commandType: CommandType.StoredProcedure);
         }
     }
 }

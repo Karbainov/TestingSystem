@@ -51,36 +51,36 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
                 return connection.Query<TeacherGroupDTO>(sqlExpression, new { groupId }, commandType: CommandType.StoredProcedure).FirstOrDefault();
             }
         }
-        public void Delete(int id)
+        public int Delete(int id)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Teacher_Group_DeleteByID";
-                connection.Execute(sqlExpression, new { id }, commandType: CommandType.StoredProcedure);
+                return connection.Execute(sqlExpression, new { id }, commandType: CommandType.StoredProcedure);
             }
         }
-        public void DeleteByUserIdGroupId(int userId, int groupId)
+        public int DeleteByUserIdGroupId(int userId, int groupId)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Teacher_Group_DeleteByUserIdGroupId";
-                connection.Execute(sqlExpression, new { userId, groupId }, commandType: CommandType.StoredProcedure);
+                return connection.Execute(sqlExpression, new { userId, groupId }, commandType: CommandType.StoredProcedure);
             }
         }
-        public void DeleteByUserId(int userId)
+        public int DeleteByUserId(int userId)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Teacher_Group_DeleteByUserID";
-                connection.Execute(sqlExpression, new { userId }, commandType: CommandType.StoredProcedure);
+                return connection.Execute(sqlExpression, new { userId }, commandType: CommandType.StoredProcedure);
             }
         }
-        public void DeleteByGroupId(int groupId)
+        public int DeleteByGroupId(int groupId)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Teacher_Group_DeleteByGroupID";
-                connection.Execute(sqlExpression, new { groupId }, commandType: CommandType.StoredProcedure);
+                return connection.Execute(sqlExpression, new { groupId }, commandType: CommandType.StoredProcedure);
             }
         }
     }
