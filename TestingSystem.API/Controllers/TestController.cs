@@ -13,6 +13,7 @@ using TestingSystem.Business;
 using TestingSystem.Business.Attempt;
 using Microsoft.AspNetCore.Authorization;
 using TestingSystem.Data.StoredProcedure.CRUD;
+using TestingSystem.Business.Statistics;
 
 namespace TestingSystem.API.Controllers
 {
@@ -35,11 +36,13 @@ namespace TestingSystem.API.Controllers
         public ActionResult <List<TestOutputModel>> GetAllTests()
         {
             Mapper mapper = new Mapper();
+            AuthorDataAccess tests = new AuthorDataAccess();
             List <TestOutputModel> lt= mapper.ConvertTestDTOToTestModelList(tests.GetAllTest());
-            foreach (var i in lt) 
+            foreach (var i in lt)
             {
                 TestStatistics ts = new TestStatistics(i.ID);
                 i.AverageResult = ts.GetAverageResult(i.ID);
+            }
             return Ok();
         }
 
