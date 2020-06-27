@@ -19,11 +19,11 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             return connection.Query<int>(sqlExpression, attempt).FirstOrDefault();
         }
         
-        public List<AttemptDTO> GetAll()
+        public List<AttemptDTO> GetAll() //???????
         {
             var connection = Connection.GetConnection();
-            string sqlExpression = "Attempt_GetALL";
-            return connection.Query<AttemptDTO>(sqlExpression).ToList();
+            string sqlExpression = "Attempt_GetALL @id, @number, @userID, @testID, @userResult, @dateTime, @durationTime";
+            return connection.Query<AttemptDTO>(sqlExpression, commandType: CommandType.StoredProcedure).ToList();
         }
 
 

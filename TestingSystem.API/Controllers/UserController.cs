@@ -177,12 +177,16 @@ namespace TestingSystem.API.Controllers
         [HttpGet("Attempt/{AttemptID}")]
         public IActionResult GetQuestionAndAnswerByAttemptID(int attemptID)
         {
-            AttemptCRUD attempt = new AttemptCRUD();
-            if(!attempt.GetAll().Any(a=>a.id==attemptID)) return BadRequest("Не существующий номер попытки");
+            
+            //AttemptCRUD attempt = new AttemptCRUD();
+            //if(attempt.GetAll().Any(a=>a.id==attemptID)) return BadRequest("Несуществующий номер попытки");// getAll не работает
             TeacherDataAccess teacher = new TeacherDataAccess();
             Mapper mapper = new Mapper();
-            List<QuestionAnswerOutputModel> model = mapper.ConvertQuestionAnswerDTOToQuestionAnswerModel(teacher.GetQuestionAndAnswerByAttempt(attemptID));
-            return Json(model);
+            List<QuestionAnswerDTO> answers = teacher.GetQuestionAndAnswerByAttempt(attemptID);
+            if (answers == null) return BadRequest("Несуществующий номер попытки");
+            return Ok (mapper.ConvertQuestionAnswerDTOToQuestionAnswerModel(teacher.GetQuestionAndAnswerByAttempt(attemptID)));
+            //List<QuestionAnswerOutputModel> model = mapper.ConvertQuestionAnswerDTOToQuestionAnswerModel(teacher.GetQuestionAndAnswerByAttempt(attemptID));
+            //return Json(model);
         }
 
         [HttpGet("{groupID}/groupTests")]

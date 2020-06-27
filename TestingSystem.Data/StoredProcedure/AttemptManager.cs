@@ -21,7 +21,7 @@ namespace TestingSystem.Data.StoredProcedure
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
-                string sqlExpression = "GetAllAnswersByAttemptId";
+                string sqlExpression = "GetAllAnswersAndQuestionsByAttemptId @AttempID";
                 connection.Execute(sqlExpression, new { attemptId }, commandType: CommandType.StoredProcedure);
                 return connection.Query<QuestionAnswerDTO>(sqlExpression, attemptId, commandType: CommandType.StoredProcedure).ToList();
             }
