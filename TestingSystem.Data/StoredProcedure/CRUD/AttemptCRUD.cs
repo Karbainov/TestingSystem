@@ -22,7 +22,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
         public List<AttemptDTO> GetAll()
         {
             var connection = Connection.GetConnection();
-            string sqlExpression = "Attempt_GetALL";
+            string sqlExpression = "Attempt_GetAll";
             return connection.Query<AttemptDTO>(sqlExpression).ToList();
         }
 

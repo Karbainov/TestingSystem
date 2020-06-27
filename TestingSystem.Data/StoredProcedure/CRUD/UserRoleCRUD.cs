@@ -15,7 +15,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
-                string sqlExpression = "User_Role_Create @RoleID,@UserID";
+                string sqlExpression = "User_Role_Add @RoleID,@UserID";
                 return connection.Query<int>(sqlExpression, userRole).FirstOrDefault();
             }
            
@@ -32,7 +32,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
-                string sqlExpression = "User_Role_Read";
+                string sqlExpression = "User_Role_Get";
                 return connection.Query<UserRoleDTO>(sqlExpression).ToList();
             }
         }

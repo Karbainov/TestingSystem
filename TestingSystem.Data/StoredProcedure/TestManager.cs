@@ -64,7 +64,7 @@ namespace TestingSystem.Data.StoredProcedure
         public List<TagDTO> GetTagsWhichAreNotInTest(int testId)
         {
             var connection = Connection.GetConnection();
-            string sqlExpression = "Tags_GetWhichAreNotInTest ";
+            string sqlExpression = "Tag_GetWhichAreNotInTest ";
             return connection.Query<TagDTO>(sqlExpression, new { testId }, commandType: CommandType.StoredProcedure).ToList();
         }
 
@@ -72,7 +72,7 @@ namespace TestingSystem.Data.StoredProcedure
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
-                string sqlExpression = "Test_ByTagAndGroup @Tag_Name @Group_ID";
+                string sqlExpression = "Test_GetByTagNameGroupId @Tag_Name @Group_ID";
                 return connection.Query<TestDTO>(sqlExpression, dto, commandType: CommandType.StoredProcedure).ToList();
             }
         }
@@ -127,7 +127,7 @@ namespace TestingSystem.Data.StoredProcedure
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
-                string sqlExpression = "Test_BestGroupResult @GroupID";
+                string sqlExpression = "Test_GetÍBestGroupResult @GroupID";
                 return connection.Query<AllStudentTestsDTO>(sqlExpression, new { groupId }).ToList();
             }
         }
@@ -271,7 +271,7 @@ namespace TestingSystem.Data.StoredProcedure
         //{
         //    using (IDbConnection connection = Connection.GetConnection())
         //    {
-        //        string sqlExpression = "Test_ByTagAndGroup @Tag_Name @Group_ID";
+        //        string sqlExpression = "Test_GetByTagNameGroupId @Tag_Name @Group_ID";
         //        return connection.Query<TestDTO>(sqlExpression, dto, commandType: CommandType.StoredProcedure).ToList();
         //    }
         //}
