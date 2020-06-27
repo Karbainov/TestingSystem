@@ -72,8 +72,8 @@ namespace TestingSystem.Business.Tests
         }
 
         [TestCase(1)]
-        //[TestCase(6)]
-        //[TestCase(13)]
+        [TestCase(6)]
+        [TestCase(5)]
 
         public void GetAverageGroupResultForAllTestsTest(int groupId)
         {

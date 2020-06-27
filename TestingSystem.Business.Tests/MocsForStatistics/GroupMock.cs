@@ -14,15 +14,15 @@ namespace TestingSystem.Business.Tests.MocsForStatistics
                 case 1:
                     mock.Add(1, 20);
                     return mock;
-                //case 6:
-                //    mock.Add(7, 1);
-                //    mock.Add(8, 3);
-                //    mock.Add(9, 3);
-                //    mock.Add(26, 3);
-                //    return mock;
-                //case 13:
-                //    mock.Add(22, 1);
-                //    return mock;
+                case 6:
+                    mock.Add(15, 69);
+                    mock.Add(16, 74.5);
+                    mock.Add(17, 82);
+                    return mock;
+                case 5:
+                    mock.Add(2, 85);
+                    mock.Add(19, 71);
+                    return mock;
             }
             return mock;
         }
