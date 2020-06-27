@@ -257,6 +257,33 @@ namespace TestingSystem.Data.StoredProcedure
             return result;
 
         }
+
+        public TestWithStudentsDTO GetLateStudentsByTestID(int id)
+        {
+            TestWithStudentsDTO result = null;
+            using(var connection = Connection.GetConnection())
+            {
+                string sqlExpression = "Attepmt_GetLateStudentByTestID";
+                connection.Query<TestDTO, UserDTO, TestWithStudentsDTO>(sqlExpression, (test, student) =>
+                  {
+                      if (result == null)
+                      {
+                          result = new TestWithStudentsDTO();
+                          //result.Test = new TestDTO();
+                          result.Test = test;
+                          result.Students = new List<UserDTO>();
+                          result.Students.Add(student);
+                      }
+                      else
+                      {
+                          result.Students.Add(student);
+                      }
+                      return result;
+                  }
+                , new { id }, splitOn: "ID", commandType: CommandType.StoredProcedure);
+            }
+            return result;
+        }
         //public List<TagDTO> GetTestTags (TestDTO tests )
         //{
         //    using (IDbConnection connection = Connection.GetConnection())

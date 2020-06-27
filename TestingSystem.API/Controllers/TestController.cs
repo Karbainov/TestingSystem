@@ -388,19 +388,31 @@ namespace TestingSystem.API.Controllers
             return new OkResult();
         }
         [Authorize(Roles ="Teacher")]
-        [HttpGet("{testid}/{userid}/Res")]
+        [HttpGet("{testid}/{userid}/result")]
         public ActionResult GetUserResultByTestIdUserId(int testid,int userid)
         {
             if(new TestCRUD().GetById(testid)==null)
             {
                 return BadRequest("Теста с таким id не существует");
             }
-            if(new UserCRUD().GetByID(userid)==null)
+            if (new UserCRUD().GetByID(userid)==null)
             {
                 return BadRequest("Пользователя с таким id не существует");
             }
             TeacherDataAccess access = new TeacherDataAccess();
             return Ok(new Mapper().ConverUserTestWithQuestionsAndAnswersDTOToBestAttemptModel(access.GetAttemptsByUserIdTestId(userid, testid)));
+        }
+        [Authorize(Roles ="Teacher")]
+        [HttpGet("{testid}/lateStudents")]
+        public ActionResult GetLateStudentsByTestID(int testid)
+        {
+            if (new TestCRUD().GetById(testid) == null)
+            {
+                return BadRequest("Теста с таким id не существует");
+            }
+            TeacherDataAccess access = new TeacherDataAccess();
+            Mapper mapper = new Mapper();
+            return Ok(mapper.ConvertTestWithStudentsDTOToTestWithStudentsOutputModel( access.GetLateStudentsByTestID(testid)));
         }
     }
 }

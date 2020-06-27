@@ -27,20 +27,62 @@ namespace TestingSystem.API
                 QuestionNumber = testDTO.QuestionNumber,
             };
         }
+        public TestWithStudentsOutputModel ConvertTestWithStudentsDTOToTestWithStudentsOutputModel(TestWithStudentsDTO test)
+        {
+            if(test!=null)
+            {
+                return new TestWithStudentsOutputModel()
+                {
+                    Test = ConvertTestDTOToTestOutputModel(test.Test),
+                    Students = ConvertUserDTOToUserOutputModelList(test.Students)
+                };
+            }
+            return null;
+        }
+        public List<UserOutputModel> ConvertUserDTOToUserOutputModelList(List<UserDTO> users)
+        {
+            if(users!=null)
+            {
+                List<UserOutputModel> result = new List<UserOutputModel>();
+                foreach(var a in users)
+                {
+                    if(a!=null)
+                    {
+                        result.Add(new UserOutputModel()
+                        {
+                            Email = a.Email,
+                            BirthDate = a.BirthDate,
+                            FirstName = a.FirstName,
+                            ID = a.ID,
+                            LastName = a.LastName,
+                            Login = a.Login,
+                            Password = a.Password,
+                            Phone = a.Phone
+                        });
+                    }
+                }
+                return result;
+            }
+            return null;
+        }
         public BestAttemptModel ConverUserTestWithQuestionsAndAnswersDTOToBestAttemptModel(UserTestWithQuestionsAndAnswersDTO dTO)
         {
-            return new BestAttemptModel()
+            if (dTO != null)
             {
-                FirstName = dTO.FirstName,
-                LastName = dTO.LastName,
-                NumberOfAttempt = dTO.NumAttempt,
-                Result = dTO.Result,
-                TestID = dTO.TestID,
-                SuccessScore = dTO.SuccessScore,
-                TestName = dTO.TestName,
-                UserID = dTO.UserID,
-                Questions = ConvertQuestionWithAnswersDTOToQuestionOutputModel(dTO.Questions)
-            };
+                return new BestAttemptModel()
+                {
+                    FirstName = dTO.FirstName,
+                    LastName = dTO.LastName,
+                    NumberOfAttempt = dTO.NumAttempt,
+                    Result = dTO.Result,
+                    TestID = dTO.TestID,
+                    SuccessScore = dTO.SuccessScore,
+                    TestName = dTO.TestName,
+                    UserID = dTO.UserID,
+                    Questions = ConvertQuestionWithAnswersDTOToQuestionOutputModel(dTO.Questions)
+                };
+            }
+            return null;
 
         }
 
