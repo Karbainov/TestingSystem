@@ -184,6 +184,12 @@ namespace TestingSystem.API.Controllers
             foreach(QuestionOutputModel qom in model.Questions)
             {
                 qom.Answers = mapper.ConvertAnswerDTOToAnswerModelList(ada.GetAnswerByQuestionId(qom.ID));
+                QuestionStatistics statistics = new QuestionStatistics(qom.ID);
+                qom.PercentageOfCorrectlyAnswered = statistics.FindPercentCorrectAnswersByQuestion(qom.ID);
+                foreach (var answer in qom.Answers)
+                {
+                    answer.PercentageOfPeopleChoosingAnswer = statistics.GetPercentOfAnswerToQuestion(qom.ID)[answer.ID];
+                }
             }
             return Ok(model);
         }
@@ -283,7 +289,10 @@ namespace TestingSystem.API.Controllers
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess question = new AuthorDataAccess();
-            return Ok(mapper.ConvertQuestionDTOToQuestionOutputModel(question.GetQuestionById(quid)));
+            QuestionOutputModel model = mapper.ConvertQuestionDTOToQuestionOutputModel(question.GetQuestionById(quid));
+            QuestionStatistics statistics = new QuestionStatistics(quid);
+            model.PercentageOfCorrectlyAnswered = statistics.FindPercentCorrectAnswersByQuestion(quid);
+            return Ok(model);
         }
 
         [Authorize(Roles = "Author")]
@@ -330,13 +339,19 @@ namespace TestingSystem.API.Controllers
             return Ok(answer.AddAnswer(answerdto));            
         }
 
-        //[HttpGet("{testid}/question/{quid}/answers/Author")]       //список ответов на конкретный вопрос
-        //public ActionResult<List<AnswerOutputModel>> GetAnswersByQuestionId(int quid)
-        //{
-        //    Mapper mapper = new Mapper();
-        //    AuthorDataAccess answers = new AuthorDataAccess();
-        //    return Ok(mapper.ConvertAnswerDTOToAnswerModelList(answers.GetAnswerByQuestionId(quid)));
-        //}
+        [HttpGet("{testid}/question/{quid}/answers/Author")]       //список ответов на конкретный вопрос
+        public ActionResult<List<AnswerOutputModel>> GetAnswersByQuestionId(int quid)
+        {
+            Mapper mapper = new Mapper();
+            AuthorDataAccess answers = new AuthorDataAccess();
+            List<AnswerOutputModel> listOfModels = mapper.ConvertAnswerDTOToAnswerModelList(answers.GetAnswerByQuestionId(quid));
+            QuestionStatistics statistics = new QuestionStatistics(quid);
+            foreach(var model in listOfModels)
+            {
+                model.PercentageOfPeopleChoosingAnswer = statistics.GetPercentOfAnswerToQuestion(quid)[model.ID];
+            }
+            return Ok(listOfModels);
+        }
 
         [Authorize(Roles = "Author")]
         [HttpPut("answer-update")]     //редактировать ответ
