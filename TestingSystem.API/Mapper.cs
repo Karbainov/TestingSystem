@@ -727,6 +727,12 @@ namespace TestingSystem.API
         {
             return new QuestionTypeAnswersBusinessModel(qta.TypeId, qta.Id, qta.Value);
         }
+
+        public TestGroupDTO ConvertTestGroupInputModelToTestGroupDTO (TestGroupInputModel test)
+        {
+            return new TestGroupDTO(0, test.groupId.Value, test.testId.Value,  DateTime.Parse(test.startDate), DateTime.Parse(test.endDate));
+        }
+              
     }
 }
 
