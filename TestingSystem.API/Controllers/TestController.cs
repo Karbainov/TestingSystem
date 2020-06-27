@@ -395,10 +395,12 @@ namespace TestingSystem.API.Controllers
 
         [Authorize(Roles ="")]
         [HttpPost("feedback")]
-        public IActionResult PostFeedbackForTest()
+        public IActionResult PostFeedbackForTest(FeedbackInputModel feedback)
         {
-
-            return Ok();
+            Mapper mapper = new Mapper();
+            StudentDataAccess student = new StudentDataAccess();
+            int id = student.CreateFeedback(mapper.ConvertFeedbackInputModelToFeedbackDTO(feedback));
+            return Ok(id);
         }
     }
 }

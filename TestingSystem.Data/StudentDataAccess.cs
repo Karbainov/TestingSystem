@@ -9,10 +9,10 @@ namespace TestingSystem.Data
 {
     public class StudentDataAccess
     {
-        public void CreateFeedback(FeedbackDTO feedbackDTO)
+        public int CreateFeedback(FeedbackDTO feedbackDTO)
         {
             FeedbackCRUD feedback = new FeedbackCRUD();
-            feedback.Add(feedbackDTO);
+            return feedback.Add(feedbackDTO);
         }
         public List<TestAttemptDTO> GetCompleteTests(int userId)
         {
