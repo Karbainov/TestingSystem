@@ -29,7 +29,6 @@ namespace TestingSystem.Business.Statistics
                         int result = info.Attempts[attemptId].UserResult;
                         results.Add(attemptId, result);
                     }
-                    return new List<int>();
                 }
             }            
             return results.Values.ToList();
