@@ -25,7 +25,7 @@ namespace TestingSystem.Business.Tests.MocsForStatistics
                     mock.Add(9, 3);
                     mock.Add(26, 3);
                     return mock;
-                case 13:
+                case 31:
                     mock.Add(22, 1);
                     return mock;
             }
@@ -49,8 +49,9 @@ namespace TestingSystem.Business.Tests.MocsForStatistics
                     mock.Add(9, 75);
                     mock.Add(26, 75);
                     return mock;
-                case 13:
-                    mock.Add(22, 100);
+                case 41:
+                    mock.Add(71, 100);
+                    mock.Add(73, 50);
                     return mock;
             }
             return mock;
@@ -64,7 +65,7 @@ namespace TestingSystem.Business.Tests.MocsForStatistics
                     return 0 ;
                 case 6:
                     return 0 ;
-                case 13:
+                case 31:
                     return 100 ;
             }
             return -1;

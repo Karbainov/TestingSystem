@@ -44,7 +44,7 @@ namespace TestingSystem.Business.Tests
 
         [TestCase(4)]
         [TestCase(6)]
-        [TestCase(13)]
+        [TestCase(41)]
         public void GetPercentageOfPeopleChoosingAnswerTest(int questionId)
         {
             QuestionStatistics statistic = new QuestionStatistics(questionId);
