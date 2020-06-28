@@ -231,6 +231,7 @@ namespace TestingSystem.API.Controllers
             if (!groups.GetAllByUserId(userId).Any(g => g.GroupID == groupId)) return BadRequest("Группа относится к другому преподавателю");
             List<TestDTO> tests = teacher.GetTestByGroupId(groupId);
             GroupStatistics gs = new GroupStatistics(groupId);
+            //if(gs.GetAverageGroupResultForAllTests(groupId).Any(g=>g.Key==null)) return BadRequest("Т");
             Dictionary<int, double> statistic = gs.GetAverageGroupResultForAllTests(groupId);
             return Ok(mapper.ConvertTestDTOToGroupTestsAndResultsOutputModel(tests,statistic));
         }
