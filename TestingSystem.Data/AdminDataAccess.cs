@@ -235,5 +235,11 @@ namespace TestingSystem.Data
             UserManager adm = new UserManager();
             return adm.GetUserWithRolesByUserId(id);
         }
+        
+        public int AddUserWithRole(UserWithRoleDTO userRole)
+        {
+            UserManager adm = new UserManager();
+            return adm.AddUserWithRole(userRole);
+        }
     }
 }

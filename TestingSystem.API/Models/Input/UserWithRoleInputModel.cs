@@ -1,7 +1,8 @@
-﻿using System;
-namespace TestingSystem.Data.DTO
+using System;
+
+namespace TestingSystem.API.Models.Input
 {
-    public class UserWithRoleDTO
+    public class UserWithRoleInputModel
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -10,9 +11,9 @@ namespace TestingSystem.Data.DTO
         public string Password { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
-        public int RoleID { get; set; }
+        public int RoleId { get; set; }
 
-        public UserWithRoleDTO(string firstname, string lastname, DateTime birthdate, string login, string password, string email, string phone, int roleID)
+        public UserWithRoleInputModel(string firstname, string lastname, DateTime birthdate, string login, string password, string email, string phone, int roleId)
         {
             FirstName = firstname;
             LastName = lastname;
@@ -21,9 +22,9 @@ namespace TestingSystem.Data.DTO
             Password = password;
             Email = email;
             Phone = phone;
-            RoleID = roleID;
+            RoleId = roleId;
         }
-        public UserWithRoleDTO()
+        public UserWithRoleInputModel()
         {
         }
     }

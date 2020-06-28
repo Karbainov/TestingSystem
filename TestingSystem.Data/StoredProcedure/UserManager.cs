@@ -19,15 +19,16 @@ namespace TestingSystem.Data.StoredProcedure
                 string sqlExpression = "User_Create @GroupID,@FirstName,@LastName,@BirthDate,@Login,@Password,@Email,@Phone";
                 return connection.Query<int>(sqlExpression, userGroup).FirstOrDefault();
             }
-
         }
 
         public int AddUserWithRole(UserWithRoleDTO user)
         {
-            var connection = Connection.GetConnection();
-            connection.Open();
-            string sqlExpression = "AddUserWithRole @FirstName, @LastName, @BirthDate, @Login, @Password, @Email, @Phone, @RoleID";
-            return connection.Execute(sqlExpression, user);
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression =
+                    "AddUserWithRole @FirstName, @LastName, @BirthDate, @Login, @Password, @Email, @Phone, @RoleID";
+                return connection.Query<int>(sqlExpression, user ).FirstOrDefault();
+            }
         }
 
         public List<RoleDTO> GetRolesByUserId(int userId)
@@ -170,9 +171,7 @@ namespace TestingSystem.Data.StoredProcedure
                     userP = userDictionary[userId];
                     return userP;
                 }
-
             }
-
             return null;
         }
     }

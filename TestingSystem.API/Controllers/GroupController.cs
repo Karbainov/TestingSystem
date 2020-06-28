@@ -162,7 +162,7 @@ namespace TestingSystem.API.Controllers
 
         [Authorize(Roles = "Teacher")]
         [HttpGet("teacher/{id}")]
-        public IActionResult GetGroupsWithStudentsByTeacherID(int id)
+        public IActionResult GetGroupsWithStudentsByTeacherId(int id)
         {
             GroupManager teacher = new GroupManager();
             Mapper mapper = new Mapper();

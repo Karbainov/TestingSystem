@@ -38,6 +38,23 @@ namespace TestingSystem.API.Controllers
         }
         
         [Authorize(Roles = "Admin")]
+        [HttpPost("withrole")]
+        public IActionResult PostUserWithRole([FromBody] UserWithRoleInputModel user)
+        {
+            if (string.IsNullOrWhiteSpace(user.FirstName)) return BadRequest("Вы не написали имя");
+            if (string.IsNullOrWhiteSpace(user.LastName)) return BadRequest("Вы не написали фамилию");
+            if (string.IsNullOrWhiteSpace(user.Login)) return BadRequest("Введите логин");
+            if (string.IsNullOrWhiteSpace(user.Password)) return BadRequest("Введите пароль");
+            if (string.IsNullOrWhiteSpace(user.Email)) return BadRequest("Введите почту");
+            if (string.IsNullOrWhiteSpace(user.Phone)) return BadRequest("Напишите номер телефона");
+            UserMapper mapper = new UserMapper();
+            AdminDataAccess adm = new AdminDataAccess();
+            adm.AddUserWithRole(mapper.ConvertUserWithRoleInputModelToUserWithRoleDTO(user));
+
+            return Ok("Пользователь создан успешно");
+        }
+        
+        [Authorize(Roles = "Admin")]
         [HttpGet("{id}")]
         public IActionResult GetUserById(int id)
         {
@@ -74,6 +91,12 @@ namespace TestingSystem.API.Controllers
         [HttpPut]
         public IActionResult PutUserById([FromBody] UserInputModel user)
         {
+            if (string.IsNullOrWhiteSpace(user.FirstName)) return BadRequest("Вы не написали имя");
+            if (string.IsNullOrWhiteSpace(user.LastName)) return BadRequest("Вы не написали фамилию");
+            if (string.IsNullOrWhiteSpace(user.Login)) return BadRequest("Введите логин");
+            if (string.IsNullOrWhiteSpace(user.Password)) return BadRequest("Введите пароль");
+            if (string.IsNullOrWhiteSpace(user.Email)) return BadRequest("Введите почту");
+            if (string.IsNullOrWhiteSpace(user.Phone)) return BadRequest("Напишите номер телефона");
             UserMapper mapper = new UserMapper();
             AdminDataAccess adm = new AdminDataAccess();
             int result = adm.UserUpdate(mapper.ConvertUserInputModelToUserDTO(user));
