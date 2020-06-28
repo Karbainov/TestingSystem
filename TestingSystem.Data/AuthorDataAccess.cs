@@ -209,9 +209,9 @@ namespace TestingSystem.Data
         {
             AnswerCRUD answer = new AnswerCRUD();
             answer.Delete(id);
-        }       
+        }
 
-        public FeedbackDTO GetFeedbackById(int feedbackId)       
+        public FeedbackDTO GetFeedbackById(int feedbackId)  //проверка
         {
             FeedbackCRUD feedback = new FeedbackCRUD();
             return feedback.GetById(feedbackId);
