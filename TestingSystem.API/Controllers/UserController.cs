@@ -213,7 +213,7 @@ namespace TestingSystem.API.Controllers
 
         [Authorize(Roles = "Author,Teacher")]
         [HttpGet("test/{testId}")]
-        public ActionResult <List<AllTestsByStudentIdOutputModel>> GetGetAllStudentsByTestId(int testId)
+        public ActionResult<List<AllTestsByStudentIdOutputModel>> GetGetAllStudentsByTestId(int testId)
         {
             TeacherDataAccess teacher = new TeacherDataAccess();
             Mapper mapper = new Mapper();
@@ -221,6 +221,8 @@ namespace TestingSystem.API.Controllers
             var test = tests.GetTestById(testId);
             if (test == null) return BadRequest("Теста не существует");
             return Ok(mapper.ConvertAllStudentTestsDTOToAllTestsByStudentIdOutputModel(teacher.GetStudentsByTestId(testId)));
+        }
+
         [Authorize(Roles = "Teacher")]
         [HttpGet("teacher/{userId}/{groupId}")]
         public IActionResult GetGroupTestsAndResults(int userId, int groupId)
@@ -234,7 +236,7 @@ namespace TestingSystem.API.Controllers
             if (!groups.GetAllByUserId(userId).Any(g => g.GroupID == groupId)) return BadRequest("Группа относится к другому преподавателю");
             List<TestDTO> tests = teacher.GetTestByGroupId(groupId);
             GroupStatistics gs = new GroupStatistics(groupId);
-            Dictionary<int, double> statistic = gs.GetAverageGroupResultForAllTests(groupId);
+            Dictionary<int, double> statistic = gs.GetAverageResultsOfAllTestsByGroupId(groupId);
             return Ok(mapper.ConvertTestDTOToGroupTestsAndResultsOutputModel(tests,statistic));
         }
         
