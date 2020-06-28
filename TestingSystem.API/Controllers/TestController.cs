@@ -75,7 +75,7 @@ namespace TestingSystem.API.Controllers
             {
                 if (converter.CreateArrayFromString(model.Tag).Length < 3)
                 {
-                    return Json(mapper.ConvertTestDTOToTestModelList(search.GetTestsVSTagSearchAnd(converter.CreateArrayFromString(model.Tag))));
+                    return Json(mapper.ConvertTestDTOToTestModelList(search.GetTestsFoundByTagAnd(converter.CreateArrayFromString(model.Tag))));
                 }
                 else
                 {
@@ -86,7 +86,7 @@ namespace TestingSystem.API.Controllers
             {
                 if (converter.CreateArrayFromString(model.Tag).Length < 3)
                 {
-                    return Json(mapper.ConvertTestDTOToTestModelList(search.GetTestsVSTagSearchOr(converter.CreateArrayFromString(model.Tag))));
+                    return Json(mapper.ConvertTestDTOToTestModelList(search.GetTestsFoundByTagOr(converter.CreateArrayFromString(model.Tag))));
                 }
                 else
                 {
@@ -125,7 +125,7 @@ namespace TestingSystem.API.Controllers
             var tag = tags.GetTagById(tagModel.ID);
             if (tag == null) return BadRequest("Тега не существует");
             if (string.IsNullOrWhiteSpace(tagModel.Name)) return BadRequest("Введите название тега");
-            tags.UpdateTag(tagDto);            
+            tags.UpdateTagById(tagDto);            
             return Ok(tagModel.ID);
         }
 
@@ -136,7 +136,7 @@ namespace TestingSystem.API.Controllers
             AuthorDataAccess tags = new AuthorDataAccess();
             var tag = tags.GetTagById(tagId);
             if (tag == null) return BadRequest("Тега не существует");
-            tags.DeleteTag(tagId);
+            tags.DeleteTagById(tagId);
             return Ok(tagId);
         }        
 
