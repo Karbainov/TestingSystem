@@ -313,6 +313,8 @@ namespace TestingSystem.API
                 return tagOutputs;
             }
             return null;
+        }
+
         public List<TestOutputModel> ConvertTestDTOToTestModelList(List<TestDTO> dtoList) 
         {
             List<TestOutputModel> modelList = new List<TestOutputModel>();
