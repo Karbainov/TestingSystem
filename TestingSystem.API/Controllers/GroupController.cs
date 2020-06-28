@@ -166,7 +166,7 @@ namespace TestingSystem.API.Controllers
         {
             GroupManager teacher = new GroupManager();
             Mapper mapper = new Mapper();
-            return Ok(mapper.ConvertTeacherGroupsWithStudentsDTOToGroupWithStudentsOutputModel(teacher.GetGroupsWithStudentsByTeacherID(id)));
+            return Ok(mapper.ConvertTeacherGroupsWithStudentsDTOToGroupWithStudentsOutputModel(teacher.GetGroupsWithStudentsByTeacherID(userId)));
         }
 
         [Authorize(Roles = "Teacher")]
