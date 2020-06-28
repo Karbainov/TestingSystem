@@ -102,7 +102,7 @@ namespace TestingSystem.API.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Teacher, Student")]
         [HttpGet("{userId}/test")]
         public IActionResult GetStudentTestsByUserId(int userId)
         {
@@ -114,7 +114,7 @@ namespace TestingSystem.API.Controllers
             return Ok(model);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Teacher, Student")]
         [HttpGet("{userId}/test/{testId}")]
         public IActionResult GetAttemptsByUserIdTestId(int userId, int testId)
         {
@@ -125,7 +125,7 @@ namespace TestingSystem.API.Controllers
             return Ok(model);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Teacher, Student")]
         [HttpGet("{userId}/test/attempt/{attemptId}")]
         public IActionResult GetQuestionAndAnswerByAttemptID(int attemptID)
         {
