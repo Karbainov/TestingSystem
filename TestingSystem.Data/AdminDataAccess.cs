@@ -133,7 +133,7 @@ namespace TestingSystem.Data
             return roleCRUD.GetByUserID(userId);
         }
         
-        public List<UserDTO> GetUsersByRoleID(int roleId)
+        public List<UserDTO> GetUsersByRoleId(int roleId)
         {
             UserManager users = new UserManager();
             return users.GetUsersByRoleID(roleId);
@@ -224,7 +224,7 @@ namespace TestingSystem.Data
             return manager.RestoreGroup(id);
         }
 
-        public List<UserRoleDTO> GetRoleByRoleID(int roleId)
+        public List<UserRoleDTO> GetRoleByRoleId(int roleId)
         {
             UserRoleCRUD role = new UserRoleCRUD();
             return role.GetByRoleID(roleId);
