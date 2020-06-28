@@ -50,7 +50,7 @@ namespace TestingSystem.API.Controllers
             AuthorDataAccess feedbacks = new AuthorDataAccess();
             var test = feedbacks.GetTestById(testId);
             if (test == null) return BadRequest("Теста не существует");
-            return Ok(mapper.ConvertFeedbackDTOToFeedbackModelList(feedbacks.GetFeedbackByTestId(testId)));
+            return Ok(mapper.ConvertFeedbackDTOToFeedbackModelList(feedbacks.GetFeedbacksByTestId(testId)));
         }
 
         [Authorize(Roles = "Author")]
@@ -59,7 +59,7 @@ namespace TestingSystem.API.Controllers
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess feedbacks = new AuthorDataAccess();
-            return Ok(mapper.ConvertFeedbackDTOToFeedbackModelList(feedbacks.GetFeedbackByPeriod(period.StringConverToDateTime(period.PeriodStart), period.StringConverToDateTime(period.PeriodEnd))));
+            return Ok(mapper.ConvertFeedbackDTOToFeedbackModelList(feedbacks.GetFeedbacksByPeriod(period.StringConverToDateTime(period.PeriodStart), period.StringConverToDateTime(period.PeriodEnd))));
         }       
 
         [Authorize(Roles = "Author")]
