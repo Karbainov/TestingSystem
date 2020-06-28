@@ -29,6 +29,7 @@ namespace TestingSystem.Business.Statistics
                         int result = info.Attempts[attemptId].UserResult;
                         results.Add(attemptId, result);
                     }
+                    return new List<int>();
                 }
             }            
             return results.Values.ToList();
@@ -37,9 +38,11 @@ namespace TestingSystem.Business.Statistics
         public double GetAverageResults(int id)
         {
             List<int> results = GetAllResults(id);
+            double avg = 0;
+
             if (results.Count == 0)
             {
-                return Double.NaN;
+                return avg;
             }
 
             double sum = 0;
@@ -47,7 +50,7 @@ namespace TestingSystem.Business.Statistics
             {
                 sum += i;
             }
-            double avg = sum / results.Count();
+            avg = sum / results.Count();
             return avg;
         }
 

@@ -10,8 +10,8 @@ namespace TestingSystem.Business.Tests
     public class StatisticsTests
     {   
         [TestCase(1, ExpectedResult = 20)]
-        [TestCase(5, ExpectedResult = Double.NaN)]
-        [TestCase(3, ExpectedResult = Double.NaN)]
+        [TestCase(5, ExpectedResult = 0)]
+        [TestCase(3, ExpectedResult = 0)]
         public double GetAverageResultsTest(int id)
         {      
             TestStatistics statistic = new TestStatistics(id);

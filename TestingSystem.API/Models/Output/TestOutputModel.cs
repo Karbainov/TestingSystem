@@ -13,6 +13,10 @@ namespace TestingSystem.API.Models.Output
         public byte? SuccessScore { get; set; }
         public int? QuestionNumber { get; set; }
         public double AverageResult { get; set; }
+        public int Passed { get; set; }
+        public int Failed { get; set; }
+        public double SuccessRate { get; set; }
+
         public List<QuestionOutputModel> Questions { get; set; }
         public List<TagOutputModel> Tags { get; set; }        
     }
