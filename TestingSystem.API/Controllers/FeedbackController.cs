@@ -73,18 +73,7 @@ namespace TestingSystem.API.Controllers
             FeedbackQuestionOutputModel model = mapper.ConvertFeedbackQuestionDTOToFeedbackQuestionOutputModel(feedbacks.GetFeedbackWithQuestion(feedbackId));
             model.Answers = mapper.ConvertAnswerDTOToAnswerModelList(feedbacks.GetAllAnswersByFeedbackId(feedbackId));
             return Ok(model);
-        }
-
-        //[Authorize(Roles = "Author")]
-        //[HttpGet("answers-by-feedback/{feedbackId}")]
-        //public ActionResult<List<AnswerOutputModel>> GetAllAnswersByFeedbackId(int feedbackId)    
-        //{
-        //    Mapper mapper = new Mapper();
-        //    AuthorDataAccess answers = new AuthorDataAccess();
-        //    var feedback = answers.GetFeedbackById(feedbackId);
-        //    if (feedback == null) return BadRequest("Фитбека не существует");
-        //    return Ok(mapper.ConvertAnswerDTOToAnswerModelList(answers.GetAllAnswersByFeedbackId(feedbackId)));
-        //}
+        }        
 
         [Authorize(Roles = "Author")]
         [HttpPut("update-processe/{feedbackId}")]
