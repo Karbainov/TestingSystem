@@ -204,7 +204,7 @@ namespace TestingSystem.API.Controllers
             return Ok("Роль пользователя удалена");
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpGet("{groupID}/groupTests")]
         public IActionResult GetTestByGroupId(int groupId)
         {
@@ -213,12 +213,9 @@ namespace TestingSystem.API.Controllers
             List<TestDTO> tests = teacher.GetTestByGroupId(groupId);
             if (tests == null) return BadRequest("Группы не существет");
             return Ok(mapper.ConvertTestDTOToTestModelList(teacher.GetTestByGroupId(groupId)));
-
-            //TestOutputModel model = mapper.ConvertTestDTOToTestOutputModel(teacher.GetTestByGroupId(tests));
-            //return Json(model);
         }
 
-        //[Authorize(Roles = "Teacher")]
+        [Authorize(Roles = "Teacher")]
         [HttpGet("teacher/{userId}/{groupId}")]
         public IActionResult GetGroupTestsAndResults(int userId, int groupId)
         {
@@ -231,7 +228,6 @@ namespace TestingSystem.API.Controllers
             if (!groups.GetAllByUserId(userId).Any(g => g.GroupID == groupId)) return BadRequest("Группа относится к другому преподавателю");
             List<TestDTO> tests = teacher.GetTestByGroupId(groupId);
             GroupStatistics gs = new GroupStatistics(groupId);
-            //if(gs.GetAverageGroupResultForAllTests(groupId).Any(g=>g.Key==null)) return BadRequest("Т");
             Dictionary<int, double> statistic = gs.GetAverageGroupResultForAllTests(groupId);
             return Ok(mapper.ConvertTestDTOToGroupTestsAndResultsOutputModel(tests,statistic));
         }
