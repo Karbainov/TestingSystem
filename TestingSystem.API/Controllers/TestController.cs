@@ -34,7 +34,7 @@ namespace TestingSystem.API.Controllers
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess tests = new AuthorDataAccess();
-            List <TestOutputModel> listOfModels= mapper.ConvertTestDTOToTestModelList(tests.GetAllTest());
+            List <TestOutputModel> listOfModels= mapper.ConvertTestDTOToTestModelList(tests.GetAllTests());
             foreach (var i in listOfModels)
             {
                 TestStatistics statistics = new TestStatistics(i.ID);
