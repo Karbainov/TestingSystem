@@ -8,6 +8,7 @@ using TestingSystem.Data.DTO;
 using TestingSystem.Business;
 using TestingSystem.Business.Models;
 using TestingSystem.Data.StoredProcedure;
+using TestingSystem.Business.Statistics;
 
 namespace TestingSystem.API
 {
@@ -296,6 +297,25 @@ namespace TestingSystem.API
             foreach (TestDTO testDTO in dtoList)
             {
                 modelList.Add(ConvertTestDTOToTestOutputModel(testDTO));
+            }
+            return modelList;
+        }
+
+        public List<GroupTestsAndResultsOutputModel> ConvertTestDTOToGroupTestsAndResultsOutputModel(List<TestDTO> dto, Dictionary<int,double> statictic)
+        {
+            List<GroupTestsAndResultsOutputModel> modelList = new List<GroupTestsAndResultsOutputModel>();
+            foreach (TestDTO test in dto)
+            {
+                modelList.Add(
+                    new GroupTestsAndResultsOutputModel()
+                    {
+                         ID = test.ID,
+                         Name = test.Name,
+                         DurationTime = test.DurationTime,
+                         SuccessScore = test.SuccessScore,
+                         Result = statictic[test.ID]
+                     }
+                    );
             }
             return modelList;
         }

@@ -13,6 +13,7 @@ using TestingSystem.API.Models.Input;
 using TestingSystem.API.Models.Output;
 using TestingSystem.Business;
 using Microsoft.AspNetCore.Authorization;
+using TestingSystem.Business.Statistics;
 
 namespace TestingSystem.API.Controllers
 {
@@ -217,5 +218,21 @@ namespace TestingSystem.API.Controllers
             //return Json(model);
         }
 
-    }
+        [Authorize(Roles = "Teacher")]
+        [HttpGet("teacher/{userId}/{groupId}")]
+        public IActionResult GetGroupTestsAndResults(int userId, int groupId)
+        {
+            TeacherDataAccess teacher = new TeacherDataAccess();
+            Mapper mapper = new Mapper();
+            TeacherGroup groups = new TeacherGroup();
+            var g = groups.GetAll();
+            if (!g.Any(g => g.UserID == userId)) return BadRequest("Такой преподаватель отсутствует");
+            if (!g.Any(g => g.GroupID == groupId)) return BadRequest("Группа отсутствует");
+            if (!groups.GetAllByUserId(userId).Any(g => g.GroupID == groupId)) return BadRequest("Группа относится к другому преподавателю");
+            List<TestDTO> tests = teacher.GetTestByGroupId(groupId);
+            GroupStatistics gs = new GroupStatistics(groupId);
+            Dictionary<int, double> statistic = gs.GetAverageGroupResultForAllTests(groupId);
+            return Ok(mapper.ConvertTestDTOToGroupTestsAndResultsOutputModel(tests,statistic));
+        }
+     }
 }
