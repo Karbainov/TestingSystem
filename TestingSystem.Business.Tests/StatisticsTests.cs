@@ -8,29 +8,25 @@ using TestingSystem.Business.Tests.MocsForStatistics;
 namespace TestingSystem.Business.Tests
 {
     public class StatisticsTests
-    {       
-
+    {   
         [TestCase(1, ExpectedResult = 20)]
-        [TestCase(5, ExpectedResult = Double.NaN)]
-        [TestCase(3, ExpectedResult = Double.NaN)]
-
-        public double GetAverageResultTest(int id)
+        [TestCase(5, ExpectedResult = 0)]
+        [TestCase(3, ExpectedResult = 0)]
+        public double GetAverageResultsTest(int id)
         {      
             TestStatistics statistic = new TestStatistics(id);
-            double actual = statistic.GetAverageResult(id);
+            double actual = statistic.GetAverageResults(id);
             return actual;
-        }
-    
+        }    
 
         [TestCase(1)]
         [TestCase(7)]
-        [TestCase(6)]
-        
+        [TestCase(6)]        
         public void GetPassedFailedStatsTest(int id)
         {
             TestStatistics statistic = new TestStatistics(id);
             PassedFailedModel actual = statistic.GetPassedFailedStats(id);
-            TestMock test = new TestMock();
+            TestExpectedMock test = new TestExpectedMock();
             PassedFailedModel expected = test.GetPassedFailed(id);
             Assert.AreEqual(expected, actual);
         }
@@ -38,52 +34,45 @@ namespace TestingSystem.Business.Tests
         [TestCase(4)]
         [TestCase(6)]
         [TestCase(13)]
-
-        public void CountNumberOfAnswersForAttemptByQuestionIdTest(int questionId)
+        public void CountNumberOfAnswersInAttemptByQuestionIdTest(int questionId)
         {
             QuestionStatistics statistic = new QuestionStatistics(questionId);
             Dictionary<int, int> actual = statistic.CountNumberOfAnswersInAttemptByQuestionId(questionId);
-            QuestionMock mock = new QuestionMock();
-            Assert.AreEqual(mock.CountNumberOfAnswerMock(questionId), actual);
+            QuestionExpectedMock mock = new QuestionExpectedMock();
+            Assert.AreEqual(mock.CountNumberOfAnswersInAttemptByQuestionId(questionId), actual);
         }
 
         [TestCase(4)]
         [TestCase(6)]
         [TestCase(13)]
-
-        public void GetPercentOfAnswerToQuestionTest(int questionId)
+        public void GetPercentageOfPeopleChoosingAnswerTest(int questionId)
         {
             QuestionStatistics statistic = new QuestionStatistics(questionId);
-            Dictionary<int, double> actual = statistic.GetPercentOfAnswerToQuestion(questionId);
-            QuestionMock mock = new QuestionMock();
-            Assert.AreEqual(mock.GetPercentOfAnswerMock(questionId), actual);
+            Dictionary<int, double> actual = statistic.GetPercentageOfPeopleChoosingAnswer(questionId);
+            QuestionExpectedMock mock = new QuestionExpectedMock();
+            Assert.AreEqual(mock.GetPercentageOfPeopleChoosingAnswer(questionId), actual);
         }
 
         [TestCase(4)]
         [TestCase(6)]
         [TestCase(13)]
-
-        public void FindPercentCorrectAnswersByQuestionTest(int questionId)
+        public void GetPercentageOfCorrectlyAnsweredTest(int questionId)
         {
             QuestionStatistics statistic = new QuestionStatistics(questionId);
-            double actual = statistic.FindPercentCorrectAnswersByQuestion(questionId);
-            QuestionMock mock = new QuestionMock();
-            Assert.AreEqual(mock.FindPercentCorrectMock(questionId), actual);
+            double actual = statistic.GetPercentageOfCorrectlyAnswered(questionId);
+            QuestionExpectedMock mock = new QuestionExpectedMock();
+            Assert.AreEqual(mock.GetPercentageOfCorrectlyAnswered(questionId), actual);
         }
 
         [TestCase(1)]
         [TestCase(6)]
         [TestCase(5)]
-
-        public void GetAverageGroupResultForAllTestsTest(int groupId)
+        public void GetAverageResultsOfAllTestsByGroupIdTest(int groupId)
         {
             GroupStatistics statistic = new GroupStatistics(groupId);
-            Dictionary<int, double> actual = statistic.GetAverageGroupResultForAllTests(groupId);
-            GroupMock mock = new GroupMock();
-            Assert.AreEqual(mock.GetAverageGroupResultForAllTests(groupId), actual);
+            Dictionary<int, double> actual = statistic.GetAverageResultsOfAllTestsByGroupId(groupId);
+            GroupExpectedMock mock = new GroupExpectedMock();
+            Assert.AreEqual(mock.GetAverageResultsOfAllTestsByGroupId(groupId), actual);
         }
-
-
-
     }
 }

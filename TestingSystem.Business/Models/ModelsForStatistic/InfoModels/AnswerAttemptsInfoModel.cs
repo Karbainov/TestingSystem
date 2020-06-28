@@ -8,6 +8,5 @@ namespace TestingSystem.Business.Statistics.Models
     {
         public int AnswersStudentId { get; set; }
         public List<int> AttemptId { get; set; }
-
     }
 }

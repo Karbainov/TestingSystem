@@ -42,11 +42,6 @@ namespace TestingSystem.Data
             return feedbacks.GetNotProcessedFeedback();
         }
 
-        public List<TestDTO> GetAllTest()
-        {
-            throw new NotImplementedException();
-        }
-
         public List<FeedbackDTO> GetAllFeedbacks()       //список всех фидбэков (сортировка по дате убыв.)
         {
             FeedbackCRUD feedbacks = new FeedbackCRUD();
@@ -258,65 +253,5 @@ namespace TestingSystem.Data
             FeedbackManager feedback = new FeedbackManager();
             return feedback.UpdateProcessedInFeedback(id);
         }
-
-
-
-
-
-
-
-
-
-        //Методы, которые могут пригодиться?
-
-        public void DeleteByTagId(int tagId)   //удалить тэг из всех тестов
-        {
-            TestTagCRUD tt = new TestTagCRUD();
-            tt.DeleteByTagId(tagId);
-        }
-
-        public void DeleteByTestId(int testId)   //удалить все тэги из теста
-        {
-            TestTagCRUD tt = new TestTagCRUD();
-            tt.DeleteByTestId(testId);
-        }
-
-        public List<QuestionDTO> GetAllQuestions()   //список всех существующих вопросов
-        {
-            QuestionCRUD q = new QuestionCRUD();
-            return q.GetAll();
-        }        
-
-        
-
-        public List<QuestionDTO> GetQuestionsByTypeId(int typeId)  //список всех вопросов по конкретному типу
-        {
-            QuestionCRUD q = new QuestionCRUD();
-            return q.GetByTypeId(typeId);
-        }
-
-        public int AddType(TypeDTO type)   //добавить тип вопросов
-        {
-            TypeCRUD typeCRUD = new TypeCRUD();
-            return typeCRUD.Add(type);
-        }
-
-        public List<TypeDTO> GetAllTypes()  //список всех типов вопросов
-        {
-            TypeCRUD typeCRUD = new TypeCRUD();
-            return typeCRUD.GetAll();
-        }
-
-        public void UpdateType(TypeDTO type)   //поменять тип вопросов
-        {
-            TypeCRUD typeCRUD = new TypeCRUD();
-            typeCRUD.Update(type);
-        }
-
-        public void DeleteType(TypeDTO type)  //удалить тип вопросов
-        {
-            TypeCRUD typeCRUD = new TypeCRUD();
-            typeCRUD.Delete(type.ID);
-        }        
     }
 }

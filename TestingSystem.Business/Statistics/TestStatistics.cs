@@ -6,7 +6,7 @@ using TestingSystem.Business.Statistics.Models;
 
 namespace TestingSystem.Business.Statistics
 {
-    public class TestStatistics : AStatistics
+    public class TestStatistics : AbstractStatistics
     {
         public TestStatistics() { }
         public TestStatistics(int id)
@@ -29,20 +29,20 @@ namespace TestingSystem.Business.Statistics
                         int result = info.Attempts[attemptId].UserResult;
                         results.Add(attemptId, result);
                     }
+                    return new List<int>();
                 }
-
-            }
-            //if (results.Count == 0) { results.Add(0,) }:
-
+            }            
             return results.Values.ToList();
         }
 
-        public double GetAverageResult(int id)
+        public double GetAverageResults(int id)
         {
             List<int> results = GetAllResults(id);
+            double avg = 0;
+
             if (results.Count == 0)
             {
-                return Double.NaN;
+                return avg;
             }
 
             double sum = 0;
@@ -50,7 +50,7 @@ namespace TestingSystem.Business.Statistics
             {
                 sum += i;
             }
-            double avg = sum / results.Count();
+            avg = sum / results.Count();
             return avg;
         }
 

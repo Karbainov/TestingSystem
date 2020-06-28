@@ -4,11 +4,11 @@ using System.Text;
 
 namespace TestingSystem.Business.Tests.MocsForStatistics
 {
-    public class QuestionMock
+    public class QuestionExpectedMock
     {
-        public QuestionMock () { }
+        public QuestionExpectedMock () { }
 
-        public Dictionary<int, int> CountNumberOfAnswerMock(int questionId) 
+        public Dictionary<int, int> CountNumberOfAnswersInAttemptByQuestionId(int questionId) 
         {
             Dictionary<int, int> mock = new Dictionary<int, int>();
             switch (questionId)
@@ -32,7 +32,7 @@ namespace TestingSystem.Business.Tests.MocsForStatistics
             return mock;     
         }
 
-        public Dictionary<int, double> GetPercentOfAnswerMock(int questionId) 
+        public Dictionary<int, double> GetPercentageOfPeopleChoosingAnswer(int questionId) 
         {
             Dictionary<int, double> mock = new Dictionary<int, double>();
             switch (questionId)
@@ -56,8 +56,7 @@ namespace TestingSystem.Business.Tests.MocsForStatistics
             return mock;
         }
 
-
-        public double FindPercentCorrectMock(int questionId) 
+        public double GetPercentageOfCorrectlyAnswered(int questionId) 
         {
             switch (questionId)
             {

@@ -217,5 +217,18 @@ namespace TestingSystem.API.Controllers
             //return Json(model);
         }
 
+        [Authorize(Roles = "Author,Teacher")]
+        [HttpGet("students-by-test/{testId}")]
+        public ActionResult <List<AllTestsByStudentIdOutputModel>> GetGetAllStudentsByTest(int testId)
+        {
+            TeacherDataAccess teacher = new TeacherDataAccess();
+            Mapper mapper = new Mapper();
+            if (testId == null) return BadRequest("Группы не существет");
+            return Ok(mapper.ConvertAllStudentTestsDTOToAllTestsByStudentIdOutputModel(teacher.GetStudentsByTestId(testId)));
+
+            //TestOutputModel model = mapper.ConvertTestDTOToTestOutputModel(teacher.GetTestByGroupId(tests));
+            //return Json(model);
+        }
+
     }
 }

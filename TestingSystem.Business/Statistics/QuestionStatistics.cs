@@ -6,7 +6,7 @@ using TestingSystem.Business.Statistics.Models;
 
 namespace TestingSystem.Business.Statistics
 {
-    public class QuestionStatistics:AStatistics
+    public class QuestionStatistics:AbstractStatistics
     {
         public QuestionStatistics(int id)
         {
@@ -14,34 +14,34 @@ namespace TestingSystem.Business.Statistics
             info = creator.CreateByQuestionId(id);
         }
 
-        public Dictionary<int, int> CountNumberOfAnswersInAttemptByQuestionId(int quId) 
+        public Dictionary<int, int> CountNumberOfAnswersInAttemptByQuestionId(int questionId) 
         {
-            Dictionary<int, int> question = new Dictionary<int, int>();
+            Dictionary<int, int> answers = new Dictionary<int, int>();
             
-            foreach (var record in info.IdInfo) 
+            foreach (var i in info.IdInfo) 
             {
-                if (record.QuestionId == quId && !question.ContainsKey(record.AnswerId)) 
+                if (i.QuestionId == questionId && !answers.ContainsKey(i.AnswerId)) 
                 {
-                    int answerId = record.AnswerId;                     
+                    int answerId = i.AnswerId;                     
                     List<int> attemptId = new List<int>(info.Answers[answerId].Attempts);
                     int count = attemptId.Count;
-                    question.Add(answerId, count);
+                    answers.Add(answerId, count);
                 }
             }
-            return question;
+            return answers;
         }
 
-        public Dictionary<int, double> GetPercentOfAnswerToQuestion(int quId) 
+        public Dictionary<int, double> GetPercentageOfPeopleChoosingAnswer(int questionId) 
         {
-            Dictionary<int, int> answers = CountNumberOfAnswersInAttemptByQuestionId(quId);
+            Dictionary<int, int> answers = CountNumberOfAnswersInAttemptByQuestionId(questionId);
             Dictionary<int, double> answersPercent = new Dictionary<int, double> ();            
             List<int> attemptId = new List<int>();
 
-            foreach (var record in info.IdInfo)
+            foreach (var j in info.IdInfo)
             {
-                if (record.QuestionId == quId && !attemptId.Contains(record.AttemptId))
+                if (j.QuestionId == questionId && !attemptId.Contains(j.AttemptId))
                 {
-                    attemptId.Add(record.AttemptId);
+                    attemptId.Add(j.AttemptId);
                 }                
             }
             foreach (var i in answers) 
@@ -52,7 +52,7 @@ namespace TestingSystem.Business.Statistics
             return answersPercent;
         }
 
-        public double FindPercentCorrectAnswersByQuestion (int questionId)
+        public double GetPercentageOfCorrectlyAnswered (int questionId)
         {
             int correct = 0;
             int sumCorrect = 0;             

@@ -15,5 +15,6 @@ namespace TestingSystem.API.Models.Output
         public QuestionType? Type { get; set; }
         public int? Weight { get; set; }
         public List<AnswerOutputModel> Answers { get; set; }
+        public double PercentageOfCorrectlyAnswered { get; set; }
     }   
 }

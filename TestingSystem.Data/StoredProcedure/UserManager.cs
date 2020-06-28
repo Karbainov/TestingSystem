@@ -82,6 +82,15 @@ namespace TestingSystem.Data.StoredProcedure
             }
         }
 
+        public List<AllStudentTestsDTO> GetStudentsByTestId(int id)
+        {
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "AllStudentsByTestId";
+                return connection.Query<AllStudentTestsDTO>(sqlExpression, new { id }, commandType: CommandType.StoredProcedure).ToList();
+            }
+        }
+
         public List<TestAttemptDTO> GetIncompleteTests(int id)
         {
             using (IDbConnection connection = Connection.GetConnection())

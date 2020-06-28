@@ -14,8 +14,7 @@ namespace TestingSystem.API
     public class Mapper
     {
         public object TestStistics { get; private set; }
-
-        //тест
+       
         public TestOutputModel ConvertTestDTOToTestOutputModel(TestDTO testDTO)
         {
             return new TestOutputModel()
@@ -93,7 +92,6 @@ namespace TestingSystem.API
             {
                 if (a != null) 
                 {
-
                     QuestionOutputModel tmp = new QuestionOutputModel()
                     {
                         AnswerCount = a.AnswersCount,
@@ -101,8 +99,6 @@ namespace TestingSystem.API
                         Value = a.Value,
                         Weight = a.Weight,
                         Answers = ConvertAnswerDTOToAnswerModelList(a.Answers),
-                        
-
                     };
                     switch(a.Type)
                     {
@@ -116,13 +112,12 @@ namespace TestingSystem.API
                             tmp.Type = Shared.QuestionType.TextAnswer;
                             break;
                     }
-
                     result.Add(tmp);
-                }
-               
+                }               
             }
             return result;
         }
+
         public TestOutputModel ConvertTestQuestionTagDTOToTestOutputModel(TestQuestionTagDTO testDTO)
         {
             if (testDTO != null)
@@ -146,6 +141,7 @@ namespace TestingSystem.API
                 return new TestOutputModel();
             }
         }
+
         public List<UserOutputModel> ConvertStudentDTOToUserOutputModel(List<StudentDTO> students)
         {
             List<UserOutputModel> users = new List<UserOutputModel>();
@@ -170,6 +166,7 @@ namespace TestingSystem.API
             }
             return users;
         }
+
         public List<UserOutputModel> ConvertTeacherDTOToUserOutputModel(List<TeacherDTO> teachers)
         {
             List<UserOutputModel> users = new List<UserOutputModel>();
@@ -194,6 +191,7 @@ namespace TestingSystem.API
             }
             return users;
         }
+
         public List<GroupOutputModel> ConvertGroupWithStudentsAndTeachersDTOToGroupOutputModel(List<GroupWithStudentsAndTeachersDTO> groups)
         {
             List<GroupOutputModel> result = new List<GroupOutputModel>();
@@ -214,6 +212,7 @@ namespace TestingSystem.API
             }
             return result;
         }
+
         public List<GroupWithStudentsOutputModel> ConvertTeacherGroupsWithStudentsDTOToGroupWithStudentsOutputModel(List<TeacherGroupsWithStudentsDTO> groups)
         {
             List<GroupWithStudentsOutputModel> result = new List<GroupWithStudentsOutputModel>();
@@ -233,6 +232,29 @@ namespace TestingSystem.API
             }
             return result;
         }
+
+        public List<AllTestsByStudentIdOutputModel> ConvertAllStudentTestsDTOToAllTestsByStudentIdOutputModel(List<AllStudentTestsDTO> ts)
+        {
+            List<AllTestsByStudentIdOutputModel> result = new List<AllTestsByStudentIdOutputModel>();
+            foreach (var g in ts)
+            {
+                if (g != null)
+                {
+                    result.Add(new AllTestsByStudentIdOutputModel()
+                    {
+                        Id = g.Id,
+                        FirstName = g.FirstName,
+                        LastName = g.LastName,
+                        NameTest = g.NameTest,
+                        NumberOfAttempts= g.NumberOfAttempts,
+                         MaxResult=g.MaxResult
+                    });
+                }
+            }
+            return result;
+        }
+
+
         public List<QuestionOutputModel> ConvertQuestionForOneToManyDTOToQuestionModelList(List<QuestionForOneToManyDTO> dtoList)
         {
             List<QuestionOutputModel> modelList = new List<QuestionOutputModel>();
@@ -242,6 +264,7 @@ namespace TestingSystem.API
             }
             return modelList;
         }
+
         public List<TestOutputModel> ConvertTestQuestionTagDTOToTestOutputListModel(List<TestQuestionTagDTO> testDTO)
         {
             List<TestOutputModel> tests = new List<TestOutputModel>();
@@ -251,6 +274,9 @@ namespace TestingSystem.API
             }
             return tests;
         }
+
+
+
         public QuestionOutputModel ConvertQuestionForOneToManyDTOToQuestionOutputModel(QuestionForOneToManyDTO questionDTO)
         {
             if (questionDTO != null)
@@ -267,6 +293,7 @@ namespace TestingSystem.API
             }
             return null;
         }
+
         public List<TagOutputModel> ConvertTagsWithTestIdToTagOutputModel(List<TagWithTestIDDTO> tag)
         {
             if (tag != null)
@@ -286,11 +313,7 @@ namespace TestingSystem.API
                 return tagOutputs;
             }
             return null;
-        }
-
-
-        //список тестов
-        public List<TestOutputModel> ConvertTestDTOToTestModelList(List<TestDTO> dtoList) //формирует список тестов
+        public List<TestOutputModel> ConvertTestDTOToTestModelList(List<TestDTO> dtoList) 
         {
             List<TestOutputModel> modelList = new List<TestOutputModel>();
             foreach (TestDTO testDTO in dtoList)
@@ -300,7 +323,7 @@ namespace TestingSystem.API
             return modelList;
         }
 
-        ////тест, найденный по тэгам
+       
         //public TestOutputModel SearchTestByTagDTOToTestOutputModel(SearchTestByTagDTO searchTestByTagDTO)
         //{
         //    return new TestOutputModel()
@@ -310,7 +333,7 @@ namespace TestingSystem.API
         //    };
         //}
 
-        ////список тестов, найденных по тегам
+        
         //public List<TestOutputModel> SearchTestByTagDTOToTestModelList(List<SearchTestByTagDTO> dtoList)
         //{
         //    List<TestOutputModel> modelList = new List<TestOutputModel>();
@@ -320,8 +343,7 @@ namespace TestingSystem.API
         //    }
         //    return modelList;
         //}
-
-        //фидбэк
+        
         public FeedbackOutputModel ConvertFeedbackDTOToFeedbackOutputModel(FeedbackDTO feedbackDTO)
         {
             return new FeedbackOutputModel()
@@ -332,8 +354,7 @@ namespace TestingSystem.API
                 Processed = feedbackDTO.Processed,
             };
         }
-
-        //список фидбэков
+       
         public List<FeedbackOutputModel> ConvertFeedbackDTOToFeedbackModelList(List<FeedbackDTO> dtoList)
         {
             List<FeedbackOutputModel> modelList = new List<FeedbackOutputModel>();
@@ -343,8 +364,7 @@ namespace TestingSystem.API
             }
             return modelList;
         }
-
-        //тэг
+        
         public TagOutputModel ConvertTagDTOToTagOutputModel(TagDTO tagDTO)
         {
             return new TagOutputModel()
@@ -353,8 +373,7 @@ namespace TestingSystem.API
                 Name = tagDTO.Name,
             };
         }
-
-        //список тэгов
+       
         public List<TagOutputModel> ConvertTagDTOToTagModelList(List<TagDTO> dtoList)
         {
             List<TagOutputModel> modelList = new List<TagOutputModel>();
@@ -364,8 +383,7 @@ namespace TestingSystem.API
             }
             return modelList;
         }
-
-        //создать тэг, изменить тэг
+       
         public TagDTO ConvertTagInputModelToTagDTO(TagInputModel tagmodel)
         {
             return new TagDTO()
@@ -374,8 +392,7 @@ namespace TestingSystem.API
                 Name = tagmodel.Name,
             };
         }
-
-        //попытка
+      
         public List<AttemptResultOutputModel> ConvertAttemptDTOToAttemptModel(List<AttemptResultDTO> attempt)
         {
             List<AttemptResultOutputModel> model = new List<AttemptResultOutputModel>();
@@ -393,15 +410,13 @@ namespace TestingSystem.API
             }
             return model;
         }
-
-        //попытка студента по конкретному тесту
+        
         public StudentOutputModel ConvertUserDTOTestAttemptDTOToStudentModel(UserDTO user, List<TestAttemptOutputModel> tests)
         {
             StudentOutputModel student = new StudentOutputModel(user.ID, user.FirstName, user.LastName, tests);
             return student;
         }
-
-        //список вопросов с ответами
+       
         public List<QuestionAnswerOutputModel> ConvertQuestionAnswerDTOToQuestionAnswerModel(List<QuestionAnswerDTO> questionsAnswers)
         {
             List<QuestionAnswerOutputModel> model = new List<QuestionAnswerOutputModel>();
@@ -418,8 +433,7 @@ namespace TestingSystem.API
             }
             return model;
         }
-
-        //список попыток теста
+        
         public List<TestAttemptOutputModel> ConvertTestAttemptDTOToTestAttemptModel(List<TestAttemptDTO> tests)
         {
             List<TestAttemptOutputModel> model = new List<TestAttemptOutputModel>();
@@ -438,8 +452,7 @@ namespace TestingSystem.API
             }
             return model;
         }
-
-        //создать тест, изменить тест
+        
         public TestDTO ConvertTestInputModelToTestDTO(TestInputModel testmodel)
         {
             return new TestDTO()
@@ -451,8 +464,7 @@ namespace TestingSystem.API
                 QuestionNumber = testmodel.QuestionNumber,
             };
         }
-
-        //вопрос
+       
         public QuestionOutputModel ConvertQuestionDTOToQuestionOutputModel(QuestionDTO questionDTO)
         {
             return new QuestionOutputModel()
@@ -464,8 +476,7 @@ namespace TestingSystem.API
                 AnswerCount = questionDTO.AnswersCount
             };
         }
-
-        //список вопросов
+       
         public List<QuestionOutputModel> ConvertQuestionDTOToQuestionModelList(List<QuestionDTO> dtoList)
         {
             List<QuestionOutputModel> modelList = new List<QuestionOutputModel>();
@@ -475,8 +486,7 @@ namespace TestingSystem.API
             }
             return modelList;
         }
-
-        //ответ
+        
         public AnswerOutputModel ConvertAnswerDTOToAnswerOutputModel(AnswerDTO answerDTO)
         {
             return new AnswerOutputModel()
@@ -487,8 +497,7 @@ namespace TestingSystem.API
                 Correct = answerDTO.Correct,
             };
         }
-
-        //список ответов 
+        
         public List<AnswerOutputModel> ConvertAnswerDTOToAnswerModelList(List<AnswerDTO> dtoList)
         {
             List<AnswerOutputModel> modelList = new List<AnswerOutputModel>();
@@ -498,8 +507,7 @@ namespace TestingSystem.API
             }
             return modelList;
         }
-
-        //добавляем тэг в тест
+       
         public TestTagDTO ConvertTestTagInputModelToTestTagDTO(TestTagInputModel testtagmodel)
         {
             return new TestTagDTO()
@@ -508,7 +516,7 @@ namespace TestingSystem.API
                 TagID = testtagmodel.TagID,
             };
         }
-        //mapper для вывод группы 
+       
         public GroupOutputModel ConvertGroupDTOToGroupOutputModel(GroupDTO group)
         {
             return new GroupOutputModel()
@@ -519,8 +527,7 @@ namespace TestingSystem.API
                 EndDate = group.EndDate,
             };
         }
-
-        //список group
+      
         public List<GroupOutputModel> ConvertGroupDTOToListGroupOutputModel(List<GroupDTO> list)
         {
             List<GroupOutputModel> listOutputmodels = new List<GroupOutputModel>();
@@ -593,8 +600,7 @@ namespace TestingSystem.API
                 EndDate = group.EndDate,
             };
         }
-
-        //создать вопрос
+        
         public QuestionDTO ConvertQuestionInputModelToQuestionDTO(QuestionInputModel questionmodel)
         {
             return new QuestionDTO()
@@ -606,8 +612,7 @@ namespace TestingSystem.API
                 Weight = questionmodel.Weight,
             };
         }
-
-        //создать ответ
+       
         public AnswerDTO ConvertAnswerInputModelToAnswerDTO(AnswerInputModel answermodel)
         {
             return new AnswerDTO()
@@ -618,8 +623,7 @@ namespace TestingSystem.API
                 Correct = answermodel.Correct,
             };
         }
-
-        //полный фидбэк с вопросом, тестом и именем пользователя
+        
         public FeedbackQuestionOutputModel ConvertFeedbackQuestionDTOToFeedbackQuestionOutputModel(FeedbackQuestionDTO feedbackquestionDTO)
         {
             return new FeedbackQuestionOutputModel()
@@ -644,7 +648,6 @@ namespace TestingSystem.API
                 Value = answers.Answer,
 
             };
-
             return newanswers;
         }
 
@@ -659,12 +662,9 @@ namespace TestingSystem.API
                 newquestion.Answers = new List<AnswerWithoutCorrectnessOutputModel>();
 
                 foreach (var answer in question.Answers)
-
                 {
-                    newquestion.Answers.Add(new Mapper().AnswerWithoutCorrectnessDTOToAnswerWithoutCorrectnessOutputModel(answer));
-
-                }
-
+                    newquestion.Answers.Add(new Mapper().AnswerWithoutCorrectnessDTOToAnswerWithoutCorrectnessOutputModel(answer));            
+                }                         
                 return newquestion;
             }
         }
@@ -674,13 +674,10 @@ namespace TestingSystem.API
             List<QuestionWithListAnswersOutputModel> newquestions = new List<QuestionWithListAnswersOutputModel>();
 
             foreach (var question in questions)
-
             {
                 newquestions.Add(new Mapper().QuestionWithListAnswersDTOToQuestionWithListAnswersOutputModel(question));
-
             }
             return newquestions;
-
         }
 
         public ConcreteAttemptOutputModel AttemptBusinessModelToConcreteAttemptOutputModel(AttemptBusinessModel questions, int userId, int testId)
