@@ -24,7 +24,7 @@ namespace TestingSystem.Data
             UserManager user = new UserManager();
             return user.GetIncompleteTests(userId);
         }
-        public List<AllStudentTestsDTO> GetStudentsTests(int userId)
+        public List<StudentsVSTestsDTO> GetStudentsTests(int userId)
         {
             UserManager user = new UserManager();
             return user.GetStudentVsTests(userId);

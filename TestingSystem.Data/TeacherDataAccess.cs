@@ -41,7 +41,7 @@ namespace TestingSystem.Data
             return teacher.GetTestByGroupId(groupId);
         }
 
-        public List<AllStudentTestsDTO> GetAllStudentTests(int id) // конкретные студент - лучшая попытка и макс балл. GetAllTestsByUserID
+        public List<StudentsVSTestsDTO> GetAllStudentTests(int id) // конкретные студент - лучшая попытка и макс балл. GetAllTestsByUserID
 
         {
             UserManager teacher = new UserManager();
@@ -68,7 +68,7 @@ namespace TestingSystem.Data
 
         }
 
-        public List<AllStudentTestsDTO> GetBestResultOfTestByGroupId(int groupId) //Лучшая попытка конкретного теста конкретного юзера -  все студенты *
+        public List<StudentsVSTestsDTO> GetBestResultOfTestByGroupId(int groupId) //Лучшая попытка конкретного теста конкретного юзера -  все студенты *
         {
             TestManager teacher = new TestManager();
             return teacher.GetBestResultOfTestByGroupID(groupId);
@@ -144,11 +144,16 @@ namespace TestingSystem.Data
             return manager.GetLateStudentsByTestID(id);
         }
 
-        public List<AllStudentTestsDTO> GetStudentsByTestId(int id)
+        public List<StudentsVSTestsDTO> GetStudentsByTestId(int id)
         {
             UserManager user = new UserManager();
             return user.GetStudentsByTestId(id);
         }
 
+        public List<StudentsVSTestsDTO> GetTestsByStudentId(int id)
+        {
+            UserManager user = new UserManager();
+            return user.GetTestsByStudentId(id);
+        }
     }
 }

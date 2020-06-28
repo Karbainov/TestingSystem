@@ -73,21 +73,30 @@ namespace TestingSystem.Data.StoredProcedure
             return userPositions;
         }
 
-        public List<AllStudentTestsDTO> GetStudentVsTests(int id)
+        public List<StudentsVSTestsDTO> GetStudentVsTests(int id)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "AllStudentTests ";
-                return connection.Query<AllStudentTestsDTO>(sqlExpression, new { id }, commandType: CommandType.StoredProcedure).ToList();
+                return connection.Query<StudentsVSTestsDTO>(sqlExpression, new { id }, commandType: CommandType.StoredProcedure).ToList();
             }
         }
 
-        public List<AllStudentTestsDTO> GetStudentsByTestId(int id)
+        public List<StudentsVSTestsDTO> GetStudentsByTestId(int id)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "AllStudentsByTestId";
-                return connection.Query<AllStudentTestsDTO>(sqlExpression, new { id }, commandType: CommandType.StoredProcedure).ToList();
+                return connection.Query<StudentsVSTestsDTO>(sqlExpression, new { id }, commandType: CommandType.StoredProcedure).ToList();
+            }
+        }
+
+        public List<StudentsVSTestsDTO> GetTestsByStudentId(int id)
+        {
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "AllTestsByStudentId";
+                return connection.Query<StudentsVSTestsDTO>(sqlExpression, new { id }, commandType: CommandType.StoredProcedure).ToList();
             }
         }
 
