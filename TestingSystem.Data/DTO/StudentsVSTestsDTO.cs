@@ -4,24 +4,26 @@ using System.Text;
 
 namespace TestingSystem.Data.DTO
 {
-    public class AllStudentTestsDTO
+    public class StudentsVSTestsDTO
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string NameTest { get; set; }
+        public int TestId { get; set; }
+        public string TestName { get; set; }
         public int NumberOfAttempts { get; set; }
         public int MaxResult { get; set; }
 
 
-        public AllStudentTestsDTO() { }
+        public StudentsVSTestsDTO() { }
 
-        public AllStudentTestsDTO(int userId, string firstName, string lastName, string nameTest, int numberOfAttempts, int maxResult)
+        public StudentsVSTestsDTO(int userId, string firstName,int testId , string lastName, string testName, int numberOfAttempts, int maxResult)
         {
             this.Id = userId;
             this.FirstName = firstName;
             this.LastName = lastName;
-            this.NameTest = nameTest;
+            this.TestId = testId;
+            this.TestName = testName;
             this.NumberOfAttempts = numberOfAttempts;
             this.MaxResult = maxResult;
 

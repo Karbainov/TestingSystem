@@ -123,12 +123,12 @@ namespace TestingSystem.Data.StoredProcedure
                 connection.Execute(sqlExpression, Id, commandType: CommandType.StoredProcedure);
         }
 
-        public List<AllStudentTestsDTO> GetBestResultOfTestByGroupID(int groupId)
+        public List<StudentsVSTestsDTO> GetBestResultOfTestByGroupID(int groupId)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Test_GetÍBestGroupResult @GroupID";
-                return connection.Query<AllStudentTestsDTO>(sqlExpression, new { groupId }).ToList();
+                return connection.Query<StudentsVSTestsDTO>(sqlExpression, new { groupId }).ToList();
             }
         }
 

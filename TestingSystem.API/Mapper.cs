@@ -233,7 +233,7 @@ namespace TestingSystem.API
             return result;
         }
 
-        public List<AllTestsByStudentIdOutputModel> ConvertAllStudentTestsDTOToAllTestsByStudentIdOutputModel(List<AllStudentTestsDTO> ts)
+        public List<AllTestsByStudentIdOutputModel> ConvertAllStudentTestsDTOToAllTestsByStudentIdOutputModel(List<StudentsVSTestsDTO> ts)
         {
             List<AllTestsByStudentIdOutputModel> result = new List<AllTestsByStudentIdOutputModel>();
             foreach (var g in ts)
@@ -245,9 +245,8 @@ namespace TestingSystem.API
                         Id = g.Id,
                         FirstName = g.FirstName,
                         LastName = g.LastName,
-                        NameTest = g.NameTest,
                         NumberOfAttempts= g.NumberOfAttempts,
-                         MaxResult=g.MaxResult
+                        MaxResult=g.MaxResult
                     });
                 }
             }

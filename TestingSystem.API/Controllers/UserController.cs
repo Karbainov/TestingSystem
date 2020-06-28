@@ -223,11 +223,10 @@ namespace TestingSystem.API.Controllers
         {
             TeacherDataAccess teacher = new TeacherDataAccess();
             Mapper mapper = new Mapper();
-            if (testId == null) return BadRequest("Группы не существет");
+            AuthorDataAccess tests = new AuthorDataAccess();
+            var test = tests.GetTestById(testId);
+            if (test == null) return BadRequest("Теста не существует");
             return Ok(mapper.ConvertAllStudentTestsDTOToAllTestsByStudentIdOutputModel(teacher.GetStudentsByTestId(testId)));
-
-            //TestOutputModel model = mapper.ConvertTestDTOToTestOutputModel(teacher.GetTestByGroupId(tests));
-            //return Json(model);
         }
 
     }
