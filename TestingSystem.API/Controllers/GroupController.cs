@@ -110,8 +110,8 @@ namespace TestingSystem.API.Controllers
         }
 
         [Authorize(Roles ="Teacher")]
-        [HttpGet("{teacherid}/all")]
-        public ActionResult GetStatisticByTeacherID(int teacherId)
+        [HttpGet("{teacherId}/all")]
+        public ActionResult GetStatisticByTeacherId(int teacherId)
         {
             TeacherDataAccess teacher = new TeacherDataAccess();
             Mapper mapper = new Mapper();
@@ -186,7 +186,7 @@ namespace TestingSystem.API.Controllers
 
         [Authorize(Roles = "Teacher")]
         [HttpGet("teacher/{userId}")]
-        public IActionResult GetGroupsWithStudentsByTeacherID(int userId)
+        public IActionResult GetGroupsWithStudentsByTeacherId(int userId)
         {
             GroupManager teacher = new GroupManager();
             Mapper mapper = new Mapper();
