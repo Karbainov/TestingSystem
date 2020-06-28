@@ -185,12 +185,12 @@ namespace TestingSystem.API.Controllers
         }
 
         [Authorize(Roles = "Teacher")]
-        [HttpGet("teacher/{id}")]
-        public IActionResult GetGroupsWithStudentsByTeacherID(int id)
+        [HttpGet("teacher/{userId}")]
+        public IActionResult GetGroupsWithStudentsByTeacherID(int userId)
         {
             GroupManager teacher = new GroupManager();
             Mapper mapper = new Mapper();
-            return Ok(mapper.ConvertTeacherGroupsWithStudentsDTOToGroupWithStudentsOutputModel(teacher.GetGroupsWithStudentsByTeacherID(id)));
+            return Ok(mapper.ConvertTeacherGroupsWithStudentsDTOToGroupWithStudentsOutputModel(teacher.GetGroupsWithStudentsByTeacherID(userId)));
         }
 
         [Authorize(Roles = "Teacher")]

@@ -9,7 +9,7 @@ using TestingSystem.Data.DTO;
 
 namespace TestingSystem.Data.StoredProcedure.CRUD
 {
-    class TeacherGroup
+    public class TeacherGroup
     {
         public int Add(TeacherGroupDTO teacherGroup)
         {
@@ -35,20 +35,20 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
                 return connection.Query<TeacherGroupDTO>(sqlExpression, new { id }, commandType: CommandType.StoredProcedure).FirstOrDefault();
             }
         }
-        public TeacherGroupDTO GetByUserId(int userId)
+        public List<TeacherGroupDTO> GetAllByUserId(int userId)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Teacher_Group_GetByUserID";
-                return connection.Query<TeacherGroupDTO>(sqlExpression, new { userId }, commandType: CommandType.StoredProcedure).FirstOrDefault();
+                return connection.Query<TeacherGroupDTO>(sqlExpression, new { userId }, commandType: CommandType.StoredProcedure).ToList();
             }
         }
-        public TeacherGroupDTO GetByGroupId(int groupId)
+        public List<TeacherGroupDTO> GetAllByGroupId(int groupId)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Teacher_Group_GetByGroupID";
-                return connection.Query<TeacherGroupDTO>(sqlExpression, new { groupId }, commandType: CommandType.StoredProcedure).FirstOrDefault();
+                return connection.Query<TeacherGroupDTO>(sqlExpression, new { groupId }, commandType: CommandType.StoredProcedure).ToList();
             }
         }
         public int Delete(int id)

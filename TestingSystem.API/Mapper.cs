@@ -8,6 +8,7 @@ using TestingSystem.Data.DTO;
 using TestingSystem.Business;
 using TestingSystem.Business.Models;
 using TestingSystem.Data.StoredProcedure;
+using TestingSystem.Business.Statistics;
 
 namespace TestingSystem.API
 {
@@ -325,6 +326,29 @@ namespace TestingSystem.API
         }
 
 
+        public List<GroupTestsAndResultsOutputModel> ConvertTestDTOToGroupTestsAndResultsOutputModel(List<TestDTO> dto, Dictionary<int,double> statictic)
+        {
+            List<GroupTestsAndResultsOutputModel> modelList = new List<GroupTestsAndResultsOutputModel>();
+            foreach (TestDTO test in dto)
+            {
+                 GroupTestsAndResultsOutputModel tmp = new GroupTestsAndResultsOutputModel()
+                 {
+                     ID = test.ID,
+                     Name = test.Name,
+                     DurationTime = test.DurationTime,
+                     SuccessScore = test.SuccessScore
+                     
+                     };
+                if(statictic.TryGetValue(test.ID,out double x))
+                {
+                    tmp.Result = statictic[test.ID];
+                }
+                modelList.Add(tmp);
+            }
+            return modelList;
+        }
+
+        ////тест, найденный по тэгам
         //public TestOutputModel SearchTestByTagDTOToTestOutputModel(SearchTestByTagDTO searchTestByTagDTO)
         //{
         //    return new TestOutputModel()
