@@ -221,5 +221,6 @@ namespace TestingSystem.API.Controllers
             if (test == null) return BadRequest("Теста не существует");
             return Ok(mapper.ConvertAllStudentTestsDTOToAllTestsByStudentIdOutputModel(teacher.GetStudentsByTestId(testId)));
         }
+        
     }
 }
