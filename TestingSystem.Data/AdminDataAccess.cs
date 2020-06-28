@@ -224,7 +224,7 @@ namespace TestingSystem.Data
             return manager.RestoreGroup(id);
         }
 
-        public List<UserRoleDTO> GetRoleByRoleID(int roleId)
+        public List<UserRoleDTO> GetRoleByRoleId(int roleId)
         {
             UserRoleCRUD role = new UserRoleCRUD();
             return role.GetByRoleID(roleId);

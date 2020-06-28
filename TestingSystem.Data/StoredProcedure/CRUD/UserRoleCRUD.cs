@@ -15,7 +15,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
-                string sqlExpression = "User_Role_Add @RoleID,@UserID";
+                string sqlExpression = "User_Role_Add @UserID, @RoleID";
                 return connection.Query<int>(sqlExpression, userRole).FirstOrDefault();
             }
            
@@ -36,20 +36,20 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
                 return connection.Query<UserRoleDTO>(sqlExpression).ToList();
             }
         }
-        public List<UserRoleDTO> GetByUserID(int userRole)
+        public List<UserRoleDTO> GetByUserID(int userId)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
-                string sqlExpression = "User_Role_ReadByUserID @UserID";
-                return connection.Query<UserRoleDTO>(sqlExpression,new { userRole }).ToList();
+                string sqlExpression = "User_Role_GetByUserID @UserID";
+                return connection.Query<UserRoleDTO>(sqlExpression, new {userId}).ToList();
             }
         }
-        public List<UserRoleDTO> GetByRoleID(int roleID)
+        public List<UserRoleDTO> GetByRoleID(int roleId)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
-                string sqlExpression = "User_Role_ReadByRoleID @RoleID";
-                return connection.Query<UserRoleDTO>(sqlExpression, new {roleID }).ToList();
+                string sqlExpression = "User_Role_GetByRoleID @RoleID";
+                return connection.Query<UserRoleDTO>(sqlExpression, new {roleId }).ToList();
             }
         }
     }
