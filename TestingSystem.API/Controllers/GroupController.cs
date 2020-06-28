@@ -109,7 +109,31 @@ namespace TestingSystem.API.Controllers
             return Ok();
         }
 
+        [Authorize(Roles ="Teacher")]
+        [HttpGet("{teacherid}/all")]
+        public ActionResult GetStatisticByTeacherID(int teacherId)
+        {
+            TeacherDataAccess teacher = new TeacherDataAccess();
+            Mapper mapper = new Mapper();
+            var groups = teacher.GetGroupsWithStudentsByTeacherId(teacherId);
+            List<StudentsVSTestsDTO> students = new List<StudentsVSTestsDTO>();
+            List<TestDTO> tests = new List<TestDTO>();
+            foreach (var g in groups)
+            {
+                if (g.Students != null)
+                    foreach (var s in g.Students)
+                    {
+                        students.AddRange(teacher.GetTestsByStudentId(s.ID));
 
+                    }
+            }
+            if (students != null)
+                foreach (var s in students)
+                {
+                    tests.Add(new AuthorDataAccess().GetTestById(s.TestId));
+                }
+            return Ok(mapper.ConvertStudentsVSTestsDTOAndTeacherGroupsWithStudentsDTOToGroupWithStudentsWithAttemptsOutputModel(students, groups, tests));
+        }
         [Authorize(Roles = "Admin")]
         [HttpGet("{groupId}")]
         public IActionResult GetGroupById(int groupId)

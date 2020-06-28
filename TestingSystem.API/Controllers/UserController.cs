@@ -221,30 +221,6 @@ namespace TestingSystem.API.Controllers
             if (test == null) return BadRequest("Теста не существует");
             return Ok(mapper.ConvertAllStudentTestsDTOToAllTestsByStudentIdOutputModel(teacher.GetStudentsByTestId(testId)));
         }
-        [Authorize(Roles ="Teacher")]
-        [HttpGet("st/{teacherid}")]
-        public ActionResult GetStatisticByTeacherID(int teacherId)
-        {
-            TeacherDataAccess teacher = new TeacherDataAccess();
-            Mapper mapper = new Mapper();
-            var groups = teacher.GetGroupsWithStudentsByTeacherId(teacherId);
-            List<StudentsVSTestsDTO> students = new List<StudentsVSTestsDTO>();
-            List<TestDTO> tests = new List<TestDTO>();
-            foreach(var g in groups)
-            {
-                if(g.Students!=null)
-                foreach(var s in g.Students)
-                {
-                    students.AddRange(teacher.GetTestsByStudentId(s.ID));
-                  
-                }
-            }
-            if(students!=null)
-            foreach(var s in students)
-            {
-                tests.Add(new AuthorDataAccess().GetTestById(s.TestId));
-            }
-            return Ok(mapper.ConvertStudentsVSTestsDTOAndTeacherGroupsWithStudentsDTOToGroupWithStudentsWithAttemptsOutputModel(students, groups,tests));
-        }
+        
     }
 }
