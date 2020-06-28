@@ -106,7 +106,7 @@ namespace TestingSystem.API.Controllers
 
         [Authorize(Roles = "Author")]
         [HttpPost("tag")]     
-        public ActionResult <int> PostTag([FromBody]TagInputModel tagModel)           //спросить у Макса
+        public ActionResult <int> PostTag([FromBody]TagInputModel tagModel)           
         {
             if(string.IsNullOrWhiteSpace(tagModel.Name)) return BadRequest("Введите название тега");
             Mapper mapper = new Mapper();
@@ -141,7 +141,7 @@ namespace TestingSystem.API.Controllers
         }        
 
         [Authorize(Roles = "Author")]
-        [HttpPost]                             //??? выдает 
+        [HttpPost]                             
         public ActionResult<int> PostTest(TestInputModel testModel)
         {
             if (string.IsNullOrWhiteSpace(testModel.Name)) return BadRequest("Введите название теста");
@@ -206,45 +206,37 @@ namespace TestingSystem.API.Controllers
                 //}
             }
             return Ok(model);
+        }        
+
+        [HttpGet("{testId}/questions/Author")]
+        public ActionResult<List<QuestionOutputModel>> GetQuestionsByTestID(int testId)
+        {
+            Mapper mapper = new Mapper();
+            AuthorDataAccess questions = new AuthorDataAccess();
+            List<QuestionOutputModel> listOfModels = mapper.ConvertQuestionDTOToQuestionModelList(questions.GetQuestionsByTestID(testId));
+            foreach (var model in listOfModels)
+            {
+                QuestionStatistics statistics = new QuestionStatistics(model.ID);
+                model.PercentageOfCorrectlyAnswered = statistics.GetPercentageOfCorrectlyAnswered(model.ID);
+            }
+            return Ok(listOfModels);
         }
 
-        //[HttpGet("{testId}/test-info/Author")]          
-        //public ActionResult<TestOutputModel> GetTestById(int testId)
-        //{
-        //    Mapper mapper = new Mapper();
-        //    AuthorDataAccess test = new AuthorDataAccess();
-        //    return Ok(mapper.ConvertTestDTOToTestOutputModel(test.GetTestById(testId)));
-        //}
+        [HttpGet("{testId}/answers/Author")]
+        public ActionResult<List<AnswerOutputModel>> GetAnswersByTestID(int testId)
+        {
+            Mapper mapper = new Mapper();
+            AuthorDataAccess answers = new AuthorDataAccess();
+            return Ok(mapper.ConvertAnswerDTOToAnswerModelList(answers.GetAllAnswersInTest(testId)));
+        }
 
-        //[HttpGet("{testId}/questions/Author")]         
-        //public ActionResult<List<QuestionOutputModel>> GetQuestionsByTestID(int testId)
-        //{
-        //    Mapper mapper = new Mapper();
-        //    AuthorDataAccess questions = new AuthorDataAccess();
-        //    List<QuestionOutputModel> listOfModels = mapper.ConvertQuestionDTOToQuestionModelList(questions.GetQuestionsByTestID(testId));
-        //    foreach(var model in listOfModels)
-        //    {
-        //        QuestionStatistics statistics = new QuestionStatistics(model.ID);
-        //        model.PercentageOfCorrectlyAnswered = statistics.FindPercentCorrectAnswersByQuestion(model.ID);
-        //    }
-        //    return Ok(listOfModels);
-        //}
-
-        //[HttpGet("{testId}/answers/Author")]          
-        //public ActionResult<List<AnswerOutputModel>> GetAnswersByTestID(int testId)
-        //{
-        //    Mapper mapper = new Mapper();
-        //    AuthorDataAccess answers = new AuthorDataAccess();
-        //    return Ok(mapper.ConvertAnswerDTOToAnswerModelList(answers.GetAllAnswersInTest(testId)));
-        //}
-
-        //[HttpGet("{testId}/tags/Author")]         
-        //public ActionResult<List<TagOutputModel>> GetTagsInTest(int testId)
-        //{
-        //    Mapper mapper = new Mapper();
-        //    AuthorDataAccess tags = new AuthorDataAccess();
-        //    return Ok(mapper.ConvertTagDTOToTagModelList(tags.GetTagsInTest(testId)));
-        //}
+        [HttpGet("{testId}/tags/Author")]
+        public ActionResult<List<TagOutputModel>> GetTagsInTest(int testId)
+        {
+            Mapper mapper = new Mapper();
+            AuthorDataAccess tags = new AuthorDataAccess();
+            return Ok(mapper.ConvertTagDTOToTagModelList(tags.GetTagsInTest(testId)));
+        }
 
         [Authorize(Roles = "Author")]
         [HttpGet("{testid}/missing-tags")]          
@@ -287,7 +279,7 @@ namespace TestingSystem.API.Controllers
         }
         
         [Authorize(Roles = "Author")]
-        [HttpPost("add-question-by-test")]                        //??????? не работает!!!
+        [HttpPost("add-question-by-test")]                        
         public ActionResult<int> PostQuestion(QuestionInputModel questionModel)
         {
             Mapper mapper = new Mapper();
@@ -404,7 +396,7 @@ namespace TestingSystem.API.Controllers
 
 
 
-        // [Authorize(Roles = "Teacher,Student")]
+        [Authorize(Roles = "Teacher,Student")]
         [HttpGet("{testid}/{userId}/Answers")]
         
         public IActionResult GetTestAttempt(int testId, int userId)

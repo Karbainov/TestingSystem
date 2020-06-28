@@ -16,7 +16,7 @@ namespace TestingSystem.API.Shared
 
     public enum QuestionType
     {
-        SingleAnswer,
+        SingleAnswer = 1,
         MultipleAnswers,
         TextAnswer,
         CodeString
