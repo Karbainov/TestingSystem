@@ -191,6 +191,28 @@ namespace TestingSystem.API
             return result;
         }
 
+        public List<AllTestsByStudentIdOutputModel> ConvertAllStudentTestsDTOToAllTestsByStudentIdOutputModel(List<AllStudentTestsDTO> ts)
+        {
+            List<AllTestsByStudentIdOutputModel> result = new List<AllTestsByStudentIdOutputModel>();
+            foreach (var g in ts)
+            {
+                if (g != null)
+                {
+                    result.Add(new AllTestsByStudentIdOutputModel()
+                    {
+                        Id = g.Id,
+                        FirstName = g.FirstName,
+                        LastName = g.LastName,
+                        NameTest = g.NameTest,
+                        NumberOfAttempts= g.NumberOfAttempts,
+                         MaxResult=g.MaxResult
+                    });
+                }
+            }
+            return result;
+        }
+
+
         public List<QuestionOutputModel> ConvertQuestionForOneToManyDTOToQuestionModelList(List<QuestionForOneToManyDTO> dtoList)
         {
             List<QuestionOutputModel> modelList = new List<QuestionOutputModel>();
@@ -210,6 +232,8 @@ namespace TestingSystem.API
             }
             return tests;
         }
+
+
 
         public QuestionOutputModel ConvertQuestionForOneToManyDTOToQuestionOutputModel(QuestionForOneToManyDTO questionDTO)
         {

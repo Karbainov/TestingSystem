@@ -13,6 +13,8 @@ namespace TestingSystem.Data
 {
     public class TeacherDataAccess
     {
+        public TestGroupCRUD UserManager { get; private set; }
+
         public List<TeacherGroupsWithStudentsDTO> GetGroupsWithStudentsByTeacherId(int teacherId)
         {
             GroupManager teacher = new GroupManager();
@@ -136,5 +138,12 @@ namespace TestingSystem.Data
             AttemptManager b = new AttemptManager();
             return b.GetAllAnswersByAttemptId(attemptId);
         }
+
+        public List<AllStudentTestsDTO> GetStudentsByTestId(int id)
+        {
+            UserManager user = new UserManager();
+            return user.GetStudentsByTestId(id);
+        }
+
     }
 }

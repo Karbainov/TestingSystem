@@ -14,6 +14,7 @@ using TestingSystem.Business.Attempt;
 using Microsoft.AspNetCore.Authorization;
 using TestingSystem.Data.StoredProcedure.CRUD;
 using TestingSystem.Business.Statistics;
+using TestingSystem.Business.Statistics.Models;
 
 namespace TestingSystem.API.Controllers
 {
@@ -26,22 +27,39 @@ namespace TestingSystem.API.Controllers
         public TestController(ILogger<TestController> logger)
         {
             _logger = logger;
-        }        
+        }
 
         [Authorize(Roles = "Author,Teacher")]
-        [HttpGet]    
-        public ActionResult <List<TestOutputModel>> GetAllTests()
+        [HttpGet]
+        public ActionResult<List<TestOutputModel>> GetAllTests()
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess tests = new AuthorDataAccess();
-            List <TestOutputModel> listOfModels= mapper.ConvertTestDTOToTestModelList(tests.GetAllTests());
+
+            List<TestOutputModel> listOfModels = mapper.ConvertTestDTOToTestModelList(tests.GetAllTests());
+
             foreach (var i in listOfModels)
             {
                 TestStatistics statistics = new TestStatistics(i.ID);
+                PassedFailedModel pfs = statistics.GetPassedFailedStats(i.ID);
                 i.AverageResult = statistics.GetAverageResults(i.ID);
+                i.Passed = pfs.Passed;
+                i.Failed = pfs.Failed;
+                i.SuccessRate = pfs.SuccessRate;
+
             }
             return Ok(listOfModels);
         }
+
+
+        [Authorize(Roles = "Author,Teacher")]
+        [HttpGet("had/{testId}")]
+        public PassedFailedModel qq (int testId)
+        {
+           TestStatistics st = new TestStatistics(testId);
+           return st.GetPassedFailedStats(testId);
+        }
+
 
         [Authorize(Roles = "Author,Teacher")]
         [HttpGet("search-test-by-tags")]    
@@ -167,21 +185,25 @@ namespace TestingSystem.API.Controllers
             Mapper mapper = new Mapper();
             AuthorDataAccess tests = new AuthorDataAccess();
             var test = tests.GetTestById(testId);
-            TestStatistics testStatistics = new TestStatistics();
+            TestStatistics testStatistics = new TestStatistics(testId);
             if (test == null) return BadRequest("Теста не существует");
-            TestOutputModel model = mapper.ConvertTestDTOToTestOutputModel(tests.GetTestById(testId));            
+            TestOutputModel model = mapper.ConvertTestDTOToTestOutputModel(tests.GetTestById(testId));
+            PassedFailedModel pfs = testStatistics.GetPassedFailedStats(testId);
             model.Questions = mapper.ConvertQuestionDTOToQuestionModelList(tests.GetQuestionsByTestID(testId));
             model.Tags = mapper.ConvertTagDTOToTagModelList(tests.GetTagsInTest(testId));
             model.AverageResult = testStatistics.GetAverageResults(testId);
+            model.Passed = pfs.Passed;
+            model.Failed = pfs.Failed;
+            model.SuccessRate = pfs.SuccessRate;
             foreach (QuestionOutputModel qModel in model.Questions)
             {
                 qModel.Answers = mapper.ConvertAnswerDTOToAnswerModelList(tests.GetAnswerByQuestionId(qModel.ID));
-                QuestionStatistics statistics = new QuestionStatistics(qModel.ID);
-                qModel.PercentageOfCorrectlyAnswered = statistics.GetPercentageOfCorrectlyAnswered(qModel.ID);
-                foreach (var answer in qModel.Answers)
-                {
-                    answer.PercentageOfPeopleChoosingAnswer = statistics.GetPercentageOfPeopleChoosingAnswer(qModel.ID)[answer.ID];
-                }
+                //QuestionStatistics statistics = new QuestionStatistics(qModel.ID);
+                //qModel.PercentageOfCorrectlyAnswered = statistics.GetPercentageOfCorrectlyAnswered(qModel.ID);
+                //foreach (var answer in qModel.Answers)
+                //{
+                //    answer.PercentageOfPeopleChoosingAnswer = statistics.GetPercentageOfPeopleChoosingAnswer(qModel.ID)[answer.ID];
+                //}
             }
             return Ok(model);
         }
