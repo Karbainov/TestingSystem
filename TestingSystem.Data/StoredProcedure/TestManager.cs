@@ -26,7 +26,7 @@ namespace TestingSystem.Data.StoredProcedure
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
-                string sqlExpression = "Answer_GetCorrectByTestID @TestID";
+                string sqlExpression = "Answers_GetCorrectByTestId @testId";
                 return connection.Query<QuestionAnswerDTO>(sqlExpression,new { testId }).ToList();
             }
 
@@ -145,6 +145,7 @@ namespace TestingSystem.Data.StoredProcedure
             string sqlExpression = "AnswersAll_GetByTestId";
             return connection.Query<AnswerDTO>(sqlExpression, new { testId }, commandType: CommandType.StoredProcedure).ToList();
         }
+
 
 
         public TestDTO GetDurationAndQuestionNumber(int id)
@@ -302,6 +303,13 @@ namespace TestingSystem.Data.StoredProcedure
         //        return connection.Query<TestDTO>(sqlExpression, dto, commandType: CommandType.StoredProcedure).ToList();
         //    }
         //}
-    
+
+        //public List<AnswerDTO> GetAllCorrectAnswersInTest(int testId)
+        //{
+        //    var connection = Connection.GetConnection();
+        //    string sqlExpression = "Answers_GetCorrectByTestId1";
+        //    return connection.Query<AnswerDTO>(sqlExpression, new { testId }, commandType: CommandType.StoredProcedure).ToList();
+        //}
+
     }
 }

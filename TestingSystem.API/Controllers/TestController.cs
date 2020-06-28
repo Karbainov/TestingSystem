@@ -474,5 +474,17 @@ namespace TestingSystem.API.Controllers
             Mapper mapper = new Mapper();
             return Ok(mapper.ConvertTestWithStudentsDTOToTestWithStudentsOutputModel( access.GetLateStudentsByTestID(testid)));
         }        
+
+        [HttpGet("{testID}/correctAnswers")]
+        public IActionResult GetCorrectAnswersByTestId(int testId)
+        {
+            TeacherDataAccess teacher = new TeacherDataAccess();
+            Mapper mapper = new Mapper();
+
+            List<QuestionAnswerDTO> tests = teacher.GetCorrectAnswerByTestId(testId);
+            if (tests == null) return BadRequest("Теста не существует");
+            return Ok(mapper.ConvertQuestionAnswerDTOToQuestionAnswerModel(teacher.GetCorrectAnswerByTestId(testId)));
+
+        }
     }
 }

@@ -203,7 +203,17 @@ namespace TestingSystem.API.Controllers
             return Ok("Роль пользователя удалена");
         }
 
+        [HttpGet("Attempt/{AttemptID}")]
+        public IActionResult GetQuestionAndAnswerByAttemptID(int attemptID)
+        {
+            TeacherDataAccess teacher = new TeacherDataAccess();
+            Mapper mapper = new Mapper();
+            List<QuestionAnswerDTO> answers = teacher.GetQuestionAndAnswerByAttempt(attemptID);
+            if (answers == null) return BadRequest("Несуществующий номер попытки");
+            return Ok (mapper.ConvertQuestionAnswerDTOToQuestionAnswerModel(teacher.GetQuestionAndAnswerByAttempt(attemptID)));
+        }
         [Authorize(Roles = "Admin")]
+            
         [HttpGet("{groupID}/groupTests")]
         public IActionResult GetTestByGroupId(int groupId)
         {
