@@ -306,16 +306,19 @@ namespace TestingSystem.API
             List<GroupTestsAndResultsOutputModel> modelList = new List<GroupTestsAndResultsOutputModel>();
             foreach (TestDTO test in dto)
             {
-                modelList.Add(
-                    new GroupTestsAndResultsOutputModel()
-                    {
-                         ID = test.ID,
-                         Name = test.Name,
-                         DurationTime = test.DurationTime,
-                         SuccessScore = test.SuccessScore,
-                         Result = statictic[test.ID]
-                     }
-                    );
+                 GroupTestsAndResultsOutputModel tmp = new GroupTestsAndResultsOutputModel()
+                 {
+                     ID = test.ID,
+                     Name = test.Name,
+                     DurationTime = test.DurationTime,
+                     SuccessScore = test.SuccessScore
+                     
+                     };
+                if(statictic.TryGetValue(test.ID,out double x))
+                {
+                    tmp.Result = statictic[test.ID];
+                }
+                modelList.Add(tmp);
             }
             return modelList;
         }

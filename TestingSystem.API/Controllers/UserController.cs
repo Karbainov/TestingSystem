@@ -218,7 +218,7 @@ namespace TestingSystem.API.Controllers
             //return Json(model);
         }
 
-        [Authorize(Roles = "Teacher")]
+        //[Authorize(Roles = "Teacher")]
         [HttpGet("teacher/{userId}/{groupId}")]
         public IActionResult GetGroupTestsAndResults(int userId, int groupId)
         {
