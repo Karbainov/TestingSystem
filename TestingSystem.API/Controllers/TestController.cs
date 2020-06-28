@@ -206,15 +206,7 @@ namespace TestingSystem.API.Controllers
                 //}
             }
             return Ok(model);
-        }
-
-        [HttpGet("{testId}/test-info/Author")]
-        public ActionResult<TestOutputModel> GetTestById(int testId)
-        {
-            Mapper mapper = new Mapper();
-            AuthorDataAccess test = new AuthorDataAccess();
-            return Ok(mapper.ConvertTestDTOToTestOutputModel(test.GetTestById(testId)));
-        }
+        }        
 
         [HttpGet("{testId}/questions/Author")]
         public ActionResult<List<QuestionOutputModel>> GetQuestionsByTestID(int testId)
