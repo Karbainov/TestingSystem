@@ -402,6 +402,31 @@ namespace TestingSystem.API.Controllers
             TeacherDataAccess access = new TeacherDataAccess();
             return Ok(new Mapper().ConverUserTestWithQuestionsAndAnswersDTOToBestAttemptModel(access.GetAttemptsByUserIdTestId(userid, testid)));
         }
+
+        [Authorize(Roles = "Student,Teacher")]
+        [HttpPost("feedback")]
+        public IActionResult PostFeedbackForTest([FromBody] FeedbackInputModel feedback)
+        {
+            AuthorDataAccess au = new AuthorDataAccess();
+            AdminDataAccess ad = new AdminDataAccess();
+   
+            var q = au.GetQuestionById(feedback.QuestionId);
+            var u = ad.GetUserByID(feedback.UserId);
+
+            if (string.IsNullOrWhiteSpace(feedback.Message)) 
+                return BadRequest("Введите сообщение");
+            
+            if (q == null)
+                return BadRequest("Вопроса не существует");
+
+            if (u == null)
+                return BadRequest("Юзера не существует");
+
+            Mapper mapper = new Mapper();
+            StudentDataAccess student = new StudentDataAccess();
+            int id = student.CreateFeedback(mapper.ConvertFeedbackInputModelToFeedbackDTO(feedback));
+            return Ok(id);
+        }
         [Authorize(Roles ="Teacher")]
         [HttpGet("{testid}/lateStudents")]
         public ActionResult GetLateStudentsByTestID(int testid)

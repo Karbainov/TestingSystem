@@ -733,6 +733,10 @@ namespace TestingSystem.API
             return new TestGroupDTO(0, test.groupId.Value, test.testId.Value,  DateTime.Parse(test.startDate), DateTime.Parse(test.endDate));
         }
               
+        public FeedbackDTO ConvertFeedbackInputModelToFeedbackDTO(FeedbackInputModel feedback)
+        {
+            return new FeedbackDTO(0, feedback.UserId, feedback.QuestionId, feedback.Message, feedback.DateTime, false);
+        }
     }
 }
 
