@@ -11,7 +11,7 @@ namespace TestingSystem.Business.Tests
         StringAnswerConverter stringAnswerConverter = new StringAnswerConverter();
 
         [TestCase ("Hello", ExpectedResult = "Hello")]
-        [TestCase ("Ghbdtn ghbdtn привет", ExpectedResult = "Ghbdtnghbdtnпривет")]
+        [TestCase ("Ghbdtn ghbdtn привет", ExpectedResult = "Ghbdtn ghbdtn привет")]
         [TestCase ("", ExpectedResult = "")]
         [TestCase (" ", ExpectedResult = " ")]
         [TestCase ("Hel(l)o'", ExpectedResult = "Hello")]
