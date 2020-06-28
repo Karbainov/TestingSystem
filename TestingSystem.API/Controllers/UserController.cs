@@ -125,17 +125,17 @@ namespace TestingSystem.API.Controllers
             return Ok(model);
         }
 
-        [Authorize(Roles = "Teacher, Student")]
-        [HttpGet("{userId}/test/attempt/{attemptId}")]
-        public IActionResult GetQuestionAndAnswerByAttemptID(int attemptID)
-        {
-            AttemptCRUD attempt = new AttemptCRUD();
-            if (!attempt.GetAll().Any(a => a.id == attemptID)) return BadRequest("Не существующий номер попытки");
-            TeacherDataAccess teacher = new TeacherDataAccess();
-            Mapper mapper = new Mapper();
-            List<QuestionAnswerOutputModel> model = mapper.ConvertQuestionAnswerDTOToQuestionAnswerModel(teacher.GetQuestionAndAnswerByAttempt(attemptID));
-            return Ok(model);
-        }
+        //[Authorize(Roles = "Teacher, Student")]
+        //[HttpGet("{userId}/test/attempt/{attemptId}")]
+        //public IActionResult GetQuestionAndAnswerByAttemptID(int attemptID)
+        //{
+        //    AttemptCRUD attempt = new AttemptCRUD();
+        //    if (!attempt.GetAll().Any(a => a.id == attemptID)) return BadRequest("Не существующий номер попытки");
+        //    TeacherDataAccess teacher = new TeacherDataAccess();
+        //    Mapper mapper = new Mapper();
+        //    List<QuestionAnswerOutputModel> model = mapper.ConvertQuestionAnswerDTOToQuestionAnswerModel(teacher.GetQuestionAndAnswerByAttempt(attemptID));
+        //    return Ok(model);
+        //}
 
         [Authorize(Roles = "Admin")]
         [HttpPost("role")]
@@ -203,6 +203,7 @@ namespace TestingSystem.API.Controllers
             return Ok("Роль пользователя удалена");
         }
 
+        [Authorize(Roles = "Teacher, Student")]
         [HttpGet("Attempt/{AttemptID}")]
         public IActionResult GetQuestionAndAnswerByAttemptID(int attemptID)
         {
@@ -212,7 +213,7 @@ namespace TestingSystem.API.Controllers
             if (answers == null) return BadRequest("Несуществующий номер попытки");
             return Ok (mapper.ConvertQuestionAnswerDTOToQuestionAnswerModel(teacher.GetQuestionAndAnswerByAttempt(attemptID)));
         }
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Teacher")]
             
         [HttpGet("{groupID}/groupTests")]
         public IActionResult GetTestByGroupId(int groupId)
@@ -223,8 +224,6 @@ namespace TestingSystem.API.Controllers
             if (tests == null) return BadRequest("Группы не существет");
             return Ok(mapper.ConvertTestDTOToTestModelList(teacher.GetTestByGroupId(groupId)));
 
-            //TestOutputModel model = mapper.ConvertTestDTOToTestOutputModel(teacher.GetTestByGroupId(tests));
-            //return Json(model);
         }
 
         [Authorize(Roles = "Author,Teacher")]

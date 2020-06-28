@@ -473,8 +473,8 @@ namespace TestingSystem.API.Controllers
             TeacherDataAccess access = new TeacherDataAccess();
             Mapper mapper = new Mapper();
             return Ok(mapper.ConvertTestWithStudentsDTOToTestWithStudentsOutputModel( access.GetLateStudentsByTestID(testid)));
-        }        
-
+        }
+        [Authorize(Roles = "Teacher, Author")]
         [HttpGet("{testID}/correctAnswers")]
         public IActionResult GetCorrectAnswersByTestId(int testId)
         {
