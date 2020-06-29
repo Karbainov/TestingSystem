@@ -757,7 +757,7 @@ namespace TestingSystem.API
 
         public FeedbackDTO ConvertFeedbackInputModelToFeedbackDTO(FeedbackInputModel feedback)
         {
-            return new FeedbackDTO(0, feedback.UserId, feedback.QuestionId, feedback.Message, feedback.DateTime, false);
+            return new FeedbackDTO(0, feedback.UserId, feedback.QuestionId, feedback.Message, DateTime.Now, false);
         }
         public List<GroupWithStudentsWithAttemptsOutputModel> ConvertStudentsVSTestsDTOAndTeacherGroupsWithStudentsDTOToGroupWithStudentsWithAttemptsOutputModel(List<StudentsVSTestsDTO> students, List<TeacherGroupsWithStudentsDTO> groups, List<TestDTO> tests)
         {

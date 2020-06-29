@@ -10,18 +10,16 @@ namespace TestingSystem.API.Models.Input
         public int UserId { get; set; }
         public int QuestionId { get; set; }
         public string Message { get; set; }
-        public DateTime DateTime { get; set; }
         
         public FeedbackInputModel()
         {
         }
 
-        public FeedbackInputModel(int userId, int questionId, string message, DateTime date)
+        public FeedbackInputModel(int userId, int questionId, string message)
         {
             this.UserId = userId;
             this.QuestionId = questionId;
             this.Message = message;
-            this.DateTime = date;
         }
     }
 }
