@@ -234,5 +234,10 @@ namespace TestingSystem.Data
             FeedbackManager feedback = new FeedbackManager();
             return feedback.UpdateProcessedInFeedback(id);
         }
+        public int UpdateRightAnswer(int questionId,string answerValue)
+        {
+            QuestionManager manager = new QuestionManager();
+            return manager.UpdateRightAnswer(questionId, answerValue);
+        }
     }
 }
