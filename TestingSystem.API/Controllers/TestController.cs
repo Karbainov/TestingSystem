@@ -277,7 +277,7 @@ namespace TestingSystem.API.Controllers
         }
 
         [Authorize(Roles = "Author")]
-        [HttpGet("question/{quid}")]       
+        [HttpGet("question/{questionId}")]       
         public ActionResult<QuestionOutputModel> GetQuestionById([FromBody] int questionId)
         {
             Mapper mapper = new Mapper();
@@ -308,7 +308,7 @@ namespace TestingSystem.API.Controllers
         }
 
         [Authorize(Roles = "Author")]
-        [HttpDelete("question-delete/{quid}")]     
+        [HttpDelete("question-delete/{questionId}")]     
         public ActionResult<int> DeleteQuestionById(int questionId)
         {
             AuthorDataAccess questions = new AuthorDataAccess();
@@ -333,15 +333,14 @@ namespace TestingSystem.API.Controllers
         }
 
         [Authorize(Roles = "Author")]
-        [HttpGet("question/{quid}/answers")]      
+        [HttpGet("question/{questionId}/answers")]      
         public ActionResult<List<AnswerOutputModel>> GetAnswersByQuestionId(int questionId)
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess answers = new AuthorDataAccess();
-            List<AnswerOutputModel> listOfModels = mapper.ConvertAnswerDTOToAnswerModelList(answers.GetAnswerByQuestionId(questionId));
-            Dictionary<int, double> answersPercent = new Dictionary<int, double>();
+            List<AnswerOutputModel> listOfModels = mapper.ConvertAnswerDTOToAnswerModelList(answers.GetAnswerByQuestionId(questionId));             
             QuestionStatistics statistics = new QuestionStatistics(questionId);
-            answersPercent = statistics.GetPercentageOfPeopleChoosingAnswer(questionId);
+            Dictionary<int, double> answersPercent = statistics.GetPercentageOfPeopleChoosingAnswer(questionId);
             foreach (var model in listOfModels)
             {
                 foreach (var i in answersPercent)
