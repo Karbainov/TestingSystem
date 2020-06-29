@@ -11,14 +11,12 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
 {
     public class GroupCRUD
     {
-        public int Add(GroupDTO group)
+        public bool Add(GroupDTO group)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Group_Add @name, @startDate, @endDate ";
-                int groupId = connection.Query<int>(sqlExpression, group).FirstOrDefault();
-                group.Id = groupId;
-                return groupId;
+                return connection.Query<bool>(sqlExpression, group).FirstOrDefault();
             }
         }
 
@@ -40,23 +38,21 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
             }
         }
 
-        public int Update(GroupDTO group)
+        public bool Update(GroupDTO group)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
-                string sqlExpression = "Group_Update";
-                int result = connection.Execute(sqlExpression, group, commandType: CommandType.StoredProcedure);
-                return result;
+                string sqlExpression = "Group_Update @id, @name, @startDate, @endDate";
+                return connection.Query<bool>(sqlExpression, group).FirstOrDefault();
             }
         }
 
-
-        public int Delete(int id)
+        public bool Delete(int id)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
-                string sqlExpression = "Group_Delete";
-                return connection.Execute(sqlExpression, new { id }, commandType: CommandType.StoredProcedure);
+                string sqlExpression = "Group_Delete @id";
+                return connection.Query<bool>(sqlExpression, id).FirstOrDefault();
             }
         }
     }
