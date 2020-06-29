@@ -57,6 +57,10 @@ namespace TestingSystem.Business.Statistics
             int correct = 0;
             int sumCorrect = 0;             
             List<int> attemptId = new List<int>();
+
+            if (attemptId.Count == 0)
+                return Double.NaN;
+
             foreach (var i in info.IdInfo)
             {
                 if (questionId == i.QuestionId)

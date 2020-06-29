@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using TestingSystem.Data.StoredProcedure;
 using TestingSystem.Data.DTO;
+using TestingSystem.Data;
 
 namespace TestingSystem.Business.Statistics.Models
 {
@@ -132,19 +133,18 @@ namespace TestingSystem.Business.Statistics.Models
 
         private void CreateQuestionAnswersLists(InfoForStatisticsModel info)
         {
-            foreach (int testId in info.TestSuccessScores.Keys)
+            AuthorDataAccess tests = new AuthorDataAccess();
+            foreach (var question in info.Questions)
             {
-                QuestionManager qm = new QuestionManager();
-                List<QuestionWithListAnswersDTO> testQuestions = qm.GetQuestionsAndAnswers(testId);
-                foreach(var question in testQuestions)
+                question.Value.AnswersId = new List<int>();
+                question.Value.CorrectId = new List<int>();
+                var answers = tests.GetAnswerByQuestionId(question.Key);
+                foreach(var answer in answers)
                 {
-                    if (info.Questions.ContainsKey(question.Id))
+                    question.Value.AnswersId.Add(answer.ID);
+                    if (answer.Correct == true)
                     {
-                        info.Questions[question.Id].AnswersId = new List<int>();
-                        foreach(var answer in question.Answers)
-                        {
-                            info.Questions[question.Id].AnswersId.Add(answer.AnswerId);
-                        }
+                        question.Value.CorrectId.Add(answer.ID);
                     }
                 }
             }
