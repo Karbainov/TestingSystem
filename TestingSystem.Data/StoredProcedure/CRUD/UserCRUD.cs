@@ -49,7 +49,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
-                string sqlExpression = "User_GetByID @id";
+                string sqlExpression = "User_ReadByID @id";
                 return connection.Query<UserDTO>(sqlExpression, new { id }).FirstOrDefault();
             }
         }
