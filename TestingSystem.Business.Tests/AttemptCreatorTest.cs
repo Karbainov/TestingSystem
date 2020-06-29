@@ -22,9 +22,9 @@ namespace TestingSystem.Business.Tests
         }
                      
 
-        [TestCase(2,18)]
-        [TestCase(3,22)]
         [TestCase(1,24)]
+        [TestCase(8,34)]
+        [TestCase(9,35)]
 
         public void CreateListOfQuestionsTest(int userId, int testId)
         {
