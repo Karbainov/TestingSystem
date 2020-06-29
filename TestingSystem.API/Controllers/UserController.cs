@@ -37,24 +37,7 @@ namespace TestingSystem.API.Controllers
             UserMapper mapper = new UserMapper();
             return Ok(mapper.ConvertUserPositionDTOsToUserWithRolesOutputModels(users));
         }
-        
-        [Authorize(Roles = "Admin")]
-        [HttpPost("withrole")]
-        public IActionResult PostUserWithRole([FromBody] UserWithRoleInputModel user)
-        {
-            if (string.IsNullOrWhiteSpace(user.FirstName)) return BadRequest("Вы не написали имя");
-            if (string.IsNullOrWhiteSpace(user.LastName)) return BadRequest("Вы не написали фамилию");
-            if (string.IsNullOrWhiteSpace(user.Login)) return BadRequest("Введите логин");
-            if (string.IsNullOrWhiteSpace(user.Password)) return BadRequest("Введите пароль");
-            if (string.IsNullOrWhiteSpace(user.Email)) return BadRequest("Введите почту");
-            if (string.IsNullOrWhiteSpace(user.Phone)) return BadRequest("Напишите номер телефона");
-            UserMapper mapper = new UserMapper();
-            AdminDataAccess adm = new AdminDataAccess();
-            adm.AddUserWithRole(mapper.ConvertUserWithRoleInputModelToUserWithRoleDTO(user));
 
-            return Ok("Пользователь создан успешно");
-        }
-        
         [Authorize(Roles = "Admin")]
         [HttpGet("{id}")]
         public IActionResult GetUserById(int id)
@@ -84,6 +67,23 @@ namespace TestingSystem.API.Controllers
             UserMapper mapper = new UserMapper();
             AdminDataAccess adm = new AdminDataAccess();
             adm.UserCreate(mapper.ConvertUserInputModelToUserDTO(user));
+
+            return Ok("Пользователь создан успешно");
+        }
+        
+        [Authorize(Roles = "Admin")]
+        [HttpPost("withrole")]
+        public IActionResult PostUserWithRole([FromBody] UserWithRoleInputModel user)
+        {
+            if (string.IsNullOrWhiteSpace(user.FirstName)) return BadRequest("Вы не написали имя");
+            if (string.IsNullOrWhiteSpace(user.LastName)) return BadRequest("Вы не написали фамилию");
+            if (string.IsNullOrWhiteSpace(user.Login)) return BadRequest("Введите логин");
+            if (string.IsNullOrWhiteSpace(user.Password)) return BadRequest("Введите пароль");
+            if (string.IsNullOrWhiteSpace(user.Email)) return BadRequest("Введите почту");
+            if (string.IsNullOrWhiteSpace(user.Phone)) return BadRequest("Напишите номер телефона");
+            UserMapper mapper = new UserMapper();
+            AdminDataAccess adm = new AdminDataAccess();
+            adm.AddUserWithRole(mapper.ConvertUserWithRoleInputModelToUserWithRoleDTO(user));
 
             return Ok("Пользователь создан успешно");
         }
@@ -149,7 +149,7 @@ namespace TestingSystem.API.Controllers
             return Ok(model);
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpGet("role")]
         public IActionResult GetRole()
         {
@@ -163,6 +163,22 @@ namespace TestingSystem.API.Controllers
             }
 
             return Ok(rolesOut);
+        }
+        
+        //[Authorize(Roles = "Admin")]
+        [HttpGet("{userId}/role")]
+        public IActionResult GetRolesByUserId(int userId)
+        {
+            AdminDataAccess adm = new AdminDataAccess();
+            List<RoleOutputModel> allUsers = new List<RoleOutputModel>();
+            UserMapper mapper = new UserMapper();
+            var roles = adm.GetRoleByUserId(userId);
+            if (roles == null) return BadRequest("У пользователя нет ролей");
+            foreach (RoleDTO role in adm.GetRoleByUserId(userId))
+            {
+                allUsers.Add(mapper.ConvertRoleDTOToRoleOutputModel(role));
+            }
+            return Ok(allUsers);
         }
         
         [Authorize(Roles = "Admin")]

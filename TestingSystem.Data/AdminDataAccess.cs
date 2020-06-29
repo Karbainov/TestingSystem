@@ -133,6 +133,12 @@ namespace TestingSystem.Data
             return roleCRUD.GetByUserID(userId);
         }
         
+        public List<RoleDTO> GetRoleByUserId(int userId)
+        {
+            UserManager role = new UserManager();
+            return role.GetRoleByUserId(userId);
+        }
+        
         public List<UserDTO> GetUsersByRoleId(int roleId)
         {
             UserManager users = new UserManager();

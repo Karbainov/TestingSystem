@@ -11,16 +11,7 @@ namespace TestingSystem.Data.StoredProcedure
 {
     public class UserManager
     {
-
-        public int AddStudentAndPutThemIntoGroup(UserGroupDTO userGroup)//добавление студента сразу в группу
-        {
-            using (IDbConnection connection = Connection.GetConnection())
-            {
-                string sqlExpression = "User_Create @GroupID,@FirstName,@LastName,@BirthDate,@Login,@Password,@Email,@Phone";
-                return connection.Query<int>(sqlExpression, userGroup).FirstOrDefault();
-            }
-        }
-
+        
         public int AddUserWithRole(UserWithRoleDTO user)
         {
             using (IDbConnection connection = Connection.GetConnection())
@@ -31,7 +22,7 @@ namespace TestingSystem.Data.StoredProcedure
             }
         }
 
-        public List<RoleDTO> GetRolesByUserId(int userId)
+        public List<RoleDTO> GetRoleByUserId(int userId)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -42,7 +33,6 @@ namespace TestingSystem.Data.StoredProcedure
 
         public List<UserPositionDTO> GetUserVSRole()
         {
-
             IDbConnection usPos = Connection.GetConnection();
             List<UserPositionDTO> userPositions;
             using (usPos)
@@ -70,7 +60,6 @@ namespace TestingSystem.Data.StoredProcedure
                 .ToList();
                 userPositions = new List<UserPositionDTO>(userDictionary.Values);
             }
-
             return userPositions;
         }
 

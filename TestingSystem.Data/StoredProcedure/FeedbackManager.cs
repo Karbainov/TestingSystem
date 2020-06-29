@@ -64,6 +64,5 @@ namespace TestingSystem.Data.StoredProcedure
             string sqlExpression = "Answers_GetByFeedbackId";
             return connection.Query<AnswerDTO>(sqlExpression, new { feedbackId }, commandType: CommandType.StoredProcedure).ToList();
         }
-
     }
 }

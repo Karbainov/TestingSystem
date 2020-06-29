@@ -44,6 +44,7 @@ namespace TestingSystem.Data.StoredProcedure
             string sqlExpression = "CountQtyCorrectAnswers";
             connection.Execute(sqlExpression, new { questionId }, commandType: CommandType.StoredProcedure);
         }
+        
         public void UpdateRightAnswer(int id, string value)
         {
             using (IDbConnection connection = Connection.GetConnection())
@@ -60,13 +61,7 @@ namespace TestingSystem.Data.StoredProcedure
                     transaction.Rollback();
                 }
             }
-           
-
         }
-
-
-
-        
 
         public List<QuestionWithListAnswersDTO> GetQuestionsAndAnswers(int testID)
         {
@@ -81,14 +76,12 @@ namespace TestingSystem.Data.StoredProcedure
                     (question, answers) =>
                     {
                         QuestionWithListAnswersDTO questionEntry;
-
                         if (!questionDictionary.TryGetValue(question.Id, out questionEntry))
                         {
                             questionEntry = question;
                             questionEntry.Answers = new List<AnswerWithoutCorrectnessDTO>();
                             questionDictionary.Add(questionEntry.Id, questionEntry);
                         }
-
                         questionEntry.Answers.Add(answers);
                         return questionEntry;
                     },
@@ -98,7 +91,6 @@ namespace TestingSystem.Data.StoredProcedure
                 .ToList();
                 questions = new List<QuestionWithListAnswersDTO>(questionDictionary.Values);
             }
-
             return questions;
         }
         

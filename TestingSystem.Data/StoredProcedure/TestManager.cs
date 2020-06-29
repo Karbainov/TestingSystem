@@ -20,8 +20,8 @@ namespace TestingSystem.Data.StoredProcedure
                 string sqlExpression = "Test_Attempt_GetLate @UserID";
                 return connection.Query<TestDTO>(sqlExpression,new { userId }).ToList();
             }
-
         }
+        
         public List<QuestionAnswerDTO> GetCorrectAnswerByTestID(int testId)//нахождение правильных ответов теста
         {
             using (IDbConnection connection = Connection.GetConnection())
@@ -29,8 +29,8 @@ namespace TestingSystem.Data.StoredProcedure
                 string sqlExpression = "Answers_GetCorrectByTestId @testId";
                 return connection.Query<QuestionAnswerDTO>(sqlExpression,new { testId }).ToList();
             }
-
         }
+        
         public List<QuestionAnswerDTO> GetQuestionAndAnswerFromAttempt(int attemptId)//все вопросы и ответы попытки
         {
             using (IDbConnection connection = Connection.GetConnection())
@@ -38,7 +38,6 @@ namespace TestingSystem.Data.StoredProcedure
                 string sqlExpression = "Attempt_GetQuestionAndAnswer @AttemptID";
                 return connection.Query<QuestionAnswerDTO>(sqlExpression,new{ attemptId }).ToList();
             }
-
         }
 
         public int DeleteConcreteAttempt(AttemptDTO attempt)//удаление попытки 
@@ -48,7 +47,6 @@ namespace TestingSystem.Data.StoredProcedure
                 string sqlExpression = "Attempt_DeleteConcrete @UserID,@TestID,@Number";
                 return connection.Execute(sqlExpression, attempt);
             }
-
         }
 
         public List<TagDTO> GetTestTags(int testId)
@@ -57,15 +55,17 @@ namespace TestingSystem.Data.StoredProcedure
             {
                 string sqlExpression = "GetTestTags";
                 return connection.Query<TagDTO>(sqlExpression, new { testId }, commandType: CommandType.StoredProcedure).ToList();
-
             }
         }
 
         public List<TagDTO> GetTagsWhichAreNotInTest(int testId)
         {
-            var connection = Connection.GetConnection();
-            string sqlExpression = "Tag_GetWhichAreNotInTest ";
-            return connection.Query<TagDTO>(sqlExpression, new { testId }, commandType: CommandType.StoredProcedure).ToList();
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "Tag_GetWhichAreNotInTest ";
+                return connection.Query<TagDTO>(sqlExpression, new {testId}, commandType: CommandType.StoredProcedure)
+                    .ToList();
+            }
         }
 
         public List<TestDTO> GetTestByTagpAndGroup(TagGroupDTO dto)
@@ -88,7 +88,6 @@ namespace TestingSystem.Data.StoredProcedure
 
         public List<TestDTO> GetTestVSTagSearchOr(params string[] tag)
         {
-
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "SearchTestByTagOr";
@@ -98,7 +97,6 @@ namespace TestingSystem.Data.StoredProcedure
 
         public List<TestDTO> GetTestVSTagSearchAnd(params string[] tag)
         {
-
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "SearchTestByTagAnd";
@@ -112,15 +110,16 @@ namespace TestingSystem.Data.StoredProcedure
             {
                 string sqlExpression = "GetCompletedTestsByUserID";
                 return connection.Query<TestAttemptDTO>(sqlExpression, new { userId }, commandType: CommandType.StoredProcedure).ToList();
-
             }
         }
 
         public void DeleteTest(int Id)
         {
-                var connection = Connection.GetConnection();
+            using (IDbConnection connection = Connection.GetConnection())
+            {
                 string sqlExpression = "DeleteTest";
                 connection.Execute(sqlExpression, Id, commandType: CommandType.StoredProcedure);
+            }
         }
 
         public List<StudentsVSTestsDTO> GetBestResultOfTestByGroupID(int groupId)
@@ -134,16 +133,23 @@ namespace TestingSystem.Data.StoredProcedure
 
         public List<TestQuestionsDTO> GetTestWithAllQuestionsById (int testId)
         {
-            var connection = Connection.GetConnection();
-            string sqlExpression = "GetAllQuestionsByTestID";
-            return connection.Query<TestQuestionsDTO>(sqlExpression, new { testId }, commandType: CommandType.StoredProcedure).ToList();
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "GetAllQuestionsByTestID";
+                return connection
+                    .Query<TestQuestionsDTO>(sqlExpression, new {testId}, commandType: CommandType.StoredProcedure)
+                    .ToList();
+            }
         }
 
         public List<AnswerDTO> GetAllAnswersInTest(int testId)
         {
-            var connection = Connection.GetConnection();
-            string sqlExpression = "AnswersAll_GetByTestId";
-            return connection.Query<AnswerDTO>(sqlExpression, new { testId }, commandType: CommandType.StoredProcedure).ToList();
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "AnswersAll_GetByTestId";
+                return connection
+                    .Query<AnswerDTO>(sqlExpression, new {testId}, commandType: CommandType.StoredProcedure).ToList();
+            }
         }
 
 
@@ -159,7 +165,6 @@ namespace TestingSystem.Data.StoredProcedure
 
         public List<QuestionWithListAnswersDTO> GetQuestionsAndAnswers(int testID)
         {
-
             IDbConnection connection = Connection.GetConnection();
             List<QuestionWithListAnswersDTO> questions;
             using (connection)
@@ -185,11 +190,11 @@ namespace TestingSystem.Data.StoredProcedure
                     splitOn: "QuestionId",
                     commandType: CommandType.StoredProcedure)
                 .ToList();
-
                 questions = new List<QuestionWithListAnswersDTO>(questionDictionary.Values);
             }
             return questions;
         }
+        
         public TestQuestionTagDTO GetTestWithQuestionsAndTagsByID(int id)
         {
             using (var connection = Connection.GetConnection())
@@ -219,7 +224,6 @@ namespace TestingSystem.Data.StoredProcedure
                 }
                 ,new { id }
             , splitOn: "TestID,IDtest",commandType:CommandType.StoredProcedure);
-                
                 return result;
             }
         }
@@ -256,7 +260,6 @@ namespace TestingSystem.Data.StoredProcedure
                 , new { userID, testID }, splitOn: "Id,IDQuestion", commandType: CommandType.StoredProcedure);
             }
             return result;
-
         }
 
         public TestWithStudentsDTO GetLateStudentsByTestID(int id)
@@ -285,31 +288,5 @@ namespace TestingSystem.Data.StoredProcedure
             }
             return result;
         }
-        //public List<TagDTO> GetTestTags (TestDTO tests )
-        //{
-        //    using (IDbConnection connection = Connection.GetConnection())
-        //    {
-        //        string sqlExpression = "GetTestTags @TestID";
-        //        return connection.Query<TagDTO>(sqlExpression,  tests , commandType: CommandType.StoredProcedure).ToList();
-
-        //    }
-        //}
-
-        //public List<TestDTO> GetTestByTagpAndGroup (TagGroupDTO dto)
-        //{
-        //    using (IDbConnection connection = Connection.GetConnection())
-        //    {
-        //        string sqlExpression = "Test_GetByTagNameGroupId @Tag_Name @Group_ID";
-        //        return connection.Query<TestDTO>(sqlExpression, dto, commandType: CommandType.StoredProcedure).ToList();
-        //    }
-        //}
-
-        //public List<AnswerDTO> GetAllCorrectAnswersInTest(int testId)
-        //{
-        //    var connection = Connection.GetConnection();
-        //    string sqlExpression = "Answers_GetCorrectByTestId1";
-        //    return connection.Query<AnswerDTO>(sqlExpression, new { testId }, commandType: CommandType.StoredProcedure).ToList();
-        //}
-
     }
 }
