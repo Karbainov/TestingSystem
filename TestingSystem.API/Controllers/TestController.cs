@@ -478,6 +478,14 @@ namespace TestingSystem.API.Controllers
             return Ok(mapper.ConvertQuestionAnswerDTOToQuestionAnswerModel(teacher.GetCorrectAnswerByTestId(testId)));
 
         }
-
+        [Authorize(Roles ="Author")]
+        [HttpPut("change-right-answer")]
+        public ActionResult PutNewRightAnswer([FromBody] AnswerWithoutIDInputModel answer)
+        {
+            QuestionCRUD question = new QuestionCRUD();
+            if (!question.GetAll().Any(x => x.ID == answer.QuestionID)) { return BadRequest("Вопроса с таким ID не существует"); }
+            AuthorDataAccess author = new AuthorDataAccess();
+            return Ok(author.UpdateRightAnswer(answer.QuestionID, answer.Value));
+        }
     }
 }
