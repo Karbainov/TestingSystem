@@ -11,16 +11,16 @@ namespace TestingSystem.Data.StoredProcedure
 {
   public class GroupManager
     {
-        public List<GroupDTO> GetGroupByTeacherID( int id)//все группы преподавателя
+        public List<GroupDTO> GetGroupByTeacherId( int id)//все группы преподавателя
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Group_GetByTeacherID @TeacherID";
                 return connection.Query<GroupDTO>(sqlExpression, new { id }).ToList();
             }
-           
         }
-        public List<TeacherGroupsWithStudentsDTO> GetGroupsWithStudentsByTeacherID(int teacherID)
+        
+        public List<TeacherGroupsWithStudentsDTO> GetGroupsWithStudentsByTeacherID(int teacherId)
         {
             List<TeacherGroupsWithStudentsDTO> result = null;
             using(IDbConnection connection = Connection.GetConnection())
@@ -50,10 +50,11 @@ namespace TestingSystem.Data.StoredProcedure
                         }
                     }
                     return group;
-                }, new { teacherID },splitOn:"id", commandType: CommandType.StoredProcedure).ToList();
+                }, new { teacherId },splitOn:"id", commandType: CommandType.StoredProcedure).ToList();
             }
             return result;
         }
+        
         public List<UserDTO> GetAllStudents(int id)
         {
             using (IDbConnection connection = Connection.GetConnection())
@@ -62,6 +63,7 @@ namespace TestingSystem.Data.StoredProcedure
                 return connection.Query<UserDTO>(sqlExpression, new { id }, commandType: CommandType.StoredProcedure).ToList();
             }
         }
+        
         public List<UserDTO> GetTeacherByGroupId(int groupId)
         {
             var connection = Connection.GetConnection();

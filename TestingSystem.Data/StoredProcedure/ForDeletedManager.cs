@@ -35,6 +35,7 @@ namespace TestingSystem.Data.StoredProcedure
                 return connection.Query<int>(sqlExpression, new { id }).FirstOrDefault();
             }
         }
+        
         public List<QuestionDTO> GetDeletedQuestions()
         {
             using (var connection = Connection.GetConnection())
@@ -43,6 +44,7 @@ namespace TestingSystem.Data.StoredProcedure
                 return connection.Query<QuestionDTO>(sqlExpression).ToList();
             }
         }
+        
         public int RestoreQuestion(int id)
         {
             using (var connection = Connection.GetConnection())
@@ -51,14 +53,7 @@ namespace TestingSystem.Data.StoredProcedure
                 return connection.Query<int>(sqlExpression, new { id }).FirstOrDefault();
             }
         }
-        public List<GroupDTO> GetDeletedGroups()
-        {
-            using (var connection = Connection.GetConnection())
-            {
-                string sqlExpression = "Group_GetDeleted";
-                return connection.Query<GroupDTO>(sqlExpression).ToList();
-            }
-        }
+
         public int RestoreGroup(int id)
         {
             using (var connection = Connection.GetConnection())
@@ -67,6 +62,7 @@ namespace TestingSystem.Data.StoredProcedure
                 return connection.Query<int>(sqlExpression, new { id }).FirstOrDefault();
             }
         }
+        
         public List<TestQuestionTagDTO> GetDeletedOneToManyTests()
         {
             using(var connection = Connection.GetConnection())
@@ -93,6 +89,7 @@ namespace TestingSystem.Data.StoredProcedure
                 return dTOs;
             }
         }
+        
         public List<GroupWithStudentsAndTeachersDTO> GetDeletedGroupsOneToMany()
         {
             using (var connection = Connection.GetConnection())
