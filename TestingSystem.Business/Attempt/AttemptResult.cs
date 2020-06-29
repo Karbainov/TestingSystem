@@ -9,8 +9,6 @@ namespace TestingSystem.Business.Attempt
 {
     public class AttemptResult
     {
-        public int GetAttemptResult(int attemptID) { return 0; }
-
         public void RecountAttemptsResult(int id, byte count)
         {
             QuestionCRUD question = new QuestionCRUD();

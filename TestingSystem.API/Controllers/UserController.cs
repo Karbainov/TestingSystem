@@ -150,7 +150,7 @@ namespace TestingSystem.API.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Teacher,Student")]
         [HttpGet("{userId}/test")]
         public IActionResult GetStudentTestsByUserId(int userId)
         {
