@@ -59,7 +59,7 @@ namespace TestingSystem.Business.Statistics
             List<int> attemptId = new List<int>();
 
             if (attemptId.Count == 0)
-                return Double.NaN;
+                return 0;
 
             foreach (var i in info.IdInfo)
             {

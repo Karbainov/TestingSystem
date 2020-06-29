@@ -68,7 +68,7 @@ namespace TestingSystem.Business.Tests.MocsForStatistics
                 case 31:
                     return 100 ;
             }
-            return Double.NaN;
+            return 0;
         }
     }
 }

@@ -15,7 +15,7 @@ namespace TestingSystem.Business.Tests.MocsForStatistics
                     mock.Add(1, 20);
                     return mock;
                 case 6:
-                    mock.Add(15, 69);
+                    mock.Add(15, 73.5);
                     mock.Add(16, 74.5);
                     mock.Add(17, 82);
                     return mock;
