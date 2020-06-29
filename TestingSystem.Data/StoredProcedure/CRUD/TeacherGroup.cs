@@ -11,12 +11,12 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
 {
     public class TeacherGroup
     {
-        public int Add(TeacherGroupDTO teacherGroup)
+        public bool Add(TeacherGroupDTO teacherGroup)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Teacher_Group_Add @UserID, @GroupID";
-                return connection.Query<int>(sqlExpression, teacherGroup).FirstOrDefault();
+                return connection.Query<bool>(sqlExpression, teacherGroup).FirstOrDefault();
             }
         }
         public List<TeacherGroupDTO> GetAll()

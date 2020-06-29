@@ -11,30 +11,30 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
 {
     public class UserCRUD
     {
-        public int Add( UserDTO user)
+        public bool Add( UserDTO user)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "User_Add @FirstName, @LastName, @BirthDate, @Login, @Password, @Email, @Phone";
-                return connection.Query<int>(sqlExpression, user).FirstOrDefault();
+                return connection.Query<bool>(sqlExpression, user).FirstOrDefault();
             }
             
         }
-        public int Update(UserDTO user)
+        public bool Update(UserDTO user)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "User_Update  @id, @FirstName, @LastName, @BirthDate, @Login, @Password, @Email, @Phone";
-                return connection.Query<int>(sqlExpression, user).FirstOrDefault();
+                return connection.Query<bool>(sqlExpression, user).FirstOrDefault();
             }
            
         }
-        public int Delete(int id)
+        public bool Delete(int id)
         {
             using (IDbConnection connection=Connection.GetConnection())
             {
                 string sqlExpression = "User_Delete @id";
-                return connection.Query<int>(sqlExpression, new { id }).FirstOrDefault();
+                return connection.Query<bool>(sqlExpression, new { id }).FirstOrDefault();
             }
         }
         public List<UserDTO> GetAll()
@@ -49,7 +49,7 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
-                string sqlExpression = "User_GetByID @id";
+                string sqlExpression = "User_ReadByID @id";
                 return connection.Query<UserDTO>(sqlExpression, new { id }).FirstOrDefault();
             }
         }

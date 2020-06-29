@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace TestingSystem.API.Models.Input
 {
-    public class LoginInputModel
+    public class AnswerWithoutIDInputModel
     {
-        public string Login { get; set; }
+        public int QuestionID { get; set; }
+        public string Value { get; set; }
     }
 }

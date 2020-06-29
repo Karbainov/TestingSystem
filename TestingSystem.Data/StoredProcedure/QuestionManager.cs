@@ -45,7 +45,7 @@ namespace TestingSystem.Data.StoredProcedure
             connection.Execute(sqlExpression, new { questionId }, commandType: CommandType.StoredProcedure);
         }
         
-        public void UpdateRightAnswer(int id, string value)
+        public int UpdateRightAnswer(int id, string value)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
@@ -53,12 +53,13 @@ namespace TestingSystem.Data.StoredProcedure
                 string sqlExpression = "UpdateRightAnswer";
                 try
                 {
-                    connection.Execute(sqlExpression, new { id, value }, commandType: CommandType.StoredProcedure);
+                    return connection.Query<int>(sqlExpression, new { id, value }, commandType: CommandType.StoredProcedure).FirstOrDefault();
                     transaction.Commit();
                 }
                 catch
                 {
                     transaction.Rollback();
+                    return -1;
                 }
             }
         }

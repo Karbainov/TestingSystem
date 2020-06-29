@@ -11,6 +11,6 @@ namespace TestingSystem.API.Models.Output
         public int QuestionID { get; set; }
         public string Value { get; set; }
         public bool? Correct { get; set; }
-        public double PercentageOfPeopleChoosingAnswer { get; set; }
+        public double? PercentageOfPeopleChoosingAnswer { get; set; }
     }
 }

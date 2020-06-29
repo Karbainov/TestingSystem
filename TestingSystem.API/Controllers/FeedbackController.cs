@@ -68,9 +68,9 @@ namespace TestingSystem.API.Controllers
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess feedbacks = new AuthorDataAccess();
-            var feedback = feedbacks.GetFeedbackById(feedbackId);
+            var feedback = feedbacks.GetFeedbackWithQuestion(feedbackId);
             if (feedback == null) return BadRequest("Фитбека не существует");
-            FeedbackQuestionOutputModel model = mapper.ConvertFeedbackQuestionDTOToFeedbackQuestionOutputModel(feedbacks.GetFeedbackWithQuestion(feedbackId));
+            FeedbackQuestionOutputModel model = mapper.ConvertFeedbackQuestionDTOToFeedbackQuestionOutputModel(feedback);            
             model.Answers = mapper.ConvertAnswerDTOToAnswerModelList(feedbacks.GetAllAnswersByFeedbackId(feedbackId));
             return Ok(model);
         }        

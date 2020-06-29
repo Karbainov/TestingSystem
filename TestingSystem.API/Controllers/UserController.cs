@@ -34,6 +34,7 @@ namespace TestingSystem.API.Controllers
         {
             AdminDataAccess adm = new AdminDataAccess();
             List<UserPositionDTO> users = adm.GetUsersWithRoles();
+            if (users == null) { return BadRequest("Неверный запрос"); }
             UserMapper mapper = new UserMapper();
             return Ok(mapper.ConvertUserPositionDTOsToUserWithRolesOutputModels(users));
         }
@@ -66,9 +67,15 @@ namespace TestingSystem.API.Controllers
             if (string.IsNullOrWhiteSpace(user.Phone)) return BadRequest("Напишите номер телефона");
             UserMapper mapper = new UserMapper();
             AdminDataAccess adm = new AdminDataAccess();
-            adm.UserCreate(mapper.ConvertUserInputModelToUserDTO(user));
-
-            return Ok("Пользователь создан успешно");
+            bool result = adm.UserCreate(mapper.ConvertUserInputModelToUserDTO(user));
+            if (result)
+            {
+                return Ok("Пользователь создан успешно");
+            }
+            else
+            {
+                return BadRequest("Неверный запрос");
+            }
         }
         
         [Authorize(Roles = "Admin")]
@@ -83,9 +90,15 @@ namespace TestingSystem.API.Controllers
             if (string.IsNullOrWhiteSpace(user.Phone)) return BadRequest("Напишите номер телефона");
             UserMapper mapper = new UserMapper();
             AdminDataAccess adm = new AdminDataAccess();
-            adm.AddUserWithRole(mapper.ConvertUserWithRoleInputModelToUserWithRoleDTO(user));
-
-            return Ok("Пользователь создан успешно");
+            bool result = adm.AddUserWithRole(mapper.ConvertUserWithRoleInputModelToUserWithRoleDTO(user));
+            if (result)
+            {
+                return Ok("Пользователь создан успешно");
+            }
+            else
+            {
+                return BadRequest("Неверный запрос");
+            }
         }
 
         [Authorize(Roles = "Admin")]
@@ -100,18 +113,18 @@ namespace TestingSystem.API.Controllers
             if (string.IsNullOrWhiteSpace(user.Phone)) return BadRequest("Напишите номер телефона");
             UserMapper mapper = new UserMapper();
             AdminDataAccess adm = new AdminDataAccess();
-            int result = adm.UserUpdate(mapper.ConvertUserInputModelToUserDTO(user));
-            if (result == 0)
+            bool result = adm.UserUpdate(mapper.ConvertUserInputModelToUserDTO(user));
+            if (!result)
             {
                 return BadRequest("Такого пользователя не существует");
             }
-            if (result == 1)
+            if (result)
             {
-                return Ok("Пользователь обновлён");
+                return Ok("Пользователь обновлён успешно");
             }
             else
             {
-                return BadRequest("Ошибка базы данных");
+                return BadRequest("Неверный запрос");
             }
         }
 
@@ -122,11 +135,22 @@ namespace TestingSystem.API.Controllers
             AdminDataAccess adm = new AdminDataAccess();
             var user = adm.GetUserByID(userId);
             if (user == null) return BadRequest("Пользователя не существует");
-            adm.UserDelete(userId);
-            return Ok("Пользователь удалён");
+            bool result = adm.UserDelete(userId);
+            if (!result)
+            {
+                return BadRequest("Такого пользователя не существует");
+            }
+            if (result)
+            {
+                return Ok("Пользователь удалён");
+            }
+            else
+            {
+                return BadRequest("Неверный запрос");
+            }
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Teacher,Student")]
         [HttpGet("{userId}/test")]
         public IActionResult GetStudentTestsByUserId(int userId)
         {
@@ -149,7 +173,7 @@ namespace TestingSystem.API.Controllers
             return Ok(model);
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet("role")]
         public IActionResult GetRole()
         {
@@ -161,11 +185,10 @@ namespace TestingSystem.API.Controllers
             {
                 rolesOut.Add(mapper.ConvertRoleDTOToRoleOutputModel(r));
             }
-
             return Ok(rolesOut);
         }
         
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet("{userId}/role")]
         public IActionResult GetRolesByUserId(int userId)
         {
@@ -210,8 +233,15 @@ namespace TestingSystem.API.Controllers
             List<UserRoleDTO> roles = adm.GetRolesByUserId(userRole.UserID);
             UserRoleDTO rl = mapper.ConvertUserRoleInputModelToUserRoleDTO(userRole);
             if (roles.Contains(rl)) return Ok("Данная роль для пользователя уже создана");
-            adm.UserRoleCreate(mapper.ConvertUserRoleInputModelToUserRoleDTO(userRole));
-            return Ok("Роль пользователя создана");
+            bool result = adm.UserRoleCreate(mapper.ConvertUserRoleInputModelToUserRoleDTO(userRole));
+            if (result)
+            {
+                return Ok("Роль пользователя создана");
+            }
+            else
+            {
+                return BadRequest("Ошибка запроса");
+            }
         }
 
         [Authorize(Roles = "Admin")]
@@ -224,8 +254,15 @@ namespace TestingSystem.API.Controllers
             if (user == null) return BadRequest("Пользователя не существует");
             List<UserRoleDTO> roles = adm.GetRolesByUserId(userId);
             if (!roles.Any(r => r.RoleID == roleId)) return BadRequest("Такой роли пользователя не существует");
-            adm.UserRoleDelete(userId, roleId);
-            return Ok("Роль пользователя удалена");
+            bool result = adm.UserRoleDelete(userId, roleId);
+            if (result)
+            {
+                return Ok("Роль пользователя удалена");
+            }
+            else
+            {
+                return BadRequest("Ошибка запроса");
+            }
         }
 
         [Authorize(Roles = "Teacher, Student")]
@@ -278,6 +315,5 @@ namespace TestingSystem.API.Controllers
             Dictionary<int, double> statistic = gs.GetAverageResultsOfAllTestsByGroupId(groupId);
             return Ok(mapper.ConvertTestDTOToGroupTestsAndResultsOutputModel(tests,statistic));
         }
-        
     }
 }

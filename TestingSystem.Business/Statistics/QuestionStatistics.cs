@@ -45,7 +45,7 @@ namespace TestingSystem.Business.Statistics
                 }                
             }
             foreach (var i in answers) 
-            {             
+            {                       
                 double result = ((double)i.Value / attemptId.Count * 100);
                 answersPercent.Add(i.Key, result);
             }
