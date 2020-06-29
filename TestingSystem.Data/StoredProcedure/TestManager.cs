@@ -171,7 +171,7 @@ namespace TestingSystem.Data.StoredProcedure
             {
                 var questionDictionary = new Dictionary<int, QuestionWithListAnswersDTO>();
                 connection.Query<QuestionWithListAnswersDTO, AnswerWithoutCorrectnessDTO, QuestionWithListAnswersDTO>(
-                    "GetAllQuestionsAndAnswersByTestId",
+                    "GetAllQuestionsAndAnswersByTestId1",
                     (question, answers) =>
                     {
                         QuestionWithListAnswersDTO questionEntry;
