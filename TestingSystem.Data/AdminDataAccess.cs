@@ -10,14 +10,14 @@ namespace TestingSystem.Data
 {
     public class AdminDataAccess
     {
-        public int UserCreate(UserDTO userC)
+        public bool UserCreate(UserDTO userC)
         {
             
             UserCRUD user = new UserCRUD();
             return user.Add(userC);
         }
         
-        public int UserRoleCreate(UserRoleDTO userRole)
+        public bool UserRoleCreate(UserRoleDTO userRole)
         {
             UserRoleCRUD user = new UserRoleCRUD();
             return user.Add(userRole);
@@ -35,19 +35,19 @@ namespace TestingSystem.Data
             return user.GetByID(id);
         }
 
-        public int UserUpdate(UserDTO userU)
+        public bool UserUpdate(UserDTO userU)
         {
             UserCRUD user = new UserCRUD();
             return user.Update(userU);
         }
         
-        public int UserDelete(int id)
+        public bool UserDelete(int id)
         {
             UserCRUD user = new UserCRUD();
             return user.Delete(id);
         }
         
-        public int GroupCreate(GroupDTO groupC)
+        public bool GroupCreate(GroupDTO groupC)
         {
             GroupCRUD group = new GroupCRUD();
             return group.Add(groupC);
@@ -65,19 +65,19 @@ namespace TestingSystem.Data
             return group.GetById(id);  
         }
 
-        public int GroupUpdate(GroupDTO groupU)
+        public bool GroupUpdate(GroupDTO groupU)
         {
             GroupCRUD group = new GroupCRUD();
             return group.Update(groupU);
         }
         
-        public int GroupDelete(int id)
+        public bool GroupDelete(int id)
         {
             GroupCRUD group = new GroupCRUD();
             return group.Delete(id);
         }
         
-        public int StudentAddInGroup (int userId, int groupId) 
+        public bool StudentAddInGroup (int userId, int groupId) 
         {
             StudentGroupDTO studentA = new StudentGroupDTO(1, userId, groupId);
             StudentGroup student = new StudentGroup();
@@ -102,7 +102,7 @@ namespace TestingSystem.Data
             return teacher.DeleteByUserIdGroupId(userId, groupId);
         }
         
-        public int TeacherAdd(int userId, int groupId)
+        public bool TeacherAdd(int userId, int groupId)
         {
             TeacherGroupDTO teacherA = new TeacherGroupDTO(1, userId, groupId);
             TeacherGroup teacher = new TeacherGroup();
@@ -115,7 +115,7 @@ namespace TestingSystem.Data
             return teacher.Delete(teacherD.ID);
         }
         
-        public int AddRoleToUser(UserRoleDTO dto)
+        public bool AddRoleToUser(UserRoleDTO dto)
         {
             UserRoleCRUD roleCRUD = new UserRoleCRUD();
             return roleCRUD.Add(dto);
@@ -145,7 +145,7 @@ namespace TestingSystem.Data
             return users.GetUsersByRoleID(roleId);
         }
         
-        public int UserRoleDelete(int userId, int roleId)
+        public bool UserRoleDelete(int userId, int roleId)
         {
             UserRoleCRUD userRoleCRUD = new UserRoleCRUD();
             UserRoleDTO userRoleDTO = new UserRoleDTO(0, userId, roleId);
@@ -170,13 +170,13 @@ namespace TestingSystem.Data
             return tc.GetTeacherByGroupId(groupId);
         }
         
-        public int DeleteStudentFromGroup(int userId, int groupId)
+        public bool DeleteStudentFromGroup(int userId, int groupId)
         {
             GroupManager gm = new GroupManager();
             return gm.DeleteStudentFromGroup(userId, groupId);
         }
         
-        public int DeleteTeacherFromGroup(int userId, int groupId)
+        public bool DeleteTeacherFromGroup(int userId, int groupId)
         {
             GroupManager gm = new GroupManager();
             return gm.DeleteTeacherFromGroup(userId, groupId);
@@ -242,7 +242,7 @@ namespace TestingSystem.Data
             return adm.GetUserWithRolesByUserId(id);
         }
         
-        public int AddUserWithRole(UserWithRoleDTO userRole)
+        public bool AddUserWithRole(UserWithRoleDTO userRole)
         {
             UserManager adm = new UserManager();
             return adm.AddUserWithRole(userRole);

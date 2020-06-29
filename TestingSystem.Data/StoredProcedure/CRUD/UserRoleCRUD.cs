@@ -11,21 +11,21 @@ namespace TestingSystem.Data.StoredProcedure.CRUD
 {
     class UserRoleCRUD
     {
-        public int Add(UserRoleDTO userRole)
+        public bool Add(UserRoleDTO userRole)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "User_Role_Add @UserID, @RoleID";
-                return connection.Query<int>(sqlExpression, userRole).FirstOrDefault();
+                return connection.Query<bool>(sqlExpression, userRole).FirstOrDefault();
             }
            
         }
-        public int Delete(UserRoleDTO userRole)
+        public bool Delete(UserRoleDTO userRole)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "User_Role_Delete @UserID, @RoleID";
-                return connection.Query<int>(sqlExpression, userRole).FirstOrDefault();
+                return connection.Query<bool>(sqlExpression, userRole).FirstOrDefault();
             }
         }
         public List<UserRoleDTO> GetAll()

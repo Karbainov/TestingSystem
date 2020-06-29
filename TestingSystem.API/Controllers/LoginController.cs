@@ -24,7 +24,7 @@ namespace TestingSystem.API.Controllers
     public class LoginController : Controller
     {
         [HttpGet]
-        public UserWithLoginOutputModel get([FromBody] LoginInputModel log)
+        public UserWithLoginOutputModel Get([FromBody] LoginInputModel log)
         {
             Mapper mapper = new Mapper();
             return mapper.ConvertUserByLoginDTOToListUserWithLoginOutputModel(log.Login);

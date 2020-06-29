@@ -12,13 +12,13 @@ namespace TestingSystem.Data.StoredProcedure
     public class UserManager
     {
         
-        public int AddUserWithRole(UserWithRoleDTO user)
+        public bool AddUserWithRole(UserWithRoleDTO user)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression =
                     "AddUserWithRole @FirstName, @LastName, @BirthDate, @Login, @Password, @Email, @Phone, @RoleID";
-                return connection.Query<int>(sqlExpression, user ).FirstOrDefault();
+                return connection.Query<bool>(sqlExpression, user ).FirstOrDefault();
             }
         }
 
