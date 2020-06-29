@@ -198,45 +198,27 @@ namespace TestingSystem.API.Controllers
             foreach (QuestionOutputModel qModel in model.Questions)
             {
                 qModel.Answers = mapper.ConvertAnswerDTOToAnswerModelList(tests.GetAnswerByQuestionId(qModel.ID));
-                //QuestionStatistics statistics = new QuestionStatistics(qModel.ID);
-                //qModel.PercentageOfCorrectlyAnswered = statistics.GetPercentageOfCorrectlyAnswered(qModel.ID);
-                //foreach (var answer in qModel.Answers)
-                //{
-                //    answer.PercentageOfPeopleChoosingAnswer = statistics.GetPercentageOfPeopleChoosingAnswer(qModel.ID)[answer.ID];
-                //}
+                QuestionStatistics statistics = new QuestionStatistics(qModel.ID);
+                qModel.PercentageOfCorrectlyAnswered = statistics.GetPercentageOfCorrectlyAnswered(qModel.ID);
+                Dictionary<int, double> answersPercent = new Dictionary<int, double>();
+                answersPercent = statistics.GetPercentageOfPeopleChoosingAnswer(qModel.ID);
+                foreach (var answer in qModel.Answers)
+                {          
+                    foreach(var i in answersPercent)
+                    {
+                        if (answer.ID == i.Key)
+                        {
+                            answer.PercentageOfPeopleChoosingAnswer = i.Value;
+                        }
+                        else
+                        {
+                            answer.PercentageOfPeopleChoosingAnswer = 0;
+                        }   
+                    }                    
+                }
             }
             return Ok(model);
-        }        
-
-        [HttpGet("{testId}/questions/Author")]
-        public ActionResult<List<QuestionOutputModel>> GetQuestionsByTestID(int testId)
-        {
-            Mapper mapper = new Mapper();
-            AuthorDataAccess questions = new AuthorDataAccess();
-            List<QuestionOutputModel> listOfModels = mapper.ConvertQuestionDTOToQuestionModelList(questions.GetQuestionsByTestID(testId));
-            foreach (var model in listOfModels)
-            {
-                QuestionStatistics statistics = new QuestionStatistics(model.ID);
-                model.PercentageOfCorrectlyAnswered = statistics.GetPercentageOfCorrectlyAnswered(model.ID);
-            }
-            return Ok(listOfModels);
-        }
-
-        [HttpGet("{testId}/answers/Author")]
-        public ActionResult<List<AnswerOutputModel>> GetAnswersByTestID(int testId)
-        {
-            Mapper mapper = new Mapper();
-            AuthorDataAccess answers = new AuthorDataAccess();
-            return Ok(mapper.ConvertAnswerDTOToAnswerModelList(answers.GetAllAnswersInTest(testId)));
-        }
-
-        [HttpGet("{testId}/tags/Author")]
-        public ActionResult<List<TagOutputModel>> GetTagsInTest(int testId)
-        {
-            Mapper mapper = new Mapper();
-            AuthorDataAccess tags = new AuthorDataAccess();
-            return Ok(mapper.ConvertTagDTOToTagModelList(tags.GetTagsInTest(testId)));
-        }
+        }            
 
         [Authorize(Roles = "Author")]
         [HttpGet("{testid}/missing-tags")]          
@@ -295,7 +277,7 @@ namespace TestingSystem.API.Controllers
         }
 
         [Authorize(Roles = "Author")]
-        [HttpGet("question/{quid}/Author")]       
+        [HttpGet("question/{quid}")]       
         public ActionResult<QuestionOutputModel> GetQuestionById([FromBody] int questionId)
         {
             Mapper mapper = new Mapper();
@@ -351,17 +333,29 @@ namespace TestingSystem.API.Controllers
         }
 
         [Authorize(Roles = "Author")]
-        [HttpGet("{testid}/question/{quid}/answers/Author")]      
+        [HttpGet("question/{quid}/answers")]      
         public ActionResult<List<AnswerOutputModel>> GetAnswersByQuestionId(int questionId)
         {
             Mapper mapper = new Mapper();
             AuthorDataAccess answers = new AuthorDataAccess();
             List<AnswerOutputModel> listOfModels = mapper.ConvertAnswerDTOToAnswerModelList(answers.GetAnswerByQuestionId(questionId));
+            Dictionary<int, double> answersPercent = new Dictionary<int, double>();
             QuestionStatistics statistics = new QuestionStatistics(questionId);
-            foreach(var model in listOfModels)
+            answersPercent = statistics.GetPercentageOfPeopleChoosingAnswer(questionId);
+            foreach (var model in listOfModels)
             {
-                model.PercentageOfPeopleChoosingAnswer = statistics.GetPercentageOfPeopleChoosingAnswer(questionId)[model.ID];
-            }
+                foreach (var i in answersPercent)
+                {
+                    if (model.ID == i.Key)
+                    {
+                        model.PercentageOfPeopleChoosingAnswer = i.Value;
+                    }
+                    else
+                    {
+                        model.PercentageOfPeopleChoosingAnswer = 0;
+                    }
+                }
+            }            
             return Ok(listOfModels);
         }
 
