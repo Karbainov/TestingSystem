@@ -198,12 +198,6 @@ namespace TestingSystem.API.Controllers
             foreach (QuestionOutputModel qModel in model.Questions)
             {
                 qModel.Answers = mapper.ConvertAnswerDTOToAnswerModelList(tests.GetAnswerByQuestionId(qModel.ID));
-                //QuestionStatistics statistics = new QuestionStatistics(qModel.ID);
-                //qModel.PercentageOfCorrectlyAnswered = statistics.GetPercentageOfCorrectlyAnswered(qModel.ID);
-                //foreach (var answer in qModel.Answers)
-                //{
-                //    answer.PercentageOfPeopleChoosingAnswer = statistics.GetPercentageOfPeopleChoosingAnswer(qModel.ID)[answer.ID];
-                //}
             }
             return Ok(model);
         }        
