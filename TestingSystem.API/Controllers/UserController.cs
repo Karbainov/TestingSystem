@@ -78,7 +78,7 @@ namespace TestingSystem.API.Controllers
             }
         }
         
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost("withrole")]
         public IActionResult PostUserWithRole([FromBody] UserWithRoleInputModel user)
         {
