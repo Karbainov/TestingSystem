@@ -62,9 +62,8 @@ namespace TestingSystem.Data.StoredProcedure
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
-                string sqlExpression = "Tag_GetWhichAreNotInTest ";
-                return connection.Query<TagDTO>(sqlExpression, new {testId}, commandType: CommandType.StoredProcedure)
-                    .ToList();
+                string sqlExpression = "Tags_GetWhichAreNotInTest";
+                return connection.Query<TagDTO>(sqlExpression, new {testId}, commandType: CommandType.StoredProcedure).ToList();
             }
         }
 
