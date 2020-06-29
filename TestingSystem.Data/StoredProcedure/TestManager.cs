@@ -6,147 +6,287 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using TestingSystem.Data.DTO;
+using TestingSystem.Data;
+
 
 namespace TestingSystem.Data.StoredProcedure
 {
-    class TestManager
+    public class TestManager
     {
-        public List<TestDTO> Test_Attempt_GetLate( UserDTO user)//просроченные тесты студента
+        public List<TestDTO> GetLateAttempt(int userId)//просроченные тесты студента
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Test_Attempt_GetLate @UserID";
-                return connection.Query<TestDTO>(sqlExpression, user).ToList();
+                return connection.Query<TestDTO>(sqlExpression,new { userId }).ToList();
             }
-            //connection.Open();
-            //string sqlExpression = "Test_Attempt_GetLate";
-            //SqlCommand command = new SqlCommand(sqlExpression, connection);
-            //command.CommandType = System.Data.CommandType.StoredProcedure;
-
-
-            //SqlParameter idParam = new SqlParameter("@UserID", user.ID);
-            //command.Parameters.Add(idParam);
-
-
-            //SqlDataReader reader = command.ExecuteReader();
-
-            //List<TestDTO> test = new List<TestDTO>();
-            //if (reader.HasRows) // если есть данные
-            //{
-
-            //    while (reader.Read()) // построчно считываем данные
-            //    {
-            //        TestDTO test1 = new TestDTO();
-
-            //        test1.Id = (int)reader["id"];
-            //        test1.name = (string)reader["Name"];
-            //        test1.duration = (TimeSpan)reader["DurationTime"];
-            //        test1.score= (int)reader["SuccessScore"];
-            //        test.Add(test1);
-            //    }
-            //}
-            //reader.Close();
-            //return test;
         }
-        public List<Question_AnswerDTO> Answer_GetCorrectByTestID(TestDTO test)//нахождение правильных ответов теста
+        
+        public List<QuestionAnswerDTO> GetCorrectAnswerByTestID(int testId)//нахождение правильных ответов теста
         {
-            using(IDbConnection connection = Connection.GetConnection())
+            using (IDbConnection connection = Connection.GetConnection())
             {
-                string sqlExpression = "Answer_GetCorrectByTestID @TestID";
-                return connection.Query<Question_AnswerDTO>(sqlExpression, test).ToList();
+                string sqlExpression = "Answers_GetCorrectByTestId @testId";
+                return connection.Query<QuestionAnswerDTO>(sqlExpression,new { testId }).ToList();
             }
-            //connection.Open();
-            //string sqlExpression = "Answer_GetCorrectByTestID";
-            //SqlCommand command = new SqlCommand(sqlExpression, connection);
-            //command.CommandType = System.Data.CommandType.StoredProcedure;
-            //SqlParameter questionParam = new SqlParameter("@TestID", test.Id);
-            //command.Parameters.Add(questionParam);
-            //SqlDataReader reader = command.ExecuteReader();
-
-            //List<Question_AnswerDTO> answers = new List<Question_AnswerDTO>();
-            //if (reader.HasRows) // если есть данные
-            //{
-
-            //    while (reader.Read()) // построчно считываем данные
-            //    {
-            //        Question_AnswerDTO answer = new Question_AnswerDTO();
-            //        answer.Answer_Value = (string)reader["Answer.Value"];
-            //        answer.Question_Value = (string)reader["Question.Value"];
-            //        answers.Add(answer);
-            //    }
-            //}
-            //reader.Close();
-            //return answers;
         }
-        public List<Question_AnswerDTO> Attempt_GetQuestionAndAnswer( AttemptDTO attempt)//все вопросы и ответы попытки
+        
+        public List<QuestionAnswerDTO> GetQuestionAndAnswerFromAttempt(int attemptId)//все вопросы и ответы попытки
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Attempt_GetQuestionAndAnswer @AttemptID";
-                return connection.Query<Question_AnswerDTO>(sqlExpression, attempt).ToList();
+                return connection.Query<QuestionAnswerDTO>(sqlExpression,new{ attemptId }).ToList();
             }
-            //connection.Open();
-            //string sqlExpression = "Attempt_GetQuestionAndAnswer";
-            //SqlCommand command = new SqlCommand(sqlExpression, connection);
-            //command.CommandType = System.Data.CommandType.StoredProcedure;
-            //SqlParameter attemptParam = new SqlParameter("@AttemptID", attempt.id);
-            //command.Parameters.Add(attemptParam);
-            //SqlDataReader reader = command.ExecuteReader();
-
-            //List<Question_AnswerDTO> question_Answers = new List<Question_AnswerDTO>();
-            //if (reader.HasRows) // если есть данные
-            //{
-
-            //    while (reader.Read()) // построчно считываем данные
-            //    {
-            //        Question_AnswerDTO question_Answer = new Question_AnswerDTO();
-
-            //        question_Answer.Answer_Value = (string)reader["[Answer].Value"];
-            //        question_Answer.Question_Value = (string)reader["[Question].Value"];
-            //        question_Answers.Add(question_Answer);
-            //    }
-            //}
-            //reader.Close();
-            //return question_Answers;
         }
 
-        public int Attempt_DeleteConcrete(AttemptDTO attempt)//удаление попытки 
+        public int DeleteConcreteAttempt(AttemptDTO attempt)//удаление попытки 
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
                 string sqlExpression = "Attempt_DeleteConcrete @UserID,@TestID,@Number";
                 return connection.Execute(sqlExpression, attempt);
             }
-            //connection.Open();
-            //string sqlExpression = "Attempt_DeleteConcrete";
-            //SqlCommand command = new SqlCommand(sqlExpression, connection);
-            //command.CommandType = System.Data.CommandType.StoredProcedure;
-            //SqlParameter userParam = new SqlParameter("@UserID", attempt.userID);
-            //command.Parameters.Add(userParam);
-            //SqlParameter testParam = new SqlParameter("@TestID", attempt.testID);
-            //command.Parameters.Add(testParam);
-            //SqlParameter numberParam = new SqlParameter("@Number", attempt.number);
-            //command.Parameters.Add(numberParam);
-            //return command.ExecuteNonQuery();
         }
 
-        public List<TagDTO> GetTestTags (TestDTO tests )
+        public List<TagDTO> GetTestTags(int testId)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
-                string sqlExpression = "GetTestTags @TestID";
-                return connection.Query<TagDTO>(sqlExpression,  tests , commandType: CommandType.StoredProcedure).ToList();
-              
+                string sqlExpression = "GetTestTags";
+                return connection.Query<TagDTO>(sqlExpression, new { testId }, commandType: CommandType.StoredProcedure).ToList();
             }
         }
 
-        public List<TestDTO> GetTestByTagpAndGroup (TagGroupNamesDTO names)
+        public List<TagDTO> GetTagsWhichAreNotInTest(int testId)
         {
             using (IDbConnection connection = Connection.GetConnection())
             {
-                string sqlExpression = "Test_GetByTagAndGroup @Tag_Name @Group_Name";
-                return connection.Query<TestDTO>(sqlExpression, names, commandType: CommandType.StoredProcedure).ToList();
+                string sqlExpression = "Tag_GetWhichAreNotInTest ";
+                return connection.Query<TagDTO>(sqlExpression, new {testId}, commandType: CommandType.StoredProcedure)
+                    .ToList();
             }
+        }
+
+        public List<TestDTO> GetTestByTagpAndGroup(TagGroupDTO dto)
+        {
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "Test_GetByTagNameGroupId @Tag_Name @Group_ID";
+                return connection.Query<TestDTO>(sqlExpression, dto, commandType: CommandType.StoredProcedure).ToList();
+            }
+        }
+
+        public List<TestDTO> GetTestByGroupId(int groupId)
+        {
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "GetTestsByGroupId";
+                return connection.Query<TestDTO>(sqlExpression, new { groupId }, commandType: CommandType.StoredProcedure).ToList();
+            }
+        }
+
+        public List<TestDTO> GetTestVSTagSearchOr(params string[] tag)
+        {
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "SearchTestByTagOr";
+                return connection.Query<TestDTO>(sqlExpression, new { tag }, commandType: CommandType.StoredProcedure).ToList();
+            }
+        }
+
+        public List<TestDTO> GetTestVSTagSearchAnd(params string[] tag)
+        {
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "SearchTestByTagAnd";
+                return connection.Query<TestDTO>(sqlExpression, new { tag }, commandType: CommandType.StoredProcedure).ToList();
+            }
+        }
+
+        public List<TestAttemptDTO> GetCompletedTestsByUserID(int userId)
+        {
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "GetCompletedTestsByUserID";
+                return connection.Query<TestAttemptDTO>(sqlExpression, new { userId }, commandType: CommandType.StoredProcedure).ToList();
+            }
+        }
+
+        public void DeleteTest(int Id)
+        {
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "DeleteTest";
+                connection.Execute(sqlExpression, Id, commandType: CommandType.StoredProcedure);
+            }
+        }
+
+        public List<StudentsVSTestsDTO> GetBestResultOfTestByGroupID(int groupId)
+        {
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "Test_GetÍBestGroupResult @GroupID";
+                return connection.Query<StudentsVSTestsDTO>(sqlExpression, new { groupId }).ToList();
+            }
+        }
+
+        public List<TestQuestionsDTO> GetTestWithAllQuestionsById (int testId)
+        {
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "GetAllQuestionsByTestID";
+                return connection
+                    .Query<TestQuestionsDTO>(sqlExpression, new {testId}, commandType: CommandType.StoredProcedure)
+                    .ToList();
+            }
+        }
+
+        public List<AnswerDTO> GetAllAnswersInTest(int testId)
+        {
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "AnswersAll_GetByTestId";
+                return connection
+                    .Query<AnswerDTO>(sqlExpression, new {testId}, commandType: CommandType.StoredProcedure).ToList();
+            }
+        }
+
+
+
+        public TestDTO GetDurationAndQuestionNumber(int id)
+        {
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "Test_GetDurationAndQuestionNumber";
+                return connection.Query<TestDTO>(sqlExpression, new { id }, commandType: CommandType.StoredProcedure).FirstOrDefault();
+            }
+        }
+
+        public List<QuestionWithListAnswersDTO> GetQuestionsAndAnswers(int testID)
+        {
+            IDbConnection connection = Connection.GetConnection();
+            List<QuestionWithListAnswersDTO> questions;
+            using (connection)
+            {
+                var questionDictionary = new Dictionary<int, QuestionWithListAnswersDTO>();
+                connection.Query<QuestionWithListAnswersDTO, AnswerWithoutCorrectnessDTO, QuestionWithListAnswersDTO>(
+                    "GetAllQuestionsAndAnswersByTestId",
+                    (question, answers) =>
+                    {
+                        QuestionWithListAnswersDTO questionEntry;
+
+                        if (!questionDictionary.TryGetValue(question.Id, out questionEntry))
+                        {
+                            questionEntry = question;
+                            questionEntry.Answers = new List<AnswerWithoutCorrectnessDTO>();
+                            questionDictionary.Add(questionEntry.Id, questionEntry);
+                        }
+
+                        questionEntry.Answers.Add(answers);
+                        return questionEntry;
+                    },
+                    new { testID },
+                    splitOn: "QuestionId",
+                    commandType: CommandType.StoredProcedure)
+                .ToList();
+                questions = new List<QuestionWithListAnswersDTO>(questionDictionary.Values);
+            }
+            return questions;
+        }
+        
+        public TestQuestionTagDTO GetTestWithQuestionsAndTagsByID(int id)
+        {
+            using (var connection = Connection.GetConnection())
+            {
+                TestQuestionTagDTO result = null; 
+                string sqlExpression = "GetTestsByIdOneToMany";
+                connection.Query<TestQuestionTagDTO, QuestionForOneToManyDTO, TagWithTestIDDTO, TestQuestionTagDTO>(sqlExpression, (test, question, tag) =>
+                {
+                    if (result == null)
+                    {
+                        result = test;
+                        result.Questions = new List<QuestionForOneToManyDTO>();
+                        result.Questions.Add(question);
+                        result.Tags = new List<TagWithTestIDDTO>();
+                        result.Tags.Add(tag);
+                        
+                    }
+                    else
+                    {
+                        if (!result.Questions.Any(x=>x.Value==question.Value))
+                        { result.Questions.Add(question); }
+                        if (!result.Tags.Any(x=>x.Name==tag.Name))
+                        {result.Tags.Add(tag);}
+                    }
+                    
+                    return result;
+                }
+                ,new { id }
+            , splitOn: "TestID,IDtest",commandType:CommandType.StoredProcedure);
+                return result;
+            }
+        }
+
+        public UserTestWithQuestionsAndAnswersDTO GetUserResultByUserIDAndTestID(int userID,int testID)
+        {
+            UserTestWithQuestionsAndAnswersDTO result = null;
+            using (var connection = Connection.GetConnection())
+            {
+                string sqlExpression = "GetUserResultByUserIDTestID";
+                connection.Query<UserTestWithQuestionsAndAnswersDTO, AnswerDTO, QuestionWithAnswersDTO, UserTestWithQuestionsAndAnswersDTO>(sqlExpression, (res,answer, question) =>
+                {
+                    if(result == null)
+                    {
+                        result = res;
+                        result.Questions = new List<QuestionWithAnswersDTO>();
+                        question.Answers = new List<AnswerDTO>();
+                        question.Answers.Add(answer);
+                        result.Questions.Add(question);
+                    }
+                    if(!result.Questions.Any(x=>x.IDQuestion == question.IDQuestion))
+                    {
+                        question.Answers = new List<AnswerDTO>();
+                        result.Questions.Add(question);
+                    }
+                    if(!result.Questions.Any(x=>x.Answers.Any(y=>y.ID==answer.ID)))
+                    {
+                        int id = result.Questions.FindIndex(x => x.IDQuestion == answer.QuestionID);
+                        if(id>-1)
+                        result.Questions[id].Answers.Add(answer);
+                    }
+                    return result;
+                }
+                , new { userID, testID }, splitOn: "Id,IDQuestion", commandType: CommandType.StoredProcedure);
+            }
+            return result;
+        }
+
+        public TestWithStudentsDTO GetLateStudentsByTestID(int id)
+        {
+            TestWithStudentsDTO result = null;
+            using(var connection = Connection.GetConnection())
+            {
+                string sqlExpression = "Attepmt_GetLateStudentByTestID";
+                connection.Query<TestDTO, UserDTO, TestWithStudentsDTO>(sqlExpression, (test, student) =>
+                  {
+                      if (result == null)
+                      {
+                          result = new TestWithStudentsDTO();
+                          //result.Test = new TestDTO();
+                          result.Test = test;
+                          result.Students = new List<UserDTO>();
+                          result.Students.Add(student);
+                      }
+                      else
+                      {
+                          result.Students.Add(student);
+                      }
+                      return result;
+                  }
+                , new { id }, splitOn: "ID", commandType: CommandType.StoredProcedure);
+            }
+            return result;
         }
     }
 }

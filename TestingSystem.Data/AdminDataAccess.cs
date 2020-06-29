@@ -4,63 +4,248 @@ using System.Data.SqlClient;
 using System.Text;
 using TestingSystem.Data.DTO;
 using TestingSystem.Data.StoredProcedure.CRUD;
+using TestingSystem.Data.StoredProcedure;
 
 namespace TestingSystem.Data
 {
     public class AdminDataAccess
     {
-        public void UserCreate(UserDTO userC)
+        public int UserCreate(UserDTO userC)
         {
-            var connect = Connection.GetSqlConnection();
-            User user = new User();
-            user.User_Create(connect, userC);
+            
+            UserCRUD user = new UserCRUD();
+            return user.Add(userC);
         }
-        public void UserUpdate(UserDTO userU)
+        
+        public int UserRoleCreate(UserRoleDTO userRole)
         {
-            var connect = Connection.GetSqlConnection();
-            User user = new User();
-            user.User_Update(connect, userU);
+            UserRoleCRUD user = new UserRoleCRUD();
+            return user.Add(userRole);
         }
-        public void UserDelete(UserDTO userD)
+
+        public List<UserDTO> GetAllUsers()
         {
-            var connect = Connection.GetSqlConnection();
-            User user = new User();
-            user.User_Create(connect, userD);
+            UserCRUD user = new UserCRUD();
+            return user.GetAll();
         }
-        public void GroupCreate(GroupDTO groupC)
+        
+        public UserDTO GetUserByID (int id)
         {
-            Group group = new Group();
-            group.GroupAdd(groupC);
+            UserCRUD user = new UserCRUD();
+            return user.GetByID(id);
         }
-        public void GroupUpdate(GroupDTO groupU)
+
+        public int UserUpdate(UserDTO userU)
         {
-            Group group = new Group();
-            group.GroupUpdate(groupU);
+            UserCRUD user = new UserCRUD();
+            return user.Update(userU);
         }
-        public void GroupDelete(GroupDTO groupD)
+        
+        public int UserDelete(int id)
         {
-            Group group = new Group();
-            group.GroupAdd(groupD);
+            UserCRUD user = new UserCRUD();
+            return user.Delete(id);
         }
-        public void StudentAdd (Student_GroupDTO studentA) 
+        
+        public int GroupCreate(GroupDTO groupC)
         {
-            Student_Group student = new Student_Group();
-            student.StudentGroupAdd(studentA);
+            GroupCRUD group = new GroupCRUD();
+            return group.Add(groupC);
         }
-        public void StudentDelete(Student_GroupDTO studentD)
+
+        public List<GroupDTO> GetAllGroups()
         {
-            Student_Group student = new Student_Group();
-            student.StudentGroupDeleteByID(studentD.ID);
+            GroupCRUD group = new GroupCRUD();
+            return group.GetAll();  
         }
-        public void TeacherAdd(Teacher_GroupDTO teacherA)
+
+        public GroupDTO GetGroupById(int id)
         {
-            Teacher_Group student = new Teacher_Group();
-            student.TeacherGroupAdd(teacherA);
+            GroupCRUD group = new GroupCRUD();
+            return group.GetById(id);  
         }
-        public void TeacherDelete(Teacher_GroupDTO teacherD)
+
+        public int GroupUpdate(GroupDTO groupU)
         {
-            Teacher_Group student = new Teacher_Group();
-            student.TeacherGroupDeleteByID(teacherD.ID);
+            GroupCRUD group = new GroupCRUD();
+            return group.Update(groupU);
+        }
+        
+        public int GroupDelete(int id)
+        {
+            GroupCRUD group = new GroupCRUD();
+            return group.Delete(id);
+        }
+        
+        public int StudentAddInGroup (int userId, int groupId) 
+        {
+            StudentGroupDTO studentA = new StudentGroupDTO(1, userId, groupId);
+            StudentGroup student = new StudentGroup();
+            return student.Add(studentA);
+        }
+        
+        public int StudentDeleteFromGroup(StudentGroupDTO studentD)
+        {
+            StudentGroup student = new StudentGroup();
+            return student.Delete(studentD.ID);
+        }
+        
+        public int StudentDeleteByUserIdGroupId(int userId, int groupId)
+        {
+            StudentGroup student = new StudentGroup();
+            return student.DeleteByUserIdGroupId(userId, groupId);
+        }
+        
+        public int TeacherDeleteByUserIdGroupId(int userId, int groupId)
+        {
+            TeacherGroup teacher = new TeacherGroup();
+            return teacher.DeleteByUserIdGroupId(userId, groupId);
+        }
+        
+        public int TeacherAdd(int userId, int groupId)
+        {
+            TeacherGroupDTO teacherA = new TeacherGroupDTO(1, userId, groupId);
+            TeacherGroup teacher = new TeacherGroup();
+            return teacher.Add(teacherA);
+        }
+        
+        public int TeacherDelete(TeacherGroupDTO teacherD)
+        {
+            TeacherGroup teacher = new TeacherGroup();
+            return teacher.Delete(teacherD.ID);
+        }
+        
+        public int AddRoleToUser(UserRoleDTO dto)
+        {
+            UserRoleCRUD roleCRUD = new UserRoleCRUD();
+            return roleCRUD.Add(dto);
+        }
+        
+        public List<UserPositionDTO> GetUsersWithRoles()
+        {
+            UserManager adm = new UserManager();
+            return adm.GetUserVSRole();
+        }
+        
+        public List<UserRoleDTO> GetRolesByUserId(int userId)
+        {
+            UserRoleCRUD roleCRUD = new UserRoleCRUD();
+            return roleCRUD.GetByUserID(userId);
+        }
+        
+        public List<RoleDTO> GetRoleByUserId(int userId)
+        {
+            UserManager role = new UserManager();
+            return role.GetRoleByUserId(userId);
+        }
+        
+        public List<UserDTO> GetUsersByRoleId(int roleId)
+        {
+            UserManager users = new UserManager();
+            return users.GetUsersByRoleID(roleId);
+        }
+        
+        public int UserRoleDelete(int userId, int roleId)
+        {
+            UserRoleCRUD userRoleCRUD = new UserRoleCRUD();
+            UserRoleDTO userRoleDTO = new UserRoleDTO(0, userId, roleId);
+            return userRoleCRUD.Delete(userRoleDTO);
+        }
+
+        public List<RoleDTO> GetRoles()
+        {
+            RoleCRUD role = new RoleCRUD();
+            return role.GetAll();
+        }
+
+        public List<UserDTO> GetStudents(int id)
+        {
+            GroupManager gm = new GroupManager();
+            return gm.GetAllStudents(id);
+        }
+        
+        public List<UserDTO> GetTeacherByGroupId(int groupId)
+        {
+            GroupManager tc = new GroupManager();
+            return tc.GetTeacherByGroupId(groupId);
+        }
+        
+        public int DeleteStudentFromGroup(int userId, int groupId)
+        {
+            GroupManager gm = new GroupManager();
+            return gm.DeleteStudentFromGroup(userId, groupId);
+        }
+        
+        public int DeleteTeacherFromGroup(int userId, int groupId)
+        {
+            GroupManager gm = new GroupManager();
+            return gm.DeleteTeacherFromGroup(userId, groupId);
+        }
+        
+        public List<UserDTO> GetDeletedUsers()
+        {
+            ForDeletedManager manager = new ForDeletedManager();
+            return manager.GetDeletedUsers();
+        }
+        
+        public int RestoreUser(int id)
+        {
+            ForDeletedManager manager = new ForDeletedManager();
+            return manager.RestoreUser(id);
+        }
+        
+        public List<TestQuestionTagDTO> GetDeletedTests()
+        {
+            ForDeletedManager manager = new ForDeletedManager();
+            return manager.GetDeletedOneToManyTests();
+        }
+        
+        public int RestoreTest(int id)
+        {
+            ForDeletedManager manager = new ForDeletedManager();
+            return manager.RestoreTest(id);
+        }
+        
+        public List<QuestionDTO> GetDeletedQuestions()
+        {
+            ForDeletedManager manager = new ForDeletedManager();
+            return manager.GetDeletedQuestions();
+        }
+        
+        public int RestoreQuestion(int id)
+        {
+            ForDeletedManager manager = new ForDeletedManager();
+            return manager.RestoreQuestion(id);
+        }
+        
+        public List<GroupWithStudentsAndTeachersDTO> GetDeletedGroups()
+        {
+            ForDeletedManager manager = new ForDeletedManager();
+            return manager.GetDeletedGroupsOneToMany();
+        }
+        
+        public int RestoreGroup(int id)
+        {
+            ForDeletedManager manager = new ForDeletedManager();
+            return manager.RestoreGroup(id);
+        }
+
+        public List<UserRoleDTO> GetRoleByRoleId(int roleId)
+        {
+            UserRoleCRUD role = new UserRoleCRUD();
+            return role.GetByRoleID(roleId);
+        }
+
+        public UserPositionDTO GetUserWithRolesByUserId(int id)
+        {
+            UserManager adm = new UserManager();
+            return adm.GetUserWithRolesByUserId(id);
+        }
+        
+        public int AddUserWithRole(UserWithRoleDTO userRole)
+        {
+            UserManager adm = new UserManager();
+            return adm.AddUserWithRole(userRole);
         }
     }
 }

@@ -1,0 +1,216 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System.Data.SqlClient;
+using System.Text;
+using TestingSystem.Data.DTO;
+using TestingSystem.Data.StoredProcedure.CRUD;
+using TestingSystem.Data;
+using TestingSystem.Data.StoredProcedure;
+using TestingSystem.API.Models.Output;
+using TestingSystem.API.Models.Input;
+using Microsoft.AspNetCore.Authorization;
+
+namespace TestingSystem.API.Controllers
+{
+    [ApiController]
+    [Route("[controller]")]
+    public class GroupController : Controller
+    {
+        private readonly ILogger<GroupController> _logger;
+        
+        public GroupController(ILogger<GroupController> logger)
+        {
+            _logger = logger;
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public IActionResult GetAllGroups()
+        {         
+            AdminDataAccess adm = new AdminDataAccess();
+            List<GroupOutputModel> groupOutputModels = new List<GroupOutputModel>();
+            List<GroupDTO> groups = adm.GetAllGroups();
+            if (groups == null) { return BadRequest("Ошибка сервера"); }
+            else {
+                foreach (GroupDTO g in groups)
+                {
+                    GroupOutputModel groupoutmodel = new GroupOutputModel();
+                    AdminDataAccess gr = new AdminDataAccess();
+                    groupoutmodel.Id = g.Id;
+                    groupoutmodel.Name = g.Name;
+                    groupoutmodel.StartDate = g.StartDate;
+                    groupoutmodel.EndDate = g.EndDate;
+                    List<UserDTO> students = gr.GetStudents(g.Id);
+                    List<UserOutputModel> studentsOut = new List<UserOutputModel>();
+                    foreach (UserDTO st in students)
+                    {
+                        UserMapper um = new UserMapper();
+                        studentsOut.Add(um.ConvertUserDTOToUserOutputModel(st));
+                    }
+                    List<UserDTO> teachers = gr.GetTeacherByGroupId(g.Id);
+                    List<UserOutputModel> teachersOut = new List<UserOutputModel>();
+                    foreach (UserDTO tc in teachers)
+                    {
+                        UserMapper tm = new UserMapper();
+                        teachersOut.Add(tm.ConvertUserDTOToUserOutputModel(tc));
+                    }
+                    groupoutmodel.Students = studentsOut;
+                    groupoutmodel.Teachers = teachersOut;  
+                    groupOutputModels.Add(groupoutmodel);
+                } 
+                return Ok(groupOutputModels);
+            }
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public IActionResult PostGroup([FromBody]GroupInputModel groupC)
+        {
+            if (string.IsNullOrWhiteSpace(groupC.Name)) return BadRequest(@"Не заполнено поле ""Название группы"" ");
+            Mapper mapper = new Mapper();
+            GroupDTO groupDTO = mapper.ConvertGroupInputModelToGroupDTO(groupC);
+            AdminDataAccess group = new AdminDataAccess();
+            group.GroupCreate(groupDTO);
+            return Ok();
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPut]
+        public IActionResult PutGroup([FromBody]GroupInputModel groupU)
+        {
+            Mapper mapper = new Mapper();
+            GroupDTO groupDTO = mapper.ConvertGroupInputModelToGroupDTO(groupU);
+            AdminDataAccess adm = new AdminDataAccess();
+            int result = adm.GroupUpdate(groupDTO);
+            if (result == 0)
+            {
+                return new BadRequestObjectResult("Запрашиваемой группы не существует");
+            }
+            if (result == 1)
+            {
+                return Ok("Информация о группе успешно обновлена");
+            }
+            else
+            {
+                return BadRequest("Ошибка запроса");
+            }
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpDelete] //url удаляем из group
+        public IActionResult DeleteGroup([FromBody] int id)
+        {
+            AdminDataAccess adm = new AdminDataAccess();
+            adm.GroupDelete(id);
+            return Ok();
+        }
+
+        [Authorize(Roles ="Teacher")]
+        [HttpGet("{teacherId}/all")]
+        public ActionResult GetStatisticByTeacherId(int teacherId)
+        {
+            TeacherDataAccess teacher = new TeacherDataAccess();
+            Mapper mapper = new Mapper();
+            var groups = teacher.GetGroupsWithStudentsByTeacherId(teacherId);
+            List<StudentsVSTestsDTO> students = new List<StudentsVSTestsDTO>();
+            List<TestDTO> tests = new List<TestDTO>();
+            foreach (var g in groups)
+            {
+                if (g.Students != null)
+                    foreach (var s in g.Students)
+                    {
+                        students.AddRange(teacher.GetTestsByStudentId(s.ID));
+
+                    }
+            }
+            if (students != null)
+                foreach (var s in students)
+                {
+                    tests.Add(new AuthorDataAccess().GetTestById(s.TestId));
+                }
+            return Ok(mapper.ConvertStudentsVSTestsDTOAndTeacherGroupsWithStudentsDTOToGroupWithStudentsWithAttemptsOutputModel(students, groups, tests));
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpGet("{groupId}")]
+        public IActionResult GetGroupById(int groupId)
+        {
+            Mapper mapper = new Mapper();
+            AdminDataAccess adm = new AdminDataAccess();
+            GroupDTO group = adm.GetGroupById(groupId);
+            if (group == null) { return new BadRequestObjectResult("Группы с таким id не существует"); }
+            else {
+                return Ok(mapper.ConvertGroupDTOToGroupOutputModel(group)); 
+            }
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost("{groupId}/student/{userId}")]
+        public IActionResult PostStudentInGroup(int userId, int groupId)
+        {
+            AdminDataAccess adm = new AdminDataAccess();
+            adm.StudentAddInGroup(userId, groupId);
+            return Ok();
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost("{groupId}/teacher/{userId}")]
+        public IActionResult PostTeacherInGroup(int userId, int groupId)
+        {
+            AdminDataAccess adm = new AdminDataAccess();
+            adm.TeacherAdd(userId, groupId);
+            return Ok();
+        }
+          
+                
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("{groupId}/student/{userId}")] // удаляем студента из группы
+        public IActionResult DeleteStudentFromGroup(int groupId, int userId)
+        {
+            AdminDataAccess adm = new AdminDataAccess();
+            adm.DeleteStudentFromGroup(userId, groupId);
+            return Ok();
+        }
+        
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("{groupId}/teacher/{userId}")] // удаляем учителя из группы
+        public IActionResult DeleteTeacherFromGroup(int userId, int groupId)
+        {
+            AdminDataAccess adm = new AdminDataAccess();
+            adm.DeleteTeacherFromGroup(userId, groupId);
+            return Ok();
+        }
+
+        [Authorize(Roles = "Teacher")]
+        [HttpGet("teacher/{userId}")]
+        public IActionResult GetGroupsWithStudentsByTeacherId(int userId)
+        {
+            GroupManager teacher = new GroupManager();
+            Mapper mapper = new Mapper();
+            return Ok(mapper.ConvertTeacherGroupsWithStudentsDTOToGroupWithStudentsOutputModel(teacher.GetGroupsWithStudentsByTeacherID(userId)));
+        }
+
+        [Authorize(Roles = "Teacher")]
+        [HttpPost("test")]
+        public IActionResult PostTestForGroup([FromBody]TestGroupInputModel test)
+        {
+            AdminDataAccess adm = new AdminDataAccess();
+            var group = adm.GetGroupById(test.groupId.Value);
+            if (group == null) return BadRequest("Группа не существует");
+            AuthorDataAccess author = new AuthorDataAccess();
+            var t = author.GetTestById(test.testId.Value);
+            if (t == null) return BadRequest("Тест не существует");
+            if (test.testId == null) return BadRequest("Не выбран тест");
+            if (test.groupId == null) return BadRequest("Не выбрана группа");
+            if (string.IsNullOrWhiteSpace(test.startDate)) return BadRequest("Отсутствует дата начала теста"); 
+            if (string.IsNullOrWhiteSpace(test.endDate)) return BadRequest("Отсутствует дата окончания теста");
+            Mapper mapper = new Mapper();
+            TeacherDataAccess teacher = new TeacherDataAccess();
+            int id = teacher.SetTestForGroup(mapper.ConvertTestGroupInputModelToTestGroupDTO(test));
+            return Ok(id);
+        }
+    }
+}

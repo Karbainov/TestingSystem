@@ -6,12 +6,12 @@ namespace TestingSystem.Data.DTO
 {
     public class FeedbackDTO
     {
-        public int Id { get; set; }
-        public int userId { get; set; }
-        public int questionId { get; set; }
-        public string message { get; set; }
-        public DateTime date { get; set; }
-        public Boolean processed { get; set; }
+        public int ID { get; set; }
+        public int UserId { get; set; }
+        public int QuestionId { get; set; }
+        public string Message { get; set; }
+        public DateTime DateTime { get; set; }
+        public Boolean Processed { get; set; }
 
         public FeedbackDTO()
         {
@@ -19,12 +19,12 @@ namespace TestingSystem.Data.DTO
 
         public FeedbackDTO(int Id, int userId, int questionId, string message, DateTime date, Boolean processed)
         {
-            this.Id = Id;
-            this.userId = userId;
-            this.questionId = questionId;
-            this.message = message;
-            this.date = date;
-            this.processed = processed;
+            this.ID = Id;
+            this.UserId = userId;
+            this.QuestionId = questionId;
+            this.Message = message;
+            this.DateTime = date;
+            this.Processed = processed;
         }
     }
 }

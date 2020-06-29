@@ -2,38 +2,91 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
+using System.Linq;
+using System.Data;
 using TestingSystem.Data.DTO;
+using Dapper;
 
 namespace TestingSystem.Data.StoredProcedure
 {
-    class GroupManager
+  public class GroupManager
     {
-        public List<GroupDTO> Group_GetByTeacherID(SqlConnection connection, UserDTO user)//все группы преподавателя
+        public List<GroupDTO> GetGroupByTeacherId( int id)//все группы преподавателя
         {
-            connection.Open();
-            string sqlExpression = "Group_GetByTeacherID";
-            SqlCommand command = new SqlCommand(sqlExpression, connection);
-            command.CommandType = System.Data.CommandType.StoredProcedure;
-            SqlParameter idParam = new SqlParameter("@TeacherID", user.ID);
-            command.Parameters.Add(idParam);
-            SqlDataReader reader = command.ExecuteReader();
-            List<GroupDTO> groups = new List<GroupDTO>();
-            if (reader.HasRows) // если есть данные
+            using (IDbConnection connection = Connection.GetConnection())
             {
-
-                while (reader.Read()) // построчно считываем данные
-                {
-                    GroupDTO group = new GroupDTO();
-
-                    group.id = (int)reader["id"];
-                    group.name = (string)reader["Name"];
-                    group.startDate = (DateTime)reader["StartDate"];
-                    group.endDate = (DateTime)reader["EndDate"];
-                    groups.Add(group);
-                }
+                string sqlExpression = "Group_GetByTeacherID @TeacherID";
+                return connection.Query<GroupDTO>(sqlExpression, new { id }).ToList();
             }
-            reader.Close();
-            return groups;
+        }
+        
+        public List<TeacherGroupsWithStudentsDTO> GetGroupsWithStudentsByTeacherID(int teacherId)
+        {
+            List<TeacherGroupsWithStudentsDTO> result = null;
+            using(IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "GetTeacherGroupsWithStudentsById";
+                connection.Query<TeacherGroupsWithStudentsDTO, UserDTO, TeacherGroupsWithStudentsDTO>(sqlExpression, (group, user)=>
+                {
+                    if (result == null)
+                    {
+                        result = new List<TeacherGroupsWithStudentsDTO>();
+                        group.Students = new List<UserDTO>();
+                        group.Students.Add(user);
+                        result.Add(group);
+                    }
+                    if (!result.Any(r => r.GroupID == group.GroupID))
+                    {
+                        group.Students = new List<UserDTO>();
+                        group.Students.Add(user);
+                        result.Add(group);
+                    }
+                    else
+                    {
+                        int id = result.FindIndex(r=>r.GroupID==group.GroupID);
+                        if (!result[id].Students.Any(r => r.ID == user.ID))
+                        {
+                            result[id].Students.Add(user);
+                        }
+                    }
+                    return group;
+                }, new { teacherId },splitOn:"id", commandType: CommandType.StoredProcedure).ToList();
+            }
+            return result;
+        }
+        
+        public List<UserDTO> GetAllStudents(int id)
+        {
+            using (IDbConnection connection = Connection.GetConnection())
+            {
+                string sqlExpression = "Group_GetAllStudents";
+                return connection.Query<UserDTO>(sqlExpression, new { id }, commandType: CommandType.StoredProcedure).ToList();
+            }
+        }
+        
+        public List<UserDTO> GetTeacherByGroupId(int groupId)
+        {
+            var connection = Connection.GetConnection();
+            connection.Open();
+            string sqlExpression = "GetTeacherByGroupID";
+            List<UserDTO> teachers = connection.Query<UserDTO>(sqlExpression, new { groupId }, commandType: CommandType.StoredProcedure).ToList();
+            return teachers;
+        }
+
+        public int DeleteStudentFromGroup(int userId, int groupId)
+        {
+            var connection = Connection.GetConnection();
+            connection.Open();
+            string sqlExpression = "DeleteStudentFromGroup";
+            return connection.Execute(sqlExpression, new { userId, groupId}, commandType: CommandType.StoredProcedure);
+        }
+
+        public int DeleteTeacherFromGroup(int userId, int groupId)
+        {
+            var connection = Connection.GetConnection();
+            connection.Open();
+            string sqlExpression = "DeleteTeacherFromGroup";
+            return connection.Execute(sqlExpression, new { userId, groupId }, commandType: CommandType.StoredProcedure);
         }
     }
 }
