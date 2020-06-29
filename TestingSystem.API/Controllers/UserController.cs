@@ -149,7 +149,7 @@ namespace TestingSystem.API.Controllers
             return Ok(model);
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet("role")]
         public IActionResult GetRole()
         {
@@ -165,7 +165,7 @@ namespace TestingSystem.API.Controllers
             return Ok(rolesOut);
         }
         
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet("{userId}/role")]
         public IActionResult GetRolesByUserId(int userId)
         {

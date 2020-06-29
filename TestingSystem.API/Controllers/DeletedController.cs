@@ -20,6 +20,7 @@ namespace TestingSystem.API.Controllers
         {
             _logger = logger;
         }
+        
         [Authorize(Roles = "Admin")]
         [HttpGet("Users")]
         public IActionResult GetDeletedUsers()
@@ -28,6 +29,7 @@ namespace TestingSystem.API.Controllers
             UserMapper mapper = new UserMapper();
             return Ok(mapper.ConvertListUserDTOToListUserOutputModel(admin.GetDeletedUsers()));
         }
+        
         [Authorize(Roles = "Admin,Author")]
         [HttpGet("Tests")]
         public IActionResult GetDeletedTests()
@@ -36,6 +38,7 @@ namespace TestingSystem.API.Controllers
             Mapper mapper = new Mapper();
             return Ok(mapper.ConvertTestQuestionTagDTOToTestOutputListModel(admin.GetDeletedTests()));
         }
+        
         [Authorize(Roles = "Admin,Author")]
         [HttpGet("Questions")]
         public IActionResult GetDeletedQuestions()
@@ -44,6 +47,7 @@ namespace TestingSystem.API.Controllers
             Mapper mapper = new Mapper();
             return Ok(mapper.ConvertQuestionDTOToQuestionModelList(admin.GetDeletedQuestions()));
         }
+        
         [Authorize(Roles = "Admin")]
         [HttpGet("Groups")]
         public IActionResult GetDeletedGroups()
@@ -52,6 +56,7 @@ namespace TestingSystem.API.Controllers
             Mapper mapper = new Mapper();
             return Ok(mapper.ConvertGroupWithStudentsAndTeachersDTOToGroupOutputModel(admin.GetDeletedGroups()));
         }
+        
         [Authorize(Roles = "Admin")]
         [HttpPut("User/{id}")]
         public IActionResult RestoreUser(int id)
@@ -63,6 +68,7 @@ namespace TestingSystem.API.Controllers
             AdminDataAccess admin = new AdminDataAccess();
             return Ok(admin.RestoreUser(id));
         }
+        
         [Authorize(Roles = "Admin,Author")]
         [HttpPut("Test/{id}")]
         public IActionResult RestoreTest(int id)
@@ -73,6 +79,7 @@ namespace TestingSystem.API.Controllers
             AdminDataAccess admin = new AdminDataAccess();
             return Ok(admin.RestoreTest(id));
         }
+        
         [Authorize(Roles = "Admin,Author")]
         [HttpPut("Question/{id}")]
         public IActionResult RestoreQuestion(int id)
@@ -83,6 +90,7 @@ namespace TestingSystem.API.Controllers
             AdminDataAccess admin = new AdminDataAccess();
             return Ok(admin.RestoreQuestion(id));
         }
+        
         [Authorize(Roles = "Admin")]
         [HttpPut("Group/{id}")]
         public IActionResult RestoreGroup(int id)
