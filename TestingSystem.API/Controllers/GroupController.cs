@@ -27,7 +27,7 @@ namespace TestingSystem.API.Controllers
             _logger = logger;
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult GetAllGroups()
         {
@@ -66,7 +66,7 @@ namespace TestingSystem.API.Controllers
             }
         }
         
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet("{groupId}")]
         public IActionResult GetGroupById(int groupId)
         {
@@ -101,7 +101,7 @@ namespace TestingSystem.API.Controllers
             }
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult PostGroup([FromBody]GroupInputModel groupC)
         {
@@ -120,7 +120,7 @@ namespace TestingSystem.API.Controllers
             }
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         public IActionResult PutGroup([FromBody]GroupInputModel groupU)
         {
@@ -143,8 +143,8 @@ namespace TestingSystem.API.Controllers
             }
         }
 
-        //[Authorize(Roles = "Admin")]
-        [HttpDelete("{groupId}")] //url удаляем из group
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("{groupId}")] 
         public IActionResult DeleteGroup(int id)
         {
             AdminDataAccess adm = new AdminDataAccess();
@@ -163,7 +163,7 @@ namespace TestingSystem.API.Controllers
             }
         }
 
-        //[Authorize(Roles ="Teacher")]
+        [Authorize(Roles ="Teacher")]
         [HttpGet("teacher/{userId}/statistics")]
         public ActionResult GetStatisticByTeacherId(int userId)
         {
@@ -189,7 +189,7 @@ namespace TestingSystem.API.Controllers
             return Ok(mapper.ConvertStudentsVSTestsDTOAndTeacherGroupsWithStudentsDTOToGroupWithStudentsWithAttemptsOutputModel(students, groups, tests));
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost("{groupId}/student/{userId}")] // добавляем студента в группу
         public IActionResult PostStudentInGroup(int userId, int groupId)
         {
@@ -205,7 +205,7 @@ namespace TestingSystem.API.Controllers
             }
         }
 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost("{groupId}/teacher/{userId}")] // добавляем учителя в группу
         public IActionResult PostTeacherInGroup(int userId, int groupId)
         {
@@ -222,7 +222,7 @@ namespace TestingSystem.API.Controllers
         }
           
                 
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{groupId}/student/{userId}")] // удаляем студента из группы
         public IActionResult DeleteStudentFromGroup(int groupId, int userId)
         {
@@ -238,7 +238,7 @@ namespace TestingSystem.API.Controllers
             }
         }
         
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{groupId}/teacher/{userId}")] // удаляем учителя из группы
         public IActionResult DeleteTeacherFromGroup(int userId, int groupId)
         {
@@ -254,7 +254,7 @@ namespace TestingSystem.API.Controllers
             }
         }
 
-        //[Authorize(Roles = "Teacher")]
+        [Authorize(Roles = "Teacher")]
         [HttpGet("teacher/{userId}")]
         public IActionResult GetGroupsWithStudentsByTeacherId(int userId)
         {
@@ -267,7 +267,7 @@ namespace TestingSystem.API.Controllers
             return Ok(result);
         }
 
-        //[Authorize(Roles = "Teacher")]
+        [Authorize(Roles = "Teacher")]
         [HttpPost("test")]
         public IActionResult PostTestForGroup([FromBody]TestGroupInputModel test)
         {
